@@ -273,8 +273,7 @@ class BF_Model extends CI_Model
     public function __construct()
     {
         parent::__construct();
-
-        // If there are specific DB connection settings used in the model, load
+		// If there are specific DB connection settings used in the model, load
         // the database using those settings.
         if (! empty($this->db_con)) {
             $this->db = $this->load->database($this->db_con, true);
@@ -318,7 +317,7 @@ class BF_Model extends CI_Model
     {
         $this->trigger('before_find');
 
-        $query = $this->db->get_where($this->table_name, array("{$this->table_name}.{$this->key}" => $id));
+        $query = $this->db->get_where($this->db->schema.".".$this->table_name, array("{$this->table_name}.{$this->key}" => $id));
 
         if (! $query->num_rows()) {
             return false;
@@ -351,8 +350,8 @@ class BF_Model extends CI_Model
     public function find_all()
     {
         $this->trigger('before_find');
-		//echo "<br>table : ".$this->table_name	
-        $query = $this->db->get($this->table_name);
+		//echo "<br>table : ".$this->table_name;
+        $query = $this->db->get($this->db->schema.".".$this->table_name);
 
         if (! $query->num_rows()) {
             return false;
@@ -434,7 +433,7 @@ class BF_Model extends CI_Model
             $this->db->where($where);
         }
 
-        $query = $this->db->get($this->table_name);
+        $query = $this->db->get($this->db->schema.".".$this->table_name);
         if (! $query->num_rows()) {
             return false;
         }
@@ -477,7 +476,7 @@ class BF_Model extends CI_Model
         }
 
         // Insert it
-        $status = $this->db->insert($this->table_name, $data);
+        $status = $this->db->insert($this->db->schema.".".$this->table_name, $data);
         if ($status == false) {
             $this->error = $this->get_db_error_message();
         } elseif ($this->return_insert_id) {
@@ -528,7 +527,7 @@ class BF_Model extends CI_Model
         }
 
         // Insert it.
-        $status = $this->db->insert_batch($this->table_name, $data);
+        $status = $this->db->insert_batch($this->db->schema.".".$this->table_name, $data);
 
         if ($status === false) {
             $this->error = $this->get_db_error_message();
@@ -570,7 +569,7 @@ class BF_Model extends CI_Model
             $data[$this->modified_by_field] = $this->auth->user_id();
         }
 
-        if ($result = $this->db->update($this->table_name, $data, $where)) {
+        if ($result = $this->db->update($this->db->schema.".".$this->table_name, $data, $where)) {
             $this->trigger('after_update', array($data, $result));
             return true;
         }
@@ -619,7 +618,7 @@ class BF_Model extends CI_Model
             }
         }
 
-        $result = $this->db->update_batch($this->table_name, $data, $index);
+        $result = $this->db->update_batch($this->db->schema.".".$this->table_name, $data, $index);
 
         // CI 2 returns null on success, CI 3 returns the number of affected rows.
         // Both return false on failure, or display the DB error message.
@@ -654,9 +653,9 @@ class BF_Model extends CI_Model
                 $data[$this->deleted_by_field] = $this->auth->user_id();
             }
 
-            $result = $this->db->update($this->table_name, $data);
+            $result = $this->db->update($this->db->schema.".".$this->table_name, $data);
         } else {
-            $result = $this->db->delete($this->table_name);
+            $result = $this->db->delete($this->db->schema.".".$this->table_name);
         }
 
         if ($result) {
@@ -699,9 +698,9 @@ class BF_Model extends CI_Model
                 $data[$this->deleted_by_field] = $this->auth->user_id();
             }
 
-            $this->db->update($this->table_name, $data);
+            $this->db->update($this->db->schema.".".$this->table_name, $data);
         } else {
-            $this->db->delete($this->table_name);
+            $this->db->delete($this->db->schema.".".$this->table_name);
         }
 
         $result = $this->db->affected_rows();
@@ -737,7 +736,7 @@ class BF_Model extends CI_Model
         }
 
         $this->db->where($field, $value);
-        $query = $this->db->get($this->table_name);
+        $query = $this->db->get($this->db->schema.".".$this->table_name);
 
         if ($query && $query->num_rows() == 0) {
             return true;
@@ -758,7 +757,7 @@ class BF_Model extends CI_Model
      */
     public function count_all()
     {
-        return $this->db->count_all_results($this->table_name);
+        return $this->db->count_all_results($this->db->schema.".".$this->table_name);
     }
 
     /**
@@ -779,7 +778,7 @@ class BF_Model extends CI_Model
 
         $this->db->where($field, $value);
 
-        return (int)$this->db->count_all_results($this->table_name);
+        return (int)$this->db->count_all_results($this->db->schema.".".$this->table_name);
     }
 
     /**
@@ -800,7 +799,7 @@ class BF_Model extends CI_Model
 
         $query = $this->db->select($field)
                           ->where($this->key, $id)
-                          ->get($this->table_name);
+                          ->get($this->db->schema.".".$this->table_name);
 
         if ($query && $query->num_rows() > 0) {
             return $query->row()->$field;
@@ -827,7 +826,7 @@ class BF_Model extends CI_Model
         }
 
         $query = $this->db->select(array($key, $value))
-                          ->get($this->table_name);
+                          ->get($this->db->schema.".".$this->table_name);
 
         $options = array();
         foreach ($query->result() as $row) {
@@ -1315,7 +1314,7 @@ class BF_Model extends CI_Model
      */
     public function get_table()
     {
-        return $this->table_name;
+        return $this->db->schema.".".$this->table_name;
     }
 
     /**

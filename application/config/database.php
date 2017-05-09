@@ -91,6 +91,7 @@ $active_group = 'default';
 
 if (defined('CI_VERSION') && substr(CI_VERSION, 0, 1) != '2') {
     // CodeIgniter 3 configuration
+    // test update
     $query_builder = true;
     $db['default'] = array(
         'dsn'          => '',
@@ -100,6 +101,7 @@ if (defined('CI_VERSION') && substr(CI_VERSION, 0, 1) != '2') {
         'password'     => 'd1kbudHR',
         'database'     => 'db_dikbudhr',
         'dbdriver'     => 'postgre',
+        'schema'     => 'hris',
         'port'     => '5432',
         'dbprefix'     => '',
         'pconnect'     => false, // not supported with the database session driver
