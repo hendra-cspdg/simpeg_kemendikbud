@@ -33,7 +33,7 @@ echo form_open($this->uri->uri_string(), 'class="form-horizontal" autocomplete="
 	</fieldset>
 	<?php
     if (has_permission('Bonfire.Roles.Manage')
-        && ( ! isset($user) || (isset($user) && has_permission('Permissions.' . $user->role_name . '.Manage')))
+        && ( ! isset($user) || (isset($user) && has_permission('Permissions.' . trim($user->role_name) . '.Manage')))
        ) :
     ?>
     <fieldset>
