@@ -517,7 +517,7 @@ class User_model extends BF_Model
 			$this->select($this->table_name . '.*, role_name');
 		}
 
-		$this->db->join("hris.".$this->roles_table, $this->roles_table . '.role_id = ' . $this->table_name . '.role_id', 'left');
+		$this->db->join($this->roles_table, $this->roles_table . '.role_id = ' . $this->table_name . '.role_id', 'left');
 
 		return parent::find_by($field, $value, $type);
 
