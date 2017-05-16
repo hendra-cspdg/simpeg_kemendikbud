@@ -75,8 +75,9 @@ class Settings_lib
             && class_exists('settings_model')
             && isset(self::$ci->db)
             && ! empty(self::$ci->db->database)
-            && self::$ci->db->table_exists(self::$ci->settings_model->get_table())
+            && self::$ci->db->table_exists("settings")
         ) {
+        	
             self::$settingsModelLoaded = true;
         }
     }
@@ -261,14 +262,13 @@ class Settings_lib
                 return null;
             }
         }
-
+		
         if (self::$cache) {
             return self::$cache;
         }
-
         $settings = self::$ci->settings_model->find_all();
         foreach ($settings as $setting) {
-            self::$cache[$setting->name] = $setting->value;
+            self::$cache[trim($setting->name)] = $setting->value;
         }
 
         return self::$cache;

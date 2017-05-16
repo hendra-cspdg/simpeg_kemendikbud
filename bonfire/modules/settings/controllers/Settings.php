@@ -78,7 +78,6 @@ class Settings extends Admin_Controller
 
         // Read the current settings
         $settings = $this->settings_lib->find_all();
-
         // Get the available languages
         $this->load->helper('translate/languages');
 

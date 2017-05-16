@@ -480,9 +480,9 @@ class BF_Model extends CI_Model
         if ($status == false) {
             $this->error = $this->get_db_error_message();
         } elseif ($this->return_insert_id) {
-            $id = $this->db->insert_id();
+            	$id = $this->db->insert_id();
 
-            $status = $this->trigger('after_insert', $id);
+            	$status = $this->trigger('after_insert', $id);
         }
 
         return $status;

@@ -98,11 +98,11 @@ if (defined('CI_VERSION') && substr(CI_VERSION, 0, 1) != '2') {
         //'dsn'          => 'pgsql:host=localhost;port=5433;dbname=sdm_kemdikbud;user=postgres;password=123456789',
         'hostname'     => 'localhost',
         'username'     => 'postgres',
-        'password'     => 'd1kbudHR',
+        'password'     => '123456789',
         'database'     => 'db_dikbudhr',
         'dbdriver'     => 'postgre',
         'schema'     => 'hris',
-        'port'     => '5432',
+        'port'     => '5433',
         'dbprefix'     => '',
         'pconnect'     => false, // not supported with the database session driver
         'db_debug'     => true,

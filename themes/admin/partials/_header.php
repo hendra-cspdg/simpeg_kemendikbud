@@ -42,7 +42,7 @@
       <span class="logo-lg">
       	<img src="<?php echo base_url();?>assets/images/logo.png" height="25"/> 
       		<?php
-				echo $this->settings_lib->item('site.title');
+				echo trim($this->settings_lib->item('site.title'));
 			?></span>
     </a>
 
@@ -164,6 +164,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i> Data Pegawai</a></li>
           </ul>
         </li>
          <?php endif; ?>
