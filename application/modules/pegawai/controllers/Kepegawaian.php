@@ -230,8 +230,8 @@ class Kepegawaian extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->pegawai_model->where('"Nama" LIKE \''.$search.'%\'');
-			$this->pegawai_model->or_where('"Nip_Baru" LIKE \''.$search.'%\'');
+			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
 		}
 		
 		$this->pegawai_model->limit($length,$start);
@@ -247,8 +247,8 @@ class Kepegawaian extends Admin_Controller
 		*/
 		if($search != "")
 		{
-			$this->pegawai_model->where('"Nama" LIKE \''.$search.'%\'');
-			$this->pegawai_model->or_where('"Nip_Baru" LIKE \''.$search.'%\'');
+			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
 			//$this->pegawai_model->or_where('Nip_Baru',$search);
 			$jum	= $this->pegawai_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
@@ -258,18 +258,18 @@ class Kepegawaian extends Admin_Controller
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) :
 				$output['data'][]=array($nomor_urut.".",$record->Nip_Baru,$record->Nama,$record->Satuan_Kerja_Kerja_ID,
-						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->id."'>
+						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->id."' data-toggle='tooltip' title='Lihat Profile' >
 						<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->id."'><span class='fa-stack'>
+					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->id."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='#' kode='$record->id' class='sweet-5'>
+					   	<a href='#' kode='$record->id' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>

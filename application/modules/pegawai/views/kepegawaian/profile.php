@@ -1,5 +1,6 @@
 <?php
-
+$this->load->library('convert');
+$convert = new convert();
 if (validation_errors()) :
 ?>
 <div class='alert alert-block alert-error fade in'>
@@ -16,34 +17,16 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
 ?>
 <div class="admin-box box box-primary profile">
 	<div class="box-body">
-                        <div class="row">
-                            <div class="col-md-3">
+		<div class="row">
+                            <div class="col-md-2">
                                 <ul class="list-unstyled profile-nav">
                                     <li>
                                         <img src="https://intra.lipi.go.id/public/uploads/foto/__323/198503012010121001.jpg" class="img-responsive pic-bordered" alt="">
-                                        <a href="javascript:;" class="profile-edit"> ubah foto </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Publikasi </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Kegiatan </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Perjalanan Luar Negeri </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Blog </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Grup </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://intra.kemdikbud.go.id/"> Berita </a>
+                                        <a href="javascript:;" class="btn btn-small btn-warning margin"><i class="fa fa-photo"></i> Ubah foto </a>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-10">
                                 <div class="row">
                                     <div class="col-md-8 profile-info">
                                         <h1 class="font-green sbold uppercase"><?php echo isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''; ?>  <?php echo isset($pegawai->Nama) ? $pegawai->Nama : ''; ?> <?php echo isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''; ?></h1>
@@ -116,7 +99,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                                             Nama
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b>Yana Mardiyana </b>
+                                                            <b><?php echo isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''; ?>  <?php echo isset($pegawai->Nama) ? $pegawai->Nama : ''; ?> <?php echo isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''; ?> </b>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,7 +109,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                                             NIP
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b>198503012010121001</b>
+                                                            <b><?php echo isset($pegawai->Nip_Baru) ? $pegawai->Nip_Baru : ''; ?></b>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -137,7 +120,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                             <b>
-                                                                Pusat Penelitian Sistem Mutu dan Teknologi Pengujian                                                            </b>
+                                                                <?php echo isset($pegawai->satker) ? $pegawai->satker : ''; ?></b>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -145,10 +128,9 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                             Status Kepegawaian
-                                                            
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b>PNS (12 Jan 2010 - 03 Jan 2043)</b>
+                                                            <b><?php echo isset($pegawai->Status_CPNS_PNS) ? $pegawai->Status_CPNS_PNS == "P" ? "PNS" : "" : ''; ?>   (<?php echo $convert->fmtDate($pegawai->TMT_PNS,"dd month yyyy"); ?>)</b>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -156,7 +138,6 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                             Golongan
-                                                            
                                                         </div>
                                                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                                                             <b>III/b - Penata Muda Tingkat I</b>
@@ -326,8 +307,5 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                 </div>
                             </div>
                         </div>
-                    
-                    <!--tab_1_2-->
-                    <!--end tab-pane-->
-            </div>
+    </div>
 </div>
