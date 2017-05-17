@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'users/login';
-$route['404_override'] = 'Not_pound404';
+$route['404_override'] = '';
 
 // Authentication
 Route::any(LOGIN_URL, 'users/login', array('as' => 'login'));
@@ -74,6 +74,7 @@ Route::any('resend_activation', 'users/resend_activation');
 Route::prefix(SITE_AREA, function(){
     Route::context('content', array('home' => SITE_AREA .'/content/index'));
     Route::context('reports', array('home' => SITE_AREA .'/reports/index'));
+    Route::context('lokasi', array('home' => SITE_AREA .'/reports/index'));
     Route::context('developer');
     Route::context('settings');
     Route::context('realisasi');
