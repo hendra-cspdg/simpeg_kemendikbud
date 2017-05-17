@@ -21,6 +21,9 @@ class Test2 extends MX_Controller
 		}
         echo json_encode($json);
     }
+    public function ajax2(){
+        echo date('Y-m-d H:i:s');
+    }
 
     private function data_model($key,$start,$limit){
            
