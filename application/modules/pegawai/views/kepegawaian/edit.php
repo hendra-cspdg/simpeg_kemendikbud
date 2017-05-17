@@ -498,7 +498,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("pegawai/lokasi/ajax");?>',
+            url: '<?php echo site_url("admin/lokasi/pegawai/ajax");?>',
             dataType: 'json',
             data: function(params) {
                 return {

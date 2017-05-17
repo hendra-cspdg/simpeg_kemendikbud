@@ -21,7 +21,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0
     </div>
-    <strong>Copyright © 2017 <a href="#">Pusat Penelitian Metalurgi - LIPI</a>.</strong> All rights
+    <strong>Copyright © 2017 <a href="#">Kementerian Pendidikan dan Kebudayaan</a>.</strong> All rights
     reserved.
 </footer>
 </div>	
@@ -34,7 +34,6 @@
 	<!-- AdminLTE App -->
 	<script src="<?php echo base_url(); ?>themes/admin/dist/js/app.min.js"></script>
 	<!-- Sparkline -->
-	<script src="<?php echo base_url(); ?>themes/admin/plugins/sparkline/jquery.sparkline.min.js"></script>
 	<!-- jvectormap -->
 	<script src="<?php echo base_url(); ?>themes/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
 	<script src="<?php echo base_url(); ?>themes/admin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>

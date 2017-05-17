@@ -9,6 +9,7 @@ class Kepegawaian extends Admin_Controller
     protected $permissionDelete = 'Pegawai.Kepegawaian.Delete';
     protected $permissionEdit   = 'Pegawai.Kepegawaian.Edit';
     protected $permissionView   = 'Pegawai.Kepegawaian.View';
+    protected $permissionAddpendidikan   = 'Pegawai.Kepegawaian.Addpendidikan';
 
     /**
      * Constructor
@@ -21,6 +22,7 @@ class Kepegawaian extends Admin_Controller
         
         $this->auth->restrict($this->permissionView);
         $this->load->model('pegawai/pegawai_model');
+        $this->load->model('pegawai/rwt_pendidikan_model');
         $this->lang->load('pegawai');
         
             Assets::add_css('flick/jquery-ui-1.8.13.custom.css');
@@ -100,10 +102,51 @@ class Kepegawaian extends Admin_Controller
         Template::set('records', $records);
         
     Template::set('toolbar_title', lang('pegawai_manage'));
-
+		
         Template::render();
     }
-    
+    public function uploadfoto()
+	{
+		$PNS_ID = $this->uri->segment(5);
+		Template::set('PNS_ID', $PNS_ID);
+		Template::render();
+	}
+	function savefoto(){
+		$this->auth->restrict($this->permissionEdit);
+    	$this->load->helper('handle_upload');
+		$uploadData = array();
+		$upload = true;
+		$id_log = $this->input->post('PNS_ID');
+		 $id = "";
+		 $namafile = "";
+		 if (isset($_FILES['userfile']) && is_array($_FILES['userfile']) && $_FILES['userfile']['error'] != 4)
+		 {
+			$tmp_name = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
+			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.pathphoto')));
+			 if (isset($uploadData['error']) && !empty($uploadData['error']))
+			 {
+			 	$tipefile=$_FILES['userfile']['type'];
+			 	//$tipefile = $_FILES['userfile']['name'];
+				 $upload = false;
+				 log_activity($this->auth->user_id(), 'Gagal : '.$uploadData['error'].trim($this->settings_lib->item('site.pathphoto')).$tipefile.$this->input->ip_address(), 'pegawai');
+			 }else{
+			 	$namafile = $uploadData['data']['file_name'];
+                log_activity($this->auth->user_id(), 'upload foto : ' . $id_log . ' : ' . $this->input->ip_address(), 'pegawai');
+			 }
+		 }else{
+		 	die("File tidak ditemukan");
+		 	log_activity($this->auth->user_id(), 'File tidak ditemukan : ' . $this->input->ip_address(), 'pegawai');
+		 } 	
+		if ($namafile != "")
+		{
+			$dataupdate = array(
+			'photo'	=> $namafile
+			);
+			$this->pegawai_model->update_where("PNS_ID",$id_log, $dataupdate);
+		}
+       echo '{"namafile":"'.$namafile.'"}';
+       exit();
+	}
     /**
      * Create a pegawai object.
      *
@@ -130,6 +173,94 @@ class Kepegawaian extends Admin_Controller
         Template::set('toolbar_title', lang('pegawai_action_create'));
 
         Template::render();
+    }
+    // riwayat pendidikan
+    public function addpendidikan()
+    {
+        $this->auth->restrict($this->permissionAddpendidikan);
+		$PNS_ID = $this->uri->segment(5);
+		$ID = $this->uri->segment(6);
+		Template::set('rwt_pendidikan', $this->rwt_pendidikan_model->find($ID));
+		
+		Template::set('PNS_ID', $PNS_ID);
+        Template::set('toolbar_title', "Tambah Riwayat Pendiikan");
+
+        Template::render();
+    }
+    public function deletependidikan()
+	{
+		$this->auth->restrict($this->permissionAddpendidikan);
+		$id 	= $this->input->post('kode');
+		if ($this->rwt_pendidikan_model->delete($id)) {
+			 log_activity($this->auth->user_id(), 'delete data Riwayat Pendidikan : ' . $id . ' : ' . $this->input->ip_address(), 'pegawai');
+			 Template::set_message("Sukses Hapus data", 'success');
+			 echo "Sukses";
+		}else{
+			echo "Gagal";
+		}
+
+		exit();
+	}
+    public function savependidikan()
+    {
+    	$insert_id = 0;
+        $this->auth->restrict($this->permissionAddpendidikan);
+		$id = $this->input->post('id_data');
+		if($id != ""){
+			if($this->save_pendidikan("update",$id))
+			{
+				 echo "Sukses Update data";
+			}else{
+				 echo "Gagal simpan data";
+			}
+        }else{
+        	
+        	if($id = $this->save_pendidikan()){
+        		log_activity($this->auth->user_id(), 'Save riwayat Pendidikan : ' . $id . ' : ' . $this->input->ip_address(), 'pegawai');
+        		echo "Sukses simpan data";
+        	}else{
+        		log_activity($this->auth->user_id(), 'Save riwayat Pendidikan gagal, dari' .$this->rwt_pendidikan_model->error. $this->input->ip_address(), 'pegawai');
+        		echo "Gagal ".$this->rwt_pendidikan_model->error;
+        	}
+        }
+       
+        exit();
+    }
+    private function save_pendidikan($type = 'insert', $id = 0)
+    {
+        if ($type == 'update') {
+            $_POST['id'] = $id;
+        }
+       
+        // Make sure we only pass in the fields we want
+        
+        $data = $this->rwt_pendidikan_model->prep_data($this->input->post());
+		$data['PNS_ID'] 	= trim($this->input->post('PNS_ID'));
+		$data['Tingkat_Pendidikan_ID'] 	= $this->input->post('Tingkat_Pendidikan_ID');
+		$data['Pendidikan_ID'] 	= $this->input->post('Pendidikan_ID');
+		$data['Tanggal_Lulus'] 	= $this->input->post('Tanggal_Lulus') ? $this->input->post('Tanggal_Lulus') : null;
+		$data['Tahun_Lulus'] 	= $this->input->post('Tahun_Lulus');
+		$data['Nomor_Ijasah'] 	= $this->input->post('Nomor_Ijasah');
+		$data['Nama_Sekolah'] 	= $this->input->post('Nama_Sekolah');
+		$data['Gelar_Depan'] 	= $this->input->post('Gelar_Depan');
+		$data['Gelar_Belakang'] 	= $this->input->post('Gelar_Belakang');
+		$data['Pendidikan_Pertama'] 	= $this->input->post('Pendidikan_Pertama');
+		$data['Negara_sekolah'] 	= $this->input->post('Negara_sekolah');
+        // Additional handling for default values should be added below,
+        
+
+        $return = false;
+        if ($type == 'insert') {
+            $id = $this->rwt_pendidikan_model->insert($data);
+
+            if (is_numeric($id)) {
+                $return = $id;
+            }
+        } elseif ($type == 'update') {
+            $return = $this->rwt_pendidikan_model->update($id, $data);
+        }
+
+        return $return;
     }
     /**
      * Allows editing of pegawai data.
@@ -188,9 +319,11 @@ class Kepegawaian extends Admin_Controller
         }
         
          
-        
-        Template::set('pegawai', $this->pegawai_model->find($id));
-
+        $pegawai = $this->pegawai_model->find($id);
+        Template::set('pegawai', $pegawai);
+        $this->rwt_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
+        $rwtpendidikan = $this->rwt_pendidikan_model->find_all();
+		Template::set('records', $rwtpendidikan);
         Template::set('toolbar_title',"View Profile");
         Template::render();
     }

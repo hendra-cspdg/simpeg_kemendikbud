@@ -1,3 +1,5 @@
+<script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
 <?php
 $this->load->library('convert');
 $convert = new convert();
@@ -13,6 +15,7 @@ if (validation_errors()) :
 <?php
 endif;
 $id = isset($pegawai->id) ? $pegawai->id : '';
+$PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
 
 ?>
 <div class="admin-box box box-primary profile">
@@ -21,8 +24,9 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                             <div class="col-md-2">
                                 <ul class="list-unstyled profile-nav">
                                     <li>
-                                        <img src="https://intra.lipi.go.id/public/uploads/foto/__323/198503012010121001.jpg" class="img-responsive pic-bordered" alt="">
-                                        <a href="javascript:;" class="btn btn-small btn-warning margin"><i class="fa fa-photo"></i> Ubah foto </a>
+                                        <img src="<?php echo base_url(); ?>assets/images/<?php echo (isset($pegawai->photo) and $pegawai->photo != "") ? $pegawai->photo : 'noimage.jpg'; ?>" class="img-responsive pic-bordered" alt="">
+                                        
+                                        <a href="<?php echo base_url();?>admin/kepegawaian/pegawai/uploadfoto/<?php echo $PNS_ID; ?>" tooltip="Upload Foto" class="show-modal btn btn-small btn-warning margin"><i class="fa fa-photo"></i> Ubah foto </a>
                                     </li>
                                 </ul>
                             </div>
@@ -30,43 +34,38 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                 <div class="row">
                                     <div class="col-md-8 profile-info">
                                         <h1 class="font-green sbold uppercase"><?php echo isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''; ?>  <?php echo isset($pegawai->Nama) ? $pegawai->Nama : ''; ?> <?php echo isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''; ?></h1>
-                                        <h4><?php echo isset($pegawai->Nama_satker) ? $pegawai->Nama_satker : 'Nama Satker'; ?></h4>
-                                        <p>   </p>
-                                                                                <p>
-                                            <a href="javascript:;"><?php echo isset($pegawai->Email) ? $pegawai->Email : 'Email'; ?></a>
-                                        </p>
+                                        <h4><b>NIP</b> <?php echo isset($pegawai->Nip_Baru) ? $pegawai->Nip_Baru : ''; ?></h4>
                                         <ul class="list-inline">
                                             <li>
                                                 <i class="fa fa-map-marker"></i> <?php echo isset($pegawai->Alamat) ? $pegawai->Alamat : 'Alamat'; ?></li>
                                             <li>
-                                                <i class="fa fa-calendar"></i> <?php echo isset($pegawai->Tgl_Lahir) ? $pegawai->Tgl_Lahir : 'Tgl_Lahir'; ?> </li>
-                                                                                        <li>
-                                                <a target="_blank" href="Mardiana Razors"><i class="fa fa-facebook"></i> Facebook </a>
-                                            </li>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </ul>
+                                                <i class="fa fa-calendar"></i> <?php echo isset($pegawai->Tgl_Lahir) ? $convert->fmtDate($pegawai->Tgl_Lahir,"dd month yyyy") : 'Tgl_Lahir'; ?> </li>                                                                                                                                                                                                                                                                                                                                                                                                       </ul>
                                     </div>
                                     <!--end col-md-8-->
                                     <div class="col-md-4">
                                         <div class="portlet sale-summary">
                                             <div class="portlet-title" style="padding:5px;">
-                                                <div class="caption font-red sbold"> Kepakaran Sivitas </div>
+                                                <div class="caption font-red sbold"> Unit Organisasi </div>
                                             </div>
                                             <div class="portlet-body" style="padding:5px;">
                                                 <ul class="list-unstyled">
                                                     <li>
-                                                        <strong>Bidang Kepakaran</strong><br>
+                                                        <strong>Satker</strong><br>
                                                         <small>
-                                                            Tidak Ada Bidang Kepakaran                                                        </small>
+                                                            <?php echo isset($pegawai->satker) ? $pegawai->satker : '-'; ?>
+                                                       </small>
                                                     </li>
                                                     <li>
-                                                        <strong>Bidang Penelitian</strong><br>
+                                                        <strong>Bidang</strong><br>
                                                         <small>
-                                                            Tidak Ada Bidang Penelitian                                                        </small>
+                                                            <?php echo isset($pegawai->bidang) ? $pegawai->bidang : '-'; ?>
+                                                        </small>
                                                     </li>
                                                     <li>
-                                                        <strong>Rumpun Kepakaran</strong><br>
+                                                        <strong>Sub Bidang</strong><br>
                                                         <small>
-                                                            Tidak Ada Rumpun Kepakaran                                                        </small>
+                                                        	<?php echo isset($pegawai->sub_bidang) ? $pegawai->sub_bidang : '-'; ?>    
+                                                        </small>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -93,37 +92,8 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="personal">
                                             <form role="form" action="#">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                            Nama
-                                                        </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b><?php echo isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''; ?>  <?php echo isset($pegawai->Nama) ? $pegawai->Nama : ''; ?> <?php echo isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''; ?> </b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                            NIP
-                                                        </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b><?php echo isset($pegawai->Nip_Baru) ? $pegawai->Nip_Baru : ''; ?></b>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                            Satuan Kerja
-                                                        </div>
-                                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                            <b>
-                                                                <?php echo isset($pegawai->satker) ? $pegawai->satker : ''; ?></b>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
+                                                 
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -266,13 +236,70 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                                         <div class="tab-pane" id="pendidikan">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                        Pendidikan
-                                                    </div>
-                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                        <b>
-                                                              Pelatihan CCNA (Cisco), Pelatihan Mikrotik jaringan, Pelatihan Programming Phyton dan Java                                                        </b>
-                                                    </div>
+                                                	<div class="col-lg-12 col-md-12 col-sm-21 col-xs-12">
+                                                    <?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Addpendidikan')) : ?>
+													<a href="<?php echo base_url(); ?>admin/kepegawaian/pegawai/addpendidikan/<?php echo $PNS_ID ?>" class="show-modal" tooltip="Tambah Riwayat Pendidikan">
+														<button type="button" class="btn btn-default btn-warning margin pull-right "><i class="fa fa-plus"></i> Tambah</button>
+													</a>
+													<?php endif; ?>
+													<table class="table">
+													<thead>
+														<tr>
+															<th>No</th>
+															<th>Pendidikan</th>
+															<th>Tgl. Lulus</th>
+															<th>Tahun Lulus</th>
+															<th>Nomor Ijazah</th>
+															<th>Nama Sekolah</th>
+															<th>Pendidikan Pertama</th>
+															<th>#</th>
+														</tr>
+													</thead>
+													<tfoot>
+														<tr>
+															 
+														</tr>
+													</tfoot>
+													<tbody>
+														<?php
+														$NO = 1;
+														$has_records	= isset($records) && is_array($records) && count($records);
+														if ($has_records) :
+															foreach ($records as $record) :
+														?>
+														<tr>
+															<td><?php e($NO); ?>.</td>
+															<td><?php e($record->NAMA_PENDIDIKAN); ?></td>
+															<td><?php e($record->Tanggal_Lulus) ?></td>
+															<td><?php e($record->Tahun_Lulus) ?></td>
+															<td><?php e($record->Nomor_Ijasah) ?></td>
+															<td><?php e($record->Nama_Sekolah) ?></td>
+															<td><?php e($record->Pendidikan_Pertama) ?></td>
+															<td>
+															<a href="<?php echo base_url(); ?>admin/kepegawaian/pegawai/addpendidikan/<?php echo $record->PNS_ID; ?>/<?php echo $record->ID; ?>"  data-toggle='tooltip' title='Edit data' class="show-modal"><span class='fa-stack'>
+															 <i class='fa fa-square fa-stack-2x'></i>
+															 <i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+															 </span>
+															 </a>
+															 <a href="#" url="<?php echo base_url() ?>admin/kepegawaian/pegawai/deletependidikan" kode="<?php echo $record->ID; ?>" class='delete' data-toggle='tooltip' title='Hapus Data' >
+															 <span class='fa-stack'>
+															 <i class='fa fa-square fa-stack-2x'></i>
+															 <i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
+															 </span>
+															 </a>
+															 </td>
+														</tr>
+														<?php
+															endforeach;
+														else:
+														?>
+														<tr>
+															<td colspan="7">Data tidak ada</td>
+														</tr>
+														<?php endif; ?>
+													</tbody>
+												</table>  
+												</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,3 +336,42 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                         </div>
     </div>
 </div>
+<script type="text/javascript">
+$(".delete").click(function(){
+	var kode =$(this).attr("kode");
+	var url =$(this).attr("url");
+	swal({
+		title: "Anda Yakin?",
+		text: "Hapus data riwayat pendidikan!",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonClass: 'btn-danger',
+		confirmButtonText: 'Ya, Delete!',
+		cancelButtonText: "Tidak, Batalkan!",
+		closeOnConfirm: false,
+		closeOnCancel: false
+	},
+	function (isConfirm) {
+		if (isConfirm) {
+			var post_data = "kode="+kode;
+			$.ajax({
+					url: url,
+					type:"POST",
+					data: post_data,
+					dataType: "html",
+					timeout:180000,
+					success: function (result) {
+						 swal("Deleted!", result, "success");
+						 location.reload(true);
+				},
+				error : function(error) {
+					alert(error);
+				} 
+			});        
+			
+		} else {
+			swal("Batal", "", "error");
+		}
+	});
+});
+</script>

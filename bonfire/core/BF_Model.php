@@ -548,13 +548,13 @@ class BF_Model extends CI_Model
      */
     public function update($where = null, $data = null)
     {
+    	
         if ($this->skip_validation === false) {
             $data = $this->validate($data);
             if ($data === false) {
                 return false;
             }
         }
-
         if (! is_array($where)) {
             $where = array($this->key => $where);
         }

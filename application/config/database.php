@@ -96,13 +96,13 @@ if (defined('CI_VERSION') && substr(CI_VERSION, 0, 1) != '2') {
     $db['default'] = array(
         'dsn'          => '',
         //'dsn'          => 'pgsql:host=localhost;port=5433;dbname=sdm_kemdikbud;user=postgres;password=123456789',
-        'hostname'     => '192.168.61.12',
+        'hostname'     => '127.0.0.1',
         'username'     => 'postgres',
         'password'     => 'd1kbudHR',
         'database'     => 'db_dikbudhr',
         'dbdriver'     => 'postgre',
         'schema'     => 'hris',
-        'port'     => '5432',
+        'port'     => '5433',
         'dbprefix'     => '',
         'pconnect'     => false, // not supported with the database session driver
         'db_debug'     => true,
