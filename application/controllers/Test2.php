@@ -48,6 +48,7 @@ class Test2 extends MX_Controller
                     "limitx"=>$limit
                 )
             );   
+             $this->db->flush_cache();
             return $o;
     }
 }
