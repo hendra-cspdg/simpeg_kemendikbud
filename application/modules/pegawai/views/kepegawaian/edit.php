@@ -489,3 +489,23 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
 <script>
 	 $(".select2").select2();
 </script>
+
+<script>
+    
+    $("#Lokasi_Kerja_ID").select2({
+        placeholder: 'Cari Lokasi Kerja...',
+        width: '350px',
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("pegawai/lokasi/ajax");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
+</script>
