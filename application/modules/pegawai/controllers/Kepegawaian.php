@@ -54,12 +54,13 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/kpkn_model');
         $kpkns = $this->kpkn_model->find_all();
 		Template::set('kpkns', $kpkns);
-		
+		/*
+		$this->load->model('pegawai/lokasi_model');
+        $lokasis = $this->lokasi_model->find_all();
+		Template::set('lokasis', $lokasis);
+		*/
     }
-    public function test_lokasi(){
-        
-        Template::render();
-    }
+
     /**
      * Display a list of pegawai data.
      *

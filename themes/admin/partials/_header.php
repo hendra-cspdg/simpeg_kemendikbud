@@ -126,7 +126,7 @@
         	<li class="treeview <?php echo $menu == 'dashboard' ? 'active' : '' ?>">
         		<a href="<?php echo base_url();?>admin/reports/dashboard">
 	            	<i class="fa fa-dashboard"></i>
-    	        	<span>Dashboard Simpedas</span>    
+    	        	<span>Dashboard</span>    
           		</a>
           </li>
         <?php endif; ?>
