@@ -54,8 +54,9 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/kpkn_model');
         $kpkns = $this->kpkn_model->find_all();
 		Template::set('kpkns', $kpkns);
-		/*
+		
 		$this->load->model('pegawai/lokasi_model');
+        /*
         $lokasis = $this->lokasi_model->find_all();
 		Template::set('lokasis', $lokasis);
 		*/
@@ -173,8 +174,9 @@ class Kepegawaian extends Admin_Controller
             Template::set_message(lang('pegawai_delete_failure') . $this->pegawai_model->error, 'error');
         }
         
-        Template::set('pegawai', $this->pegawai_model->find($id));
-
+        $pegawaiData = $this->pegawai_model->find($id);
+        Template::set('pegawai', $pegawaiData);
+        Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->Lokasi_Kerja_ID));
         Template::set('toolbar_title', lang('pegawai_edit_heading'));
         Template::render();
     }
