@@ -3,7 +3,7 @@
 /**
  * Kepegawaian controller
  */
-class Lokasi extends MX_Controller
+class Test2 extends MX_Controller
 {
     public function __construct()
     {
@@ -20,9 +20,6 @@ class Lokasi extends MX_Controller
             $json = $this->data_model($q,$start,$limit);
 		}
         echo json_encode($json);
-    }
-	public function index(){
-        die("masuk");
     }
 
     private function data_model($key,$start,$limit){
