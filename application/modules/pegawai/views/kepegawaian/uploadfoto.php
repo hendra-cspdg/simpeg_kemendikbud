@@ -24,7 +24,7 @@ Dropzone.autoDiscover = true;
 		 method:"post",
 		 acceptedFiles:"image/*",
 		 paramName:"userfile",
-		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto anda disini<br>gunakan foto seperti foto KTP, dengan background biru atau merah",
+		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto disini",
 		 dictInvalidFileType:"Type file ini tidak dizinkan",
 		 addRemoveLinks:true,
 		 init: function () {
