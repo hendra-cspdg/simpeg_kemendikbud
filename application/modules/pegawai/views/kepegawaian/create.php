@@ -59,7 +59,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
             <div class="control-group<?php echo form_error('Nama') ? ' error' : ''; ?> col-sm-7">
                 <?php echo form_label(lang('pegawai_field_Nama'), 'Nama', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nama' type='text' class="form-control" name='Nama' maxlength='11' value="<?php echo set_value('Nama', isset($pegawai->Nama) ? $pegawai->Nama : ''); ?>" />
+                    <input id='Nama' type='text' class="form-control" name='Nama' maxlength='50' value="<?php echo set_value('Nama', isset($pegawai->Nama) ? $pegawai->Nama : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('Nama'); ?></span>
                 </div>
             </div>

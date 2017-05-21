@@ -123,12 +123,13 @@ class Kepegawaian extends Admin_Controller
 		 if (isset($_FILES['userfile']) && is_array($_FILES['userfile']) && $_FILES['userfile']['error'] != 4)
 		 {
 			$tmp_name = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
-			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.pathphoto')));
+			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.urlphoto')));
 			 if (isset($uploadData['error']) && !empty($uploadData['error']))
 			 {
 			 	$tipefile=$_FILES['userfile']['type'];
 			 	//$tipefile = $_FILES['userfile']['name'];
 				 $upload = false;
+			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.urlphoto')));
 				 log_activity($this->auth->user_id(), 'Gagal : '.$uploadData['error'].trim($this->settings_lib->item('site.pathphoto')).$tipefile.$this->input->ip_address(), 'pegawai');
 			 }else{
 			 	$namafile = $uploadData['data']['file_name'];
@@ -311,9 +312,8 @@ class Kepegawaian extends Admin_Controller
         Template::set('toolbar_title', lang('pegawai_edit_heading'));
         Template::render();
     }
-    public function profile()
+    public function profile($id='')
     {
-        $id = $this->uri->segment(5);
         if (empty($id)) {
             Template::set_message(lang('pegawai_invalid_id'), 'error');
 

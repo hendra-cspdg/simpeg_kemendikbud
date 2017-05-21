@@ -57,7 +57,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'Nama',
 			'label' => 'lang:pegawai_field_Nama',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[50]',
 		),
 		array(
 			'field' => 'Gelar_Depan',
