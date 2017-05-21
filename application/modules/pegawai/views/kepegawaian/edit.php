@@ -475,15 +475,13 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
         </div>
     <?php echo form_close(); ?>
 </div>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datepicker/bootstrap-datepicker.js"></script>
+
 <script>
     //Date picker
     $('.datepicker').datepicker({
       autoclose: true,format: 'yyyy-mm-dd'
     });
 </script>
-<!-- Select2 -->
-<script src="<?php echo base_url(); ?>themes/admin/plugins/select2/select2.full.min.js"></script>
 
 <script>
 	 $(".select2").select2();

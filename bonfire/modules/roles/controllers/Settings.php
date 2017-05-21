@@ -317,6 +317,7 @@ class Settings extends Admin_Controller
             }
         } elseif ($type == 'update') {
             // Update the permission name.
+            
             $currentPermission = $this->permission_model->find_by('name', 'Permissions.' . ucwords($current_name) . '.Manage');
             $permissionKey = $this->permission_model->get_key();
             $add_perm['status'] = $currentPermission->status;

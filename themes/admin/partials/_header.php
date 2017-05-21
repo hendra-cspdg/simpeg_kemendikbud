@@ -24,6 +24,22 @@
    	<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/dist/css/AdminLTE.min.css">
    	<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/dist/css/skins/_all-skins.min.css">
    	<script src="<?php echo base_url(); ?>themes/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.js"></script>
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/datepicker/bootstrap-datepicker.js"></script>
+    
+    <!-- Select2 -->
+    <script src="<?php echo base_url(); ?>themes/admin/plugins/select2/select2.full.min.js"></script>
+
+    <!-- sweet alert -->
+    <script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
+
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css">
+
    	<?php echo Assets::css(null, true); ?> 
 </head> 
 
@@ -129,7 +145,7 @@
           		</a>
           </li>
         <?php endif; ?>
-         
+          
         <?php if ($this->auth->has_permission('Site.Masters.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?> <?php echo $menu == 'pegawai' ? 'active' : '' ?>">
           <a href="#">
@@ -140,6 +156,9 @@
             </span>
           </a>
           <ul class="treeview-menu">
+              <?php if ($this->auth->has_permission('Agama.Masters.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/masters/agama"><i class="fa fa-circle-o"></i>Agama</a></li>
+            <?php endif; ?>
             <?php if ($this->auth->has_permission('Kegiatan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/masters/kegiatan"><i class="fa fa-circle-o"></i>Kegiatan</a></li>
             <?php endif; ?>

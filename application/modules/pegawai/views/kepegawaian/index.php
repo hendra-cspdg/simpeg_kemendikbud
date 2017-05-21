@@ -1,8 +1,4 @@
-<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css">
-<!-- sweet alert -->
-<script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
+
 <?php
 $checkSegment = $this->uri->segment(4);
 $areaUrl = SITE_AREA . '/kepegawaian/pegawai';
@@ -40,12 +36,6 @@ if ($can_delete) {
 </div>
 </div>
 
-<script src="<?php echo base_url(); ?>themes/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.js"></script>
 
 <script type="text/javascript">
 $(".table-data").DataTable({
