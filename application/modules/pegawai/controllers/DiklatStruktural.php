@@ -24,13 +24,13 @@ class DiklatStruktural extends Admin_Controller
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
+        $PNS_ID = $this->input->post('PNS_ID');
 		
 		$length= $this->input->post('length');
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		
-		//$this->diklat_struktural_model->where("deleted ",null);
+		$this->diklat_struktural_model->where("PNS_ID",$PNS_ID);
 		$total= $this->diklat_struktural_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -50,7 +50,7 @@ class DiklatStruktural extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_struktural_model->order_by($iSortCol,$sSortCol);
-       // $this->diklat_struktural_model->where("deleted ",null);
+        $this->diklat_struktural_model->where("PNS_ID",$PNS_ID);    
 		$records=$this->diklat_struktural_model->find_all();
 
 		/*Ketika dalam mode pencarian, berarti kita harus
@@ -69,7 +69,10 @@ class DiklatStruktural extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
-                $row []  = $record->NAMA;
+                $row []  = $record->NOMOR;
+                $row []  = $record->NAMA_DIKLAT;
+                $row []  = $record->TANGGAL;
+                $row []  = $record->TAHUN;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "

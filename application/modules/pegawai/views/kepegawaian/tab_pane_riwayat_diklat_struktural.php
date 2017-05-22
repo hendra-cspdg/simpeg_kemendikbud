@@ -43,8 +43,11 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-				url: "<?php echo base_url() ?>pegawai/diklatstruktural/ajax_list",
-				type:'POST',
+					url: "<?php echo base_url() ?>pegawai/diklatstruktural/ajax_list",
+					type:'POST',
+					data : {
+						PNS_ID:'<?php echo $PNS_ID;?>'
+					}
 				}
 			});
 

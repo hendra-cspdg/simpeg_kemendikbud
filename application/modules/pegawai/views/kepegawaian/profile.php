@@ -116,14 +116,14 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                     </ul>
                                     <div class="tab-content">
                                         <?php 
-                                            $this->load->view('kepegawaian/tab_pane_personal',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_personal_id));                                         
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_pendidikan',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pendidikan_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_pengalaman',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pengalaman_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_kepangkatan',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_kepangkatan_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_pindah_unit_kerja',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pindah_unit_kerja_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_prestasi_kerja',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_prestasi_kerja));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_struktural',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_diklat_struktural_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_fungsional',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_diklat_fungsional_id));
+                                            $this->load->view('kepegawaian/tab_pane_personal',array('TAB_ID'=>$tab_pane_personal_id));                                         
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_pendidikan',array('TAB_ID'=>$tab_pane_pendidikan_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_pengalaman',array('TAB_ID'=>$tab_pane_pengalaman_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_kepangkatan',array('TAB_ID'=>$tab_pane_kepangkatan_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_pindah_unit_kerja',array('TAB_ID'=>$tab_pane_pindah_unit_kerja_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_prestasi_kerja',array('TAB_ID'=>$tab_pane_prestasi_kerja));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_struktural',array('TAB_ID'=>$tab_pane_diklat_struktural_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_fungsional',array('TAB_ID'=>$tab_pane_diklat_fungsional_id));
 
                                         ?>
                                         
