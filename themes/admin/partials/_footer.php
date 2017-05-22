@@ -26,7 +26,6 @@
 </footer>
 </div>	
 	<div id="debug"><!-- Stores the Profiler Results --></div>
- 	<script src="<?php echo base_url(); ?>themes/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- Bootstrap 3.3.6 -->
 	<script src="<?php echo base_url(); ?>themes/admin/js/bootstrap.min.js"></script>
 	<!-- AdminLTE App -->

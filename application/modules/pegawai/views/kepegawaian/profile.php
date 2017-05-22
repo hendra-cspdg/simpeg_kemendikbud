@@ -73,9 +73,10 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                     </div>
                                     <!--end col-md-4-->
                                 </div>
-                                <!--end row-->
+                                
+
                                 <div class="tabbable-line tabbable-custom-profile">
-                                    <ul class="nav nav-tabs">
+                                    <ul id="tab-insides-here" class="nav nav-tabs">
                                         <li class="active">
                                             <a href="#personal" data-toggle="tab" aria-expanded="true"> Data Personal </a>
                                         </li>
@@ -87,6 +88,33 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                         </li>
                                         <li class="">
                                             <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan2 </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan3 </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan4 </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan5 </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan6 </a>
+                                        </li>
+                                         <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
                                         </li>
                                     </ul>
                                     <div class="tab-content">
@@ -375,3 +403,13 @@ $(".delete").click(function(){
 	});
 });
 </script>
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.css">
+ <script src="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.js"></script>
+
+ <script>
+    $(document).ready(function(){
+        
+        $('.nav-tabs').scrollingTabs();
+        
+    });
+ </script>
