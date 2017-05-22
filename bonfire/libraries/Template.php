@@ -196,7 +196,7 @@ class Template
         $controller = self::$ci->router->class;
         if (empty(self::$current_view)) {
             self::$current_view = "{$controller}/" . self::$ci->router->method;
-            die(self::$current_view);
+            
         }
 
         // Override the layout if this is an AJAX request.
