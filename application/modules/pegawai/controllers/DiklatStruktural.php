@@ -100,7 +100,19 @@ class DiklatStruktural extends Admin_Controller
 		die();
     }
     public function show($PNS_ID,$record_id=''){
+        if(empty($record_id)){
+            $this->auth->restrict($this->permissionCreate);
+            Template::set_view("kepegawaian/riwayat_diklat_struktural_add");
+            //Template::set('rwt_pendidikan', $this->rwt_pendidikan_model->find($riwayat_pendidikan_id));
+            
+            Template::set('PNS_ID', $PNS_BKN_ID);
+            Template::set('toolbar_title', "Tambah Riwayat Diklat Struktural");
 
+            Template::render();
+        }
+    }
+    public function add($PNS_ID){
+        $this->show($PNS_ID);
     }
     public function save($record_id=''){
 

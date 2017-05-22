@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-21 col-xs-12">
             <?php if ($this->auth->has_permission('DiklatStruktural.Kepegawaian.Create')) : ?>
-            <a href="<?php echo base_url(); ?>admin/kepegawaian/diklatstruktural/add/<?php echo $PNS_ID ?>" class="show-modal" tooltip="Tambah Riwayat Diklat">
+            <a href="<?php echo base_url(); ?>pegawai/diklatstruktural/add/<?php echo $PNS_ID ?>" class="show-modal" tooltip="Tambah Riwayat Diklat">
                 <button type="button" class="btn btn-default btn-warning margin pull-right "><i class="fa fa-plus"></i> Tambah</button>
             </a>
             <?php endif; ?>
