@@ -12,7 +12,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                 
-			  <div class="form-group">
+			  <div class="form-group col-sm-12">
 				  <div class="row">
 					  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						  Tempat Lahir
@@ -22,7 +22,7 @@
 					  </div>
 				  </div>
 			  </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				  <div class="row">
 					  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						  Tanggal Lahir
@@ -31,7 +31,7 @@
 						  <b><?php echo isset($pegawai->Tgl_Lahir) ? $pegawai->Tgl_Lahir : ''; ?></b>
 					  </div>
 				  </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Email
@@ -41,7 +41,7 @@
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Alamat
@@ -51,7 +51,7 @@
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 NO HP
@@ -61,37 +61,37 @@
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Jenis Pegawai
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							 <b><?php echo isset($pegawai->Jenis_Pegawai_ID) ? $pegawai->Jenis_Pegawai_ID : ''; ?></b>
+							 <b><?php echo isset($pegawai->Jenis_Pegawai) ? $pegawai->Jenis_Pegawai : ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Kedudukan PNS
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							 <b><?php echo isset($pegawai->Kedudukan_Hukum_ID) ? $pegawai->Kedudukan_Hukum_ID : ''; ?></b>
+							 <b><?php echo isset($pegawai->Kedudukan_Hukum) ? $pegawai->Kedudukan_Hukum : ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-6">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Status Pegawai
 					 </div>
-					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							 <b><?php echo isset($pegawai->Status_CPNS_PNS) ? $pegawai->Status_CPNS_PNS : ''; ?></b>
+					 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-8">
+							 <b><?php echo $pegawai->Status_CPNS_PNS == "P" ? "PNS": ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-6">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 TMT PNS
@@ -101,7 +101,7 @@
 					 </div>
 				 </div>
 			 </div>
-			 <div class="form-group">
+			 <div class="form-group col-sm-12">
 				 <div class="row">
 					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						 Pendidikan Terakhir/ Tahun Lulus

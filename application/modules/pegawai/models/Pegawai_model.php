@@ -277,4 +277,16 @@ class Pegawai_model extends BF_Model
     {
         parent::__construct();
     }
+    public function find_detil($ID ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*,jenis_pegawai.NAMA as Jenis_Pegawai,kedudukan_hukum.NAMA AS Kedudukan_Hukum');
+		}
+		 
+		$this->db->join('jenis_pegawai', 'pegawai.Jenis_Pegawai_ID = jenis_pegawai.ID', 'left');
+		$this->db->join('kedudukan_hukum', 'pegawai.Kedudukan_Hukum_ID = kedudukan_hukum.ID', 'left');
+		return parent::find($ID);
+	}
 }

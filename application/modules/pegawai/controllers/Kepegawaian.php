@@ -320,7 +320,7 @@ class Kepegawaian extends Admin_Controller
         
         $this->load->library('convert');
  
-        $pegawai = $this->pegawai_model->find($id);
+        $pegawai = $this->pegawai_model->find_detil($id);
         Template::set('pegawai', $pegawai);
         Template::set('PNS_ID', $pegawai->PNS_ID);
         $this->rwt_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
