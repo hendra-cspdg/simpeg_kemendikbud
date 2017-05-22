@@ -1,4 +1,6 @@
 <?php 
+	$this->load->library('convert');
+ 	$convert = new convert();
     $tab_pane_pendidikan_id = uniqid("tab_pane_pendidikan");
     $tab_pane_personal_id = uniqid("tab_pane_personal");
     $tab_pane_pengalaman_id = uniqid("tab_pane_pengalaman");
