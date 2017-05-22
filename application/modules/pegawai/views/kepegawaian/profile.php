@@ -1,6 +1,13 @@
 <?php 
     $tab_pane_pendidikan_id = uniqid("tab_pane_pendidikan");
     $tab_pane_personal_id = uniqid("tab_pane_personal");
+    $tab_pane_pengalaman_id = uniqid("tab_pane_pengalaman");
+
+    $tab_pane_kepangkatan_id = uniqid("tab_pane_kepangkatan");
+    $tab_pane_pindah_unit_kerja_id = uniqid("tab_pane_pindah_unit_kerja");
+    $tab_pane_prestasi_kerja = uniqid("tab_pane_prestasi_kerja");
+    $tab_pane_diklat_struktural_id = uniqid("tab_pane_diklat_struktural");
+    $tab_pane_diklat_fungsional_id = uniqid("tab_pane_diklat_fungsional");
 ?>
 <script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
@@ -87,55 +94,39 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                             <a href="#<?php echo $tab_pane_pendidikan_id; ?>" data-toggle="tab" aria-expanded="false"> Pendidikan </a>
                                         </li>
                                         <li class="">
-                                            <a href="#pengalaman" data-toggle="tab" aria-expanded="false"> Pengalaman </a>
+                                            <a href="#<?php echo $tab_pane_pengalaman_id;?>" data-toggle="tab" aria-expanded="false"> Pengalaman </a>
                                         </li>
                                         <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan </a>
+                                        
+                                            <a href="#<?php echo $tab_pane_kepangkatan_id;?>" data-toggle="tab" aria-expanded="false"> Kepangkatan </a>
                                         </li>
                                          <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan2 </a>
+                                            <a href="#<?php echo $tab_pane_pindah_unit_kerja_id;?>" data-toggle="tab" aria-expanded="false"> Pindah Unit Kerja </a>
                                         </li>
                                          <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan3 </a>
+                                            <a href="#<?php echo $tab_pane_prestasi_kerja;?>" data-toggle="tab" aria-expanded="false"> Prestasi Kerja </a>
                                         </li>
                                          <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan4 </a>
+                                            <a href="#<?php echo $tab_pane_diklat_struktural_id;?>" data-toggle="tab" aria-expanded="false"> Diklat Struktural </a>
                                         </li>
                                          <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan5 </a>
+                                            <a href="#<?php echo $tab_pane_diklat_fungsional_id;?>" data-toggle="tab" aria-expanded="false"> Diklat Fungsional </a>
                                         </li>
-                                         <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan6 </a>
-                                        </li>
-                                         <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="#kegiatan" data-toggle="tab" aria-expanded="false"> Kegiatan7 </a>
-                                        </li>
+                                         
                                     </ul>
                                     <div class="tab-content">
                                         <?php 
                                             $this->load->view('kepegawaian/tab_pane_personal',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_personal_id));                                         
                                             $this->load->view('kepegawaian/tab_pane_riwayat_pendidikan',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pendidikan_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_pengalaman',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pengalaman_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_kepangkatan',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_kepangkatan_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_pindah_unit_kerja',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_pindah_unit_kerja_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_prestasi_kerja',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_prestasi_kerja));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_struktural',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_diklat_struktural_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_diklat_fungsional',array('PNS_ID'=>$PNS_ID,'TAB_ID'=>$tab_pane_diklat_fungsional_id));
+
                                         ?>
-                                        <div class="tab-pane" id="pengalaman">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    Pengalaman
-                                                </div>
-                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                                                    <b>
-                                                        <p>  Data entry Di PT.Alihdaya Indonesia,</p><p><barisbaru>Programmer PT.Dolphines Technology (1.5 Tahun),</barisbaru></p><p><barisbaru><barisbaru>Programmer PT.Bank Andara (15 Juni 2009 - februari 2011)</barisbaru></barisbaru></p>                                                    </b>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <!-- PRIVACY SETTINGS TAB -->
                                         <div class="tab-pane" id="kegiatan">
                                             <div class="row">
