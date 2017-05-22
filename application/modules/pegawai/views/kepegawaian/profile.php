@@ -87,7 +87,7 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                 </div>
                                 
 
-                                <div class="tabbable-line tabbable-custom-profile">
+                                <div class="nav-tabs-custom">
                                     <ul id="tab-insides-here" class="nav nav-tabs">
                                         <li class="active">
                                             <a href="#<?php echo $tab_pane_personal_id; ?>" data-toggle="tab" aria-expanded="true"> Data Personal </a>
