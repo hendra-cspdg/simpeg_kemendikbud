@@ -177,14 +177,12 @@ class Kepegawaian extends Admin_Controller
         Template::render();
     }
     // riwayat pendidikan
-    public function addpendidikan()
+    public function addpendidikan($PNS_BKN_ID,$riwayat_pendidikan_id=NULL)
     {
         $this->auth->restrict($this->permissionAddpendidikan);
-		$PNS_ID = $this->uri->segment(5);
-		$ID = $this->uri->segment(6);
-		Template::set('rwt_pendidikan', $this->rwt_pendidikan_model->find($ID));
+		Template::set('rwt_pendidikan', $this->rwt_pendidikan_model->find($riwayat_pendidikan_id));
 		
-		Template::set('PNS_ID', $PNS_ID);
+		Template::set('PNS_ID', $PNS_BKN_ID);
         Template::set('toolbar_title', "Tambah Riwayat Pendiikan");
 
         Template::render();
@@ -320,7 +318,8 @@ class Kepegawaian extends Admin_Controller
             redirect(SITE_AREA . '/kepegawaian/pegawai');
         }
         
-         
+        $this->load->library('convert');
+ 
         $pegawai = $this->pegawai_model->find($id);
         Template::set('pegawai', $pegawai);
         $this->rwt_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);

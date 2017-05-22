@@ -160,10 +160,9 @@ class Masters extends Admin_Controller
         Template::render();
     }
 
-    public function delete()
+    public function delete($id)
 	{
 		$this->auth->restrict($this->permissionDelete);
-		$id 	= $this->input->post('kode');
 		if ($this->agama_model->delete($id)) {
 			 log_activity($this->auth->user_id(),"Delete data" . ': ' . $id . ' : ' . $this->input->ip_address(), 'pegawai');
 			 Template::set_message("Delete pegawai sukses", 'success');
