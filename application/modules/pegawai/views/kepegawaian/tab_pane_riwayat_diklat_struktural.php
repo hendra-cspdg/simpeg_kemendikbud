@@ -1,4 +1,9 @@
 
+<style>
+	.dt-center {
+		text-align:center;
+	}
+</style>
 <!--tab-pane-->
 <div class="tab-pane" id="<?php echo $TAB_ID;?>">
     <div class="form-group">
@@ -12,11 +17,11 @@
             <table class="table table-datatable">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th width='100px' >No</th>
                     <th>Nama Diklat</th>
-                    <th>Tanggal</th>
-                    <th>Tahun</th>
-                    <th>#</th>
+                    <th width='100px' >Tanggal</th>
+                    <th width='100px' >Tahun</th>
+                    <th width='100px' align="center">#</th>
                 </tr>
             </thead>
             <tfoot>
@@ -36,12 +41,57 @@
 
 
 <script type="text/javascript">
-
-	$(document).ready(function(){
-			var grid_daftar = $("#<?php echo $TAB_ID;?> .table-datatable").DataTable({
+function showModalX(event) {
+	$('.perhatian').fadeOut(300, function(){});
+	  event.preventDefault();
+	  var currentBtn = $(this);
+	  var title = currentBtn.attr("tooltip");
+	  //alert(currentBtn.attr("href"));
+	  $.ajax({
+	  url: currentBtn.attr("href"),
+	  type: 'post',
+	  beforeSend: function (xhr) {
+		  $("#loading-all").show();
+	  },
+	  success: function (content, status, xhr) {
+		  var json = null;
+		  var is_json = true;
+		  try {
+		  	json = $.parseJSON(content);
+		  } catch (err) {
+		  	is_json = false;
+		  }
+		  if (is_json == false) {
+		  	$("#modal-body").html(content);
+		  	$("#myModalLabel").html(title);
+		  	$("#modal-global").modal('show');
+		  	$("#loading-all").hide();
+		  } else {
+		  	alert("Error");
+		  }
+	  }
+	  }).fail(function (data, status) {
+	  if (status == "error") {
+		  alert("Error");
+	  } else if (status == "timeout") {
+		  alert("Error");
+	  } else if (status == "parsererror") {
+		  alert("Error");
+	  }
+	  });
+  }
+	(function($){
+		var $container = $("#<?php echo $TAB_ID;?>");
+		var grid_daftar = $(".table-datatable",$container).DataTable({
 				ordering: false,
 				processing: true,
+				"bFilter": false,
+				"bLengthChange": false,
 				serverSide: true,
+				"columnDefs": [
+					//{"className": "dt-center", "targets": "_all"}
+					{"className": "dt-center", "targets": [0,2,3,4]}
+				],
 				ajax: {
 					url: "<?php echo base_url() ?>pegawai/diklatstruktural/ajax_list",
 					type:'POST',
@@ -49,13 +99,13 @@
 						PNS_ID:'<?php echo $PNS_ID;?>'
 					}
 				}
-			});
-
-			$('body').on('click','.btn-hapus',function () { 
-				var kode =$(this).attr("kode");
+		});
+		$container.on('click','.show-modal',showModalX);
+		$container.on('click','.btn-hapus',function(){
+			var kode =$(this).attr("kode");
 				swal({
 					title: "Anda Yakin?",
-					text: "Hapus data Agama!",
+					text: "Hapus data Riwayat Diklat!",
 					type: "warning",
 					showCancelButton: true,
 					confirmButtonClass: 'btn-danger',
@@ -68,9 +118,7 @@
 					if (isConfirm) {
 						var post_data = "kode="+kode;
 						$.ajax({
-								url: "<?php echo base_url() ?>admin/masters/agama/delete",
-								type:"POST",
-								data: post_data,
+								url: "<?php echo base_url() ?>pegawai/diklatstruktural/delete/"+kode,
 								dataType: "html",
 								timeout:180000,
 								success: function (result) {
@@ -86,7 +134,7 @@
 						swal("Batal", "", "error");
 					}
 				});
-			});
-
-	});
+		});
+				
+	})(jQuery);
 </script>

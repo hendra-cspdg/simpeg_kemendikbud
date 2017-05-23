@@ -77,27 +77,14 @@ $id = isset($rwt_pendidikan->ID) ? $rwt_pendidikan->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nama_Sekolah') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Nama Sekolah", 'Nama_Sekolah', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NAMA_DIKLAT') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Nama Diklat", 'NAMA_DIKLAT', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nama_Sekolah' type='text' class="form-control" name='Nama_Sekolah' maxlength='200' value="<?php echo set_value('Nama_Sekolah', isset($rwt_pendidikan->Nama_Sekolah) ? $rwt_pendidikan->Nama_Sekolah : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nama_Sekolah'); ?></span>
+                    <input id='NAMA_DIKLAT' type='text' class="form-control" name='NAMA_DIKLAT' maxlength='200' value="<?php echo set_value('NAMA_DIKLAT', isset($rwt_pendidikan->NAMA_DIKLAT) ? $rwt_pendidikan->NAMA_DIKLAT : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NAMA_DIKLAT'); ?></span>
                 </div>
             </div>
-             <div class="control-group<?php echo form_error('Gelar_Depan') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_Gelar_Depan'), 'Gelar_Depan', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='Gelar_Depan' type='text' class="form-control" name='Gelar_Depan' maxlength='11' value="<?php echo set_value('Gelar_Depan', isset($rwt_pendidikan->Gelar_Depan) ? $rwt_pendidikan->Gelar_Depan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Depan'); ?></span>
-                </div>
-            </div>
-            <div class="control-group<?php echo form_error('Gelar_Blk') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Gelar Belakang", 'Gelar_Blk', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='Gelar_Blk' type='text' class="form-control" name='Gelar_Blk' maxlength='11' value="<?php echo set_value('Gelar_Blk', isset($rwt_pendidikan->Gelar_Blk) ? $rwt_pendidikan->Gelar_Blk : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Blk'); ?></span>
-                </div>
-            </div>
+            
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
@@ -127,14 +114,14 @@ $id = isset($rwt_pendidikan->ID) ? $rwt_pendidikan->ID : '';
 		   	swal("Silahkan masukan Nama Sekolah", "Warning");
 		   	return false;
 	   	}
-		var json_url = "<?php echo base_url() ?>admin/kepegawaian/pegawai/savependidikan";
+		var json_url = "<?php echo base_url() ?>pegawai/diklatstruktural/save";
 		 $.ajax({    
 		 	type: "POST",
 			url: json_url,
 			data: $("#frm").serialize(),
 			success: function(data){ 
 				swal(data, "Warning");
-				location.reload(true);
+				
 			}});
 		return false; 
 	}

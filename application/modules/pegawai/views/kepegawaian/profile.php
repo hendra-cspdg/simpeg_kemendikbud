@@ -1,15 +1,15 @@
 <?php 
 	$this->load->library('convert');
  	$convert = new convert();
-    $tab_pane_pendidikan_id = uniqid("tab_pane_pendidikan");
-    $tab_pane_personal_id = uniqid("tab_pane_personal");
-    $tab_pane_pengalaman_id = uniqid("tab_pane_pengalaman");
+    $tab_pane_pendidikan_id = "tab_pane_pendidikan";//uniqid("tab_pane_pendidikan");
+    $tab_pane_personal_id = "tab_pane_personal";//uniqid("tab_pane_personal");
+    $tab_pane_pengalaman_id = "tab_pane_pengalaman";//uniqid("tab_pane_pengalaman");
 
-    $tab_pane_kepangkatan_id = uniqid("tab_pane_kepangkatan");
-    $tab_pane_pindah_unit_kerja_id = uniqid("tab_pane_pindah_unit_kerja");
-    $tab_pane_prestasi_kerja = uniqid("tab_pane_prestasi_kerja");
-    $tab_pane_diklat_struktural_id = uniqid("tab_pane_diklat_struktural");
-    $tab_pane_diklat_fungsional_id = uniqid("tab_pane_diklat_fungsional");
+    $tab_pane_kepangkatan_id = "tab_pane_kepangkatan";//uniqid("tab_pane_kepangkatan");
+    $tab_pane_pindah_unit_kerja_id = "tab_pane_pindah_unit_kerja";//uniqid("tab_pane_pindah_unit_kerja");
+    $tab_pane_prestasi_kerja = "tab_pane_prestasi_kerja";//uniqid("tab_pane_prestasi_kerja");
+    $tab_pane_diklat_struktural_id = "tab_pane_diklat_struktural";//uniqid("tab_pane_diklat_struktural");
+    $tab_pane_diklat_fungsional_id = "tab_pane_diklat_fungsional";//uniqid("tab_pane_diklat_fungsional");
 ?>
 <script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
@@ -154,8 +154,17 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
 
  <script>
     $(document).ready(function(){
-        
         $('.nav-tabs').scrollingTabs();
-        
+        // Javascript to enable link to tab
+        var url = document.location.toString();
+        if (url.match('#')) {
+            console.log( $('.nav-tabs a[href="#' + url.split('#')[1] + '"]'));
+            $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+        } //add a suffix
+
+        // Change hash for page-reload
+        $('.nav-tabs a').on('shown.bs.tab', function (e) {
+            window.location.hash = e.target.hash;
+        })
     });
  </script>
