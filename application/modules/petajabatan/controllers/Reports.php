@@ -38,8 +38,8 @@ class Reports extends Admin_Controller
     public function index()
     {
 
-    Template::set('toolbar_title', lang('petajabatan_manage'));
-
+    	Template::set('toolbar_title', lang('petajabatan_manage'));
+		Template::set("collapse",true);
         Template::render();
     }
     public function viewdata()

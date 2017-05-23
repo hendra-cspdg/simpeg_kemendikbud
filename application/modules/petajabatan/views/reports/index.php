@@ -3,6 +3,11 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/daterangepicker/daterangepicker.css">
 <!-- bootstrap datepicker -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datepicker/datepicker3.css">
+<div class="callout callout-info">
+   <h4>Peta Jabatan!</h4>
+
+   <p>Silahkan cari Unitkerja untuk melihat peta jabatan pada unit tersebut.</p>
+ </div>
 <div class="admin-box box box-primary">
 	<div class="box-header">
 	  <div class="control-group">
