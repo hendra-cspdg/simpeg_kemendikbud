@@ -68,11 +68,12 @@ class Kuotajabatan_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.KODE_UNIT_KERJA,ID_JABATAN,JUMLAH_PEMANGKU_JABATAN');
+			$this->select($this->table_name .'.KODE_UNIT_KERJA,ID_JABATAN,JUMLAH_PEMANGKU_JABATAN,Nama_Jabatan');
 		}
-		//if($unitkerja != ""){
+		if($unitkerja != ""){
 			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
-		//}
+		}
+		$this->db->join('ref_jabatan', 'kuota_jabatan.ID_JABATAN = ref_jabatan.ID_Jabatan', 'left');
 		return parent::find_all();
 	}
 	 
