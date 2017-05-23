@@ -30,7 +30,7 @@ class DiklatStruktural extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->diklat_struktural_model->where("PNS_ID",$PNS_ID);
+		$this->diklat_struktural_model->where("ID_PNS",$PNS_ID);
 		$total= $this->diklat_struktural_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
