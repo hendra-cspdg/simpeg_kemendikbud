@@ -45,6 +45,7 @@ class Reports extends Admin_Controller
     public function viewdata()
     {
     	$unitkerja = $this->input->post('unitkerja');
+    	$this->load->model('pegawai/pegawai_model');
     	$this->load->model('unitkerja/unitkerja_model');
     	$this->load->model('petajabatan/kuotajabatan_model');
     	$datadetil = $this->unitkerja_model->find($unitkerja);
@@ -73,8 +74,16 @@ class Reports extends Admin_Controller
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;
-		//print_r($akuota);
-    	$output = $this->load->view('reports/content',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota),true);	
+		
+		$pegawaijabatan = $this->pegawai_model->find_grupjabatan($ideselon2);
+		$apegawai[] = array(); 
+		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
+			foreach($pegawaijabatan as $record):
+				$apegawai[trim($record->Unor_ID)."-jml".trim($record->Jabatan_ID)][] = trim($record->jumlah);
+			endforeach;
+		endif;
+		//print_r($apegawai);
+    	$output = $this->load->view('reports/content',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota,"apegawai"=>$apegawai),true);	
 		 
 		echo $output;
         die();

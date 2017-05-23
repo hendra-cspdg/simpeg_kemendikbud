@@ -60,13 +60,15 @@
 										  <?php echo $no; ?>.
 									  </td>
 									  <td>
+									  	[<?php //echo $akuota[$ideselon4."-ID_JABATAN"][$a]; ?>]
 										  <?php echo $akuota[$ideselon4."-Nama_Jabatan"][$a]; ?>
 									  </td>
 									  <td>
 										  -
 									  </td>
 									  <td>
-										  -
+									  	<?php echo isset($apegawai[$ideselon4."-jml"][$akuota[$ideselon4."-ID_JABATAN"][$a]]) ? $apegawai[$ideselon4."-jml"][$akuota[$ideselon4."-ID_JABATAN"][$a]] : ""; ?>
+										  
 									  </td>
 									  <td>
 										  <?php echo $akuota[$ideselon4."-JML"][$a]; ?>
