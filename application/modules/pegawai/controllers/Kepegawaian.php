@@ -57,11 +57,11 @@ class Kepegawaian extends Admin_Controller
         $kpkns = $this->kpkn_model->find_all();
 		Template::set('kpkns', $kpkns);
 		
+		$this->load->model('ref_jabatan/ref_jabatan_model');
+        $jabatans = $this->ref_jabatan_model->find_all();
+		Template::set('jabatans', $jabatans);
+		
 		$this->load->model('pegawai/lokasi_model');
-        /*
-        $lokasis = $this->lokasi_model->find_all();
-		Template::set('lokasis', $lokasis);
-		*/
     }
 
     /**

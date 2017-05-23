@@ -328,29 +328,43 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Jenis_Jabatan_ID') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('Jenis_Jabatan_ID') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label(lang('pegawai_field_Jenis_Jabatan_ID'), 'Jenis_Jabatan_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Jenis_Jabatan_ID' type='text' class="form-control" name='Jenis_Jabatan_ID' maxlength='21' value="<?php echo set_value('Jenis_Jabatan_ID', isset($pegawai->Jenis_Jabatan_ID) ? $pegawai->Jenis_Jabatan_ID : ''); ?>" />
+                    <select name="Jenis_Jabatan_ID" id="Jenis_Jabatan_ID" class="form-control select2">
+						<option value="">-- Silahkan Pilih --</option>
+						<option value="Fungsional Umum">Fungsional Umum</option>
+						<option value="Fungsional Tertentu">Fungsional Tertentu</option>
+						<option value="Struktural">Struktural</option>
+					</select>
                     <span class='help-inline'><?php echo form_error('Jenis_Jabatan_ID'); ?></span>
                 </div>
             </div>
-
-            <div class="control-group<?php echo form_error('Jabatan_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Jabatan_ID'), 'Jabatan_ID', array('class' => 'control-label')); ?>
+			<div class="control-group<?php echo form_error('Jabatan_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Jabatan", 'KPKN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Jabatan_ID' type='text' class="form-control" name='Jabatan_ID' maxlength='32' value="<?php echo set_value('Jabatan_ID', isset($pegawai->Jabatan_ID) ? $pegawai->Jabatan_ID : ''); ?>" />
+                	<select name="Jabatan_ID" id="Jabatan_ID" class="form-control select2">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
+						<?php foreach($jabatans as $record):?>
+							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->Jabatan_ID))  echo  ($pegawai->Jabatan_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->Nama_Jabatan; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+					</select>
                     <span class='help-inline'><?php echo form_error('Jabatan_ID'); ?></span>
                 </div>
             </div>
-
-            <div class="control-group<?php echo form_error('TMT_Jabatan') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_TMT_Jabatan'), 'TMT_Jabatan', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='TMT_Jabatan' type='text' class="form-control" name='TMT_Jabatan'  value="<?php echo set_value('TMT_Jabatan', isset($pegawai->TMT_Jabatan) ? $pegawai->TMT_Jabatan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('TMT_Jabatan'); ?></span>
-                </div>
-            </div>
+            
+			<div class="control-group col-sm-3">
+				<label for="inputNama" class="control-label">TMT Golongan</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TMT_Jabatan' type='text' class="form-control pull-right datepicker" name='TMT_Jabatan'  value="<?php echo set_value('TMT_Jabatan', isset($pegawai->TMT_Jabatan) ? $pegawai->TMT_Jabatan : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TMT_Golongan'); ?></span>
+				</div>
+			</div> 
 
             <div class="control-group<?php echo form_error('Pendidkan_ID') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label(lang('pegawai_field_Pendidkan_ID'), 'Pendidkan_ID', array('class' => 'control-label')); ?>
