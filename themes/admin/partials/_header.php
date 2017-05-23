@@ -145,7 +145,14 @@
           		</a>
           </li>
         <?php endif; ?>
-          
+         <?php if ($this->auth->has_permission('Petajabatan.Reports.View')) : ?>
+        	<li class="treeview <?php echo $menu == 'petajabatan' ? 'active' : '' ?>">
+        		<a href="<?php echo base_url();?>admin/reports/petajabatan">
+	            	<i class="fa fa-list"></i>
+    	        	<span>Peta Jabatan</span>    
+          		</a>
+          </li>
+        <?php endif; ?>
         <?php if ($this->auth->has_permission('Site.Masters.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?> <?php echo $menu == 'pegawai' ? 'active' : '' ?>">
           <a href="#">

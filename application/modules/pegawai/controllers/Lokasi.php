@@ -12,7 +12,7 @@ class Lokasi extends MX_Controller
     public function ajax(){
         $json = array();
         $limit = 10;
-        $page = $this->input->get('page');
+        $page = $this->input->get('page') ? $this->input->get('page') : "1";
         $q= $this->input->get('term');
         $start = ($page-1)*$limit;
 		
@@ -26,7 +26,7 @@ class Lokasi extends MX_Controller
     }
 
     private function data_model($key,$start,$limit){
-           
+          
             $this->db->start_cache();
             $this->db->like('lower("NAMA")', $key);
             $this->db->from("hris.lokasi");
