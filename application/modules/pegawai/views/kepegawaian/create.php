@@ -394,12 +394,11 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 <?php echo form_label(lang('pegawai_field_Lokasi_Kerja_ID'), 'Lokasi_Kerja_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="Lokasi_Kerja_ID" id="Lokasi_Kerja_ID" class="form-control select2">
-						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($lokasis) && is_array($lokasis) && count($lokasis)):?>
-						<?php foreach($lokasis as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Lokasi_Kerja_ID))  echo  ($pegawai->Lokasi_Kerja_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
-							<?php endforeach;?>
-						<?php endif;?>
+                        <?php 
+                            if($selectedLokasiPegawai){
+                                echo "<option selected value='".$selectedLokasiPegawai->ID."'>".$selectedLokasiPegawai->NAMA."</option>";
+                            }
+                        ?>
 					</select>
                     <span class='help-inline'><?php echo form_error('Lokasi_Kerja_ID'); ?></span>
                 </div>
@@ -488,4 +487,24 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
 
 <script>
 	 $(".select2").select2();
+</script>
+<script>
+    
+    $("#Lokasi_Kerja_ID").select2({
+        placeholder: 'Cari Lokasi Kerja...',
+        width: '350px',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("admin/lokasi/pegawai/ajax");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
 </script>

@@ -1,6 +1,6 @@
 <center>
 	<div class="col-sm-12">
-		<div class="box-small col-sm-12"  style="border: 1px solid green;min-height:50px; padding:10px;margin-bottom:50px;"><?php echo isset($datadetil->NAMA_ESELON_II) ? $datadetil->NAMA_ESELON_II : ""; ?></div>
+		<div class="box-small col-sm-12"  style="border: 1px solid green;min-height:50px; padding:10px;margin-bottom:20px;background:#3c8dbc;"><?php echo isset($datadetil->NAMA_ESELON_II) ? $datadetil->NAMA_ESELON_II : ""; ?></div>
 	</div>
 	<?php if (isset($eselon3) && is_array($eselon3) && count($eselon3)):?>
 		<?php foreach($eselon3 as $record):?>
