@@ -3,7 +3,7 @@
 /**
  * Kepegawaian controller
  */
-class DiklatStruktural extends Admin_Controller
+class Diklatstruktural extends Admin_Controller
 {
     protected $permissionCreate = 'DiklatStruktural.Kepegawaian.Create';
     protected $permissionDelete = 'DiklatStruktural.Kepegawaian.Delete';
@@ -30,7 +30,7 @@ class DiklatStruktural extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->diklat_struktural_model->where("PNS_ID",$PNS_ID);
+		$this->diklat_struktural_model->where("ID_PNS",$PNS_ID);
 		$total= $this->diklat_struktural_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -50,7 +50,7 @@ class DiklatStruktural extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_struktural_model->order_by($iSortCol,$sSortCol);
-        $this->diklat_struktural_model->where("PNS_ID",$PNS_ID);    
+        $this->diklat_struktural_model->where("ID_PNS",$PNS_ID);    
 		$records=$this->diklat_struktural_model->find_all();
 
 		/*Ketika dalam mode pencarian, berarti kita harus
