@@ -1,12 +1,21 @@
 <center>
 	<div class="col-sm-12">
-		<div class="box-small col-sm-12"  style="border: 1px solid black;min-height:50px; padding:10px;margin-bottom:20px;background:#3c8dbc;color:white;"><?php echo isset($datadetil->NAMA_ESELON_II) ? $datadetil->NAMA_ESELON_II : ""; ?></div>
+		<div class="box-small col-sm-12"  style="border: 1px solid black;min-height:50px; padding:10px;margin-bottom:20px;background:#3c8dbc;color:white;">
+			<b>
+			<?php echo isset($datadetil->NAMA_ESELON_II) ? $datadetil->NAMA_ESELON_II : ""; ?>
+			</b>
+		</div>
 	</div>
 	<?php if (isset($eselon3) && is_array($eselon3) && count($eselon3)):?>
+		<?php 
+		$width = 3;
+		if(count($eselon3) < 4){
+			$width = 4;
+		} ?>
 		<?php foreach($eselon3 as $record):?>
-			<div class="box-small  col-sm-3">
+			<div class="box-small  col-sm-<?php echo $width; ?>">
 			   <div class="box-small  col-sm-12" style="border: 1px solid black;background:green;min-height:50px;color:white;">
-				   <?php echo $record->NAMA_ESELON_III; ?>
+				  <b> <?php echo $record->NAMA_ESELON_III; ?></b>
 			   </div>
 			   
 				   <?php
