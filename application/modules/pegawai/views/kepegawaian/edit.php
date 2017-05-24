@@ -537,7 +537,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("admin/masters/unitkerja/ajax");?>',
+            url: '<?php echo site_url("admin/masters/unitkerja/ajaxall");?>',
             dataType: 'json',
             data: function(params) {
                 return {
@@ -554,7 +554,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("admin/masters/unitkerja/ajax");?>',
+            url: '<?php echo site_url("admin/masters/unitkerja/ajaxall");?>',
             dataType: 'json',
             data: function(params) {
                 return {

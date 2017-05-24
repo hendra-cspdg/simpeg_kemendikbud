@@ -25,6 +25,7 @@
 					   	<div class="box-small  col-sm-12" style="margin-top:20px;border: 1px solid black;background:yellow;min-height:50px;">
 					   	<?php
 					   		$ideselon4 = $aeselon4[$ideselon3."-ID"][$i];
+					   		echo $ideselon4;
 						   	echo $aeselon4[$ideselon3][$i];
 						?>
 						</div>
@@ -60,21 +61,30 @@
 										  <?php echo $no; ?>.
 									  </td>
 									  <td>
-									  	[<?php //echo $akuota[$ideselon4."-ID_JABATAN"][$a]; ?>]
+									  	<!--[<?php echo $akuota[$ideselon4."-ID_JABATAN"][$a]; ?>]-->
 										  <?php echo $akuota[$ideselon4."-Nama_Jabatan"][$a]; ?>
 									  </td>
 									  <td>
 										  -
 									  </td>
 									  <td>
-									  	<?php echo isset($apegawai[$ideselon4."-jml"][$akuota[$ideselon4."-ID_JABATAN"][$a]]) ? $apegawai[$ideselon4."-jml"][$akuota[$ideselon4."-ID_JABATAN"][$a]] : ""; ?>
+									  <?php 
+									  	$jmlada = isset($apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]]) ? $apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]] : "";
+									  	//echo $ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]; ?>
+									  	<?php echo $jmlada; ?>
 										  
 									  </td>
 									  <td>
-										  <?php echo $akuota[$ideselon4."-JML"][$a]; ?>
+										  <?php 
+										  $quota = $akuota[$ideselon4."-JML"][$a];
+										  echo $quota; 
+										  ?>
 									  </td>
 									  <td>
-										  -/+
+										  <?php
+										  $sisa = (int)$jmlada - (int)$quota;
+										  echo $sisa;
+										  ?>
 									  </td>
 								  </tr>
 								<?php

@@ -76,10 +76,10 @@ class Reports extends Admin_Controller
 		endif;
 		
 		$pegawaijabatan = $this->pegawai_model->find_grupjabatan($ideselon2);
-		$apegawai[] = array(); 
+		$apegawai = array(); 
 		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
 			foreach($pegawaijabatan as $record):
-				$apegawai[trim($record->Unor_ID)."-jml".trim($record->Jabatan_ID)][] = trim($record->jumlah);
+				$apegawai[trim($record->Unor_ID)."-jml-".trim($record->Jabatan_ID)] = trim($record->jumlah);
 			endforeach;
 		endif;
 		//print_r($apegawai);
