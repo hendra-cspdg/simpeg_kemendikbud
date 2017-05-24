@@ -94,11 +94,10 @@ class Masters extends Admin_Controller
           
             $this->db->start_cache();
             $this->db->like('lower("NAMA_ESELON_IV")', $key);
-            //$this->db->where('"ESELON" LIKE \'II.%\'');
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID as id,CONCAT ("NAMA_ESELON_II","NAMA_ESELON_III","NAMA_ESELON_IV") as text');
+            $this->db->select('ID as id,CONCAT ("NAMA_ESELON_II",\' \',"NAMA_ESELON_III",\' \',"NAMA_ESELON_IV") as text');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
