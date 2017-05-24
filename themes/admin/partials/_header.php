@@ -36,6 +36,12 @@
     <!-- sweet alert -->
     <script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
+    
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/select2/select2.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/daterangepicker/daterangepicker.css">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datepicker/datepicker3.css">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/css/dataTables.responsive.css">
