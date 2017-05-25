@@ -17,6 +17,20 @@
 		</div>
 	    </div>
     </div>
+	<div data-backdrop="static" data-keyboard="false" class="modal fade bs-modal-lg" id="modal-custom-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModal-custom-Label">Detail</h4>
+				</div>
+				<div class="modal-body" id="modal-custom-body">
+				Loading content...
+				</div>
+				
+		</div>
+	    </div>
+    </div>
 <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0
@@ -32,7 +46,7 @@
 	<script src="<?php echo base_url(); ?>themes/admin/dist/js/app.min.js"></script>
 
 	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-	<script src="<?php echo base_url(); ?>themes/admin/dist/js/pages/dashboard2.js"></script>
+	<!-- script src="<?php echo base_url(); ?>themes/admin/dist/js/pages/dashboard2.js"></script -->
 	<!-- AdminLTE for demo purposes -->
 	<script src="<?php echo base_url(); ?>themes/admin/dist/js/demo.js"></script>
 	<?php echo Assets::js(); ?>
