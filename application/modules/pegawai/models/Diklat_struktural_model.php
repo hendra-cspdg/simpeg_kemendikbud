@@ -42,11 +42,22 @@ class Diklat_struktural_model extends BF_Model
 		array(
 			'field' => 'ID_PNS',
 			'label' => 'PNS ID',
-			'rules' => 'max_length[32]',
+			'rules' => 'required',
 		),
-		 
+		array(
+			'field' => 'TAHUN',
+			'label' => 'TAHUN',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ID_DIKLAT',
+			'label' => 'ID_DIKLAT',
+			'rules' => 'required',
+		), 
 	);
-	protected $insert_validation_rules  = array();
+	protected $insert_validation_rules  = array(
+		
+	);
 	protected $skip_validation 			= true;
 
     /**

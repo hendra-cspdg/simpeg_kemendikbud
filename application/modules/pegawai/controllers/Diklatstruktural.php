@@ -19,6 +19,8 @@ class Diklatstruktural extends Admin_Controller
     {
         parent::__construct();
          $this->load->model('pegawai/diklat_struktural_model');
+         $this->load->model('pegawai/jenis_diklat_struktural_model');
+        $this->load->model('pegawai/pegawai_model');
     }
     public function ajax_list(){
         $draw = $this->input->post('draw');
@@ -75,7 +77,7 @@ class Diklatstruktural extends Admin_Controller
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a class='show-modal' href='".base_url()."pegawai/diklatstruktural/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+                    <a class='show-modal-custom' href='".base_url()."pegawai/diklatstruktural/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
@@ -101,6 +103,8 @@ class Diklatstruktural extends Admin_Controller
 		die();
     }
     public function show($PNS_ID,$record_id=''){
+        $this->load->model('pegawai/Jenis_diklat_struktural_model');
+        Template::set('jenis_diklats', $this->Jenis_diklat_struktural_model->find_all());
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
             Template::set_view("kepegawaian/riwayat_diklat_struktural_add");
@@ -113,7 +117,7 @@ class Diklatstruktural extends Admin_Controller
         else {
             $this->auth->restrict($this->permissionEdit);
             Template::set_view("kepegawaian/riwayat_diklat_struktural_add");
-            Template::set('rwt_pendidikan', $this->diklat_struktural_model->find($record_id));
+            Template::set('detail_riwayat', $this->diklat_struktural_model->find($record_id));    
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Ubah Riwayat Diklat Struktural");
 
@@ -126,7 +130,47 @@ class Diklatstruktural extends Admin_Controller
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
     }
-    public function save($record_id=''){
+    public function save(){
+         // Validate the data
+        $this->form_validation->set_rules($this->diklat_struktural_model->get_validation_rules());
+        $response = array(
+            'success'=>false,
+            'msg'=>'Unknown error'
+        );
+        if ($this->form_validation->run() === false) {
+            $response['msg'] = "
+            <div class='alert alert-block alert-error fade in'>
+                <a class='close' data-dismiss='alert'>&times;</a>
+                <h4 class='alert-heading'>
+                    Error
+                </h4>
+                ".validation_errors()."
+            </div>
+            ";
+            echo json_encode($response);
+            exit();
+        }
+
+        $data = $this->diklat_struktural_model->prep_data($this->input->post());
+       
+        $this->pegawai_model->where("PNS_ID",$this->input->post("ID_PNS"));
+        $pegawai_data = $this->pegawai_model->find_first_row();  
+        $data["NIP_PNS"] = $pegawai_data->Nip_Baru;
+        $data["NAMA_PNS"] = $pegawai_data->Nama;
+
+        $jenis_diklat = $this->jenis_diklat_struktural_model->find($this->input->post("ID_DIKLAT"));
+        $data["NAMA_DIKLAT"] = $jenis_diklat->NAMA;
+        if(empty($data["TANGGAL"])){
+            unset($data["TANGGAL"]);
+        }
+        $id_data = $this->input->post("id_data");
+        if(isset($id_data) && !empty($id_data)){
+            $this->diklat_struktural_model->update($id_data,$data);
+        }
+        else $this->diklat_struktural_model->insert($data);
+        $response ['success']= true;
+        $response ['msg']= "Transaksi berhasil";
+        echo json_encode($response);    
 
     }
     public function delete($record_id){

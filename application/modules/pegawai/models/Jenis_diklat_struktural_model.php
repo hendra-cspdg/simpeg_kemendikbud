@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Diklat_fungsional_model extends BF_Model
+class Jenis_diklat_struktural_model extends BF_Model
 {
-    protected $table_name	= 'rwt_diklat';
+    protected $table_name	= 'jenis_diklat_struktural';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
@@ -42,16 +42,17 @@ class Diklat_fungsional_model extends BF_Model
 		array(
 			'field' => 'PNS_ID',
 			'label' => 'PNS ID',
-			'rules' => 'max_length[32]',
+			'rules' => 'max_length[32]|required',
 		),
-		 array(
+		array(
 			'field' => 'NIP_Lama',
 			'label' => 'lang:pegawai_field_NIP_Lama',
 			'rules' => 'max_length[9]|required',
 		),
+		
 	);
 	protected $insert_validation_rules  = array();
-	protected $skip_validation 			= true;
+	protected $skip_validation 			= false;
 
     /**
      * Constructor
@@ -62,17 +63,4 @@ class Diklat_fungsional_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($PNS_ID ="")
-	{
-		
-		if(empty($this->selects))
-		{
-			$this->select($this->table_name .'.*,NAMA as NAMA_PENDIDIKAN');
-		}
-		if($PNS_ID!=""){
-			$this->db->where('PNS_ID',$PNS_ID);
-		}
-		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.Pendidikan_ID', 'left');
-		return parent::find_all();
-	}
 }

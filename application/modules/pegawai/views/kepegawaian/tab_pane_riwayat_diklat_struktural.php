@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-21 col-xs-12">
             <?php if ($this->auth->has_permission('DiklatStruktural.Kepegawaian.Create')) : ?>
-            <a href="<?php echo base_url(); ?>pegawai/diklatstruktural/add/<?php echo $PNS_ID ?>" class="show-modal" tooltip="Tambah Riwayat Diklat">
-                <button type="button" class="btn btn-default btn-warning margin pull-right "><i class="fa fa-plus"></i> Tambah</button>
+            <a type="button" class="show-modal-custom btn btn-default btn-warning margin pull-right " href="<?php echo base_url(); ?>pegawai/diklatstruktural/add/<?php echo $PNS_ID ?>" tooltip="Tambah Riwayat Diklat">
+				<i class="fa fa-plus"></i> Tambah
             </a>
             <?php endif; ?>
             <table class="table table-datatable">
@@ -41,19 +41,17 @@
 
 
 <script type="text/javascript">
-function showModalX(event) {
-	$('.perhatian').fadeOut(300, function(){});
-	  event.preventDefault();
-	  var currentBtn = $(this);
-	  var title = currentBtn.attr("tooltip");
-	  //alert(currentBtn.attr("href"));
+function showModalX(callableName,callableFn,parent) {
+$('.perhatian').fadeOut(300, function(){});
+	  var title = $(parent).attr("tooltip");
 	  $.ajax({
-	  url: currentBtn.attr("href"),
+	  url: $(parent).attr("href"),
 	  type: 'post',
 	  beforeSend: function (xhr) {
 		  $("#loading-all").show();
 	  },
 	  success: function (content, status, xhr) {
+		  
 		  var json = null;
 		  var is_json = true;
 		  try {
@@ -62,9 +60,11 @@ function showModalX(event) {
 		  	is_json = false;
 		  }
 		  if (is_json == false) {
-		  	$("#modal-body").html(content);
-		  	$("#myModalLabel").html(title);
-		  	$("#modal-global").modal('show');
+		  	$("#modal-custom-body").html(content);
+		  	$("#myModalcustom-Label").html(title);
+		  	$("#modal-custom-global").modal('show');
+			  
+			$("#modal-custom-global").on(callableName,callableFn);
 		  	$("#loading-all").hide();
 		  } else {
 		  	alert("Error");
@@ -100,7 +100,17 @@ function showModalX(event) {
 					}
 				}
 		});
+		//$container.on('click','.show-modal-custom',{callableName:'sukses-tambah-riwayat-diklat',callableFn:function(){
+		//	grid_daftar.ajax.reload();	
+		//},parent:this},showModalX);
+		$container.on('click','.show-modal-custom',function(event){
+			showModalX.call(this,'sukses-tambah-riwayat-diklat',function(){
+				grid_daftar.ajax.reload();
+			},this);
+			event.preventDefault();
+		});
 		$container.on('click','.show-modal',showModalX);
+
 		$container.on('click','.btn-hapus',function(){
 			var kode =$(this).attr("kode");
 				swal({
