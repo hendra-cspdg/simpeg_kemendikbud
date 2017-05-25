@@ -38,13 +38,14 @@ class Reports extends Admin_Controller
     public function index()
     {
 
-    Template::set('toolbar_title', lang('petajabatan_manage'));
-
+    	Template::set('toolbar_title', lang('petajabatan_manage'));
+		Template::set("collapse",true);
         Template::render();
     }
     public function viewdata()
     {
     	$unitkerja = $this->input->post('unitkerja');
+    	$this->load->model('pegawai/pegawai_model');
     	$this->load->model('unitkerja/unitkerja_model');
     	$this->load->model('petajabatan/kuotajabatan_model');
     	$datadetil = $this->unitkerja_model->find($unitkerja);
@@ -68,12 +69,21 @@ class Reports extends Admin_Controller
 		$akuota[] = array(); 
 		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
 			foreach($kuotajabatan as $record):
-				$akuota[$record->KODE_UNIT_KERJA."-ID_JABATAN"][] = $record->ID_JABATAN;
-				$akuota[$record->KODE_UNIT_KERJA."-JML"][] = $record->JUMLAH_PEMANGKU_JABATAN;
+				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] = trim($record->ID_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-Nama_Jabatan"][] = trim($record->Nama_Jabatan);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;
-		//print_r($akuota);
-    	$output = $this->load->view('reports/content',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota),true);	
+		
+		$pegawaijabatan = $this->pegawai_model->find_grupjabatan($ideselon2);
+		$apegawai = array(); 
+		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
+			foreach($pegawaijabatan as $record):
+				$apegawai[trim($record->Unor_ID)."-jml-".trim($record->Jabatan_ID)] = trim($record->jumlah);
+			endforeach;
+		endif;
+		//print_r($apegawai);
+    	$output = $this->load->view('reports/content',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota,"apegawai"=>$apegawai),true);	
 		 
 		echo $output;
         die();

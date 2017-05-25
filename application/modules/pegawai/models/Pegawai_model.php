@@ -292,4 +292,19 @@ class Pegawai_model extends BF_Model
 		$this->db->join('kedudukan_hukum', 'pegawai.Kedudukan_Hukum_ID = kedudukan_hukum.ID', 'left');
 		return parent::find($ID);
 	}
+	public function find_grupjabatan($eselon2 ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.Jabatan_ID,Unor_ID,count(pegawai."Jabatan_ID") as jumlah');
+		}
+		if($eselon2 != ""){
+			$this->db->where('"Unor_ID" LIKE \''.strtoupper($eselon2).'%\'');
+		}
+		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = Jabatan_ID', 'left');
+		$this->db->group_by("Jabatan_ID");
+		$this->db->group_by("Unor_ID");
+		return parent::find_all();
+	}
 }

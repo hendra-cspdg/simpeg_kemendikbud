@@ -47,6 +47,18 @@ class Masters extends Admin_Controller
 		}
         echo json_encode($json);
     }
+    public function ajaxall(){
+        $json = array();
+        $limit = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : "1";
+        $q= $this->input->get('term');
+        $start = ($page-1)*$limit;
+		
+		if(!empty($q)){
+            $json = $this->data_modelall($q,$start,$limit);
+		}
+        echo json_encode($json);
+    }
 	public function index(){
         die("masuk");
     }
@@ -60,6 +72,32 @@ class Masters extends Admin_Controller
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
             $this->db->select('ID as id,NAMA_ESELON_II as text');
+            $this->db->limit($limit,$start);
+
+            $data = $this->db->get()->result();
+
+            $endCount = $start + $limit;
+            $morePages = $endCount > $total;
+            $o = array(
+            "results" => $data,
+                "pagination" => array(
+                    "more" =>$morePages,
+                    "totalx"=>$total,
+                    "startx"=>$start,
+                    "limitx"=>$limit
+                )
+            );   
+            $this->db->flush_cache();
+            return $o;
+    }
+    private function data_modelall($key,$start,$limit){
+          
+            $this->db->start_cache();
+            $this->db->like('lower("NAMA_ESELON_IV")', $key);
+            $this->db->from("hris.unitkerja");
+            $this->db->stop_cache();
+            $total = $this->db->get()->num_rows();
+            $this->db->select('ID as id,CONCAT ("NAMA_ESELON_II",\' \',"NAMA_ESELON_III",\' \',"NAMA_ESELON_IV") as text');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();

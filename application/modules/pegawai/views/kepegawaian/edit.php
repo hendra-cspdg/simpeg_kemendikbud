@@ -134,7 +134,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_Darurat') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('Nomor_Darurat') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_Nomor_Darurat'), 'Nomor_Darurat', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='Nomor_Darurat' type='text' class="form-control" name='Nomor_Darurat' maxlength='32' value="<?php echo set_value('Nomor_Darurat', isset($pegawai->Nomor_Darurat) ? $pegawai->Nomor_Darurat : ''); ?>" />
@@ -142,7 +142,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_HP') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('Nomor_HP') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_Nomor_HP'), 'Nomor_HP', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='Nomor_HP' type='text' class="form-control" name='Nomor_HP' maxlength='32' value="<?php echo set_value('Nomor_HP', isset($pegawai->Nomor_HP) ? $pegawai->Nomor_HP : ''); ?>" />
@@ -166,7 +166,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('NPWP_Nomor') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('NPWP_Nomor') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_NPWP_Nomor'), 'NPWP_Nomor', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='NPWP_Nomor' type='text' class="form-control" name='NPWP_Nomor' maxlength='25' value="<?php echo set_value('NPWP_Nomor', isset($pegawai->NPWP_Nomor) ? $pegawai->NPWP_Nomor : ''); ?>" />
@@ -174,7 +174,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('BPJS') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('BPJS') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_BPJS'), 'BPJS', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='BPJS' type='text' class="form-control" name='BPJS' maxlength='25' value="<?php echo set_value('BPJS', isset($pegawai->BPJS) ? $pegawai->BPJS : ''); ?>" />
@@ -328,30 +328,43 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Jenis_Jabatan_ID') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('Jenis_Jabatan_ID') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label(lang('pegawai_field_Jenis_Jabatan_ID'), 'Jenis_Jabatan_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Jenis_Jabatan_ID' type='text' class="form-control" name='Jenis_Jabatan_ID' maxlength='21' value="<?php echo set_value('Jenis_Jabatan_ID', isset($pegawai->Jenis_Jabatan_ID) ? $pegawai->Jenis_Jabatan_ID : ''); ?>" />
+                    <select name="Jenis_Jabatan_ID" id="Jenis_Jabatan_ID" class="form-control select2">
+						<option value="">-- Silahkan Pilih --</option>
+						<option value="Fungsional Umum" <?php if(isset($pegawai->Jenis_Jabatan_ID))  echo  ($pegawai->Jenis_Jabatan_ID=="Fungsional Umum") ? "selected" : ""; ?>>Fungsional Umum</option>
+						<option value="Fungsional Tertentu" <?php if(isset($pegawai->Jenis_Jabatan_ID))  echo  ($pegawai->Jenis_Jabatan_ID=="Fungsional Tertentu") ? "selected" : ""; ?>>Fungsional Tertentu</option>
+						<option value="Struktural" <?php if(isset($pegawai->Jenis_Jabatan_ID))  echo  ($pegawai->Jenis_Jabatan_ID=="Struktural") ? "selected" : ""; ?>>Struktural</option>
+					</select>
                     <span class='help-inline'><?php echo form_error('Jenis_Jabatan_ID'); ?></span>
                 </div>
             </div>
-
-            <div class="control-group<?php echo form_error('Jabatan_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Jabatan_ID'), 'Jabatan_ID', array('class' => 'control-label')); ?>
+			<div class="control-group<?php echo form_error('Jabatan_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Jabatan", 'KPKN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Jabatan_ID' type='text' class="form-control" name='Jabatan_ID' maxlength='32' value="<?php echo set_value('Jabatan_ID', isset($pegawai->Jabatan_ID) ? $pegawai->Jabatan_ID : ''); ?>" />
+                	<select name="Jabatan_ID" id="Jabatan_ID" class="form-control select2">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
+						<?php foreach($jabatans as $record):?>
+							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->Jabatan_ID))  echo  ($pegawai->Jabatan_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->Nama_Jabatan; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+					</select>
                     <span class='help-inline'><?php echo form_error('Jabatan_ID'); ?></span>
                 </div>
             </div>
-
-            <div class="control-group<?php echo form_error('TMT_Jabatan') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_TMT_Jabatan'), 'TMT_Jabatan', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='TMT_Jabatan' type='text' class="form-control" name='TMT_Jabatan'  value="<?php echo set_value('TMT_Jabatan', isset($pegawai->TMT_Jabatan) ? $pegawai->TMT_Jabatan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('TMT_Jabatan'); ?></span>
-                </div>
-            </div>
-
+            
+			<div class="control-group col-sm-3">
+				<label for="inputNama" class="control-label">TMT Golongan</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TMT_Jabatan' type='text' class="form-control pull-right datepicker" name='TMT_Jabatan'  value="<?php echo set_value('TMT_Jabatan', isset($pegawai->TMT_Jabatan) ? $pegawai->TMT_Jabatan : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TMT_Golongan'); ?></span>
+				</div>
+			</div> 
             <div class="control-group<?php echo form_error('Pendidkan_ID') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label(lang('pegawai_field_Pendidkan_ID'), 'Pendidkan_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -375,7 +388,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('KPKN_ID') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('KPKN_ID') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_KPKN_ID'), 'KPKN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="KPKN_ID" id="KPKN_ID" class="form-control select2">
@@ -390,7 +403,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Lokasi_Kerja_ID') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('Lokasi_Kerja_ID') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label(lang('pegawai_field_Lokasi_Kerja_ID'), 'Lokasi_Kerja_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="Lokasi_Kerja_ID" id="Lokasi_Kerja_ID" class="form-control select2">
@@ -404,18 +417,30 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Unor_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Unor_ID'), 'Unor_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('Unor_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Unor", 'Unor_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Unor_ID' type='text' class="form-control" name='Unor_ID' maxlength='32' value="<?php echo set_value('Unor_ID', isset($pegawai->Unor_ID) ? $pegawai->Unor_ID : ''); ?>" />
+                    <select name="Unor_ID" id="Unor_ID" class="form-control select2">
+                        <?php 
+                            if($selectedUnorid){
+                                echo "<option selected value='".$selectedUnorid->ID."'>".$selectedUnorid->NAMA_ESELON_II."</option>";
+                            }
+                        ?>
+					</select>
                     <span class='help-inline'><?php echo form_error('Unor_ID'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Unor_induk_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Unor_induk_ID'), 'Unor_induk_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('Unor_induk_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Unor Induk", 'Unor_induk_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Unor_induk_ID' type='text' class="form-control" name='Unor_induk_ID' maxlength='11' value="<?php echo set_value('Unor_induk_ID', isset($pegawai->Unor_induk_ID) ? $pegawai->Unor_induk_ID : ''); ?>" />
+                	<select name="Unor_induk_ID" id="Unor_induk_ID" class="form-control select2">
+                        <?php 
+                            if($selectedUnorindukid){
+                                echo "<option selected value='".$selectedUnorindukid->ID."'>".$selectedUnorindukid->NAMA_ESELON_II."</option>";
+                            }
+                        ?>
+					</select>
                     <span class='help-inline'><?php echo form_error('Unor_induk_ID'); ?></span>
                 </div>
             </div>
@@ -491,11 +516,45 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
     
     $("#Lokasi_Kerja_ID").select2({
         placeholder: 'Cari Lokasi Kerja...',
-        width: '350px',
+        width: '100%',
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
             url: '<?php echo site_url("admin/lokasi/pegawai/ajax");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
+     $("#Unor_ID").select2({
+        placeholder: 'Cari Unit Kerja...',
+        width: '100%',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("admin/masters/unitkerja/ajaxall");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
+    $("#Unor_induk_ID").select2({
+        placeholder: 'Cari Unit Kerja...',
+        width: '100%',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("admin/masters/unitkerja/ajaxall");?>',
             dataType: 'json',
             data: function(params) {
                 return {

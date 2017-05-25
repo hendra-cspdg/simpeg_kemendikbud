@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Kuotajabatan_model extends BF_Model
+class Ref_jabatan_model extends BF_Model
 {
-    protected $table_name	= 'kuota_jabatan';
-	protected $key			= 'ID';
+    protected $table_name	= 'ref_jabatan';
+	protected $key			= 'ID_Jabatan';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
@@ -41,7 +41,7 @@ class Kuotajabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'NAMA',
+			'field' => 'Nama_Jabatan',
 			'label' => 'lang:agama_field_NAMA',
 			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[20]',
 		),
@@ -63,17 +63,16 @@ class Kuotajabatan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($unitkerja ="")
+    public function find_all($jenis_jabatan ="")
 	{
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.KODE_UNIT_KERJA,ID_JABATAN,JUMLAH_PEMANGKU_JABATAN,Nama_Jabatan');
+			$this->select($this->table_name .'.*');
 		}
-		if($unitkerja != ""){
-			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
+		if($jenis_jabatan != ""){
+			$this->ref_jabatan_model->where("jenis_jabatan",$jenis_jabatan);
 		}
-		$this->db->join('ref_jabatan', 'kuota_jabatan.ID_JABATAN = ref_jabatan.ID_Jabatan', 'left');
 		return parent::find_all();
 	}
 	 
