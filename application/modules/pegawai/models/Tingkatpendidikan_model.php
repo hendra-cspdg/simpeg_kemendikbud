@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Pendidikan_model extends BF_Model
+class Tingkatpendidikan_model extends BF_Model
 {
     protected $table_name	= 'tkpendidikan';
 	protected $key			= 'ID';

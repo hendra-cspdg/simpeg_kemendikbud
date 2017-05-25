@@ -1,3 +1,44 @@
+<script>
+    function showModalX(callableName,callableFn,parent) {
+        $('.perhatian').fadeOut(300, function(){});
+            var title = $(parent).attr("tooltip");
+            $.ajax({
+            url: $(parent).attr("href"),
+            type: 'post',
+            beforeSend: function (xhr) {
+                $("#loading-all").show();
+            },
+            success: function (content, status, xhr) {
+                
+                var json = null;
+                var is_json = true;
+                try {
+                    json = $.parseJSON(content);
+                } catch (err) {
+                    is_json = false;
+                }
+                if (is_json == false) {
+                    $("#modal-custom-body").html(content);
+                    $("#myModalcustom-Label").html(title);
+                    $("#modal-custom-global").modal('show');
+                    $("#modal-custom-global").off(callableName);
+                    $("#modal-custom-global").on(callableName,callableFn);
+                    $("#loading-all").hide();
+                } else {
+                    alert("Error");
+                }
+            }
+            }).fail(function (data, status) {
+            if (status == "error") {
+                alert("Error");
+            } else if (status == "timeout") {
+                alert("Error");
+            } else if (status == "parsererror") {
+                alert("Error");
+            }
+            });
+        }
+</script>
 <?php 
 	$this->load->library('convert');
  	$convert = new convert();
@@ -11,8 +52,7 @@
     $tab_pane_diklat_struktural_id = "tab_pane_diklat_struktural";//uniqid("tab_pane_diklat_struktural");
     $tab_pane_diklat_fungsional_id = "tab_pane_diklat_fungsional";//uniqid("tab_pane_diklat_fungsional");
 ?>
-<script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
+
 <?php
 
 if (validation_errors()) :
@@ -167,4 +207,5 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
             window.location.hash = e.target.hash;
         })
     });
+    
  </script>

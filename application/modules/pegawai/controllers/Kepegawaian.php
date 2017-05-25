@@ -22,7 +22,7 @@ class Kepegawaian extends Admin_Controller
         
         $this->auth->restrict($this->permissionView);
         $this->load->model('pegawai/pegawai_model');
-        $this->load->model('pegawai/rwt_pendidikan_model');
+        $this->load->model('pegawai/riwayat_pendidikan_model');
         $this->lang->load('pegawai');
         
             Assets::add_css('flick/jquery-ui-1.8.13.custom.css');
@@ -49,8 +49,8 @@ class Kepegawaian extends Admin_Controller
         $agamas = $this->agama_model->find_all();
 		Template::set('agamas', $agamas);
 		
-		$this->load->model('pegawai/pendidikan_model');
-        $pendidikans = $this->pendidikan_model->find_all();
+		$this->load->model('pegawai/tingkatpendidikan_model');
+        $pendidikans = $this->tingkatpendidikan_model->find_all();
 		Template::set('pendidikans', $pendidikans);
 		
 		$this->load->model('pegawai/kpkn_model');
@@ -181,7 +181,7 @@ class Kepegawaian extends Admin_Controller
     public function addpendidikan($PNS_BKN_ID,$riwayat_pendidikan_id=NULL)
     {
         $this->auth->restrict($this->permissionAddpendidikan);
-		Template::set('rwt_pendidikan', $this->rwt_pendidikan_model->find($riwayat_pendidikan_id));
+		Template::set('rwt_pendidikan', $this->riwayat_pendidikan_model->find($riwayat_pendidikan_id));
 		
 		Template::set('PNS_ID', $PNS_BKN_ID);
         Template::set('toolbar_title', "Tambah Riwayat Pendiikan");
@@ -192,7 +192,7 @@ class Kepegawaian extends Admin_Controller
 	{
 		$this->auth->restrict($this->permissionAddpendidikan);
 		$id 	= $this->input->post('kode');
-		if ($this->rwt_pendidikan_model->delete($id)) {
+		if ($this->riwayat_pendidikan_model->delete($id)) {
 			 log_activity($this->auth->user_id(), 'delete data Riwayat Pendidikan : ' . $id . ' : ' . $this->input->ip_address(), 'pegawai');
 			 Template::set_message("Sukses Hapus data", 'success');
 			 echo "Sukses";
@@ -220,8 +220,8 @@ class Kepegawaian extends Admin_Controller
         		log_activity($this->auth->user_id(), 'Save riwayat Pendidikan : ' . $id . ' : ' . $this->input->ip_address(), 'pegawai');
         		echo "Sukses simpan data";
         	}else{
-        		log_activity($this->auth->user_id(), 'Save riwayat Pendidikan gagal, dari' .$this->rwt_pendidikan_model->error. $this->input->ip_address(), 'pegawai');
-        		echo "Gagal ".$this->rwt_pendidikan_model->error;
+        		log_activity($this->auth->user_id(), 'Save riwayat Pendidikan gagal, dari' .$this->riwayat_pendidikan_model->error. $this->input->ip_address(), 'pegawai');
+        		echo "Gagal ".$this->riwayat_pendidikan_model->error;
         	}
         }
        
@@ -235,7 +235,7 @@ class Kepegawaian extends Admin_Controller
        
         // Make sure we only pass in the fields we want
         
-        $data = $this->rwt_pendidikan_model->prep_data($this->input->post());
+        $data = $this->riwayat_pendidikan_model->prep_data($this->input->post());
 		$data['PNS_ID'] 	= trim($this->input->post('PNS_ID'));
 		$data['Tingkat_Pendidikan_ID'] 	= $this->input->post('Tingkat_Pendidikan_ID');
 		$data['Pendidikan_ID'] 	= $this->input->post('Pendidikan_ID');
@@ -252,13 +252,13 @@ class Kepegawaian extends Admin_Controller
 
         $return = false;
         if ($type == 'insert') {
-            $id = $this->rwt_pendidikan_model->insert($data);
+            $id = $this->riwayat_pendidikan_model->insert($data);
 
             if (is_numeric($id)) {
                 $return = $id;
             }
         } elseif ($type == 'update') {
-            $return = $this->rwt_pendidikan_model->update($id, $data);
+            $return = $this->riwayat_pendidikan_model->update($id, $data);
         }
 
         return $return;
@@ -333,8 +333,8 @@ class Kepegawaian extends Admin_Controller
         $pegawai = $this->pegawai_model->find_detil($id);
         Template::set('pegawai', $pegawai);
         Template::set('PNS_ID', $pegawai->PNS_ID);
-        $this->rwt_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
-        $rwtpendidikan = $this->rwt_pendidikan_model->find_all();
+        $this->riwayat_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
+        $rwtpendidikan = $this->riwayat_pendidikan_model->find_all();
 		Template::set('records', $rwtpendidikan);
         Template::set('toolbar_title',"View Profile");
         Template::render();

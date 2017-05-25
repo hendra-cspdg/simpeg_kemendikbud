@@ -36,7 +36,7 @@
     <!-- sweet alert -->
     <script src="<?php echo base_url(); ?>themes/admin/js/sweetalert.js"></script>
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/css/sweetalert.css">
-    
+   
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/select2/select2.min.css">
     <!-- daterange picker -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/daterangepicker/daterangepicker.css">

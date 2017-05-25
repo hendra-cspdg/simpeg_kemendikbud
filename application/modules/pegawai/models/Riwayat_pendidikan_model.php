@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Rwt_pendidikan_model extends BF_Model
+class Riwayat_pendidikan_model extends BF_Model
 {
     protected $table_name	= 'rwt_pendidikan';
 	protected $key			= 'ID';
@@ -44,7 +44,26 @@ class Rwt_pendidikan_model extends BF_Model
 			'label' => 'PNS ID',
 			'rules' => 'max_length[32]',
 		),
-		 
+		array(
+			'field' => 'Tingkat_Pendidikan_ID',
+			'label' => 'Jenjang Pendidikan',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'Nama_Sekolah',
+			'label' => 'Nama Sekolah',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'Tahun_Lulus',
+			'label' => 'Tahun Lulus',
+			'rules' => 'required',
+		), 
+		array(
+			'field' => 'Nomor_Ijasah',
+			'label' => 'Nomor Ijasah',
+			'rules' => 'required',
+		), 
 	);
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
@@ -63,12 +82,12 @@ class Rwt_pendidikan_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*,NAMA as NAMA_PENDIDIKAN');
+			$this->select($this->table_name .'.*,tk.NAMA as tk_pendidikan_text');
 		}
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
-		$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.Pendidikan_ID', 'left');
+		$this->db->join('tkpendidikan as tk', 'tk.ID = rwt_pendidikan.Tingkat_Pendidikan_ID', 'left');
 		return parent::find_all();
 	}
 }
