@@ -277,6 +277,9 @@ class Pegawai_model extends BF_Model
     {
         parent::__construct();
     }
+	public function find_first_row(){
+		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
+	}
     public function find_detil($ID ="")
 	{
 		
