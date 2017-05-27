@@ -4,9 +4,7 @@
  	$convert = new convert();
     $tab_pane_pendidikan_id = "tab_pane_pendidikan";//uniqid("tab_pane_pendidikan");
     $tab_pane_personal_id = "tab_pane_personal";//uniqid("tab_pane_personal");
-    $tab_pane_pengalaman_id = "tab_pane_pengalaman";//uniqid("tab_pane_pengalaman");
-
-    $tab_pane_kepangkatan_id = "tab_pane_kepangkatan";//uniqid("tab_pane_kepangkatan");
+      $tab_pane_kepangkatan_id = "tab_pane_kepangkatan";//uniqid("tab_pane_kepangkatan");
     $tab_pane_pindah_unit_kerja_id = "tab_pane_pindah_unit_kerja";//uniqid("tab_pane_pindah_unit_kerja");
     $tab_pane_prestasi_kerja = "tab_pane_prestasi_kerja";//uniqid("tab_pane_prestasi_kerja");
     $tab_pane_diklat_struktural_id = "tab_pane_diklat_struktural";//uniqid("tab_pane_diklat_struktural");
@@ -95,9 +93,7 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                         <li class="">
                                             <a href="#<?php echo $tab_pane_pendidikan_id; ?>" data-toggle="tab" aria-expanded="false"> Pendidikan </a>
                                         </li>
-                                        <li class="">
-                                            <a href="#<?php echo $tab_pane_pengalaman_id;?>" data-toggle="tab" aria-expanded="false"> Pengalaman </a>
-                                        </li>
+                                       
                                         <li class="">
                                         
                                             <a href="#<?php echo $tab_pane_kepangkatan_id;?>" data-toggle="tab" aria-expanded="false"> Kepangkatan </a>
@@ -120,7 +116,6 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                         <?php 
                                             $this->load->view('kepegawaian/tab_pane_personal',array('TAB_ID'=>$tab_pane_personal_id));                                         
                                             $this->load->view('kepegawaian/tab_pane_riwayat_pendidikan',array('TAB_ID'=>$tab_pane_pendidikan_id));
-                                            $this->load->view('kepegawaian/tab_pane_riwayat_pengalaman',array('TAB_ID'=>$tab_pane_pengalaman_id));
                                             $this->load->view('kepegawaian/tab_pane_riwayat_kepangkatan',array('TAB_ID'=>$tab_pane_kepangkatan_id));
                                             $this->load->view('kepegawaian/tab_pane_riwayat_pindah_unit_kerja',array('TAB_ID'=>$tab_pane_pindah_unit_kerja_id));
                                             $this->load->view('kepegawaian/tab_pane_riwayat_prestasi_kerja',array('TAB_ID'=>$tab_pane_prestasi_kerja));
