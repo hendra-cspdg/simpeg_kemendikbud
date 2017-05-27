@@ -27,7 +27,7 @@ class Diklatfungsional extends Admin_Controller
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
-        $PNS_ID = '1552260645';//$this->input->post('PNS_ID');
+        $PNS_ID = $this->input->post('PNS_ID');
         $this->pegawai_model->where("PNS_ID",$PNS_ID);
         $pegawai_data = $this->pegawai_model->find_first_row();
        
