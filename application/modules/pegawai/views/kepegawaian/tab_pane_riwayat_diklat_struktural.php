@@ -73,7 +73,8 @@
 		});
 		$container.on('click','.show-modal',showModalX);
 
-		$container.on('click','.btn-hapus',function(){
+		$container.on('click','.btn-hapus',function(event){
+			event.preventDefault();
 			var kode =$(this).attr("kode");
 				swal({
 					title: "Anda Yakin?",

@@ -74,7 +74,8 @@
 
 
 <script type="text/javascript">
-$(".delete","#<?php echo $TAB_ID;?>").click(function(){
+$(".delete","#<?php echo $TAB_ID;?>").click(function(event){
+			event.preventDefault();
 	var kode =$(this).attr("kode");
 	var url =$(this).attr("url");
 	swal({
