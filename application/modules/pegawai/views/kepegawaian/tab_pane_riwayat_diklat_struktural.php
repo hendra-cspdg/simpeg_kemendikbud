@@ -66,7 +66,7 @@
 		//	grid_daftar.ajax.reload();	
 		//},parent:this},showModalX);
 		$container.on('click','.show-modal-custom',function(event){
-			showModalX.call(this,'sukses-tambah-riwayat-diklat',function(){
+			showModalX.call(this,'sukses-tambah-riwayat-diklat-struktural',function(){
 				grid_daftar.ajax.reload();
 			},this);
 			event.preventDefault();

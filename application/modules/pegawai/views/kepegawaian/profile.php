@@ -1,44 +1,4 @@
-<script>
-    function showModalX(callableName,callableFn,parent) {
-        $('.perhatian').fadeOut(300, function(){});
-            var title = $(parent).attr("tooltip");
-            $.ajax({
-            url: $(parent).attr("href"),
-            type: 'post',
-            beforeSend: function (xhr) {
-                $("#loading-all").show();
-            },
-            success: function (content, status, xhr) {
-                
-                var json = null;
-                var is_json = true;
-                try {
-                    json = $.parseJSON(content);
-                } catch (err) {
-                    is_json = false;
-                }
-                if (is_json == false) {
-                    $("#modal-custom-body").html(content);
-                    $("#myModalcustom-Label").html(title);
-                    $("#modal-custom-global").modal('show');
-                    $("#modal-custom-global").off(callableName);
-                    $("#modal-custom-global").on(callableName,callableFn);
-                    $("#loading-all").hide();
-                } else {
-                    alert("Error");
-                }
-            }
-            }).fail(function (data, status) {
-            if (status == "error") {
-                alert("Error");
-            } else if (status == "timeout") {
-                alert("Error");
-            } else if (status == "parsererror") {
-                alert("Error");
-            }
-            });
-        }
-</script>
+
 <?php 
 	$this->load->library('convert');
  	$convert = new convert();

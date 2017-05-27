@@ -88,7 +88,7 @@
 			success: function(data){ 
                 if(data.success){
                     swal("Pemberitahuan!", data.msg, "success");
-                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-diklat");
+                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-diklat-struktural");
 					 $("#modal-custom-global").modal("hide");
                 }
                 else {

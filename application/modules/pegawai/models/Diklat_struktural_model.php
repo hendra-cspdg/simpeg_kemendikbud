@@ -2,7 +2,7 @@
 
 class Diklat_struktural_model extends BF_Model
 {
-    protected $table_name	= 'rwt_diklat';
+    protected $table_name	= 'rwt_diklat_struktural';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
