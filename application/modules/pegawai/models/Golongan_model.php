@@ -44,11 +44,6 @@ class Golongan_model extends BF_Model
 			'label' => 'PNS ID',
 			'rules' => 'max_length[32]|required',
 		),
-		array(
-			'field' => 'NIP_Lama',
-			'label' => 'lang:pegawai_field_NIP_Lama',
-			'rules' => 'max_length[9]|required',
-		),
 		
 	);
 	protected $insert_validation_rules  = array();
@@ -63,4 +58,9 @@ class Golongan_model extends BF_Model
     {
         parent::__construct();
     }
+
+	
+	public function find_first_row(){
+		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
+	}
 }

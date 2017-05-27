@@ -18,8 +18,10 @@ class Riwayatkepangkatan extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-         $this->load->model('pegawai/riwayat_kepangkatan_model');
+        $this->load->model('pegawai/riwayat_kepangkatan_model');
+        $this->load->model('pegawai/jenis_kp_model');
         $this->load->model('pegawai/pegawai_model');
+        $this->load->model('pegawai/golongan_model');
     }
     public function ajax_list(){
         
@@ -84,6 +86,7 @@ class Riwayatkepangkatan extends Admin_Controller
                 $row []  = $record->PANGKAT;
                 $row []  = $record->GOLONGAN;
                 $row []  = $record->TMT_GOLONGAN;
+                $row []  = $record->MK_GOLONGAN_TAHUN." tahun/".$record->MK_GOLONGAN_BULAN." bulan";
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -113,11 +116,12 @@ class Riwayatkepangkatan extends Admin_Controller
 		die();
     }
     public function show($PNS_ID,$record_id=''){
-        $this->load->model('pegawai/Jenis_riwayat_kepangkatan_model');
-        Template::set('jenis_diklats', $this->Jenis_riwayat_kepangkatan_model->find_all());
+        
+        Template::set('golongans', $this->golongan_model->find_all());
+        Template::set('jenis_kps', $this->jenis_kp_model->find_all());
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
-            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_crud");
+            Template::set_view("kepegawaian/riwayat_kepangkatan_crud");
             
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Tambah Riwayat Diklat Kepangkatan");
@@ -126,7 +130,7 @@ class Riwayatkepangkatan extends Admin_Controller
         }
         else {
             $this->auth->restrict($this->permissionEdit);
-            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_crud");
+            Template::set_view("kepegawaian/riwayat_kepangkatan_crud");
             Template::set('detail_riwayat', $this->riwayat_kepangkatan_model->find($record_id));    
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Ubah Riwayat Diklat Kepangkatan");
@@ -165,13 +169,25 @@ class Riwayatkepangkatan extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["NIP_BARU"] = $pegawai_data->Nip_Baru;
-        $data["NIP_LAMA"] = $pegawai_data->NIP_Lama;
-      
-          if(empty($data["TANGGAL_KURSUS"])){
-            unset($data["TANGGAL_KURSUS"]);
+        $data["NIP"] = $pegawai_data->Nip_Baru;
+        $data["ID_ORANG"] = $pegawai_data->PNS_ID;
+        $data["NAMA"] = $pegawai_data->Nama;
+        $this->jenis_kp_model->where("id",$data['KODE_JENIS_KP']);
+        $jenis_kp_data = $this->jenis_kp_model->find_first_row();
+        $data["JENIS_KP"] = $jenis_kp_data->nama;
+        
+        $this->golongan_model->where("ID",$data['ID_GOLONGAN']);
+        $golongan_data = $this->golongan_model->find_first_row();
+        $data["GOLONGAN"] = $golongan_data->NAMA;
+        $data["PANGKAT"] = $golongan_data->NAMA_PANGKAT;
+        
+        if(empty($data["TMT_GOLONGAN"])){
+            unset($data["TMT_GOLONGAN"]);
         }
-        $id_data = $this->input->post("DIKLAT_FUNGSIONAL_ID");
+        if(empty($data["SK_TANGGAL"])){
+            unset($data["SK_TANGGAL"]);
+        }
+        $id_data = $this->input->post("ID");
         if(isset($id_data) && !empty($id_data)){
             $this->riwayat_kepangkatan_model->update($id_data,$data);
         }

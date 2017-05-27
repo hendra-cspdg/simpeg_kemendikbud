@@ -21,6 +21,7 @@
                     <th>Pangkat</th>
                     <th width='100px' >Golongan</th>
                     <th width='100px' >TMT</th>
+					<th width='100px' >MK GOLONGAN</th>
                     <th width='100px' align="center">#</th>
                 </tr>
             </thead>
@@ -63,14 +64,15 @@
 				}
 		});
 		$container.on('click','.show-modal-custom',function(event){
-			showModalX.call(this,'sukses-tambah-riwayat-riwayatkepangkatan',function(){
+			showModalX.call(this,'sukses-tambah-riwayat-kepangkatan',function(){
 				grid_daftar.ajax.reload();
 			},this);
 			event.preventDefault();
 		});
 		$container.on('click','.show-modal',showModalX);
 
-		$container.on('click','.btn-hapus',function(){
+		$container.on('click','.btn-hapus',function(event){
+			event.preventDefault();
 			var kode =$(this).attr("kode");
 				swal({
 					title: "Anda Yakin?",
