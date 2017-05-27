@@ -19,7 +19,6 @@ class Riwayatkepangkatan extends Admin_Controller
     {
         parent::__construct();
          $this->load->model('pegawai/riwayat_kepangkatan_model');
-         $this->load->model('pegawai/jenis_riwayat_kepangkatan_model');
         $this->load->model('pegawai/pegawai_model');
     }
     public function ajax_list(){
@@ -27,7 +26,11 @@ class Riwayatkepangkatan extends Admin_Controller
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
-        $PNS_ID = '1552260645';//$this->input->post('PNS_ID');
+        $PNS_ID = "1552260645";//$this->input->post('PNS_ID');
+        if(empty($PNS_ID)){
+            ECHO "die";
+            die();
+        }
         $this->pegawai_model->where("PNS_ID",$PNS_ID);
         $pegawai_data = $this->pegawai_model->find_first_row();
        
@@ -35,7 +38,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->riwayat_kepangkatan_model->where("NIP_BARU",$pegawai_data->Nip_Baru);
+		$this->riwayat_kepangkatan_model->where("ID_ORANG",$pegawai_data->ID);
 		$total= $this->riwayat_kepangkatan_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -49,7 +52,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->riwayat_kepangkatan_model->where('upper("NAMA_KURSUS") LIKE \''.strtoupper($search).'%\'');
+			$this->riwayat_kepangkatan_model->where('upper("PANGKAT") LIKE \''.strtoupper($search).'%\'');
 		}
 		$this->riwayat_kepangkatan_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
@@ -58,7 +61,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_kepangkatan_model->order_by($iSortCol,$sSortCol);
         
-        $this->riwayat_kepangkatan_model->where("NIP_BARU",$pegawai_data->Nip_Baru);  
+        $this->riwayat_kepangkatan_model->where("ID_ORANG",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_kepangkatan_model->find_all();
             
@@ -68,7 +71,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		*/
 		if($search != "")
 		{
-			$this->riwayat_kepangkatan_model->where('upper("NAMA_KURSUS") LIKE \''.strtoupper($search).'%\'');
+			$this->riwayat_kepangkatan_model->where('upper("PANGKAT") LIKE \''.strtoupper($search).'%\'');
 			$jum	= $this->riwayat_kepangkatan_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
@@ -78,20 +81,20 @@ class Riwayatkepangkatan extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
-                $row []  = $record->NAMA_KURSUS;
-                $row []  = $record->TANGGAL_KURSUS;
-                $row []  = $record->TAHUN;
+                $row []  = $record->PANGKAT;
+                $row []  = $record->GOLONGAN;
+                $row []  = $record->TMT_GOLONGAN;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatkepangkatan/edit/".$PNS_ID."/".$record->DIKLAT_FUNGSIONAL_ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatkepangkatan/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
                 $btn_actions  [] = "
-                        <a href='#' kode='$record->DIKLAT_FUNGSIONAL_ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
+                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
@@ -114,19 +117,19 @@ class Riwayatkepangkatan extends Admin_Controller
         Template::set('jenis_diklats', $this->Jenis_riwayat_kepangkatan_model->find_all());
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
-            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_add");
+            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_crud");
             
             Template::set('PNS_ID', $PNS_ID);
-            Template::set('toolbar_title', "Tambah Riwayat Diklat Fungsional");
+            Template::set('toolbar_title', "Tambah Riwayat Diklat Kepangkatan");
 
             Template::render();
         }
         else {
             $this->auth->restrict($this->permissionEdit);
-            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_add");
+            Template::set_view("kepegawaian/riwayat_riwayat_kepangkatan_crud");
             Template::set('detail_riwayat', $this->riwayat_kepangkatan_model->find($record_id));    
             Template::set('PNS_ID', $PNS_ID);
-            Template::set('toolbar_title', "Ubah Riwayat Diklat Fungsional");
+            Template::set('toolbar_title', "Ubah Riwayat Diklat Kepangkatan");
 
             Template::render();
         }
@@ -181,7 +184,7 @@ class Riwayatkepangkatan extends Admin_Controller
     public function delete($record_id){
         $this->auth->restrict($this->permissionDelete);
 		if ($this->riwayat_kepangkatan_model->delete($record_id)) {
-			 log_activity($this->auth->user_id(), 'delete data Riwayat Diklat Fungsional : ' . $record_id . ' : ' . $this->input->ip_address(), 'pegawai');
+			 log_activity($this->auth->user_id(), 'delete data Riwayat Diklat Kepangkatan : ' . $record_id . ' : ' . $this->input->ip_address(), 'pegawai');
 			 Template::set_message("Sukses Hapus data", 'success');
 			 echo "Sukses";
 		}else{
