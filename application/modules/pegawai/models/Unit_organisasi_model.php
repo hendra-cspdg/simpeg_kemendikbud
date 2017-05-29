@@ -2,7 +2,7 @@
 
 class Unit_organisasi_model extends BF_Model
 {
-    protected $table_name	= 'unit_organisasi';
+    protected $table_name	= 'unitkerja';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 

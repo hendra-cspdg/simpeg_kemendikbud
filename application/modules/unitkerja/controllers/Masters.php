@@ -144,7 +144,7 @@ class Masters extends Admin_Controller
 		}
 		$this->agama_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->agama_model->order_by($iSortCol,$sSortCol);
         $this->agama_model->where("deleted ",null);

@@ -49,7 +49,7 @@ class Diklatstruktural extends Admin_Controller
 		}
 		$this->diklat_struktural_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_struktural_model->order_by($iSortCol,$sSortCol);
         $this->diklat_struktural_model->where("ID_PNS",$PNS_ID);    

@@ -93,7 +93,7 @@ class Riwayatprestasikerja extends Admin_Controller
 		$this->riwayat_prestasi_kerja_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
         
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_prestasi_kerja_model->order_by($iSortCol,$sSortCol);
         

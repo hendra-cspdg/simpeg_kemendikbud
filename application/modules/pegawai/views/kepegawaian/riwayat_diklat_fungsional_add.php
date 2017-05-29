@@ -25,7 +25,7 @@
                 </div>
             </div>            
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TANGGAL KURSUS</label>
+				<label for="inputNAMA" class="control-label">TANGGAL KURSUS</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -35,7 +35,7 @@
 				</div>
 			</div> 
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TAHUN</label>
+				<label for="inputNAMA" class="control-label">TAHUN</label>
 				<div class="input-group date">
 					<input type='text' class="form-control pull-right " name='TAHUN'  value="<?php echo set_value('TAHUN', isset($detail_riwayat->TAHUN) ? $detail_riwayat->TAHUN : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('Tgl'); ?></span>

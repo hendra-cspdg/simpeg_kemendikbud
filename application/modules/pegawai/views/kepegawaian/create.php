@@ -34,11 +34,11 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('PNS_ID'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('NIP_Lama') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_NIP_Lama'), 'NIP_Lama', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NIP_LAMA') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_NIP_LAMA'), 'NIP_LAMA', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NIP_Lama' type='text' class="form-control" name='NIP_Lama' maxlength='9' value="<?php echo set_value('NIP_Lama', isset($pegawai->NIP_Lama) ? $pegawai->NIP_Lama : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('NIP_Lama'); ?></span>
+                    <input id='NIP_LAMA' type='text' class="form-control" name='NIP_LAMA' maxlength='9' value="<?php echo set_value('NIP_LAMA', isset($pegawai->NIP_LAMA) ? $pegawai->NIP_LAMA : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NIP_LAMA'); ?></span>
                 </div>
             </div>
 
@@ -56,73 +56,73 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('GELAR_DEPAN'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('Nama') ? ' error' : ''; ?> col-sm-7">
-                <?php echo form_label(lang('pegawai_field_Nama'), 'Nama', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NAMA') ? ' error' : ''; ?> col-sm-7">
+                <?php echo form_label(lang('pegawai_field_NAMA'), 'NAMA', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nama' type='text' class="form-control" name='Nama' maxlength='50' value="<?php echo set_value('Nama', isset($pegawai->NAMA) ? $pegawai->NAMA : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nama'); ?></span>
+                    <input id='NAMA' type='text' class="form-control" name='NAMA' maxlength='50' value="<?php echo set_value('NAMA', isset($pegawai->NAMA) ? $pegawai->NAMA : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NAMA'); ?></span>
                 </div>
             </div>
 
            
 
-            <div class="control-group<?php echo form_error('Gelar_Blk') ? ' error' : ''; ?> col-sm-3">
-                <?php echo form_label(lang('pegawai_field_Gelar_Blk'), 'Gelar_Blk', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('GELAR_BELAKANG') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label(lang('pegawai_field_GELAR_BELAKANG'), 'GELAR_BELAKANG', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Gelar_Blk' type='text' class="form-control" name='Gelar_Blk' maxlength='11' value="<?php echo set_value('Gelar_Blk', isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Blk'); ?></span>
+                    <input id='GELAR_BELAKANG' type='text' class="form-control" name='GELAR_BELAKANG' maxlength='11' value="<?php echo set_value('GELAR_BELAKANG', isset($pegawai->GELAR_BELAKANG) ? $pegawai->GELAR_BELAKANG : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('GELAR_BELAKANG'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Tempat_Lahir_ID') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Tempat Lahir", 'Tempat_Lahir_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('TEMPAT_LAHIR_ID') ? ' error' : ''; ?> col-sm-9">
+                <?php echo form_label("Tempat Lahir", 'TEMPAT_LAHIR_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Tempat_Lahir_ID' type='text' class="form-control" name='Tempat_Lahir_ID' maxlength='11' value="<?php echo set_value('Tempat_Lahir_ID', isset($pegawai->Tempat_Lahir_ID) ? $pegawai->Tempat_Lahir_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Tempat_Lahir_ID'); ?></span>
+                    <input id='TEMPAT_LAHIR_ID' type='text' class="form-control" name='TEMPAT_LAHIR_ID' maxlength='11' value="<?php echo set_value('TEMPAT_LAHIR_ID', isset($pegawai->TEMPAT_LAHIR_ID) ? $pegawai->TEMPAT_LAHIR_ID : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('TEMPAT_LAHIR_ID'); ?></span>
                 </div>
             </div>
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">Tgl Lahir</label>
+				<label for="inputNAMA" class="control-label">Tgl Lahir</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='Tgl_Lahir'  value="<?php echo set_value('Tgl_Lahir', isset($pegawai->Tgl_Lahir) ? $pegawai->Tgl_Lahir : ''); ?>" />
-					<span class='help-inline'><?php echo form_error('Tgl_Lahir'); ?></span>
+					<input type='text' class="form-control pull-right datepicker" name='TGL_LAHIR'  value="<?php echo set_value('TGL_LAHIR', isset($pegawai->TGL_LAHIR) ? $pegawai->TGL_LAHIR : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_LAHIR'); ?></span>
 				</div>
 			</div> 
-            <div class="control-group<?php echo form_error('Jenis_Kelamin') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_Jenis_Kelamin'), 'Jenis_Kelamin', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JENIS_KELAMIN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_JENIS_KELAMIN'), 'JENIS_KELAMIN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select class="validate[required] text-input form-control" name="Jenis_Kelamin" id="Jenis_Kelamin" class="chosen-select-deselect">
+                	<select class="validate[required] text-input form-control" name="JENIS_KELAMIN" id="JENIS_KELAMIN" class="chosen-select-deselect">
 						<option value="">-- Pilih  --</option>
-						<option value="M" <?php if(isset($pegawai->Jenis_Kelamin))  echo  ("M"==$pegawai->Jenis_Kelamin) ? "selected" : ""; ?>> Laki-laki</option>
-						<option value="F" <?php if(isset($pegawai->Jenis_Kelamin))  echo  ("F"==$pegawai->Jenis_Kelamin) ? "selected" : ""; ?>> Perempuan</option>
+						<option value="M" <?php if(isset($pegawai->JENIS_KELAMIN))  echo  ("M"==$pegawai->JENIS_KELAMIN) ? "selected" : ""; ?>> Laki-laki</option>
+						<option value="F" <?php if(isset($pegawai->JENIS_KELAMIN))  echo  ("F"==$pegawai->JENIS_KELAMIN) ? "selected" : ""; ?>> Perempuan</option>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Jenis_Kelamin'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JENIS_KELAMIN'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Agama_ID') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Agama", 'Agama_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('AGAMA_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Agama", 'AGAMA_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Agama_ID" id="Agama_ID" class="form-control">
+                	<select name="AGAMA_ID" id="AGAMA_ID" class="form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($agamas) && is_array($agamas) && count($agamas)):?>
 						<?php foreach($agamas as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Agama_ID))  echo  ($pegawai->Agama_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->AGAMA_ID))  echo  ($pegawai->AGAMA_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Agama_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('AGAMA_ID'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Jenis_Kawin_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Jenis_Kawin_ID'), 'Jenis_Kawin_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JENIS_KAWIN_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_JENIS_KAWIN_ID'), 'JENIS_KAWIN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Jenis_Kawin_ID' type='text' class="form-control" name='Jenis_Kawin_ID' maxlength='32' value="<?php echo set_value('Jenis_Kawin_ID', isset($pegawai->Jenis_Kawin_ID) ? $pegawai->Jenis_Kawin_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Jenis_Kawin_ID'); ?></span>
+                    <input id='JENIS_KAWIN_ID' type='text' class="form-control" name='JENIS_KAWIN_ID' maxlength='32' value="<?php echo set_value('JENIS_KAWIN_ID', isset($pegawai->JENIS_KAWIN_ID) ? $pegawai->JENIS_KAWIN_ID : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('JENIS_KAWIN_ID'); ?></span>
                 </div>
             </div>
 
@@ -134,43 +134,43 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_Darurat') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_Nomor_Darurat'), 'Nomor_Darurat', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NOMOR_DARURAT') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_NOMOR_DARURAT'), 'NOMOR_DARURAT', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nomor_Darurat' type='text' class="form-control" name='Nomor_Darurat' maxlength='32' value="<?php echo set_value('Nomor_Darurat', isset($pegawai->Nomor_Darurat) ? $pegawai->Nomor_Darurat : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nomor_Darurat'); ?></span>
+                    <input id='NOMOR_DARURAT' type='text' class="form-control" name='NOMOR_DARURAT' maxlength='32' value="<?php echo set_value('NOMOR_DARURAT', isset($pegawai->NOMOR_DARURAT) ? $pegawai->NOMOR_DARURAT : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NOMOR_DARURAT'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_HP') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_Nomor_HP'), 'Nomor_HP', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NOMOR_HP') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_NOMOR_HP'), 'NOMOR_HP', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nomor_HP' type='text' class="form-control" name='Nomor_HP' maxlength='32' value="<?php echo set_value('Nomor_HP', isset($pegawai->Nomor_HP) ? $pegawai->Nomor_HP : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nomor_HP'); ?></span>
+                    <input id='NOMOR_HP' type='text' class="form-control" name='NOMOR_HP' maxlength='32' value="<?php echo set_value('NOMOR_HP', isset($pegawai->NOMOR_HP) ? $pegawai->NOMOR_HP : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NOMOR_HP'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Email') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Email'), 'Email', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('EMAIL') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_EMAIL'), 'EMAIL', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Email' type='text' class="form-control" name='Email' maxlength='200' value="<?php echo set_value('Email', isset($pegawai->Email) ? $pegawai->Email : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Email'); ?></span>
+                    <input id='EMAIL' type='text' class="form-control" name='EMAIL' maxlength='200' value="<?php echo set_value('EMAIL', isset($pegawai->EMAIL) ? $pegawai->EMAIL : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('EMAIL'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Alamat') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Alamat'), 'Alamat', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('ALAMAT') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_ALAMAT'), 'ALAMAT', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <?php echo form_textarea(array('name' => 'Alamat', 'id' => 'Alamat', 'rows' => '5', 'cols' => '80', 'value' => set_value('Alamat', isset($pegawai->Alamat) ? $pegawai->Alamat : ''))); ?>
-                    <span class='help-inline'><?php echo form_error('Alamat'); ?></span>
+                    <?php echo form_textarea(array('name' => 'ALAMAT', 'id' => 'ALAMAT', 'rows' => '5', 'cols' => '80', 'value' => set_value('ALAMAT', isset($pegawai->ALAMAT) ? $pegawai->ALAMAT : ''))); ?>
+                    <span class='help-inline'><?php echo form_error('ALAMAT'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('NPWP_Nomor') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_NPWP_Nomor'), 'NPWP_Nomor', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NPWP_NOMOR') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_NPWP_NOMOR'), 'NPWP_NOMOR', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NPWP_Nomor' type='text' class="form-control" name='NPWP_Nomor' maxlength='25' value="<?php echo set_value('NPWP_Nomor', isset($pegawai->NPWP_Nomor) ? $pegawai->NPWP_Nomor : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('NPWP_Nomor'); ?></span>
+                    <input id='NPWP_NOMOR' type='text' class="form-control" name='NPWP_NOMOR' maxlength='25' value="<?php echo set_value('NPWP_NOMOR', isset($pegawai->NPWP_NOMOR) ? $pegawai->NPWP_NOMOR : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NPWP_NOMOR'); ?></span>
                 </div>
             </div>
 
@@ -182,77 +182,77 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Jenis_Pegawai_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Jenis Pegawai", 'Jenis_Pegawai_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JENIS_PEGAWAI_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Jenis Pegawai", 'JENIS_PEGAWAI_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Jenis_Pegawai_ID" id="Jenis_Pegawai_ID" class="form-control select2">
+                	<select name="JENIS_PEGAWAI_ID" id="JENIS_PEGAWAI_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($jenis_pegawais) && is_array($jenis_pegawais) && count($jenis_pegawais)):?>
-						<?php foreach($jenis_pegawais as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Jenis_Pegawai_ID))  echo  ($pegawai->Jenis_Pegawai_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+						<?php if (isset($JENIS_PEGAWAIs) && is_array($JENIS_PEGAWAIs) && count($JENIS_PEGAWAIs)):?>
+						<?php foreach($JENIS_PEGAWAIs as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->JENIS_PEGAWAI_ID))  echo  ($pegawai->JENIS_PEGAWAI_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Jenis_Pegawai_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JENIS_PEGAWAI_ID'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Kedudukan_Hukum_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Kedudukan Hukum", 'Kedudukan_Hukum_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('KEDUDUKAN_HUKUM_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Kedudukan Hukum", 'KEDUDUKAN_HUKUM_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Kedudukan_Hukum_ID" id="Kedudukan_Hukum_ID" class="form-control select2">
+                	<select name="KEDUDUKAN_HUKUM_ID" id="KEDUDUKAN_HUKUM_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($kedudukan_hukums) && is_array($kedudukan_hukums) && count($kedudukan_hukums)):?>
-						<?php foreach($kedudukan_hukums as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Kedudukan_Hukum_ID))  echo  ($pegawai->Kedudukan_Hukum_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+						<?php if (isset($KEDUDUKAN_HUKUMs) && is_array($KEDUDUKAN_HUKUMs) && count($KEDUDUKAN_HUKUMs)):?>
+						<?php foreach($KEDUDUKAN_HUKUMs as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->KEDUDUKAN_HUKUM_ID))  echo  ($pegawai->KEDUDUKAN_HUKUM_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Kedudukan_Hukum_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('KEDUDUKAN_HUKUM_ID'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Status_CPNS_PNS') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Status CPNS/PNS", 'Status_CPNS_PNS', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('STATUS_CPNS_PNS') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Status CPNS/PNS", 'STATUS_CPNS_PNS', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select class="validate[required] text-input form-control" name="Status_CPNS_PNS" id="Status_CPNS_PNS" class="chosen-select-deselect">
+                	<select class="validate[required] text-input form-control" name="STATUS_CPNS_PNS" id="STATUS_CPNS_PNS" class="chosen-select-deselect">
 						<option value="">-- Pilih  --</option>
-						<option value="P" <?php if(isset($pegawai->Status_CPNS_PNS))  echo  ("P"==$pegawai->Status_CPNS_PNS) ? "selected" : ""; ?>> PNS</option>
-						<option value="C" <?php if(isset($pegawai->Status_CPNS_PNS))  echo  ("C"==$pegawai->Status_CPNS_PNS) ? "selected" : ""; ?>> CPNS</option>
+						<option value="P" <?php if(isset($pegawai->STATUS_CPNS_PNS))  echo  ("P"==$pegawai->STATUS_CPNS_PNS) ? "selected" : ""; ?>> PNS</option>
+						<option value="C" <?php if(isset($pegawai->STATUS_CPNS_PNS))  echo  ("C"==$pegawai->STATUS_CPNS_PNS) ? "selected" : ""; ?>> CPNS</option>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Status_CPNS_PNS'); ?></span>
+                    <span class='help-inline'><?php echo form_error('STATUS_CPNS_PNS'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Kartu_Pegawai') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Kartu_Pegawai'), 'Kartu_Pegawai', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('KARTU_PEGAWAI') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_KARTU_PEGAWAI'), 'KARTU_PEGAWAI', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Kartu_Pegawai' type='text' class="form-control" name='Kartu_Pegawai' maxlength='11' value="<?php echo set_value('Kartu_Pegawai', isset($pegawai->Kartu_Pegawai) ? $pegawai->Kartu_Pegawai : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Kartu_Pegawai'); ?></span>
+                    <input id='KARTU_PEGAWAI' type='text' class="form-control" name='KARTU_PEGAWAI' maxlength='11' value="<?php echo set_value('KARTU_PEGAWAI', isset($pegawai->KARTU_PEGAWAI) ? $pegawai->KARTU_PEGAWAI : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('KARTU_PEGAWAI'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_SK_CPNS') ? ' error' : ''; ?> col-sm-3">
-                <?php echo form_label(lang('pegawai_field_Nomor_SK_CPNS'), 'Nomor_SK_CPNS', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NOMOR_SK_CPNS') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label(lang('pegawai_field_NOMOR_SK_CPNS'), 'NOMOR_SK_CPNS', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nomor_SK_CPNS' type='text' class="form-control" name='Nomor_SK_CPNS' maxlength='11' value="<?php echo set_value('Nomor_SK_CPNS', isset($pegawai->Nomor_SK_CPNS) ? $pegawai->Nomor_SK_CPNS : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nomor_SK_CPNS'); ?></span>
+                    <input id='NOMOR_SK_CPNS' type='text' class="form-control" name='NOMOR_SK_CPNS' maxlength='11' value="<?php echo set_value('NOMOR_SK_CPNS', isset($pegawai->NOMOR_SK_CPNS) ? $pegawai->NOMOR_SK_CPNS : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NOMOR_SK_CPNS'); ?></span>
                 </div>
             </div>
 
            		
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">SK CPNS</label>
+				<label for="inputNAMA" class="control-label">SK CPNS</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-				  	<input id='Tgl_SK_CPNS' type='text' class="form-control pull-right datepicker" name='Tgl_SK_CPNS'  value="<?php echo set_value('Tgl_SK_CPNS', isset($pegawai->Tgl_SK_CPNS) ? $pegawai->Tgl_SK_CPNS : ''); ?>" />
-					<span class='help-inline'><?php echo form_error('Tgl_SK_CPNS'); ?></span>
+				  	<input id='TGL_SK_CPNS' type='text' class="form-control pull-right datepicker" name='TGL_SK_CPNS'  value="<?php echo set_value('TGL_SK_CPNS', isset($pegawai->TGL_SK_CPNS) ? $pegawai->TGL_SK_CPNS : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_SK_CPNS'); ?></span>
 				</div>
 			</div> 
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT CPNS</label>
+				<label for="inputNAMA" class="control-label">TMT CPNS</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -262,7 +262,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 				</div>
 			</div> 
           	<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT PNS</label>
+				<label for="inputNAMA" class="control-label">TMT PNS</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -271,113 +271,113 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 					<span class='help-inline'><?php echo form_error('TMT_PNS'); ?></span>
 				</div>
 			</div>
-            <div class="control-group<?php echo form_error('Gol_Awal_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Golongan Awal", 'Gol_Awal_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('GOL_AWAL_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Golongan Awal", 'GOL_AWAL_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Gol_Awal_ID" id="Gol_Awal_ID" class="form-control select2">
+                	<select name="GOL_AWAL_ID" id="GOL_AWAL_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($golongans) && is_array($golongans) && count($golongans)):?>
 						<?php foreach($golongans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Gol_Awal_ID))  echo  ($pegawai->Gol_Awal_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?> | <?php echo $record->NAMA_PANGKAT; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->GOL_AWAL_ID))  echo  ($pegawai->GOL_AWAL_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?> | <?php echo $record->NAMA_PANGKAT; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
                     
-                    <span class='help-inline'><?php echo form_error('Gol_Awal_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('GOL_AWAL_ID'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Gol_ID') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Golongan", 'Gol_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('GOL_ID') ? ' error' : ''; ?> col-sm-9">
+                <?php echo form_label("Golongan", 'GOL_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>	
-                	<select name="Gol_ID" id="Gol_ID" class="form-control select2">
+                	<select name="GOL_ID" id="GOL_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($golongans) && is_array($golongans) && count($golongans)):?>
 						<?php foreach($golongans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Gol_ID))  echo  ($pegawai->Gol_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?> | <?php echo $record->NAMA_PANGKAT; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->GOL_ID))  echo  ($pegawai->GOL_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?> | <?php echo $record->NAMA_PANGKAT; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Gol_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('GOL_ID'); ?></span>
                 </div>
             </div>
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT Golongan</label>
+				<label for="inputNAMA" class="control-label">TMT Golongan</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='TMT_Golongan'  value="<?php echo set_value('TMT_Golongan', isset($pegawai->TMT_Golongan) ? $pegawai->TMT_Golongan : ''); ?>" />
-					<span class='help-inline'><?php echo form_error('TMT_Golongan'); ?></span>
+					<input type='text' class="form-control pull-right datepicker" name='TMT_GOLONGAN'  value="<?php echo set_value('TMT_GOLONGAN', isset($pegawai->TMT_GOLONGAN) ? $pegawai->TMT_GOLONGAN : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TMT_GOLONGAN'); ?></span>
 				</div>
 			</div> 
 			
-            <div class="control-group<?php echo form_error('MK_Tahun') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Masa Kerja Tahun", 'MK_Tahun', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('MK_TAHUN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Masa Kerja Tahun", 'MK_TAHUN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='MK_Tahun' type='text' class="form-control" name='MK_Tahun' maxlength='4' value="<?php echo set_value('MK_Tahun', isset($pegawai->MK_Tahun) ? $pegawai->MK_Tahun : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('MK_Tahun'); ?></span>
+                    <input id='MK_TAHUN' type='text' class="form-control" name='MK_TAHUN' maxlength='4' value="<?php echo set_value('MK_TAHUN', isset($pegawai->MK_TAHUN) ? $pegawai->MK_TAHUN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('MK_TAHUN'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('MK_Bulan') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Masa kerja Bulan", 'MK_Bulan', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('MK_BULAN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Masa kerja Bulan", 'MK_BULAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='MK_Bulan' type='text' class="form-control" name='MK_Bulan' maxlength='10' value="<?php echo set_value('MK_Bulan', isset($pegawai->MK_Bulan) ? $pegawai->MK_Bulan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('MK_Bulan'); ?></span>
+                    <input id='MK_BULAN' type='text' class="form-control" name='MK_BULAN' maxlength='10' value="<?php echo set_value('MK_BULAN', isset($pegawai->MK_BULAN) ? $pegawai->MK_BULAN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('MK_BULAN'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Jenis_Jabatan_ID') ? ' error' : ''; ?> col-sm-3">
-                <?php echo form_label(lang('pegawai_field_Jenis_Jabatan_ID'), 'Jenis_Jabatan_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JENIS_JABATAN_ID') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label(lang('pegawai_field_JENIS_JABATAN_ID'), 'JENIS_JABATAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <select name="Jenis_Jabatan_ID" id="Jenis_Jabatan_ID" class="form-control select2">
+                    <select name="JENIS_JABATAN_ID" id="JENIS_JABATAN_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
 						<option value="Fungsional Umum">Fungsional Umum</option>
 						<option value="Fungsional Tertentu">Fungsional Tertentu</option>
 						<option value="Struktural">Struktural</option>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Jenis_Jabatan_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JENIS_JABATAN_ID'); ?></span>
                 </div>
             </div>
-			<div class="control-group<?php echo form_error('Jabatan_ID') ? ' error' : ''; ?> col-sm-6">
+			<div class="control-group<?php echo form_error('JABATAN_ID') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("Jabatan", 'KPKN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Jabatan_ID" id="Jabatan_ID" class="form-control select2">
+                	<select name="JABATAN_ID" id="JABATAN_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
-							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->Jabatan_ID))  echo  ($pegawai->Jabatan_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->NAMA_Jabatan; ?></option>
+							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->JABATAN_ID))  echo  ($pegawai->JABATAN_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->NAMA_Jabatan; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Jabatan_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JABATAN_ID'); ?></span>
                 </div>
             </div>
             
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT Golongan</label>
+				<label for="inputNAMA" class="control-label">TMT Golongan</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-				  	<input id='TMT_Jabatan' type='text' class="form-control pull-right datepicker" name='TMT_Jabatan'  value="<?php echo set_value('TMT_Jabatan', isset($pegawai->TMT_Jabatan) ? $pegawai->TMT_Jabatan : ''); ?>" />
-					<span class='help-inline'><?php echo form_error('TMT_Golongan'); ?></span>
+				  	<input id='TMT_JABATAN' type='text' class="form-control pull-right datepicker" name='TMT_JABATAN'  value="<?php echo set_value('TMT_JABATAN', isset($pegawai->TMT_JABATAN) ? $pegawai->TMT_JABATAN : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TMT_GOLONGAN'); ?></span>
 				</div>
 			</div> 
 
-            <div class="control-group<?php echo form_error('Pendidkan_ID') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label(lang('pegawai_field_Pendidkan_ID'), 'Pendidkan_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('PENDIDIKAN_ID') ? ' error' : ''; ?> col-sm-9">
+                <?php echo form_label(lang('pegawai_field_PENDIDIKAN_ID'), 'PENDIDIKAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Pendidkan_ID" id="Pendidkan_ID" class="form-control select2">
+                	<select name="PENDIDIKAN_ID" id="PENDIDIKAN_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($pendidikans) && is_array($pendidikans) && count($pendidikans)):?>
 						<?php foreach($pendidikans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->Pendidkan_ID))  echo  ($pegawai->Pendidkan_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->PENDIDIKAN_ID))  echo  ($pegawai->PENDIDIKAN_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Pendidkan_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('PENDIDIKAN_ID'); ?></span>
                 </div>
             </div>
 
@@ -446,11 +446,11 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 			<!--
-            <div class="control-group<?php echo form_error('Instansi_Induk_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Instansi_Induk_ID'), 'Instansi_Induk_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('INSTANSI_INDUK_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_INSTANSI_INDUK_ID'), 'INSTANSI_INDUK_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Instansi_Induk_ID' type='text' class="form-control" name='Instansi_Induk_ID' maxlength='11' value="<?php echo set_value('Instansi_Induk_ID', isset($pegawai->Instansi_Induk_ID) ? $pegawai->Instansi_Induk_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Instansi_Induk_ID'); ?></span>
+                    <input id='INSTANSI_INDUK_ID' type='text' class="form-control" name='INSTANSI_INDUK_ID' maxlength='11' value="<?php echo set_value('INSTANSI_INDUK_ID', isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('INSTANSI_INDUK_ID'); ?></span>
                 </div>
             </div>
 
@@ -478,17 +478,17 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 			-->
-            <div class="control-group<?php echo form_error('Golongan_Darah') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Golongan_Darah'), 'Golongan_Darah', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('GOLONGAN_DARAH') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_GOLONGAN_DARAH'), 'GOLONGAN_DARAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select class="validate[required] text-input form-control" name="Golongan_Darah" id="Golongan_Darah" class="chosen-select-deselect">
+                	<select class="validate[required] text-input form-control" name="GOLONGAN_DARAH" id="GOLONGAN_DARAH" class="chosen-select-deselect">
 						<option value="">-- Pilih  --</option>
-						<option value="O" <?php if(isset($pegawai->Golongan_Darah))  echo  ("O"==$pegawai->Golongan_Darah) ? "selected" : ""; ?>>O</option>
-						<option value="A" <?php if(isset($pegawai->Golongan_Darah))  echo  ("A"==$pegawai->Golongan_Darah) ? "selected" : ""; ?>>A</option>
-						<option value="B" <?php if(isset($pegawai->Golongan_Darah))  echo  ("B"==$pegawai->Golongan_Darah) ? "selected" : ""; ?>>B</option>
-						<option value="AB" <?php if(isset($pegawai->Golongan_Darah))  echo  ("AB"==$pegawai->Golongan_Darah) ? "selected" : ""; ?>>AB</option>
+						<option value="O" <?php if(isset($pegawai->GOLONGAN_DARAH))  echo  ("O"==$pegawai->GOLONGAN_DARAH) ? "selected" : ""; ?>>O</option>
+						<option value="A" <?php if(isset($pegawai->GOLONGAN_DARAH))  echo  ("A"==$pegawai->GOLONGAN_DARAH) ? "selected" : ""; ?>>A</option>
+						<option value="B" <?php if(isset($pegawai->GOLONGAN_DARAH))  echo  ("B"==$pegawai->GOLONGAN_DARAH) ? "selected" : ""; ?>>B</option>
+						<option value="AB" <?php if(isset($pegawai->GOLONGAN_DARAH))  echo  ("AB"==$pegawai->GOLONGAN_DARAH) ? "selected" : ""; ?>>AB</option>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Golongan_Darah'); ?></span>
+                    <span class='help-inline'><?php echo form_error('GOLONGAN_DARAH'); ?></span>
                 </div>
             </div>
         </fieldset>

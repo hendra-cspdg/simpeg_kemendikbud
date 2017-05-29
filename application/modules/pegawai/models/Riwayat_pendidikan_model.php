@@ -51,7 +51,7 @@ class Riwayat_pendidikan_model extends BF_Model
 		),
 		array(
 			'field' => 'NAMA_SEKOLAH',
-			'label' => 'Nama Sekolah',
+			'label' => 'NAMA Sekolah',
 			'rules' => 'required',
 		),
 		array(

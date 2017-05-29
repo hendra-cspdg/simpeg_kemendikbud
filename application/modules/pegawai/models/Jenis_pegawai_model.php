@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Jenis_pegawai_model extends BF_Model
+class JENIS_PEGAWAI_model extends BF_Model
 {
     protected $table_name	= 'jenis_pegawai';
 	protected $key			= 'ID';
@@ -45,8 +45,8 @@ class Jenis_pegawai_model extends BF_Model
 			'rules' => 'max_length[32]|required',
 		),
 		array(
-			'field' => 'NIP_Lama',
-			'label' => 'lang:pegawai_field_NIP_Lama',
+			'field' => 'NIP_LAMA',
+			'label' => 'lang:pegawai_field_NIP_LAMA',
 			'rules' => 'max_length[9]|required',
 		),
 		

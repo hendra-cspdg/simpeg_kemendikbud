@@ -40,7 +40,7 @@
                 </div>
             </div>            
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT_GOLONGAN</label>
+				<label for="inputNAMA" class="control-label">TMT_GOLONGAN</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">SK TANGGAL</label>
+				<label for="inputNAMA" class="control-label">SK TANGGAL</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TANGGAL BKN</label>
+				<label for="inputNAMA" class="control-label">TANGGAL BKN</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>

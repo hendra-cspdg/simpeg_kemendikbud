@@ -25,7 +25,7 @@
                 </div>
             </div>
            <div class="control-group<?php echo form_error('NAMA_SEKOLAH') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Nama Sekolah", 'NAMA_SEKOLAH', array('class' => 'control-label')); ?>
+                <?php echo form_label("NAMA Sekolah", 'NAMA_SEKOLAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='NAMA_SEKOLAH' type='text' class="form-control" name='NAMA_SEKOLAH' maxlength='200' value="<?php echo set_value('NAMA_SEKOLAH', isset($detail_riwayat->NAMA_Sekolah) ? $detail_riwayat->NAMA_Sekolah : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NAMA_SEKOLAH'); ?></span>
@@ -33,7 +33,7 @@
             </div>
             
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">Tgl Lulus</label>
+				<label for="inputNAMA" class="control-label">Tgl Lulus</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>

@@ -93,6 +93,44 @@ class Riwayatpindahunitkerja extends Admin_Controller
             echo json_encode($json);
     }
     
+    public function mig(){
+        $uks = array();
+        $uks2 = array();
+        $unitkerjas = $this->unit_organisasi_model->find_all();
+        foreach($unitkerjas as $record){
+            $uks[$record->KODE_UNIT_KERJA] = $record->ID;
+            $uks2[$record->KODE_UNIT_KERJA] = null;
+        }
+        foreach($unitkerjas as $record){
+            $split = explode(".",$record->KODE_UNIT_KERJA);
+            $parent = "";
+
+            if($split[0]=="00"){
+                $parent = "00".".00".".00".".00";
+            }
+            else if($split[1]=="00"){
+                $parent = "00".".00".".00".".00";
+            }
+            else if($split[2]=="00"){
+                $parent = $split[0].".00".".00".".00";
+            }
+            else if($split[3]=="00"){
+                $parent = $split[0].".".$split[1].".00".".00";
+            }
+            else {
+                $parent = $split[0].".".$split[1].".".$split[2].".00";
+            }
+            $parent_id =  $uks[$parent];
+            
+            $uks2[$record->KODE_UNIT_KERJA]=array(
+                'KODE_UNIT_KERJA'=>$record->KODE_UNIT_KERJA,
+                'PARENT_ID'=>$parent_id
+            );
+           
+        }
+        echo json_encode($uks2);
+        $this->db->update_batch('hris.unitkerja',$uks2,"KODE_UNIT_KERJA");
+    }
     public function ajax_list(){
         
         $draw = $this->input->post('draw');
@@ -129,7 +167,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
 		$this->riwayat_pindah_unit_kerja_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
         
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_pindah_unit_kerja_model->order_by($iSortCol,$sSortCol);
         

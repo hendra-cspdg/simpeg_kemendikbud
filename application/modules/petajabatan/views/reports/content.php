@@ -62,7 +62,7 @@
 									  </td>
 									  <td>
 									  	<!--[<?php echo $akuota[$ideselon4."-ID_JABATAN"][$a]; ?>]-->
-										  <?php echo $akuota[$ideselon4."-Nama_Jabatan"][$a]; ?>
+										  <?php echo $akuota[$ideselon4."-NAMA_Jabatan"][$a]; ?>
 									  </td>
 									  <td>
 										  -
