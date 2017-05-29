@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Diklat_fungsional_model extends BF_Model
+class Riwayat_prestasi_kerja_model extends BF_Model
 {
-    protected $table_name	= 'rwt_diklat_fungsional';
-	protected $key			= 'DIKLAT_FUNGSIONAL_ID';
+    protected $table_name	= 'rwt_prestasi_kerja';
+	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
@@ -44,31 +44,7 @@ class Diklat_fungsional_model extends BF_Model
 			'label' => 'PNS ID',
 			'rules' => 'max_length[32]',
 		),
-		array(
-			'field' => 'JENIS_DIKLAT',
-			'label' => 'JENIS DIKLAT',
-			'rules' => 'required',
-		),
-		array(
-			'field' => 'TAHUN',
-			'label' => 'TAHUN KURSUS',
-			'rules' => 'required',
-		),
-		array(
-			'field' => 'NAMA_KURSUS',
-			'label' => 'NAMA KURSUS',
-			'rules' => 'required',
-		),
-		array(
-			'field' => 'INSTITUSI_PENYELENGGARA',
-			'label' => 'INSTITUSI PENYELENGGARA',
-			'rules' => 'required',
-		),
-		array(
-			'field' => 'NOMOR_SERTIPIKAT',
-			'label' => 'NOMOR SERTIFIKAT',
-			'rules' => 'required',
-		),
+		
 	);
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
@@ -92,7 +68,6 @@ class Diklat_fungsional_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
-		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.PENDIDIKAN_ID', 'left');
 		return parent::find_all();
 	}
 }

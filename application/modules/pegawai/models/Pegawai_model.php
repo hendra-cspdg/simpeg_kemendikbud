@@ -50,8 +50,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[9]|required',
 		),
 		array(
-			'field' => 'Nip_Baru',
-			'label' => 'lang:pegawai_field_Nip_Baru',
+			'field' => 'NIP_BARU',
+			'label' => 'lang:pegawai_field_NIP_BARU',
 			'rules' => 'max_length[18]',
 		),
 		array(
@@ -60,8 +60,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[50]',
 		),
 		array(
-			'field' => 'Gelar_Depan',
-			'label' => 'lang:pegawai_field_Gelar_Depan',
+			'field' => 'GELAR_DEPAN',
+			'label' => 'lang:pegawai_field_GELAR_DEPAN',
 			'rules' => 'max_length[11]',
 		),
 		array(
@@ -215,8 +215,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Tahun_Lulus',
-			'label' => 'lang:pegawai_field_Tahun_Lulus',
+			'field' => 'TAHUN_LULUS',
+			'label' => 'lang:pegawai_field_TAHUN_LULUS',
 			'rules' => 'max_length[4]',
 		),
 		array(

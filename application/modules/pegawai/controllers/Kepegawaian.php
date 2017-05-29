@@ -237,16 +237,16 @@ class Kepegawaian extends Admin_Controller
         
         $data = $this->riwayat_pendidikan_model->prep_data($this->input->post());
 		$data['PNS_ID'] 	= trim($this->input->post('PNS_ID'));
-		$data['Tingkat_Pendidikan_ID'] 	= $this->input->post('Tingkat_Pendidikan_ID');
-		$data['Pendidikan_ID'] 	= $this->input->post('Pendidikan_ID');
-		$data['Tanggal_Lulus'] 	= $this->input->post('Tanggal_Lulus') ? $this->input->post('Tanggal_Lulus') : null;
-		$data['Tahun_Lulus'] 	= $this->input->post('Tahun_Lulus');
-		$data['Nomor_Ijasah'] 	= $this->input->post('Nomor_Ijasah');
-		$data['Nama_Sekolah'] 	= $this->input->post('Nama_Sekolah');
-		$data['Gelar_Depan'] 	= $this->input->post('Gelar_Depan');
-		$data['Gelar_Belakang'] 	= $this->input->post('Gelar_Belakang');
-		$data['Pendidikan_Pertama'] 	= $this->input->post('Pendidikan_Pertama');
-		$data['Negara_sekolah'] 	= $this->input->post('Negara_sekolah');
+		$data['TINGKAT_PENDIDIKAN_ID'] 	= $this->input->post('TINGKAT_PENDIDIKAN_ID');
+		$data['PENDIDIKAN_ID'] 	= $this->input->post('PENDIDIKAN_ID');
+		$data['TANGGAL_LULUS'] 	= $this->input->post('TANGGAL_LULUS') ? $this->input->post('TANGGAL_LULUS') : null;
+		$data['TAHUN_LULUS'] 	= $this->input->post('TAHUN_LULUS');
+		$data['NOMOR_IJASAH'] 	= $this->input->post('NOMOR_IJASAH');
+		$data['NAMA_SEKOLAH'] 	= $this->input->post('NAMA_SEKOLAH');
+		$data['GELAR_DEPAN'] 	= $this->input->post('GELAR_DEPAN');
+		$data['GELAR_BELAKANG'] 	= $this->input->post('GELAR_BELAKANG');
+		$data['PENDIDIKAN_PERTAMA'] 	= $this->input->post('PENDIDIKAN_PERTAMA');
+		$data['NEGARA_SEKOLAH'] 	= $this->input->post('NEGARA_SEKOLAH');
         // Additional handling for default values should be added below,
         
 
@@ -376,7 +376,7 @@ class Kepegawaian extends Admin_Controller
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
 			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
 		}
 		
 		$this->pegawai_model->limit($length,$start);
@@ -393,8 +393,8 @@ class Kepegawaian extends Admin_Controller
 		if($search != "")
 		{
 			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
-			//$this->pegawai_model->or_where('Nip_Baru',$search);
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			//$this->pegawai_model->or_where('NIP_BARU',$search);
 			$jum	= $this->pegawai_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
@@ -402,19 +402,19 @@ class Kepegawaian extends Admin_Controller
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->Nip_Baru,$record->Nama,$record->Satuan_Kerja_Kerja_ID,
-						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->id."' data-toggle='tooltip' title='Lihat Profile' >
+				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->Satuan_Kerja_Kerja_ID,
+						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
 						<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->id."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
+					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='#' kode='$record->id' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
+					   	<a href='#' kode='$record->ID' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>

@@ -28,7 +28,7 @@ class Riwayatkepangkatan extends Admin_Controller
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
-        $PNS_ID = "1552260645";//$this->input->post('PNS_ID');
+        $PNS_ID = $this->input->post('PNS_ID');
         if(empty($PNS_ID)){
             ECHO "die";
             die();
@@ -169,9 +169,9 @@ class Riwayatkepangkatan extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["NIP"] = $pegawai_data->Nip_Baru;
+        $data["NIP"] = $pegawai_data->NIP_BARU;
         $data["ID_ORANG"] = $pegawai_data->PNS_ID;
-        $data["NAMA"] = $pegawai_data->Nama;
+        $data["NAMA"] = $pegawai_data->NAMA;
         $this->jenis_kp_model->where("id",$data['KODE_JENIS_KP']);
         $jenis_kp_data = $this->jenis_kp_model->find_first_row();
         $data["JENIS_KP"] = $jenis_kp_data->nama;
@@ -210,7 +210,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		exit();
     }
     public function index($PNS_ID='1552260645'){
-        Template::set_view("kepegawaian/tab_pane_riwayat_riwayat_kepangkatan");
+        Template::set_view("kepegawaian/tab_pane_riwayat_kepangkatan");
         Template::set('PNS_ID', $PNS_ID);
         Template::set('TAB_ID', uniqid("TAB_CONTOH"));
         Template::render();

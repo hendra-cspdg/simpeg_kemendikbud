@@ -35,7 +35,7 @@ class Diklatfungsional extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->diklat_fungsional_model->where("NIP_BARU",$pegawai_data->Nip_Baru);
+		$this->diklat_fungsional_model->where("NIP_BARU",$pegawai_data->NIP_BARU);
 		$total= $this->diklat_fungsional_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -58,7 +58,7 @@ class Diklatfungsional extends Admin_Controller
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_fungsional_model->order_by($iSortCol,$sSortCol);
         
-        $this->diklat_fungsional_model->where("NIP_BARU",$pegawai_data->Nip_Baru);  
+        $this->diklat_fungsional_model->where("NIP_BARU",$pegawai_data->NIP_BARU);  
 		
         $records=$this->diklat_fungsional_model->find_all();
             
@@ -162,7 +162,7 @@ class Diklatfungsional extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["NIP_BARU"] = $pegawai_data->Nip_Baru;
+        $data["NIP_BARU"] = $pegawai_data->NIP_BARU;
         $data["NIP_LAMA"] = $pegawai_data->NIP_Lama;
       
           if(empty($data["TANGGAL_KURSUS"])){

@@ -54,9 +54,9 @@ $lang['pegawai_area_title'] = 'pegawai';
 
 // Fields
 $lang['pegawai_field_NIP_Lama'] = 'NIP Lama';
-$lang['pegawai_field_Nip_Baru'] = 'Nip Baru';
+$lang['pegawai_field_NIP_BARU'] = 'Nip Baru';
 $lang['pegawai_field_Nama'] = 'Nama';
-$lang['pegawai_field_Gelar_Depan'] = 'Gelar Depan';
+$lang['pegawai_field_GELAR_DEPAN'] = 'Gelar Depan';
 $lang['pegawai_field_Gelar_Blk'] = 'Gelar Blk';
 $lang['pegawai_field_Tempat_Lahir_ID'] = 'Tempat Lahir ID';
 $lang['pegawai_field_Tgl_Lahir'] = 'Tgl Lahir';
@@ -87,7 +87,7 @@ $lang['pegawai_field_Jenis_Jabatan_ID'] = 'Jenis Jabatan ID';
 $lang['pegawai_field_Jabatan_ID'] = 'Jabatan ID';
 $lang['pegawai_field_TMT_Jabatan'] = 'TMT Jabatan';
 $lang['pegawai_field_Pendidkan_ID'] = 'Pendidkan ID';
-$lang['pegawai_field_Tahun_Lulus'] = 'Tahun Lulus';
+$lang['pegawai_field_TAHUN_LULUS'] = 'Tahun Lulus';
 $lang['pegawai_field_KPKN_ID'] = 'KPKN ID';
 $lang['pegawai_field_Lokasi_Kerja_ID'] = 'Lokasi Kerja ID';
 $lang['pegawai_field_Unor_ID'] = 'Unor ID';

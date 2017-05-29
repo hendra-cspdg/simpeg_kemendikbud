@@ -10,25 +10,25 @@
              <input id='id_data' type='hidden' class="form-control" name='id_data' maxlength='32' value="<?php echo set_value('id_data', isset($id) ? trim($id) : ''); ?>" />
             <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
             
-            <div class="control-group<?php echo form_error('Tingkat_Pendidikan_ID') ? ' error' : ''; ?> col-sm-3">
-                <?php echo form_label('Jenjang Pendidikan', 'Tingkat_Pendidikan_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('TINGKAT_PENDIDIKAN_ID') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label('Jenjang Pendidikan', 'TINGKAT_PENDIDIKAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Tingkat_Pendidikan_ID" id="Tingkat_Pendidikan_ID" class="form-control">
+                	<select name="TINGKAT_PENDIDIKAN_ID" id="TINGKAT_PENDIDIKAN_ID" class="form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($tk_pendidikans) && is_array($tk_pendidikans) && count($tk_pendidikans)):?>
 						<?php foreach($tk_pendidikans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->Tingkat_Pendidikan_ID))  echo  ($detail_riwayat->Tingkat_Pendidikan_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->TINGKAT_PENDIDIKAN_ID))  echo  ($detail_riwayat->TINGKAT_PENDIDIKAN_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Tingkat_Pendidikan_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('TINGKAT_PENDIDIKAN_ID'); ?></span>
                 </div>
             </div>
-           <div class="control-group<?php echo form_error('Nama_Sekolah') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Nama Sekolah", 'Nama_Sekolah', array('class' => 'control-label')); ?>
+           <div class="control-group<?php echo form_error('NAMA_SEKOLAH') ? ' error' : ''; ?> col-sm-9">
+                <?php echo form_label("Nama Sekolah", 'NAMA_SEKOLAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nama_Sekolah' type='text' class="form-control" name='Nama_Sekolah' maxlength='200' value="<?php echo set_value('Nama_Sekolah', isset($detail_riwayat->Nama_Sekolah) ? $detail_riwayat->Nama_Sekolah : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nama_Sekolah'); ?></span>
+                    <input id='NAMA_SEKOLAH' type='text' class="form-control" name='NAMA_SEKOLAH' maxlength='200' value="<?php echo set_value('NAMA_SEKOLAH', isset($detail_riwayat->NAMA_Sekolah) ? $detail_riwayat->NAMA_Sekolah : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NAMA_SEKOLAH'); ?></span>
                 </div>
             </div>
             
@@ -38,39 +38,39 @@
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='Tanggal_Lulus'  value="<?php echo set_value('Tanggal_Lulus', isset($detail_riwayat->Tanggal_Lulus) ? $detail_riwayat->Tanggal_Lulus : ''); ?>" />
-					<span class='help-inline'><?php echo form_error('Tanggal_Lulus'); ?></span>
+					<input type='text' class="form-control pull-right datepicker" name='TANGGAL_LULUS'  value="<?php echo set_value('TANGGAL_LULUS', isset($detail_riwayat->TANGGAL_LULUS) ? $detail_riwayat->TANGGAL_LULUS : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TANGGAL_LULUS'); ?></span>
 				</div>
 			</div> 
-            <div class="control-group<?php echo form_error('Tahun_Lulus') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Tahun Lulus", 'Gelar_Belakang', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('TAHUN_LULUS') ? ' error' : ''; ?> col-sm-9">
+                <?php echo form_label("Tahun Lulus", 'GELAR_BELAKANG', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Tahun_Lulus' type='text' class="form-control" name='Tahun_Lulus' maxlength='11' value="<?php echo set_value('Tahun_Lulus', isset($detail_riwayat->Tahun_Lulus) ? $detail_riwayat->Tahun_Lulus : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Tahun_Lulus'); ?></span>
+                    <input id='TAHUN_LULUS' type='text' class="form-control" name='TAHUN_LULUS' maxlength='11' value="<?php echo set_value('TAHUN_LULUS', isset($detail_riwayat->TAHUN_LULUS) ? $detail_riwayat->TAHUN_LULUS : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('TAHUN_LULUS'); ?></span>
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nomor_Ijasah') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Nomor Ijasah", 'Nomor_Ijasah', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NOMOR_IJASAH') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Nomor Ijasah", 'NOMOR_IJASAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nomor_Ijasah' type='text' class="form-control" name='Nomor_Ijasah' maxlength='32' value="<?php echo set_value('Nomor_Ijasah', isset($detail_riwayat->Nomor_Ijasah) ? $detail_riwayat->Nomor_Ijasah : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nomor_Ijasah'); ?></span>
+                    <input id='NOMOR_IJASAH' type='text' class="form-control" name='NOMOR_IJASAH' maxlength='32' value="<?php echo set_value('NOMOR_IJASAH', isset($detail_riwayat->NOMOR_IJASAH) ? $detail_riwayat->NOMOR_IJASAH : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NOMOR_IJASAH'); ?></span>
                 </div>
             </div>
 
             
-             <div class="control-group<?php echo form_error('Gelar_Depan') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label('Gelar Depan', 'Gelar_Depan', array('class' => 'control-label')); ?>
+             <div class="control-group<?php echo form_error('GELAR_DEPAN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label('Gelar Depan', 'GELAR_DEPAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Gelar_Depan' type='text' class="form-control" name='Gelar_Depan' maxlength='11' value="<?php echo set_value('Gelar_Depan', isset($detail_riwayat->Gelar_Depan) ? $detail_riwayat->Gelar_Depan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Depan'); ?></span>
+                    <input id='GELAR_DEPAN' type='text' class="form-control" name='GELAR_DEPAN' maxlength='11' value="<?php echo set_value('GELAR_DEPAN', isset($detail_riwayat->GELAR_DEPAN) ? $detail_riwayat->GELAR_DEPAN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('GELAR_DEPAN'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('Gelar_Belakang') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Gelar Belakang", 'Gelar_Belakang', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('GELAR_BELAKANG') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Gelar Belakang", 'GELAR_BELAKANG', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Gelar_Belakang' type='text' class="form-control" name='Gelar_Belakang' maxlength='11' value="<?php echo set_value('Gelar_Belakang', isset($detail_riwayat->Gelar_Belakang) ? $detail_riwayat->Gelar_Belakang : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Belakang'); ?></span>
+                    <input id='GELAR_BELAKANG' type='text' class="form-control" name='GELAR_BELAKANG' maxlength='11' value="<?php echo set_value('GELAR_BELAKANG', isset($detail_riwayat->GELAR_BELAKANG) ? $detail_riwayat->GELAR_BELAKANG : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('GELAR_BELAKANG'); ?></span>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
       autoclose: true,format: 'yyyy-mm-dd'
     }).on("input change", function (e) {
         var date = $(this).datepicker('getDate');
-        if(date)$("[name=Tahun_Lulus]",form).val(date.getFullYear());
+        if(date)$("[name=TAHUN_LULUS]",form).val(date.getFullYear());
     });
 </script>
 <script>

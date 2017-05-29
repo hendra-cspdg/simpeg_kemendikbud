@@ -45,22 +45,22 @@ class Riwayat_pendidikan_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Tingkat_Pendidikan_ID',
+			'field' => 'TINGKAT_PENDIDIKAN_ID',
 			'label' => 'Jenjang Pendidikan',
 			'rules' => 'required',
 		),
 		array(
-			'field' => 'Nama_Sekolah',
+			'field' => 'NAMA_SEKOLAH',
 			'label' => 'Nama Sekolah',
 			'rules' => 'required',
 		),
 		array(
-			'field' => 'Tahun_Lulus',
+			'field' => 'TAHUN_LULUS',
 			'label' => 'Tahun Lulus',
 			'rules' => 'required',
 		), 
 		array(
-			'field' => 'Nomor_Ijasah',
+			'field' => 'NOMOR_IJASAH',
 			'label' => 'Nomor Ijasah',
 			'rules' => 'required',
 		), 
@@ -87,7 +87,7 @@ class Riwayat_pendidikan_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
-		$this->db->join('tkpendidikan as tk', 'tk.ID = rwt_pendidikan.Tingkat_Pendidikan_ID', 'left');
+		$this->db->join('tkpendidikan as tk', 'tk.ID = rwt_pendidikan.TINGKAT_PENDIDIKAN_ID', 'left');
 		return parent::find_all();
 	}
 }

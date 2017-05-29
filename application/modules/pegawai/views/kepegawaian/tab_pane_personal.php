@@ -107,7 +107,7 @@
 						 Pendidikan Terakhir/ Tahun Lulus
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							 <b><?php echo isset($pegawai->Pendidikan_ID) ? $pegawai->Pendidikan_ID : ''; ?>/<?php echo isset($pegawai->Tahun_Lulus) ? $pegawai->Tahun_Lulus : ''; ?></b>
+							 <b><?php echo isset($pegawai->PENDIDIKAN_ID) ? $pegawai->PENDIDIKAN_ID : ''; ?>/<?php echo isset($pegawai->TAHUN_LULUS) ? $pegawai->TAHUN_LULUS : ''; ?></b>
 					 </div>
 				 </div>
 			 </div>

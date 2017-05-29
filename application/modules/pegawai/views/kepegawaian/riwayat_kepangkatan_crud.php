@@ -17,7 +17,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_kps) && is_array($jenis_kps) && count($jenis_kps)):?>
 						<?php foreach($jenis_kps as $record):?>
-							<option value="<?php echo $record->id?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->id) ? "selected" : ""; ?>><?php echo $record->id." | ".$record->nama.""; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->ID) ? "selected" : ""; ?>><?php echo $record->ID." | ".$record->nama.""; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>

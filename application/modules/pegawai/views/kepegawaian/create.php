@@ -18,7 +18,7 @@ if (validation_errors()) :
 <?php
 endif;
 
-$id = isset($pegawai->id) ? $pegawai->id : '';
+$id = isset($pegawai->ID) ? $pegawai->ID : '';
 
 ?>
 <div class='box box-primary'>
@@ -42,24 +42,24 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Nip_Baru') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_Nip_Baru'), 'Nip_Baru', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('NIP_BARU') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_NIP_BARU'), 'NIP_BARU', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nip_Baru' type='text' class="form-control" name='Nip_Baru' maxlength='18' value="<?php echo set_value('Nip_Baru', isset($pegawai->Nip_Baru) ? $pegawai->Nip_Baru : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Nip_Baru'); ?></span>
+                    <input id='NIP_BARU' type='text' class="form-control" name='NIP_BARU' maxlength='18' value="<?php echo set_value('NIP_BARU', isset($pegawai->NIP_BARU) ? $pegawai->NIP_BARU : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NIP_BARU'); ?></span>
                 </div>
             </div>
-			 <div class="control-group<?php echo form_error('Gelar_Depan') ? ' error' : ''; ?> col-sm-2">
-                <?php echo form_label(lang('pegawai_field_Gelar_Depan'), 'Gelar_Depan', array('class' => 'control-label')); ?>
+			 <div class="control-group<?php echo form_error('GELAR_DEPAN') ? ' error' : ''; ?> col-sm-2">
+                <?php echo form_label(lang('pegawai_field_GELAR_DEPAN'), 'GELAR_DEPAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Gelar_Depan' type='text' class="form-control" name='Gelar_Depan' maxlength='11' value="<?php echo set_value('Gelar_Depan', isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Gelar_Depan'); ?></span>
+                    <input id='GELAR_DEPAN' type='text' class="form-control" name='GELAR_DEPAN' maxlength='11' value="<?php echo set_value('GELAR_DEPAN', isset($pegawai->GELAR_DEPAN) ? $pegawai->GELAR_DEPAN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('GELAR_DEPAN'); ?></span>
                 </div>
             </div>
             <div class="control-group<?php echo form_error('Nama') ? ' error' : ''; ?> col-sm-7">
                 <?php echo form_label(lang('pegawai_field_Nama'), 'Nama', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Nama' type='text' class="form-control" name='Nama' maxlength='50' value="<?php echo set_value('Nama', isset($pegawai->Nama) ? $pegawai->Nama : ''); ?>" />
+                    <input id='Nama' type='text' class="form-control" name='Nama' maxlength='50' value="<?php echo set_value('Nama', isset($pegawai->NAMA) ? $pegawai->NAMA : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('Nama'); ?></span>
                 </div>
             </div>
@@ -347,7 +347,7 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
-							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->Jabatan_ID))  echo  ($pegawai->Jabatan_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->Nama_Jabatan; ?></option>
+							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->Jabatan_ID))  echo  ($pegawai->Jabatan_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->NAMA_Jabatan; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
@@ -381,11 +381,11 @@ $id = isset($pegawai->id) ? $pegawai->id : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('Tahun_Lulus') ? ' error' : ''; ?> col-sm-3">
-                <?php echo form_label(lang('pegawai_field_Tahun_Lulus'), 'Tahun_Lulus', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('TAHUN_LULUS') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label(lang('pegawai_field_TAHUN_LULUS'), 'TAHUN_LULUS', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='Tahun_Lulus' type='text' class="form-control" name='Tahun_Lulus' maxlength='4' value="<?php echo set_value('Tahun_Lulus', isset($pegawai->Tahun_Lulus) ? $pegawai->Tahun_Lulus : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('Tahun_Lulus'); ?></span>
+                    <input id='TAHUN_LULUS' type='text' class="form-control" name='TAHUN_LULUS' maxlength='4' value="<?php echo set_value('TAHUN_LULUS', isset($pegawai->TAHUN_LULUS) ? $pegawai->TAHUN_LULUS : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('TAHUN_LULUS'); ?></span>
                 </div>
             </div>
 

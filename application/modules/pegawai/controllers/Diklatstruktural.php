@@ -155,8 +155,8 @@ class Diklatstruktural extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("ID_PNS"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["NIP_PNS"] = $pegawai_data->Nip_Baru;
-        $data["NAMA_PNS"] = $pegawai_data->Nama;
+        $data["NIP_PNS"] = $pegawai_data->NIP_BARU;
+        $data["NAMA_PNS"] = $pegawai_data->NAMA;
 
         $jenis_diklat = $this->jenis_diklat_struktural_model->find($this->input->post("ID_DIKLAT"));
         $data["NAMA_DIKLAT"] = $jenis_diklat->NAMA;
