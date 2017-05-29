@@ -3,7 +3,7 @@
 class Pegawai_model extends BF_Model
 {
     protected $table_name	= 'pegawai';
-	protected $key			= 'id';
+	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;

@@ -167,9 +167,16 @@ class Riwayatprestasikerja extends Admin_Controller
            
             Template::set_view("kepegawaian/riwayat_prestasi_kerja_crud");
             $detailRiwayat = $this->riwayat_prestasi_kerja_model->find($record_id);
+            $this->pegawai_model->where("PNS_ID",$detailRiwayat->ATASAN_LANGSUNG_PNS_ID);
+            $selectedAtasanLangsung = $this->pegawai_model->find_first_row();
+            Template::set('selectedAtasanLangsung',$selectedAtasanLangsung );
             
-            $selectedAtasanLangsung = $this->pegawai_model->find($detailRiwayat->ATASAN_LANGSUNG_PNS_ID);
-            Template::set('selectedAtasanLangsung',$selectedAtasanLangsung );    
+            $this->pegawai_model->where("PNS_ID",$detailRiwayat->ATASAN_ATASAN_LANGSUNG_PNS_ID);
+            $selectedAtasanAtasanLangsung = $this->pegawai_model->find_first_row();
+            Template::set('selectedAtasanAtasanLangsung',$selectedAtasanAtasanLangsung );
+            
+            
+
             Template::set('detail_riwayat',$detailRiwayat );    
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Ubah Riwayat Pindah Unit Kerja");
@@ -183,6 +190,22 @@ class Riwayatprestasikerja extends Admin_Controller
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
     }
+    function maximumCheck($num)
+    {
+        if ($num > 100)
+        {
+            $this->form_validation->set_message(
+                            'your_number_field',
+                            'The %s field must be less than 24'
+                        );
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
     public function save(){
          // Validate the data
         $this->form_validation->set_rules($this->riwayat_prestasi_kerja_model->get_validation_rules());
@@ -226,12 +249,30 @@ class Riwayatprestasikerja extends Admin_Controller
         $data["ATASAN_ATASAN_LANGSUNG_NAMA_PNS"] = $atasan_atasan_pegawai_data->NAMA;
         $data["ATASAN_ATASAN_LANGSUNG_NIP_PNS"] = $atasan_atasan_pegawai_data->NIP_BARU;
 
-        
+        $jenis_jabatan_data = $this->jenis_jabatan_model->find($this->input->post("JABATAN_TIPE"));
+        $data["JABATAN_TEXT"] = $jenis_jabatan_data->NAMA;
 
        
         if(empty($data["SK_TANGGAL"])){
             unset($data["SK_TANGGAL"]);
         }
+
+       
+        $data['NILAI_PROSENTASE_SKP'] = 60;
+        $data['NILAI_SKP_AKHIR'] = $data['NILAI_PROSENTASE_SKP']/100*$data['NILAI_SKP'];
+
+        $data['NILAI_PROSENTASE_PERILAKU'] = 40;
+        $data['NILAI_PERILAKU'] = $data['PERILAKU_KOMITMEN'] 
+                                  +$data['PERILAKU_INTEGRITAS'] 
+                                  +$data['PERILAKU_DISIPLIN'] 
+                                  +$data['PERILAKU_KERJASAMA'] 
+                                  +$data['PERILAKU_ORIENTASI_PELAYANAN'] ;
+        if($data['JABATAN_TIPE']==1){
+             $data['NILAI_PERILAKU'] += $data['PERILAKU_KEPEMIMPINAN'] ;
+        }
+        $data['NILAI_PERILAKU_AKHIR'] = $data['NILAI_PROSENTASE_PERILAKU']/100*$data['NILAI_PERILAKU'];
+
+
         $id_data = $this->input->post("ID");
         if(isset($id_data) && !empty($id_data)){
             $this->riwayat_prestasi_kerja_model->update($id_data,$data);

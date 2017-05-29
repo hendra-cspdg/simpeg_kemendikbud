@@ -16,7 +16,9 @@
                 	<select name="JABATAN_TIPE" id="JABATAN_TIPE" class="form-control">
 						<?php 
                             foreach($jenis_jabatans as $record){
-                                echo "<option value='".$record->ID."'>$record->NAMA</option> ";
+                                $selected = "";
+                                if($record->ID == $detail_riwayat->JABATAN_TIPE) $selected = ' selected="selected"';
+                                echo "<option  value='".$record->ID."' ".$selected.">".$record->NAMA."</option> ";
                             }
                         ?>
 					</select>
@@ -28,8 +30,8 @@
                 <div class='controls'>
                 	<select name="ATASAN_LANGSUNG_PNS_ID" id="ATASAN_LANGSUNG_PNS_ID" class="form-control">
 						<?php 
-                            if($selectedAtasan){
-                                echo "<option selected value='".$selectedUnorBaru->ID."'>".$selectedUnorBaru->NAMA."</option>";
+                            if($selectedAtasanLangsung){
+                                echo "<option selected value='".$selectedAtasanLangsung->PNS_ID."'>".$selectedAtasanLangsung->NAMA."</option>";
                             }
                         ?>
 					</select>
@@ -41,8 +43,8 @@
                 <div class='controls'>
                 	<select name="ATASAN_ATASAN_LANGSUNG_PNS_ID" id="ATASAN_ATASAN_LANGSUNG_PNS_ID" class="form-control">
 						<?php 
-                            if($selectedAtasanAtasan){
-                                echo "<option selected value='".$selectedUnorBaru->ID."'>".$selectedUnorBaru->NAMA."</option>";
+                            if($selectedAtasanAtasanLangsung){
+                                echo "<option selected value='".$selectedAtasanAtasanLangsung->PNS_ID."'>".$selectedAtasanAtasanLangsung->NAMA."</option>";
                             }
                         ?>
 					</select>
@@ -56,56 +58,56 @@
                     <span class='help-inline'><?php echo form_error('NILAI_SKP'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('PERILAKU_KOMITMEN') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('PERILAKU_KOMITMEN') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU KOMITMEN", 'PERILAKU KOMITMEN', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='PERILAKU_KOMITMEN' type='text' class="form-control" name='PERILAKU_KOMITMEN' maxlength='32' value="<?php echo set_value('PERILAKU_KOMITMEN', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->PERILAKU_KOMITMEN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_KOMITMEN'); ?></span>
                 </div>
             </div>
-             <div class="control-group<?php echo form_error('PERILAKU_INTEGRITAS') ? ' error' : ''; ?> col-sm-9">
+             <div class="control-group<?php echo form_error('PERILAKU_INTEGRITAS') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU INTEGRITAS", 'PERILAKU INTEGRITAS', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='PERILAKU_INTEGRITAS' type='text' class="form-control" name='PERILAKU_INTEGRITAS' maxlength='32' value="<?php echo set_value('PERILAKU_INTEGRITAS', isset($detail_riwayat->PERILAKU_INTEGRITAS) ? $detail_riwayat->PERILAKU_INTEGRITAS : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_INTEGRITAS'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('PERILAKU_DISIPLIN') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('PERILAKU_DISIPLIN') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU DISIPLIN", 'PERILAKU DISIPLIN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='PERILAKU_DISIPLIN' type='text' class="form-control" name='PERILAKU_DISIPLIN' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->NILAI_PPK : ''); ?>" />
+                    <input id='PERILAKU_DISIPLIN' type='text' class="form-control" name='PERILAKU_DISIPLIN' maxlength='32' value="<?php echo set_value('PERILAKU_DISIPLIN', isset($detail_riwayat->PERILAKU_DISIPLIN) ? $detail_riwayat->PERILAKU_DISIPLIN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_DISIPLIN'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('PERILAKU_KERJASAMA') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('PERILAKU_KERJASAMA') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU KERJASAMA", 'PERILAKU KERJASAMA', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='PERILAKU_KERJASAMA' type='text' class="form-control" name='PERILAKU_KERJASAMA' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->NILAI_PPK : ''); ?>" />
+                    <input id='PERILAKU_KERJASAMA' type='text' class="form-control" name='PERILAKU_KERJASAMA' maxlength='32' value="<?php echo set_value('PERILAKU_KERJASAMA', isset($detail_riwayat->PERILAKU_KERJASAMA) ? $detail_riwayat->PERILAKU_KERJASAMA : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_KERJASAMA'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('PERILAKU_ORIENTASI_PELAYANAN') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('PERILAKU_ORIENTASI_PELAYANAN') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU ORIENTASI PELAYANAN", 'PERILAKU ORIENTASI PELAYANAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='PERILAKU_ORIENTASI_PELAYANAN' type='text' class="form-control" name='PERILAKU_ORIENTASI_PELAYANAN' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->NILAI_PPK : ''); ?>" />
+                    <input id='PERILAKU_ORIENTASI_PELAYANAN' type='text' class="form-control" name='PERILAKU_ORIENTASI_PELAYANAN' maxlength='32' value="<?php echo set_value('PERILAKU_ORIENTASI_PELAYANAN', isset($detail_riwayat->PERILAKU_ORIENTASI_PELAYANAN) ? $detail_riwayat->PERILAKU_ORIENTASI_PELAYANAN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_ORIENTASI_PELAYANAN'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('PERILAKU_KEPEMIMPINAN') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('PERILAKU_KEPEMIMPINAN') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("PERILAKU KEPEMIMPINAN", 'PERILAKU KEPEMIMPINAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='PERILAKU_KEPEMIMPINAN' type='text' class="form-control" name='PERILAKU_KEPEMIMPINAN' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->PERILAKU_KEPEMIMPINAN) ? $detail_riwayat->PERILAKU_KEPEMIMPINAN : ''); ?>" />
+                    <input id='PERILAKU_KEPEMIMPINAN' type='text' class="form-control" name='PERILAKU_KEPEMIMPINAN' maxlength='32' value="<?php echo set_value('PERILAKU_KEPEMIMPINAN', isset($detail_riwayat->PERILAKU_KEPEMIMPINAN) ? $detail_riwayat->PERILAKU_KEPEMIMPINAN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('PERILAKU_KEPEMIMPINAN'); ?></span>
                 </div>
             </div>
-             <div class="control-group<?php echo form_error('NILAI_PERILAKU_AKHIR') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("PERILAKU ORIENTASI PELAYANAN", 'PERILAKU ORIENTASI PELAYANAN', array('class' => 'control-label')); ?>
+             <div class="control-group<?php echo form_error('NILAI_PERILAKU_AKHIR') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NILAI PERILAKU AKHIR", 'NILAI PERILAKU AKHIR', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NILAI_PERILAKU_AKHIR' type='text' class="form-control" name='NILAI_PERILAKU_AKHIR' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->NILAI_PPK : ''); ?>" />
+                    <input id='NILAI_PERILAKU_AKHIR' type='text' class="form-control" name='NILAI_PERILAKU_AKHIR' maxlength='32' value="<?php echo set_value('NILAI_PERILAKU_AKHIR', isset($detail_riwayat->NILAI_PERILAKU_AKHIR) ? $detail_riwayat->NILAI_PERILAKU_AKHIR : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NILAI_PERILAKU_AKHIR'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('NILAI_PPK') ? ' error' : ''; ?> col-sm-9">
+            <div class="control-group<?php echo form_error('NILAI_PPK') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("NILAI PPK", 'NILAI PPK', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='NILAI_PPK' type='text' class="form-control" name='NILAI_PPK' maxlength='32' value="<?php echo set_value('NILAI_PPK', isset($detail_riwayat->NILAI_PPK) ? $detail_riwayat->NILAI_PPK : ''); ?>" />
