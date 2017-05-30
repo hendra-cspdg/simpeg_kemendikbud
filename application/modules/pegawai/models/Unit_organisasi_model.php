@@ -63,4 +63,77 @@ class Unit_organisasi_model extends BF_Model
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
+	public function getFullNameWithData($data){
+		if(!$data){
+			return "";
+		}
+		$names = array();
+		if(!empty($data->NAMA_ESELON_I)){
+			$names[] = $data->NAMA_ESELON_I;
+		}
+		if(!empty($data->NAMA_ESELON_II)){
+			$names[] = $data->NAMA_ESELON_II;
+		}
+		if(!empty($data->NAMA_ESELON_III)){
+			$names[] = $data->NAMA_ESELON_III;
+		}
+		if(!empty($data->NAMA_ESELON_IV)){
+			$names[] = $data->NAMA_ESELON_IV;
+		}
+		return implode(" - ",$names);
+	}
+	public function getFullName($id){
+		$data = $this->find($id);
+		$names = array();
+		if(!empty($data->NAMA_ESELON_I)){
+			$names[] = $data->NAMA_ESELON_I;
+		}
+		if(!empty($data->NAMA_ESELON_II)){
+			$names[] = $data->NAMA_ESELON_II;
+		}
+		if(!empty($data->NAMA_ESELON_III)){
+			$names[] = $data->NAMA_ESELON_III;
+		}
+		if(!empty($data->NAMA_ESELON_IV)){
+			$names[] = $data->NAMA_ESELON_IV;
+		}
+		return implode(" - ",$names);
+	}
+	public function getShortNameWithData($data){
+		$names = array();
+		$eselon = $data->ESELON;
+		$eselon_arr = explode(".",$eselon);
+		if($eselon_arr[0]=="I"){
+			return $data->NAMA_ESELON_I;
+		}
+		else if($eselon_arr[0]=="II"){
+			return $data->NAMA_ESELON_II;
+		}
+		else if($eselon_arr[0]=="III"){
+			return $data->NAMA_ESELON_III;
+		}
+		else if($eselon_arr[0]=="IV"){
+			return $data->NAMA_ESELON_IV;
+		}
+		return "-";
+	}
+	public function getShortName($id){
+		$data = $this->find($id);
+		$names = array();
+		$eselon = $data->ESELON;
+		$eselon_arr = explode(".",$eselon);
+		if($eselon_arr[0]=="I"){
+			return $data->NAMA_ESELON_I;
+		}
+		else if($eselon_arr[0]=="II"){
+			return $data->NAMA_ESELON_II;
+		}
+		else if($eselon_arr[0]=="III"){
+			return $data->NAMA_ESELON_III;
+		}
+		else if($eselon_arr[0]=="IV"){
+			return $data->NAMA_ESELON_IV;
+		}
+		return "-";
+	}
 }

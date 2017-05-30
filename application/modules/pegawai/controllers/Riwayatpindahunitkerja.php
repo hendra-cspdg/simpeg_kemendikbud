@@ -33,19 +33,33 @@ class Riwayatpindahunitkerja extends Admin_Controller
         
         if(!empty($q)){
             $this->db->start_cache();
-            $this->db->like('lower("NAMA_ESELON_I")', strtolower($key));
+            $this->db->like('lower("NAMA_ESELON_I")', strtolower($q));
+            $this->db->or_like('lower("NAMA_ESELON_II")', strtolower($q)); 
+            $this->db->or_like('lower("NAMA_ESELON_III")', strtolower($q)); 
+            $this->db->or_like('lower("NAMA_ESELON_IV")', strtolower($q)); 
+
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID as id,"NAMA_ESELON_I" ||\'-\'||"NAMA_ESELON_II" ||\'-\'||"NAMA_ESELON_III" ||\'-\'||"NAMA_ESELON_IV" as text');
+            //$this->db->select('ID as id,"NAMA_ESELON_I" ||\'-\'||"NAMA_ESELON_II" ||\'-\'||"NAMA_ESELON_III" ||\'-\'||"NAMA_ESELON_IV" as text');
             $this->db->limit($limit,$start);
-
+            $this->db->like('lower("NAMA_ESELON_I")', strtolower($q));    
+            $this->db->or_like('lower("NAMA_ESELON_II")', strtolower($q)); 
+            $this->db->or_like('lower("NAMA_ESELON_III")', strtolower($q)); 
+            $this->db->or_like('lower("NAMA_ESELON_IV")', strtolower($q)); 
             $data = $this->db->get()->result();
 
             $endCount = $start + $limit;
             $morePages = $endCount > $total;
+            $rs = array();
+            foreach($data as $record){
+                $rs [] = array(
+                            'id'=>$record->ID,
+                            'text'=>$this->unit_organisasi_model->getFullNameWithData($record)
+                    );
+            }
             $o = array(
-            "results" => $data,
+            "results" => $rs,
                 "pagination" => array(
                     "more" =>$morePages,
                 )
@@ -64,7 +78,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
         
         if(!empty($q)){
             $this->db->start_cache();
-            $this->db->like('lower("NAMA")', strtolower($key));
+            $this->db->like('lower("NAMA")', strtolower($q));
             $this->db->from("hris.instansi");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
