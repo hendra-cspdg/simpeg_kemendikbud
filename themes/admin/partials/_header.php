@@ -169,17 +169,17 @@
             </span>
           </a>
           <ul class="treeview-menu">
-              <?php if ($this->auth->has_permission('Agama.Masters.View')) : ?>
+            <?php if ($this->auth->has_permission('Agama.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/masters/agama"><i class="fa fa-circle-o"></i>Agama</a></li>
             <?php endif; ?>
-            <?php if ($this->auth->has_permission('Kegiatan.Masters.View')) : ?>
-            <li><a href="<?php echo base_url();?>admin/masters/kegiatan"><i class="fa fa-circle-o"></i>Kegiatan</a></li>
+            <?php if ($this->auth->has_permission('Ref_jabatan.Masters.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/masters/ref_jabatan"><i class="fa fa-circle-o"></i>Jabatan</a></li>
             <?php endif; ?>
-            <?php if ($this->auth->has_permission('Pegawai.Kepegawaian.View')) : ?>
-            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Pegawai</a></li>
+            <?php if ($this->auth->has_permission('Tkpendidikan.Masters.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/masters/tkpendidikan"><i class="fa fa-circle-o"></i>Tingkat Pendidikan</a></li>
             <?php endif; ?>
-            <?php if ($this->auth->has_permission('Pejabat_Pemberi_Perintah.Kepegawaian.View')) : ?>
-            <li><a href="<?php echo base_url();?>admin/kepegawaian/pejabat_pemberi_perintah"><i class="fa fa-circle-o"></i>Pejabat</a></li>
+            <?php if ($this->auth->has_permission('Golongan.Masters.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/masters/golongan"><i class="fa fa-circle-o"></i>Golongan</a></li>
             <?php endif; ?>
           </ul>
           

@@ -1,17 +1,16 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Ref_jabatan_model extends BF_Model
+class Golongan_model extends BF_Model
 {
-    protected $table_name	= 'ref_jabatan';
-	protected $key			= 'ID_Jabatan';
+    protected $table_name	= 'golongan';
+	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
 	protected $set_created	= false;
 	protected $set_modified = false;
-	protected $soft_deletes	= false;
+	protected $soft_deletes	= true;
 
-    protected $deleted_field     = 'deleted';
 
 	// Customize the operations of the model without recreating the insert,
     // update, etc. methods by adding the method names to act as callbacks here.
@@ -41,14 +40,18 @@ class Ref_jabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'Nama_Jabatan',
-			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[100]',
+			'field' => 'NAMA',
+			'label' => 'lang:golongan_field_NAMA',
+			'rules' => 'max_length[255]',
 		),
-		 
+		array(
+			'field' => 'NAMA_PANGKAT',
+			'label' => 'lang:golongan_field_NAMA_PANGKAT',
+			'rules' => 'max_length[255]',
+		),
 	);
 	protected $insert_validation_rules  = array();
-	protected $skip_validation 			= true;
+	protected $skip_validation 			= false;
 
     /**
      * Constructor
@@ -59,17 +62,4 @@ class Ref_jabatan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($jenis_jabatan ="")
-	{
-		
-		if(empty($this->selects))
-		{
-			$this->select($this->table_name .'.*');
-		}
-		if($jenis_jabatan != ""){
-			$this->ref_jabatan_model->where("jenis_jabatan",$jenis_jabatan);
-		}
-		return parent::find_all();
-	}
-	 
 }
