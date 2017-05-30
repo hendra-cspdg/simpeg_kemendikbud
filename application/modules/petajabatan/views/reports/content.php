@@ -19,13 +19,13 @@
 			   </div>
 			   
 				   <?php
-					   $ideselon3 = isset($record->ID) ? substr($record->ID,0,8) : "";
+					   $ideselon3 = isset($record->KODE_UNIT_KERJA) ? substr($record->KODE_UNIT_KERJA,0,8) : "";
 					   for($i=0;$i < count($aeselon4[$ideselon3]);$i++){
 					   ?>
 					   	<div class="box-small  col-sm-12" style="margin-top:20px;border: 1px solid black;background:yellow;min-height:50px;">
 					   	<?php
 					   		$ideselon4 = $aeselon4[$ideselon3."-ID"][$i];
-					   		echo $ideselon4;
+					   		//echo $ideselon4;
 						   	echo $aeselon4[$ideselon3][$i];
 						?>
 						</div>
@@ -53,6 +53,7 @@
 								</tr>
 								 <?php
 								 $no = 1;
+								 if(isset($akuota[$ideselon4."-ID_JABATAN"])){
 								  for($a=0;$a < count($akuota[$ideselon4."-ID_JABATAN"]);$a++){
 								  
 								  ?>
@@ -89,6 +90,7 @@
 								  </tr>
 								<?php
 								$no++;
+								  }
 								  }
 								 ?>
 							</table>

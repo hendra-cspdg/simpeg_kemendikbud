@@ -71,7 +71,8 @@ class Unitkerja_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($eselon2 != ""){
-			$this->unitkerja_model->where('"ID" LIKE \''.strtoupper($eselon2).'%\'');
+			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($eselon2).'%\'');
 			$this->unitkerja_model->where('"ESELON" LIKE \'III.%\'');
 		}
 		return parent::find_all();
@@ -84,7 +85,8 @@ class Unitkerja_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($eselon2 != ""){
-			$this->unitkerja_model->where('"ID" LIKE \''.strtoupper($eselon2).'%\'');
+			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($eselon2).'%\'');
 			$this->unitkerja_model->where('"ESELON" LIKE \'IV.%\'');
 		}
 		return parent::find_all();

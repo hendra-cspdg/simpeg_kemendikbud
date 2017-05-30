@@ -230,8 +230,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Unor_ID',
-			'label' => 'lang:pegawai_field_Unor_ID',
+			'field' => 'UNOR_ID',
+			'label' => 'lang:pegawai_field_UNOR_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
@@ -297,14 +297,14 @@ class Pegawai_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.Jabatan_ID as JABATAN_ID,Unor_ID,count(pegawai."Jabatan_ID") as jumlah');
+			$this->select($this->table_name .'.JABATAN_ID,UNOR_ID,count(pegawai."JABATAN_ID") as jumlah');
 		}
 		if($eselon2 != ""){
-			$this->db->where('"Unor_ID" LIKE \''.strtoupper($eselon2).'%\'');
+			$this->db->where('"UNOR_ID" LIKE \''.strtoupper($eselon2).'%\'');
 		}
 		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = JABATAN_ID', 'left');
-		$this->db->group_by("Jabatan_ID");
-		$this->db->group_by("Unor_ID");
+		$this->db->group_by("JABATAN_ID");
+		$this->db->group_by("UNOR_ID");
 		return parent::find_all();
 	}
 	// update yanarazor
