@@ -5,10 +5,10 @@
  */
 class Masters extends Admin_Controller
 {
-    protected $permissionCreate = 'Ref_jabatan.Masters.Create';
-    protected $permissionDelete = 'Ref_jabatan.Masters.Delete';
-    protected $permissionEdit   = 'Ref_jabatan.Masters.Edit';
-    protected $permissionView   = 'Ref_jabatan.Masters.View';
+    protected $permissionCreate = 'Golongan.Masters.Create';
+    protected $permissionDelete = 'Golongan.Masters.Delete';
+    protected $permissionEdit   = 'Golongan.Masters.Edit';
+    protected $permissionView   = 'Golongan.Masters.View';
 
     /**
      * Constructor
@@ -20,31 +20,31 @@ class Masters extends Admin_Controller
         parent::__construct();
         
         $this->auth->restrict($this->permissionView);
-        $this->load->model('ref_jabatan/ref_jabatan_model');
-        $this->lang->load('ref_jabatan');
+        $this->load->model('golongan/golongan_model');
+        $this->lang->load('golongan');
         
             $this->form_validation->set_error_delimiters("<span class='error'>", "</span>");
         
         Template::set_block('sub_nav', 'masters/_sub_nav');
 
-        Assets::add_module_js('ref_jabatan', 'ref_jabatan.js');
+        Assets::add_module_js('golongan', 'Golongan.js');
     }
 
     /**
-     * Display a list of ref_jabatan data.
+     * Display a list of golongan data.
      *
      * @return void
      */
     public function index($offset = 0)
     {
         
-    	Template::set('toolbar_title',"Jabatan");
+    	Template::set('toolbar_title',"Pangkat/Golongan");
 
         Template::render();
     }
     
     /**
-     * Create a ref_jabatan object.
+     * Create a golongan object.
      *
      * @return void
      */
@@ -53,26 +53,26 @@ class Masters extends Admin_Controller
         $this->auth->restrict($this->permissionCreate);
         
         if (isset($_POST['save'])) {
-            if ($insert_id = $this->save_ref_jabatan()) {
-                log_activity($this->auth->user_id(), lang('ref_jabatan_act_create_record') . ': ' . $insert_id . ' : ' . $this->input->ip_address(), 'ref_jabatan');
-                Template::set_message(lang('ref_jabatan_create_success'), 'success');
+            if ($insert_id = $this->save_golongan()) {
+                log_activity($this->auth->user_id(), lang('golongan_act_create_record') . ': ' . $insert_id . ' : ' . $this->input->ip_address(), 'golongan');
+                Template::set_message(lang('golongan_create_success'), 'success');
 
-                redirect(SITE_AREA . '/masters/ref_jabatan');
+                redirect(SITE_AREA . '/masters/golongan');
             }
 
             // Not validation error
-            if ( ! empty($this->ref_jabatan_model->error)) {
-                Template::set_message(lang('ref_jabatan_create_failure') . $this->ref_jabatan_model->error, 'error');
+            if ( ! empty($this->golongan_model->error)) {
+                Template::set_message(lang('golongan_create_failure') . $this->golongan_model->error, 'error');
             }
         }
 
-        Template::set('toolbar_title', lang('ref_jabatan_action_create'));
+        Template::set('toolbar_title', lang('golongan_action_create'));
 
         Template::render();
     }
     
     /**
-     * Allows editing of ref_jabatan data.
+     * Allows editing of golongan data.
      *
      * @return void
      */
@@ -80,42 +80,42 @@ class Masters extends Admin_Controller
     {
         $id = $this->uri->segment(5);
         if (empty($id)) {
-            Template::set_message(lang('ref_jabatan_invalid_id'), 'error');
+            Template::set_message(lang('golongan_invalid_id'), 'error');
 
-            redirect(SITE_AREA . '/masters/ref_jabatan');
+            redirect(SITE_AREA . '/masters/golongan');
         }
         
         if (isset($_POST['save'])) {
             $this->auth->restrict($this->permissionEdit);
 
-            if ($this->save_ref_jabatan('update', $id)) {
-                log_activity($this->auth->user_id(), lang('ref_jabatan_act_edit_record') . ': ' . $id . ' : ' . $this->input->ip_address(), 'ref_jabatan');
-                Template::set_message(lang('ref_jabatan_edit_success'), 'success');
-                redirect(SITE_AREA . '/masters/ref_jabatan');
+            if ($this->save_golongan('update', $id)) {
+                log_activity($this->auth->user_id(), lang('golongan_act_edit_record') . ': ' . $id . ' : ' . $this->input->ip_address(), 'golongan');
+                Template::set_message(lang('golongan_edit_success'), 'success');
+                redirect(SITE_AREA . '/masters/golongan');
             }
 
             // Not validation error
-            if ( ! empty($this->ref_jabatan_model->error)) {
-                Template::set_message(lang('ref_jabatan_edit_failure') . $this->ref_jabatan_model->error, 'error');
+            if ( ! empty($this->golongan_model->error)) {
+                Template::set_message(lang('golongan_edit_failure') . $this->golongan_model->error, 'error');
             }
         }
         
         elseif (isset($_POST['delete'])) {
             $this->auth->restrict($this->permissionDelete);
 
-            if ($this->ref_jabatan_model->delete($id)) {
-                log_activity($this->auth->user_id(), lang('ref_jabatan_act_delete_record') . ': ' . $id . ' : ' . $this->input->ip_address(), 'ref_jabatan');
-                Template::set_message(lang('ref_jabatan_delete_success'), 'success');
+            if ($this->golongan_model->delete($id)) {
+                log_activity($this->auth->user_id(), lang('golongan_act_delete_record') . ': ' . $id . ' : ' . $this->input->ip_address(), 'golongan');
+                Template::set_message(lang('golongan_delete_success'), 'success');
 
-                redirect(SITE_AREA . '/masters/ref_jabatan');
+                redirect(SITE_AREA . '/masters/golongan');
             }
 
-            Template::set_message(lang('ref_jabatan_delete_failure') . $this->ref_jabatan_model->error, 'error');
+            Template::set_message(lang('golongan_delete_failure') . $this->golongan_model->error, 'error');
         }
         
-        Template::set('ref_jabatan', $this->ref_jabatan_model->find($id));
+        Template::set('golongan', $this->golongan_model->find($id));
 
-        Template::set('toolbar_title', lang('ref_jabatan_edit_heading'));
+        Template::set('toolbar_title', lang('golongan_edit_heading'));
         Template::render();
     }
 
@@ -123,9 +123,8 @@ class Masters extends Admin_Controller
 	{
 		$this->auth->restrict($this->permissionDelete);
 		$id = $this->input->post('kode');
-	//	die($id);
-		if ($this->ref_jabatan_model->delete($id)) {
-			 log_activity($this->auth->user_id(),"Delete data" . ': ' . $id . ' : ' . $this->input->ip_address(), 'ref_jabatan');
+		if ($this->golongan_model->delete($id)) {
+			 log_activity($this->auth->user_id(),"Delete data" . ': ' . $id . ' : ' . $this->input->ip_address(), 'golongan');
 			 Template::set_message("Delete Jabatan sukses", 'success');
 			 echo "Sukses";
 		}else{
@@ -148,21 +147,21 @@ class Masters extends Admin_Controller
      * @return boolean|integer An ID for successful inserts, true for successful
      * updates, else false.
      */
-    private function save_ref_jabatan($type = 'insert', $id = 0)
+    private function save_golongan($type = 'insert', $id = 0)
     {
         if ($type == 'update') {
             $_POST['ID'] = $id;
         }
 
         // Validate the data
-        $this->form_validation->set_rules($this->ref_jabatan_model->get_validation_rules());
+        $this->form_validation->set_rules($this->golongan_model->get_validation_rules());
         if ($this->form_validation->run() === false) {
             return false;
         }
 
         // Make sure we only pass in the fields we want
         
-        $data = $this->ref_jabatan_model->prep_data($this->input->post());
+        $data = $this->golongan_model->prep_data($this->input->post());
 
         // Additional handling for default values should be added below,
         // or in the model's prep_data() method
@@ -170,13 +169,13 @@ class Masters extends Admin_Controller
 
         $return = false;
         if ($type == 'insert') {
-            $id = $this->ref_jabatan_model->insert($data);
+            $id = $this->golongan_model->insert($data);
 
             if (is_numeric($id)) {
                 $return = $id;
             }
         } elseif ($type == 'update') {
-            $return = $this->ref_jabatan_model->update($id, $data);
+            $return = $this->golongan_model->update($id, $data);
         }
 
         return $return;
@@ -192,8 +191,8 @@ class Masters extends Admin_Controller
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		
-		//$this->ref_jabatan_model->where("deleted ",null);
-		$total= $this->ref_jabatan_model->count_all();;
+		//$this->golongan_model->where("deleted ",null);
+		$total= $this->golongan_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
 
@@ -205,16 +204,16 @@ class Masters extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->ref_jabatan_model->where('upper("Nama_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
-			$this->ref_jabatan_model->or_where('upper("Jenis_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
+			$this->golongan_model->where('upper("NAMA") LIKE \'%'.strtoupper($search).'%\'');
+			$this->golongan_model->or_where('upper("NAMA_PANGKAT") LIKE \'%'.strtoupper($search).'%\'');
 		}
-		$this->ref_jabatan_model->limit($length,$start);
+		$this->golongan_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama_Jabatan";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA_PANGKAT";
 		$sSortCol == "asc" ? "asc" : "desc";
-		$this->ref_jabatan_model->order_by($iSortCol,$sSortCol);
-        //$this->ref_jabatan_model->where("deleted",null);
-		$records=$this->ref_jabatan_model->find_all();
+		$this->golongan_model->order_by($iSortCol,$sSortCol);
+        //$this->golongan_model->where("deleted",null);
+		$records=$this->golongan_model->find_all();
 
 		/*Ketika dalam mode pencarian, berarti kita harus
 		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
@@ -222,9 +221,9 @@ class Masters extends Admin_Controller
 		*/
 		if($search != "")
 		{
-			$this->ref_jabatan_model->where('upper("Nama_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
-			$this->ref_jabatan_model->or_where('upper("Jenis_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
-			$jum	= $this->ref_jabatan_model->count_all();
+			$this->golongan_model->where('upper("NAMA") LIKE \'%'.strtoupper($search).'%\'');
+			$this->golongan_model->or_where('upper("NAMA_PANGKAT") LIKE \'%'.strtoupper($search).'%\'');
+			$jum	= $this->golongan_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
 		
@@ -233,11 +232,11 @@ class Masters extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
-                $row []  = $record->Nama_Jabatan;
-                $row []  = $record->Jenis_Jabatan;
+                $row []  = $record->NAMA;
+                $row []  = $record->NAMA_PANGKAT;
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a href='".base_url()."admin/masters/ref_jabatan/edit/".$record->ID_Jabatan."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
+                    <a href='".base_url()."admin/masters/golongan/edit/".$record->ID."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
@@ -245,7 +244,7 @@ class Masters extends Admin_Controller
                 ";
 
                 $btn_actions  [] = "
-                        <a href='#' kode='$record->ID_Jabatan' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
+                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>

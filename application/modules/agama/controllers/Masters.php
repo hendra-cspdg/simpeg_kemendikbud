@@ -231,7 +231,7 @@ class Masters extends Admin_Controller
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		
-		$this->agama_model->where("deleted ",null);
+		//$this->agama_model->where("deleted ",null);
 		$total= $this->agama_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -251,7 +251,7 @@ class Masters extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->agama_model->order_by($iSortCol,$sSortCol);
-        $this->agama_model->where("deleted ",null);
+        //$this->agama_model->where("deleted",null);
 		$records=$this->agama_model->find_all();
 
 		/*Ketika dalam mode pencarian, berarti kita harus

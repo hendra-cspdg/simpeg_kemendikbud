@@ -1,8 +1,8 @@
 <?php
-$areaUrl = SITE_AREA . '/masters/ref_jabatan';
+$areaUrl = SITE_AREA . '/masters/tkpendidikan';
 $num_columns	= 2;
-$can_delete	= $this->auth->has_permission('Ref_jabatan.Masters.Delete');
-$can_edit		= $this->auth->has_permission('Ref_jabatan.Masters.Edit');
+$can_delete	= $this->auth->has_permission('Tkpendidikan.Masters.Delete');
+$can_edit		= $this->auth->has_permission('Tkpendidikan.Masters.Edit');
 $has_records	= isset($records) && is_array($records) && count($records);
 
 if ($can_delete) {
@@ -14,7 +14,7 @@ if ($can_delete) {
 		<h3>
 			Jabatan
 			
-			 <?php if ($this->auth->has_permission('Ref_jabatan.Masters.Create')) : ?>
+			 <?php if ($this->auth->has_permission('Tkpendidikan.Masters.Create')) : ?>
               <a href="<?php echo site_url($areaUrl . '/create'); ?>">
               	<button type="button" class="btn btn-default btn-warning margin pull-right "><i class="fa fa-plus"></i> Tambah</button>
 			</a>
@@ -27,8 +27,7 @@ if ($can_delete) {
 				<thead>
 					<tr>
 						<tr><th style="width:10px">No</th>
-						<th>Nama Jabatan</th>
-						<th>Jenis</th>
+						<th>Nama</th>
 						<th width="70px">#</th>
 					</tr>
 				</thead>
@@ -46,7 +45,7 @@ var grid_daftar = $(".table-datatable").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-	  url: "<?php echo base_url() ?>admin/masters/ref_jabatan/ajax_data",
+	  url: "<?php echo base_url() ?>admin/masters/tkpendidikan/ajax_data",
 	  type:'POST',
 	}
 });
@@ -55,7 +54,7 @@ $('body').on('click','.btn-hapus',function () {
 	var kode =$(this).attr("kode");
 	swal({
 		title: "Anda Yakin?",
-		text: "Hapus data Jabatan!",
+		text: "Hapus data!",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonClass: 'btn-danger',
@@ -66,9 +65,9 @@ $('body').on('click','.btn-hapus',function () {
 	},
 	function (isConfirm) {
 		if (isConfirm) {
-			var post_data = "kode="+kode;
+			var post_data = "kode="+kode;;
 			$.ajax({
-					url: "<?php echo base_url() ?>admin/masters/ref_jabatan/delete",
+					url: "<?php echo base_url() ?>admin/masters/tkpendidikan/delete",
 					type:"POST",
 					data: post_data,
 					dataType: "html",

@@ -1,17 +1,16 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Kuotajabatan_model extends BF_Model
+class Tkpendidikan_model extends BF_Model
 {
-    protected $table_name	= 'kuota_jabatan';
+    protected $table_name	= 'tkpendidikan';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
 	protected $set_created	= false;
 	protected $set_modified = false;
-	protected $soft_deletes	= true;
+	protected $soft_deletes	= false;
 
-    protected $deleted_field     = 'deleted';
 
 	// Customize the operations of the model without recreating the insert,
     // update, etc. methods by adding the method names to act as callbacks here.
@@ -41,14 +40,19 @@ class Kuotajabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'NAMA',
-			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[20]',
+			'field' => 'GOLONGAN_ID',
+			'label' => 'lang:tkpendidikan_field_GOLONGAN_ID',
+			'rules' => 'max_length[255]',
 		),
 		array(
-			'field' => 'NCSISTIME',
-			'label' => 'lang:agama_field_NCSISTIME',
-			'rules' => 'max_length[30]',
+			'field' => 'NAMA',
+			'label' => 'lang:tkpendidikan_field_NAMA',
+			'rules' => 'max_length[255]',
+		),
+		array(
+			'field' => 'GOLONGAN_AWAL_ID',
+			'label' => 'lang:tkpendidikan_field_GOLONGAN_AWAL_ID',
+			'rules' => 'max_length[255]',
 		),
 	);
 	protected $insert_validation_rules  = array();
@@ -63,18 +67,4 @@ class Kuotajabatan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($unitkerja ="")
-	{
-		
-		if(empty($this->selects))
-		{
-			$this->select($this->table_name .'.KODE_UNIT_KERJA,ID_JABATAN,JUMLAH_PEMANGKU_JABATAN,Nama_Jabatan');
-		}
-		if($unitkerja != ""){
-			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
-		}
-		$this->db->join('ref_jabatan', 'kuota_jabatan.ID_JABATAN = ref_jabatan.ID_Jabatan', 'left');
-		return parent::find_all();
-	}
-	 
 }

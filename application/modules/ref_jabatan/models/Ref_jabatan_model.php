@@ -9,7 +9,7 @@ class Ref_jabatan_model extends BF_Model
 	protected $log_user 	= false;
 	protected $set_created	= false;
 	protected $set_modified = false;
-	protected $soft_deletes	= true;
+	protected $soft_deletes	= false;
 
     protected $deleted_field     = 'deleted';
 
@@ -43,13 +43,9 @@ class Ref_jabatan_model extends BF_Model
 		array(
 			'field' => 'NAMA_Jabatan',
 			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[20]',
+			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[100]',
 		),
-		array(
-			'field' => 'NCSISTIME',
-			'label' => 'lang:agama_field_NCSISTIME',
-			'rules' => 'max_length[30]',
-		),
+		 
 	);
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;

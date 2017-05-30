@@ -29,8 +29,6 @@ if ($can_delete) {
 			</table>
 		<?php
    		echo form_close();
-    
-    echo $this->pagination->create_links();
     ?>
 	</div>
 </div>

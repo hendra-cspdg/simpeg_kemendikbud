@@ -110,7 +110,7 @@ class Masters extends Admin_Controller
                     "more" =>$morePages,
                     "totalx"=>$total,
                     "startx"=>$start,
-                    "limitx"=>$limit
+                    "limitx"=>200
                 )
             );   
             $this->db->flush_cache();

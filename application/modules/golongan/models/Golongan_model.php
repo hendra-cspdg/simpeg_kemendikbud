@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Kuotajabatan_model extends BF_Model
+class Golongan_model extends BF_Model
 {
-    protected $table_name	= 'kuota_jabatan';
+    protected $table_name	= 'golongan';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
@@ -11,7 +11,6 @@ class Kuotajabatan_model extends BF_Model
 	protected $set_modified = false;
 	protected $soft_deletes	= true;
 
-    protected $deleted_field     = 'deleted';
 
 	// Customize the operations of the model without recreating the insert,
     // update, etc. methods by adding the method names to act as callbacks here.
@@ -42,17 +41,17 @@ class Kuotajabatan_model extends BF_Model
 	protected $validation_rules 		= array(
 		array(
 			'field' => 'NAMA',
-			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[20]',
+			'label' => 'lang:golongan_field_NAMA',
+			'rules' => 'max_length[255]',
 		),
 		array(
-			'field' => 'NCSISTIME',
-			'label' => 'lang:agama_field_NCSISTIME',
-			'rules' => 'max_length[30]',
+			'field' => 'NAMA_PANGKAT',
+			'label' => 'lang:golongan_field_NAMA_PANGKAT',
+			'rules' => 'max_length[255]',
 		),
 	);
 	protected $insert_validation_rules  = array();
-	protected $skip_validation 			= true;
+	protected $skip_validation 			= false;
 
     /**
      * Constructor
@@ -63,18 +62,17 @@ class Kuotajabatan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($unitkerja ="")
+    public function grupbygolongan()
 	{
-		
+		 
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.KODE_UNIT_KERJA,ID_JABATAN,JUMLAH_PEMANGKU_JABATAN,Nama_Jabatan');
+			$this->select('golongan.NAMA,count(pegawai."Gol_ID") as jumlah');
 		}
-		if($unitkerja != ""){
-			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
-		}
-		$this->db->join('ref_jabatan', 'kuota_jabatan.ID_JABATAN = ref_jabatan.ID_Jabatan', 'left');
+		 
+		$this->db->join('pegawai', 'pegawai.Gol_ID = golongan.ID', 'left');
+		$this->db->group_by('pegawai.Gol_ID');
+		$this->db->group_by('golongan.NAMA');
 		return parent::find_all();
 	}
-	 
 }
