@@ -67,11 +67,11 @@ class Golongan_model extends BF_Model
 		 
 		if(empty($this->selects))
 		{
-			$this->select('golongan.NAMA,count(pegawai."Gol_ID") as jumlah');
+			$this->select('golongan.NAMA,count(pegawai."GOL_ID") as jumlah');
 		}
 		 
-		$this->db->join('pegawai', 'pegawai.Gol_ID = golongan.ID', 'left');
-		$this->db->group_by('pegawai.Gol_ID');
+		$this->db->join('pegawai', 'pegawai.GOL_ID = golongan.ID', 'left');
+		$this->db->group_by('pegawai.GOL_ID');
 		$this->db->group_by('golongan.NAMA');
 		return parent::find_all();
 	}

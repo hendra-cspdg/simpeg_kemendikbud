@@ -58,8 +58,8 @@ class reports extends Admin_Controller
 		$datajk = array();
 		if (isset($jks) && is_array($jks) && count($jks)) :
 			foreach ($jks as $record) :
-				if($record->Jenis_Kelamin != "")
-					$datajk["Jenis_Kelamin"] = $record->Jenis_Kelamin;
+				if($record->JENIS_KELAMIN != "")
+					$datajk["Jenis_Kelamin"] = $record->JENIS_KELAMIN;
 				else
 					$datajk["Jenis_Kelamin"] = "Belum ditentukan";
 				$datajk["jumlah"] = $record->jumlah;
