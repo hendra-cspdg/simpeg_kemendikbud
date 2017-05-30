@@ -347,7 +347,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
-							<option value="<?php echo $record->ID_Jabatan?>" <?php if(isset($pegawai->JABATAN_ID))  echo  ($pegawai->JABATAN_ID==$record->ID_Jabatan) ? "selected" : ""; ?>><?php echo $record->NAMA_Jabatan; ?></option>
+							<option value="<?php echo $record->ID_JABATAN?>" <?php if(isset($pegawai->JABATAN_ID))  echo  ($pegawai->JABATAN_ID==$record->ID_JABATAN) ? "selected" : ""; ?>><?php echo $record->NAMA_JABATAN; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>

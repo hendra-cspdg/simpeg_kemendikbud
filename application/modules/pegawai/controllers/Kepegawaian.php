@@ -307,14 +307,14 @@ class Kepegawaian extends Admin_Controller
         
         $pegawaiData = $this->pegawai_model->find($id);
         Template::set('pegawai', $pegawaiData);
-        Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->Lokasi_Kerja_ID));
-        if($pegawaiData->Unor_ID == $pegawaiData->Unor_induk_ID){
-        	$unor = $this->unitkerja_model->find($pegawaiData->Unor_ID);
+        Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
+        if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
+        	$unor = $this->unitkerja_model->find($pegawaiData->UNOR_ID);
         	Template::set('selectedUnorid',$unor);
         	Template::set('selectedUnorindukid',$unor);
         }else{
-        	Template::set('selectedUnorid',$this->unitkerja_model->find($pegawaiData->Unor_ID));
-        	Template::set('selectedUnorindukid',$this->unitkerja_model->find($pegawaiData->Unor_induk_ID));
+        	Template::set('selectedUnorid',$this->unitkerja_model->find((int)$pegawaiData->UNOR_ID));
+        	Template::set('selectedUnorindukid',$this->unitkerja_model->find((int)$pegawaiData->UNOR_INDUK_ID));
         }
         
         Template::set('toolbar_title', lang('pegawai_edit_heading'));
@@ -402,7 +402,7 @@ class Kepegawaian extends Admin_Controller
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->Satuan_Kerja_Kerja_ID,
+				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->SATUAN_KERJA_KERJA_ID,
 						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
 						<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
