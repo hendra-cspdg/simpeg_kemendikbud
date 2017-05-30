@@ -10,6 +10,7 @@ class Kepegawaian extends Admin_Controller
     protected $permissionEdit   = 'Pegawai.Kepegawaian.Edit';
     protected $permissionView   = 'Pegawai.Kepegawaian.View';
     protected $permissionAddpendidikan   = 'Pegawai.Kepegawaian.Addpendidikan';
+    protected $permissionUbahfoto   = 'Pegawai.Kepegawaian.Ubahfoto';
 
     /**
      * Constructor
@@ -20,7 +21,7 @@ class Kepegawaian extends Admin_Controller
     {
         parent::__construct();
         
-        $this->auth->restrict($this->permissionView);
+        
         $this->load->model('pegawai/pegawai_model');
         $this->load->model('pegawai/riwayat_pendidikan_model');
         $this->lang->load('pegawai');
@@ -71,7 +72,9 @@ class Kepegawaian extends Admin_Controller
      * @return void
      */
     public function index()
-    {
+    {	
+
+    	$this->auth->restrict($this->permissionView);
         // Deleting anything?
         if (isset($_POST['delete'])) {
             $this->auth->restrict($this->permissionDelete);
@@ -114,7 +117,7 @@ class Kepegawaian extends Admin_Controller
 		Template::render();
 	}
 	function savefoto(){
-		$this->auth->restrict($this->permissionEdit);
+		$this->auth->restrict($this->permissionUbahfoto);
     	$this->load->helper('handle_upload');
 		$uploadData = array();
 		$upload = true;
@@ -309,7 +312,7 @@ class Kepegawaian extends Admin_Controller
         Template::set('pegawai', $pegawaiData);
         Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
         if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
-        	$unor = $this->unitkerja_model->find($pegawaiData->UNOR_ID);
+        	$unor = $this->unitkerja_model->find((int)$pegawaiData->UNOR_ID);
         	Template::set('selectedUnorid',$unor);
         	Template::set('selectedUnorindukid',$unor);
         }else{
@@ -322,6 +325,13 @@ class Kepegawaian extends Admin_Controller
     }
     public function profile($id='')
     {
+    	Template::set('collapse', true);
+    	if($this->auth->role_id() == "2"){
+    		$pegawai = $this->pegawai_model->find_by("NIP_BARU",trim($this->auth->username()));
+    		$id = isset($pegawai->ID) ? $pegawai->ID : "";
+    		//die($id." masuk");
+    	}
+    	 
         if (empty($id)) {
             Template::set_message(lang('pegawai_invalid_id'), 'error');
 
@@ -329,7 +339,7 @@ class Kepegawaian extends Admin_Controller
         }
         
         $this->load->library('convert');
- 
+ 		
         $pegawai = $this->pegawai_model->find_detil($id);
         Template::set('pegawai', $pegawai);
         Template::set('PNS_ID', $pegawai->PNS_ID);

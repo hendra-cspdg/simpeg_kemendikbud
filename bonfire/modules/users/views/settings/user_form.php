@@ -70,6 +70,7 @@ echo form_open($this->uri->uri_string(), 'class="form-horizontal" autocomplete="
     <?php
     endif;
 	?>
+	<!--
 	<div class="control-group <?php echo form_error('nip') ? 'error' : ''; ?> col-sm-12">
 		<?php echo form_label('Pegawai', 'nip', array('class' => 'control-label') ); ?>
 		<div class='controls'>
@@ -84,6 +85,7 @@ echo form_open($this->uri->uri_string(), 'class="form-horizontal" autocomplete="
 			<span class='help-inline'><?php echo form_error('nip'); ?></span>
 		</div>
 	</div>
+	-->
 	<?php
     // Allow modules to render custom fields
     Events::trigger('render_user_form');

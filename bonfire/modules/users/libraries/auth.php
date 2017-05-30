@@ -461,7 +461,15 @@ class Auth
 		return $this->user()->role_id;
 
 	}//end role_id()
-	
+	public function username()
+	{
+		if ( ! $this->is_logged_in())
+		{
+			return FALSE;
+		}
+		return $this->user()->username;
+
+	}
 	public function bidang()
 	{
 		if ( ! $this->is_logged_in())

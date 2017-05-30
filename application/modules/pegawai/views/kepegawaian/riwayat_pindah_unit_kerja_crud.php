@@ -129,7 +129,7 @@
                 if(data.success){
                     swal("Pemberitahuan!", data.msg, "success");
                     $("#modal-custom-global").trigger("sukses-tambah-riwayat-pindah_unit_kerja");
-					 $("#modal-custom-global").modal("hide");
+					$("#modal-custom-global").modal("hide");
                 }
                 else {
                     $("#form-diklat-fungsional-add .messages").empty().append(data.msg);

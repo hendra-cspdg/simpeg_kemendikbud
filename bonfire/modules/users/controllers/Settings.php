@@ -536,7 +536,7 @@ class Settings extends Admin_Controller
 		}
 		if ($this->input->post('role_id') == '2')
         {
-			$this->form_validation->set_rules('nip', 'Pegawai', 'required|trim|max_length[30]|unique[users.nip' . $extra_unique_rule . ']');
+			//$this->form_validation->set_rules('nip', 'Pegawai', 'required|trim|max_length[30]|unique[users.nip' . $extra_unique_rule . ']');
 		}
 		$this->form_validation->set_rules('username', 'lang:bf_username', $username_required . 'trim|max_length[30]|unique[users.username' . $extra_unique_rule . ']');
         $this->form_validation->set_rules('email', 'lang:bf_email', 'required|trim|valid_email|max_length[120]|unique[users.email' . $extra_unique_rule . ']');

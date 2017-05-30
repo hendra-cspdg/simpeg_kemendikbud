@@ -91,11 +91,12 @@ class Users extends Front_Controller
 					
 					if ($this->settings_lib->item('auth.do_login_redirect') && !empty ($this->auth->login_destination))
 					{
-						//die("masuk log");
+						//die(trim($this->auth->login_destination)."masuk log");
 						Template::redirect(trim($this->auth->login_destination));
 					}
 					else
 					{
+					die("masuk");
 						 
 						Template::redirect(trim($this->auth->login_destination));
 					}
@@ -108,7 +109,6 @@ class Users extends Front_Controller
 		}
 		else
 		{
-			
 			Template::redirect('/admin/content');
 		}//end if
 		Template::set_view('users/users/login');
