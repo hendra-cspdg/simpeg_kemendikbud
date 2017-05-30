@@ -17,7 +17,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_kps) && is_array($jenis_kps) && count($jenis_kps)):?>
 						<?php foreach($jenis_kps as $record):?>
-							<option value="<?php echo $record->id?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->id) ? "selected" : ""; ?>><?php echo $record->id." | ".$record->nama.""; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->ID) ? "selected" : ""; ?>><?php echo $record->ID." | ".$record->nama.""; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
@@ -40,7 +40,7 @@
                 </div>
             </div>            
 			<div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TMT_GOLONGAN</label>
+				<label for="inputNAMA" class="control-label">TMT_GOLONGAN</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">SK TANGGAL</label>
+				<label for="inputNAMA" class="control-label">SK TANGGAL</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="control-group col-sm-3">
-				<label for="inputNama" class="control-label">TANGGAL BKN</label>
+				<label for="inputNAMA" class="control-label">TANGGAL BKN</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>

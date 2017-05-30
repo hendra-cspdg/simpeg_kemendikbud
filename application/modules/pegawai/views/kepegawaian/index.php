@@ -26,7 +26,7 @@ if ($can_delete) {
 		<table class="slug-table table table-bordered table-striped table-responsive dt-responsive table-data table-hover">
 				 <thead>
 				 <tr><th style="width:10px">No</th>
-				 <th>NIP</th><th>Nama Pegawai</th><th>Unit Kerja</th><th width="70px">#</th></tr>
+				 <th>NIP</th><th>NAMA Pegawai</th><th>Unit Kerja</th><th width="70px">#</th></tr>
 				 </thead>
 				 </table>
 	<?php

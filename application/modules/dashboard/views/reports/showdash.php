@@ -74,7 +74,7 @@
 			  <table class="table table-bordered table-striped">
 				  <tr>
 				  	<th width="10px">No.</th>
-				  	<th>Nama</th>
+				  	<th>NAMA</th>
 					  <?php if (isset($propinsis) && is_array($propinsis) && count($propinsis)):?>
 					  <?php foreach($propinsis as $rec):?>
 						  <th><?php e(ucfirst($rec->keterangan)); ?></th>

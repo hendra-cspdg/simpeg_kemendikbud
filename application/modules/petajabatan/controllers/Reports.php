@@ -70,7 +70,7 @@ class Reports extends Admin_Controller
 		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
 			foreach($kuotajabatan as $record):
 				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] = trim($record->ID_JABATAN);
-				$akuota[trim($record->KODE_UNIT_KERJA)."-Nama_Jabatan"][] = trim($record->Nama_Jabatan);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] = trim($record->NAMA_Jabatan);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;
@@ -79,7 +79,7 @@ class Reports extends Admin_Controller
 		$apegawai = array(); 
 		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
 			foreach($pegawaijabatan as $record):
-				$apegawai[trim($record->Unor_ID)."-jml-".trim($record->Jabatan_ID)] = trim($record->jumlah);
+				$apegawai[trim($record->Unor_ID)."-jml-".trim($record->JABATAN_ID)] = trim($record->jumlah);
 			endforeach;
 		endif;
 		//print_r($apegawai);

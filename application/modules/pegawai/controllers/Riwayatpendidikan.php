@@ -50,7 +50,7 @@ class Riwayatpendidikan extends Admin_Controller
 		}
 		$this->riwayat_pendidikan_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_pendidikan_model->order_by($iSortCol,$sSortCol);
         $this->riwayat_pendidikan_model->where("PNS_ID",$PNS_ID);    
@@ -73,9 +73,9 @@ class Riwayatpendidikan extends Admin_Controller
                 $row = array();
                 $row []  = $nomor_urut;
                 $row []  = $record->tk_pendidikan_text;
-                $row []  = $record->Nama_Sekolah;
-                $row []  = $record->Tahun_Lulus;
-                $row []  = $record->Nomor_Ijasah;
+                $row []  = $record->NAMA_Sekolah;
+                $row []  = $record->TAHUN_LULUS;
+                $row []  = $record->NOMOR_IJASAH;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -154,8 +154,8 @@ class Riwayatpendidikan extends Admin_Controller
         }
 
         $data = $this->riwayat_pendidikan_model->prep_data($this->input->post());
-       if(empty($data['Tanggal_Lulus'])){
-            unset($data['Tanggal_Lulus']);
+       if(empty($data['TANGGAL_LULUS'])){
+            unset($data['TANGGAL_LULUS']);
        }
         $id_data = $this->input->post("id_data");
         if(isset($id_data) && !empty($id_data)){

@@ -18,7 +18,7 @@
             <thead>
                 <tr>
                     <th width='100px' >No</th>
-                    <th>Nama Diklat</th>
+                    <th>NAMA Diklat</th>
                     <th width='100px' >Tanggal</th>
                     <th width='100px' >Tahun</th>
                     <th width='100px' align="center">#</th>

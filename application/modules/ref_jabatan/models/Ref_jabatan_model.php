@@ -41,7 +41,7 @@ class Ref_jabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'Nama_Jabatan',
+			'field' => 'NAMA_Jabatan',
 			'label' => 'lang:agama_field_NAMA',
 			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[100]',
 		),

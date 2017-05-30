@@ -79,7 +79,7 @@ class Diklat_struktural_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('ID_PNS',$PNS_ID);
 		}
-		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.Pendidikan_ID', 'left');
+		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.PENDIDIKAN_ID', 'left');
 		return parent::find_all();
 	}
 }

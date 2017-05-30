@@ -3,7 +3,7 @@
 class Pegawai_model extends BF_Model
 {
     protected $table_name	= 'pegawai';
-	protected $key			= 'id';
+	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
@@ -45,53 +45,53 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]|required',
 		),
 		array(
-			'field' => 'NIP_Lama',
-			'label' => 'lang:pegawai_field_NIP_Lama',
+			'field' => 'NIP_LAMA',
+			'label' => 'lang:pegawai_field_NIP_LAMA',
 			'rules' => 'max_length[9]|required',
 		),
 		array(
-			'field' => 'Nip_Baru',
-			'label' => 'lang:pegawai_field_Nip_Baru',
+			'field' => 'NIP_BARU',
+			'label' => 'lang:pegawai_field_NIP_BARU',
 			'rules' => 'max_length[18]',
 		),
 		array(
-			'field' => 'Nama',
-			'label' => 'lang:pegawai_field_Nama',
+			'field' => 'NAMA',
+			'label' => 'lang:pegawai_field_NAMA',
 			'rules' => 'max_length[50]',
 		),
 		array(
-			'field' => 'Gelar_Depan',
-			'label' => 'lang:pegawai_field_Gelar_Depan',
+			'field' => 'GELAR_DEPAN',
+			'label' => 'lang:pegawai_field_GELAR_DEPAN',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Gelar_Blk',
-			'label' => 'lang:pegawai_field_Gelar_Blk',
+			'field' => 'GELAR_BELAKANG',
+			'label' => 'lang:pegawai_field_GELAR_BELAKANG',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Tempat_Lahir_ID',
-			'label' => 'lang:pegawai_field_Tempat_Lahir_ID',
+			'field' => 'TEMPAT_LAHIR_ID',
+			'label' => 'lang:pegawai_field_TEMPAT_LAHIR_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Tgl_Lahir',
-			'label' => 'lang:pegawai_field_Tgl_Lahir',
+			'field' => 'TGL_LAHIR',
+			'label' => 'lang:pegawai_field_TGL_LAHIR',
 			'rules' => '',
 		),
 		array(
-			'field' => 'Jenis_Kelamin',
-			'label' => 'lang:pegawai_field_Jenis_Kelamin',
+			'field' => 'JENIS_KELAMIN',
+			'label' => 'lang:pegawai_field_JENIS_KELAMIN',
 			'rules' => 'max_length[2]',
 		),
 		array(
-			'field' => 'Agama_ID',
-			'label' => 'lang:pegawai_field_Agama_ID',
+			'field' => 'AGAMA_ID',
+			'label' => 'lang:pegawai_field_AGAMA_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Jenis_Kawin_ID',
-			'label' => 'lang:pegawai_field_Jenis_Kawin_ID',
+			'field' => 'JENIS_KAWIN_ID',
+			'label' => 'lang:pegawai_field_JENIS_KAWIN_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
@@ -100,28 +100,28 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Nomor_Darurat',
-			'label' => 'lang:pegawai_field_Nomor_Darurat',
+			'field' => 'NOMOR_DARURAT',
+			'label' => 'lang:pegawai_field_NOMOR_DARURAT',
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Nomor_HP',
-			'label' => 'lang:pegawai_field_Nomor_HP',
+			'field' => 'NOMOR_HP',
+			'label' => 'lang:pegawai_field_NOMOR_HP',
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Email',
-			'label' => 'lang:pegawai_field_Email',
+			'field' => 'EMAIL',
+			'label' => 'lang:pegawai_field_EMAIL',
 			'rules' => 'max_length[200]',
 		),
 		array(
-			'field' => 'Alamat',
-			'label' => 'lang:pegawai_field_Alamat',
+			'field' => 'ALAMAT',
+			'label' => 'lang:pegawai_field_ALAMAT',
 			'rules' => '',
 		),
 		array(
-			'field' => 'NPWP_Nomor',
-			'label' => 'lang:pegawai_field_NPWP_Nomor',
+			'field' => 'NPWP_NOMOR',
+			'label' => 'lang:pegawai_field_NPWP_NOMOR',
 			'rules' => 'max_length[25]',
 		),
 		array(
@@ -130,33 +130,33 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[25]',
 		),
 		array(
-			'field' => 'Jenis_Pegawai_ID',
-			'label' => 'lang:pegawai_field_Jenis_Pegawai_ID',
+			'field' => 'JENIS_PEGAWAI_ID',
+			'label' => 'lang:pegawai_field_JENIS_PEGAWAI_ID',
 			'rules' => 'max_length[50]',
 		),
 		array(
-			'field' => 'Kedudukan_Hukum_ID',
-			'label' => 'lang:pegawai_field_Kedudukan_Hukum_ID',
+			'field' => 'KEDUDUKAN_HUKUM_ID',
+			'label' => 'lang:pegawai_field_KEDUDUKAN_HUKUM_ID',
 			'rules' => 'max_length[50]',
 		),
 		array(
-			'field' => 'Status_CPNS_PNS',
-			'label' => 'lang:pegawai_field_Status_CPNS_PNS',
+			'field' => 'STATUS_CPNS_PNS',
+			'label' => 'lang:pegawai_field_STATUS_CPNS_PNS',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Kartu_Pegawai',
-			'label' => 'lang:pegawai_field_Kartu_Pegawai',
+			'field' => 'KARTU_PEGAWAI',
+			'label' => 'lang:pegawai_field_KARTU_PEGAWAI',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Nomor_SK_CPNS',
-			'label' => 'lang:pegawai_field_Nomor_SK_CPNS',
+			'field' => 'NOMOR_SK_CPNS',
+			'label' => 'lang:pegawai_field_NOMOR_SK_CPNS',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Tgl_SK_CPNS',
-			'label' => 'lang:pegawai_field_Tgl_SK_CPNS',
+			'field' => 'TGL_SK_CPNS',
+			'label' => 'lang:pegawai_field_TGL_SK_CPNS',
 			'rules' => '',
 		),
 		array(
@@ -170,53 +170,53 @@ class Pegawai_model extends BF_Model
 			'rules' => '',
 		),
 		array(
-			'field' => 'Gol_Awal_ID',
-			'label' => 'lang:pegawai_field_Gol_Awal_ID',
+			'field' => 'GOL_AWAL_ID',
+			'label' => 'lang:pegawai_field_GOL_AWAL_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Gol_ID',
-			'label' => 'lang:pegawai_field_Gol_ID',
+			'field' => 'GOL_ID',
+			'label' => 'lang:pegawai_field_GOL_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'TMT_Golongan',
-			'label' => 'lang:pegawai_field_TMT_Golongan',
+			'field' => 'TMT_GOLONGAN',
+			'label' => 'lang:pegawai_field_TMT_GOLONGAN',
 			'rules' => '',
 		),
 		array(
-			'field' => 'MK_Tahun',
-			'label' => 'lang:pegawai_field_MK_Tahun',
+			'field' => 'MK_TAHUN',
+			'label' => 'lang:pegawai_field_MK_TAHUN',
 			'rules' => 'max_length[4]',
 		),
 		array(
-			'field' => 'MK_Bulan',
-			'label' => 'lang:pegawai_field_MK_Bulan',
+			'field' => 'MK_BULAN',
+			'label' => 'lang:pegawai_field_MK_BULAN',
 			'rules' => 'max_length[10]',
 		),
 		array(
-			'field' => 'Jenis_Jabatan_ID',
-			'label' => 'lang:pegawai_field_Jenis_Jabatan_ID',
+			'field' => 'JENIS_JABATAN_ID',
+			'label' => 'lang:pegawai_field_JENIS_JABATAN_ID',
 			'rules' => 'max_length[21]',
 		),
 		array(
-			'field' => 'Jabatan_ID',
-			'label' => 'lang:pegawai_field_Jabatan_ID',
+			'field' => 'JABATAN_ID',
+			'label' => 'lang:pegawai_field_JABATAN_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'TMT_Jabatan',
-			'label' => 'lang:pegawai_field_TMT_Jabatan',
+			'field' => 'TMT_JABATAN',
+			'label' => 'lang:pegawai_field_TMT_JABATAN',
 			'rules' => '',
 		),
 		array(
-			'field' => 'Pendidkan_ID',
-			'label' => 'lang:pegawai_field_Pendidkan_ID',
+			'field' => 'PENDIDIKAN_ID',
+			'label' => 'lang:pegawai_field_PENDIDIKAN_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Tahun_Lulus',
-			'label' => 'lang:pegawai_field_Tahun_Lulus',
+			'field' => 'TAHUN_LULUS',
+			'label' => 'lang:pegawai_field_TAHUN_LULUS',
 			'rules' => 'max_length[4]',
 		),
 		array(
@@ -240,8 +240,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Instansi_Induk_ID',
-			'label' => 'lang:pegawai_field_Instansi_Induk_ID',
+			'field' => 'INSTANSI_INDUK_ID',
+			'label' => 'lang:pegawai_field_INSTANSI_INDUK_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
@@ -260,8 +260,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Golongan_Darah',
-			'label' => 'lang:pegawai_field_Golongan_Darah',
+			'field' => 'GOLONGAN_DARAH',
+			'label' => 'lang:pegawai_field_GOLONGAN_DARAH',
 			'rules' => 'max_length[11]',
 		),
 	);
@@ -285,11 +285,11 @@ class Pegawai_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*,jenis_pegawai.NAMA as Jenis_Pegawai,kedudukan_hukum.NAMA AS Kedudukan_Hukum');
+			$this->select($this->table_name .'.*,jenis_pegawai.NAMA as JENIS_PEGAWAI,kedudukan_hukum.NAMA AS KEDUDUKAN_HUKUM');
 		}
 		 
-		$this->db->join('jenis_pegawai', 'pegawai.Jenis_Pegawai_ID = jenis_pegawai.ID', 'left');
-		$this->db->join('kedudukan_hukum', 'pegawai.Kedudukan_Hukum_ID = kedudukan_hukum.ID', 'left');
+		$this->db->join('jenis_pegawai', 'pegawai.JENIS_PEGAWAI_ID = jenis_pegawai.ID', 'left');
+		$this->db->join('kedudukan_hukum', 'pegawai.KEDUDUKAN_HUKUM_ID = kedudukan_hukum.ID', 'left');
 		return parent::find($ID);
 	}
 	public function find_grupjabatan($eselon2 ="")
@@ -297,13 +297,13 @@ class Pegawai_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.Jabatan_ID,Unor_ID,count(pegawai."Jabatan_ID") as jumlah');
+			$this->select($this->table_name .'.JABATAN_ID,Unor_ID,count(pegawai."JABATAN_ID") as jumlah');
 		}
 		if($eselon2 != ""){
 			$this->db->where('"Unor_ID" LIKE \''.strtoupper($eselon2).'%\'');
 		}
-		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = Jabatan_ID', 'left');
-		$this->db->group_by("Jabatan_ID");
+		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = JABATAN_ID', 'left');
+		$this->db->group_by("JABATAN_ID");
 		$this->db->group_by("Unor_ID");
 		return parent::find_all();
 	}

@@ -34,13 +34,13 @@ class Kepegawaian extends Admin_Controller
         Assets::add_module_js('pegawai', 'pegawai.js');
         
         //load referensi
-        $this->load->model('pegawai/jenis_pegawai_model');
-        $jenis_pegawais = $this->jenis_pegawai_model->find_all();
-		Template::set('jenis_pegawais', $jenis_pegawais);
+        $this->load->model('pegawai/JENIS_PEGAWAI_model');
+        $JENIS_PEGAWAIs = $this->JENIS_PEGAWAI_model->find_all();
+		Template::set('JENIS_PEGAWAIs', $JENIS_PEGAWAIs);
 		
-		$this->load->model('pegawai/kedudukan_hukum_model');
-        $kedudukan_hukums = $this->kedudukan_hukum_model->find_all();
-		Template::set('kedudukan_hukums', $kedudukan_hukums);
+		$this->load->model('pegawai/KEDUDUKAN_HUKUM_model');
+        $KEDUDUKAN_HUKUMs = $this->KEDUDUKAN_HUKUM_model->find_all();
+		Template::set('KEDUDUKAN_HUKUMs', $KEDUDUKAN_HUKUMs);
 		$this->load->model('pegawai/golongan_model');
         $golongans = $this->golongan_model->find_all();
 		Template::set('golongans', $golongans);
@@ -237,16 +237,16 @@ class Kepegawaian extends Admin_Controller
         
         $data = $this->riwayat_pendidikan_model->prep_data($this->input->post());
 		$data['PNS_ID'] 	= trim($this->input->post('PNS_ID'));
-		$data['Tingkat_Pendidikan_ID'] 	= $this->input->post('Tingkat_Pendidikan_ID');
-		$data['Pendidikan_ID'] 	= $this->input->post('Pendidikan_ID');
-		$data['Tanggal_Lulus'] 	= $this->input->post('Tanggal_Lulus') ? $this->input->post('Tanggal_Lulus') : null;
-		$data['Tahun_Lulus'] 	= $this->input->post('Tahun_Lulus');
-		$data['Nomor_Ijasah'] 	= $this->input->post('Nomor_Ijasah');
-		$data['Nama_Sekolah'] 	= $this->input->post('Nama_Sekolah');
-		$data['Gelar_Depan'] 	= $this->input->post('Gelar_Depan');
-		$data['Gelar_Belakang'] 	= $this->input->post('Gelar_Belakang');
-		$data['Pendidikan_Pertama'] 	= $this->input->post('Pendidikan_Pertama');
-		$data['Negara_sekolah'] 	= $this->input->post('Negara_sekolah');
+		$data['TINGKAT_PENDIDIKAN_ID'] 	= $this->input->post('TINGKAT_PENDIDIKAN_ID');
+		$data['PENDIDIKAN_ID'] 	= $this->input->post('PENDIDIKAN_ID');
+		$data['TANGGAL_LULUS'] 	= $this->input->post('TANGGAL_LULUS') ? $this->input->post('TANGGAL_LULUS') : null;
+		$data['TAHUN_LULUS'] 	= $this->input->post('TAHUN_LULUS');
+		$data['NOMOR_IJASAH'] 	= $this->input->post('NOMOR_IJASAH');
+		$data['NAMA_SEKOLAH'] 	= $this->input->post('NAMA_SEKOLAH');
+		$data['GELAR_DEPAN'] 	= $this->input->post('GELAR_DEPAN');
+		$data['GELAR_BELAKANG'] 	= $this->input->post('GELAR_BELAKANG');
+		$data['PENDIDIKAN_PERTAMA'] 	= $this->input->post('PENDIDIKAN_PERTAMA');
+		$data['NEGARA_SEKOLAH'] 	= $this->input->post('NEGARA_SEKOLAH');
         // Additional handling for default values should be added below,
         
 
@@ -375,13 +375,13 @@ class Kepegawaian extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
 		}
 		
 		$this->pegawai_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->pegawai_model->order_by($iSortCol,$sSortCol);
 		$records=$this->pegawai_model->find_all();
@@ -392,9 +392,9 @@ class Kepegawaian extends Admin_Controller
 		*/
 		if($search != "")
 		{
-			$this->pegawai_model->where('upper("Nama") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("Nip_Baru") LIKE \''.strtoupper($search).'%\'');
-			//$this->pegawai_model->or_where('Nip_Baru',$search);
+			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			//$this->pegawai_model->or_where('NIP_BARU',$search);
 			$jum	= $this->pegawai_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
@@ -402,19 +402,19 @@ class Kepegawaian extends Admin_Controller
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->Nip_Baru,$record->Nama,$record->Satuan_Kerja_Kerja_ID,
-						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->id."' data-toggle='tooltip' title='Lihat Profile' >
+				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->Satuan_Kerja_Kerja_ID,
+						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
 						<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->id."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
+					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='#' kode='$record->id' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
+					   	<a href='#' kode='$record->ID' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
@@ -461,12 +461,12 @@ class Kepegawaian extends Admin_Controller
         // Additional handling for default values should be added below,
         // or in the model's prep_data() method
         
-		$data['Tgl_Lahir']	= $this->input->post('Tgl_Lahir') ? $this->input->post('Tgl_Lahir') : null;
-		$data['Tgl_SK_CPNS']	= $this->input->post('Tgl_SK_CPNS') ? $this->input->post('Tgl_SK_CPNS') : null;
+		$data['TGL_LAHIR']	= $this->input->post('TGL_LAHIR') ? $this->input->post('TGL_LAHIR') : null;
+		$data['TGL_SK_CPNS']	= $this->input->post('TGL_SK_CPNS') ? $this->input->post('TGL_SK_CPNS') : null;
 		$data['TMT_CPNS']	= $this->input->post('TMT_CPNS') ? $this->input->post('TMT_CPNS') : null;
 		$data['TMT_PNS']	= $this->input->post('TMT_PNS') ? $this->input->post('TMT_PNS') : null;
-		$data['TMT_Golongan']	= $this->input->post('TMT_Golongan') ? $this->input->post('TMT_Golongan') : null;
-		$data['TMT_Jabatan']	= $this->input->post('TMT_Jabatan') ? $this->input->post('TMT_Jabatan') : null;
+		$data['TMT_GOLONGAN']	= $this->input->post('TMT_GOLONGAN') ? $this->input->post('TMT_GOLONGAN') : null;
+		$data['TMT_JABATAN']	= $this->input->post('TMT_JABATAN') ? $this->input->post('TMT_JABATAN') : null;
 
         $return = false;
         if ($type == 'insert') {

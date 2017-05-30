@@ -24,7 +24,7 @@ if (validation_errors()) :
 </div>
 <?php
 endif;
-$id = isset($pegawai->id) ? $pegawai->id : '';
+$id = isset($pegawai->ID) ? $pegawai->ID : '';
 $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
 
 ?>
@@ -43,13 +43,13 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                             <div class="col-md-10">
                                 <div class="row">
                                     <div class="col-md-8 profile-info">
-                                        <h1 class="font-green sbold uppercase"><?php echo isset($pegawai->Gelar_Depan) ? $pegawai->Gelar_Depan : ''; ?>  <?php echo isset($pegawai->Nama) ? $pegawai->Nama : ''; ?> <?php echo isset($pegawai->Gelar_Blk) ? $pegawai->Gelar_Blk : ''; ?></h1>
-                                        <h4><b>NIP</b> <?php echo isset($pegawai->Nip_Baru) ? $pegawai->Nip_Baru : ''; ?></h4>
+                                        <h1 class="font-green sbold uppercase"><?php echo isset($pegawai->GELAR_DEPAN) ? $pegawai->GELAR_DEPAN : ''; ?>  <?php echo isset($pegawai->NAMA) ? $pegawai->NAMA : ''; ?> <?php echo isset($pegawai->GELAR_BELAKANG) ? $pegawai->GELAR_BELAKANG : ''; ?></h1>
+                                        <h4><b>NIP</b> <?php echo isset($pegawai->NIP_BARU) ? $pegawai->NIP_BARU : ''; ?></h4>
                                         <ul class="list-inline">
                                             <li>
-                                                <i class="fa fa-map-marker"></i> <?php echo isset($pegawai->Alamat) ? $pegawai->Alamat : 'Alamat'; ?></li>
+                                                <i class="fa fa-map-marker"></i> <?php echo isset($pegawai->ALAMAT) ? $pegawai->ALAMAT : 'ALAMAT'; ?></li>
                                             <li>
-                                                <i class="fa fa-calendar"></i> <?php echo isset($pegawai->Tgl_Lahir) ? $convert->fmtDate($pegawai->Tgl_Lahir,"dd month yyyy") : 'Tgl_Lahir'; ?> </li>                                                                                                                                                                                                                                                                                                                                                                                                       </ul>
+                                                <i class="fa fa-calendar"></i> <?php echo isset($pegawai->TGL_LAHIR) ? $convert->fmtDate($pegawai->TGL_LAHIR,"dd month yyyy") : 'TGL_LAHIR'; ?> </li>                                                                                                                                                                                                                                                                                                                                                                                                       </ul>
                                     </div>
                                     <!--end col-md-8-->
                                     <div class="col-md-4">
@@ -144,8 +144,6 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
     </div>
 </div>
 
- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.css">
- <script src="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.js"></script>
 
  <script>
     $(document).ready(function(){

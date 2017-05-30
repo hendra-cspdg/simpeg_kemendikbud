@@ -3,7 +3,7 @@
 /**
  * Kepegawaian controller
  */
-class Lokasi extends MX_Controller
+class Lokasi extends Admin_Controller
 {
     public function __construct()
     {
