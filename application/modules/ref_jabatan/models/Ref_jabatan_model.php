@@ -3,7 +3,7 @@
 class Ref_jabatan_model extends BF_Model
 {
     protected $table_name	= 'ref_jabatan';
-	protected $key			= 'ID_Jabatan';
+	protected $key			= 'ID_JABATAN';
 	protected $date_format	= 'datetime';
 
 	protected $log_user 	= false;
@@ -41,9 +41,9 @@ class Ref_jabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'NAMA_Jabatan',
-			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[100]',
+			'field' => 'JENIS_JABATAN',
+			'label' => 'JENIS JABATAN',
+			'rules' => 'required|unique[ref_jabatan.NAMA_JABATAN,ref_jabatan.ID_JABATAN]|max_length[100]',
 		),
 		 
 	);
@@ -67,7 +67,7 @@ class Ref_jabatan_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($jenis_jabatan != ""){
-			$this->ref_jabatan_model->where("jenis_jabatan",$jenis_jabatan);
+			$this->ref_jabatan_model->where("JENIS_JABATAN",$jenis_jabatan);
 		}
 		return parent::find_all();
 	}

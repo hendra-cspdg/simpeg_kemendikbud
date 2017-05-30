@@ -205,12 +205,12 @@ class Masters extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->ref_jabatan_model->where('upper("Nama_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
-			$this->ref_jabatan_model->or_where('upper("Jenis_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
+			$this->ref_jabatan_model->where('upper("NAMA_JABATAN") LIKE \'%'.strtoupper($search).'%\'');
+			$this->ref_jabatan_model->or_where('upper("JENIS_JABATAN") LIKE \'%'.strtoupper($search).'%\'');
 		}
 		$this->ref_jabatan_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "Nama_Jabatan";
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA_JABATAN";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->ref_jabatan_model->order_by($iSortCol,$sSortCol);
         //$this->ref_jabatan_model->where("deleted",null);
@@ -222,8 +222,8 @@ class Masters extends Admin_Controller
 		*/
 		if($search != "")
 		{
-			$this->ref_jabatan_model->where('upper("Nama_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
-			$this->ref_jabatan_model->or_where('upper("Jenis_Jabatan") LIKE \'%'.strtoupper($search).'%\'');
+			$this->ref_jabatan_model->where('upper("NAMA_JABATAN") LIKE \'%'.strtoupper($search).'%\'');
+			$this->ref_jabatan_model->or_where('upper("JENIS_JABATAN") LIKE \'%'.strtoupper($search).'%\'');
 			$jum	= $this->ref_jabatan_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
@@ -233,11 +233,11 @@ class Masters extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
-                $row []  = $record->Nama_Jabatan;
-                $row []  = $record->Jenis_Jabatan;
+                $row []  = $record->NAMA_JABATAN;
+                $row []  = $record->JENIS_JABATAN;
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a href='".base_url()."admin/masters/ref_jabatan/edit/".$record->ID_Jabatan."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
+                    <a href='".base_url()."admin/masters/ref_jabatan/edit/".$record->ID_JABATAN."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
@@ -245,7 +245,7 @@ class Masters extends Admin_Controller
                 ";
 
                 $btn_actions  [] = "
-                        <a href='#' kode='$record->ID_Jabatan' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
+                        <a href='#' kode='$record->ID_JABATAN' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>

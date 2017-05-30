@@ -22,23 +22,23 @@ $id = isset($ref_jabatan->ID) ? $ref_jabatan->ID : '';
         <?php echo form_open($this->uri->uri_string(), ''); ?>
            
     <div class="box-body">
-            <div class="control-group<?php echo form_error('Jenis_Jabatan') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Jenis Jabatan", 'Jenis_Jabatan', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JENIS_JABATAN') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Jenis Jabatan", 'JENIS_JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <select name="Jenis_Jabatan" id="Jenis_Jabatan" class="form-control select2">
+                    <select name="JENIS_JABATAN" id="JENIS_JABATAN" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<option value="Jabatan Fungsional Umum" <?php if(isset($ref_jabatan->Jenis_Jabatan))  echo  (trim($ref_jabatan->Jenis_Jabatan)=="Jabatan Fungsional Umum") ? "selected" : ""; ?>>Fungsional Umum</option>
-						<option value="Jabatan Fungsional Tertentu" <?php if(isset($ref_jabatan->Jenis_Jabatan))  echo  (trim($ref_jabatan->Jenis_Jabatan) == "Jabatan Fungsional Tertentu") ? "selected" : ""; ?>>Fungsional Tertentu</option>
-						<option value="Struktural" <?php if(isset($ref_jabatan->Jenis_Jabatan))  echo  ($ref_jabatan->Jenis_Jabatan=="Struktural") ? "selected" : ""; ?>>Struktural</option>
+						<option value="Jabatan Fungsional Umum" <?php if(isset($ref_jabatan->JENIS_JABATAN))  echo  (trim($ref_jabatan->JENIS_JABATAN)=="Jabatan Fungsional Umum") ? "selected" : ""; ?>>Fungsional Umum</option>
+						<option value="Jabatan Fungsional Tertentu" <?php if(isset($ref_jabatan->JENIS_JABATAN))  echo  (trim($ref_jabatan->JENIS_JABATAN) == "Jabatan Fungsional Tertentu") ? "selected" : ""; ?>>Fungsional Tertentu</option>
+						<option value="Struktural" <?php if(isset($ref_jabatan->JENIS_JABATAN))  echo  ($ref_jabatan->JENIS_JABATAN=="Struktural") ? "selected" : ""; ?>>Struktural</option>
 					</select>
-                    <span class='help-inline'><?php echo form_error('Jenis_Jabatan'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JENIS_JABATAN'); ?></span>
                 </div>
             </div>
-                <div class="control-group<?php echo form_error('Nama_Jabatan') ? ' error' : ''; ?> col-sm-12">
-                    <?php echo form_label("Nama Jabatan". lang('bf_form_label_required'), 'Nama_Jabatan', array('class' => 'control-label')); ?>
+                <div class="control-group<?php echo form_error('NAMA_JABATAN') ? ' error' : ''; ?> col-sm-12">
+                    <?php echo form_label("Nama Jabatan". lang('bf_form_label_required'), 'NAMA_JABATAN', array('class' => 'control-label')); ?>
                     <div class='controls'>
-                        <input id='Nama_Jabatan' type='text' class="form-control" required='required' name='Nama_Jabatan' maxlength='100' value="<?php echo set_value('Nama_Jabatan', isset($ref_jabatan->Nama_Jabatan) ? $ref_jabatan->Nama_Jabatan : ''); ?>" />
-                        <span class='help-inline'><?php echo form_error('Nama_Jabatan'); ?></span>
+                        <input id='NAMA_JABATAN' type='text' class="form-control" required='required' name='NAMA_JABATAN' maxlength='100' value="<?php echo set_value('NAMA_JABATAN', isset($ref_jabatan->NAMA_JABATAN) ? $ref_jabatan->NAMA_JABATAN : ''); ?>" />
+                        <span class='help-inline'><?php echo form_error('NAMA_JABATAN'); ?></span>
                     </div>
                 </div>
         </div>
