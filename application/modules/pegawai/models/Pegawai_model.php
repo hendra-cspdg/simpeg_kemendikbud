@@ -297,14 +297,53 @@ class Pegawai_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.JABATAN_ID,Unor_ID,count(pegawai."JABATAN_ID") as jumlah');
+			$this->select($this->table_name .'.Jabatan_ID as JABATAN_ID,Unor_ID,count(pegawai."Jabatan_ID") as jumlah');
 		}
 		if($eselon2 != ""){
 			$this->db->where('"Unor_ID" LIKE \''.strtoupper($eselon2).'%\'');
 		}
 		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = JABATAN_ID', 'left');
-		$this->db->group_by("JABATAN_ID");
+		$this->db->group_by("Jabatan_ID");
 		$this->db->group_by("Unor_ID");
+		return parent::find_all();
+	}
+	// update yanarazor
+	public function find_grupagama($eselon2 ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.Agama_ID,NAMA AS label,count(pegawai."Agama_ID") as value');
+		}
+		if($eselon2 != ""){
+			$this->db->where('"Unor_ID" LIKE \''.strtoupper($eselon2).'%\'');
+		}
+		$this->db->group_by("Agama_ID");
+		$this->db->group_by("agama.NAMA");
+		$this->db->join('agama', 'pegawai.Agama_ID = agama.ID', 'left');
+		return parent::find_all();
+	}
+	public function grupbygolongan()
+	{
+		 
+		if(empty($this->selects))
+		{
+			$this->select('golongan.NAMA,count(pegawai."Gol_ID") as jumlah');
+		}
+		 
+		$this->db->join('golongan', 'pegawai.Gol_ID = golongan.ID', 'left');
+		$this->db->group_by('pegawai.Gol_ID');
+		$this->db->group_by('golongan.NAMA');
+		return parent::find_all();
+	}
+	public function grupbyjk()
+	{
+		 
+		if(empty($this->selects))
+		{
+			$this->select('pegawai.Jenis_Kelamin,count(pegawai."Jenis_Kelamin") as jumlah');
+		}
+		$this->db->group_by('pegawai.Jenis_Kelamin');
 		return parent::find_all();
 	}
 }

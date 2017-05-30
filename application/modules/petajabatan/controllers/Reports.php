@@ -69,8 +69,9 @@ class Reports extends Admin_Controller
 		$akuota[] = array(); 
 		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
 			foreach($kuotajabatan as $record):
+				//echo $record->ID_JABATAN;
 				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] = trim($record->ID_JABATAN);
-				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] = trim($record->NAMA_Jabatan);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] = trim($record->Nama_Jabatan);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;

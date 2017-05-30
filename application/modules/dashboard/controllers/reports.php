@@ -32,10 +32,41 @@ class reports extends Admin_Controller
 	{
 		
 		$this->auth->restrict('Dashboard.Reports.View');
-		$anggaran = $this->input->get('anggaran');
-		
-		$nilai = "[10]";
-		Template::set('adatasppdbulan', $nilai);
+		$this->load->model('pegawai/pegawai_model', null, true);
+		$this->load->model('golongan/golongan_model', null, true);
+		//pangkat
+		$jsonpangkat = array();
+		$recordpangkat = $this->golongan_model->grupbygolongan(); 
+		$dataprov = array();
+		if (isset($recordpangkat) && is_array($recordpangkat) && count($recordpangkat)) :
+			foreach ($recordpangkat as $record) :
+				if($record->NAMA != "")
+					$dataprov["NAMA"] = $record->NAMA;
+				else
+					$dataprov["NAMA"] = "Belum ditentukan";
+				$dataprov["jumlah"] = $record->jumlah;
+				$jsonpangkat[] 	= $dataprov;
+			endforeach;
+		endif;
+		Template::set('jsonpangkat', json_encode($jsonpangkat));
+		// agama
+		$agamas = $this->pegawai_model->find_grupagama();
+		Template::set('agamas', $agamas);
+		// jenis kelamin
+		$jks = $this->pegawai_model->grupbyjk();
+		$jsonjk = array();
+		$datajk = array();
+		if (isset($jks) && is_array($jks) && count($jks)) :
+			foreach ($jks as $record) :
+				if($record->Jenis_Kelamin != "")
+					$datajk["Jenis_Kelamin"] = $record->Jenis_Kelamin;
+				else
+					$datajk["Jenis_Kelamin"] = "Belum ditentukan";
+				$datajk["jumlah"] = $record->jumlah;
+				$jsonjk[] 	= $datajk;
+			endforeach;
+		endif;
+		Template::set('jsonjk', json_encode($jsonjk));
 		
 		Template::render();
 	}
