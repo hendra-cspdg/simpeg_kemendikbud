@@ -58,26 +58,26 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                     <div class="col-md-4">
                                         <div class="portlet sale-summary">
                                             <div class="portlet-title" style="padding:5px;">
-                                                <div class="caption font-red sbold"> Unit Organisasi </div>
+                                                <div class="caption font-red sbold"> <strong><?php echo isset($unor->NAMA_ESELON_I) ? $unor->NAMA_ESELON_I : '-'; ?> </strong></div>
                                             </div>
                                             <div class="portlet-body" style="padding:5px;">
                                                 <ul class="list-unstyled">
                                                     <li>
                                                         <strong>Satker</strong><br>
                                                         <small>
-                                                            <?php echo isset($pegawai->satker) ? $pegawai->satker : '-'; ?>
+                                                            <?php echo isset($unor->NAMA_ESELON_II) ? $unor->NAMA_ESELON_II : '-'; ?>
                                                        </small>
                                                     </li>
                                                     <li>
                                                         <strong>Bidang</strong><br>
                                                         <small>
-                                                            <?php echo isset($pegawai->bidang) ? $pegawai->bidang : '-'; ?>
+                                                            <?php //echo isset($unor->NAMA_ESELON_III) ? $unor->NAMA_ESELON_III : '-'; ?>
                                                         </small>
                                                     </li>
                                                     <li>
                                                         <strong>Sub Bidang</strong><br>
                                                         <small>
-                                                        	<?php echo isset($pegawai->sub_bidang) ? $pegawai->sub_bidang : '-'; ?>    
+                                                        	<?php //echo isset($unor->NAMA_ESELON_III) ? $unor->NAMA_ESELON_III : '-'; ?>
                                                         </small>
                                                     </li>
                                                 </ul>

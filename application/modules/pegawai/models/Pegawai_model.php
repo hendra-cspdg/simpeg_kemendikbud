@@ -287,9 +287,9 @@ class Pegawai_model extends BF_Model
 		{
 			$this->select($this->table_name .'.*,jenis_pegawai.NAMA as JENIS_PEGAWAI,kedudukan_hukum.NAMA AS KEDUDUKAN_HUKUM');
 		}
-		 
 		$this->db->join('jenis_pegawai', 'pegawai.JENIS_PEGAWAI_ID = jenis_pegawai.ID', 'left');
 		$this->db->join('kedudukan_hukum', 'pegawai.KEDUDUKAN_HUKUM_ID = kedudukan_hukum.ID', 'left');
+		
 		return parent::find($ID);
 	}
 	public function find_grupjabatan($eselon2 ="")

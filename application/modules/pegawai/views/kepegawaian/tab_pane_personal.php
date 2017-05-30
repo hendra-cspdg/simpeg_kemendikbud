@@ -419,7 +419,7 @@
 	</div>
 	<div class="box box-info collapsed-box"">
 	  <div class="box-header with-border">
-		<h3 class="box-title">Data Lainny</h3>
+		<h3 class="box-title">Data Lainnya</h3>
 
 		<div class="box-tools pull-right">
 		  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>

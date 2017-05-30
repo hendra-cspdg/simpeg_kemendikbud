@@ -420,7 +420,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             <div class="control-group<?php echo form_error('Unor_ID') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("Unor", 'Unor_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <select name="Unor_ID" id="Unor_ID" class="form-control select2">
+                    <select name="UNOR_ID" id="Unor_ID" class="form-control select2">
                         <?php 
                             if($selectedUnorid){
                                 echo "<option selected value='".$selectedUnorid->ID."'>".$selectedUnorid->NAMA_ESELON_II."</option>";
@@ -434,7 +434,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             <div class="control-group<?php echo form_error('Unor_induk_ID') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label("Unor Induk", 'Unor_induk_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="Unor_induk_ID" id="Unor_induk_ID" class="form-control select2">
+                	<select name="UNOR_INDUK_ID" id="Unor_induk_ID" class="form-control select2">
                         <?php 
                             if($selectedUnorindukid){
                                 echo "<option selected value='".$selectedUnorindukid->ID."'>".$selectedUnorindukid->NAMA_ESELON_II."</option>";
@@ -537,7 +537,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("admin/masters/unitkerja/ajaxall");?>',
+            url: '<?php echo site_url("admin/masters/unitkerja/ajax");?>',
             dataType: 'json',
             data: function(params) {
                 return {

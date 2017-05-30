@@ -345,6 +345,10 @@ class Kepegawaian extends Admin_Controller
         Template::set('PNS_ID', $pegawai->PNS_ID);
         $this->riwayat_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
         $rwtpendidikan = $this->riwayat_pendidikan_model->find_all();
+        // satker
+        $unor = $this->unitkerja_model->find((int)$pegawai->UNOR_ID);
+        Template::set('unor', $unor);
+        
 		Template::set('records', $rwtpendidikan);
         Template::set('toolbar_title',"View Profile");
         Template::render();
