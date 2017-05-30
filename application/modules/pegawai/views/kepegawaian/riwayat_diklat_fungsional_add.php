@@ -8,7 +8,7 @@
     <?php echo form_open($this->uri->uri_string(), 'id="frm"'); ?>
         <fieldset>
             <input id='DIKLAT_FUNGSIONAL_ID' type='hidden' class="form-control" name='DIKLAT_FUNGSIONAL_ID' maxlength='32' value="<?php echo set_value('DIKLAT_FUNGSIONAL_ID', isset($detail_riwayat->DIKLAT_FUNGSIONAL_ID) ? trim($detail_riwayat->DIKLAT_FUNGSIONAL_ID) : ''); ?>" />
-            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('ID_PNS', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
+            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
            
             <div class="control-group<?php echo form_error('JENIS_DIKLAT') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label('NAMA', 'NAMA', array('class' => 'control-label')); ?>
@@ -17,7 +17,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_diklats) && is_array($jenis_diklats) && count($jenis_diklats)):?>
 						<?php foreach($jenis_diklats as $record):?>
-							<option value="<?php echo $record->nama?>" <?php if(isset($detail_riwayat->JENIS_DIKLAT))  echo  ($detail_riwayat->JENIS_DIKLAT==$record->nama) ? "selected" : ""; ?>><?php echo $record->nama; ?></option>
+							<option value="<?php echo $record->NAMA?>" <?php if(isset($detail_riwayat->JENIS_DIKLAT))  echo  ($detail_riwayat->JENIS_DIKLAT==$record->NAMA) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>

@@ -33,11 +33,11 @@ class Riwayatpindahunitkerja extends Admin_Controller
         
         if(!empty($q)){
             $this->db->start_cache();
-            $this->db->like('lower("NAMA")', strtolower($key));
-            $this->db->from("hris.unit_organisasi");
+            $this->db->like('lower("NAMA_ESELON_I")', strtolower($key));
+            $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID as id,NAMA as text');
+            $this->db->select('ID as id,"NAMA_ESELON_I" ||\'-\'||"NAMA_ESELON_II" ||\'-\'||"NAMA_ESELON_III" ||\'-\'||"NAMA_ESELON_IV" as text');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
@@ -48,9 +48,6 @@ class Riwayatpindahunitkerja extends Admin_Controller
             "results" => $data,
                 "pagination" => array(
                     "more" =>$morePages,
-                    "totalx"=>$total,
-                    "startx"=>$start,
-                    "limitx"=>$limit
                 )
             );   
             $this->db->flush_cache();
@@ -71,7 +68,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
             $this->db->from("hris.instansi");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID as id,NAMA as text');
+            $this->db->select('ID as id,"NAMA" as text');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
@@ -82,9 +79,6 @@ class Riwayatpindahunitkerja extends Admin_Controller
             "results" => $data,
                 "pagination" => array(
                     "more" =>$morePages,
-                    "totalx"=>$total,
-                    "startx"=>$start,
-                    "limitx"=>$limit
                 )
             );   
             $this->db->flush_cache();
@@ -148,7 +142,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->riwayat_pindah_unit_kerja_model->where("ID_PNS",$pegawai_data->ID);
+		$this->riwayat_pindah_unit_kerja_model->where("PNS_ID",$pegawai_data->ID);
 		$total= $this->riwayat_pindah_unit_kerja_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -171,7 +165,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_pindah_unit_kerja_model->order_by($iSortCol,$sSortCol);
         
-        $this->riwayat_pindah_unit_kerja_model->where("ID_PNS",$pegawai_data->PNS_ID);  
+        $this->riwayat_pindah_unit_kerja_model->where("PNS_ID",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_pindah_unit_kerja_model->find_all();
             
@@ -283,12 +277,12 @@ class Riwayatpindahunitkerja extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["ID_PNS"] = $pegawai_data->PNS_ID;
-        $data["NAMA_PNS"] = $pegawai_data->NAMA;
-        $data["NIP_PNS"] = $pegawai_data->NIP_BARU;
+        $data["PNS_ID"] = $pegawai_data->PNS_ID;
+        $data["PNS_NAMA"] = $pegawai_data->NAMA;
+        $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
        
         $unor_baru_data = $this->unit_organisasi_model->find($data['ID_UNOR_BARU']);
-        $data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA;
+        $data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA_ESELON_I."-".$unor_baru_data->NAMA_ESELON_II."-".$unor_baru_data->NAMA_ESELON_III."-".$unor_baru_data->NAMA_ESELON_IV;
         
         $instansi_baru_data = $this->instansi_model->find($data['ID_INSTANSI']);
         $data["NAMA_INSTANSI"] = $instansi_baru_data->NAMA;

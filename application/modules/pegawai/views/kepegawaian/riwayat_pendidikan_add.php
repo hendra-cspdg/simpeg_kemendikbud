@@ -27,7 +27,7 @@
            <div class="control-group<?php echo form_error('NAMA_SEKOLAH') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label("NAMA Sekolah", 'NAMA_SEKOLAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NAMA_SEKOLAH' type='text' class="form-control" name='NAMA_SEKOLAH' maxlength='200' value="<?php echo set_value('NAMA_SEKOLAH', isset($detail_riwayat->NAMA_Sekolah) ? $detail_riwayat->NAMA_Sekolah : ''); ?>" />
+                    <input id='NAMA_SEKOLAH' type='text' class="form-control" name='NAMA_SEKOLAH' maxlength='200' value="<?php echo set_value('NAMA_SEKOLAH', isset($detail_riwayat->NAMA_SEKOLAH) ? $detail_riwayat->NAMA_SEKOLAH : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NAMA_SEKOLAH'); ?></span>
                 </div>
             </div>

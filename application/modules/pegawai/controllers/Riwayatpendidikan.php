@@ -73,7 +73,7 @@ class Riwayatpendidikan extends Admin_Controller
                 $row = array();
                 $row []  = $nomor_urut;
                 $row []  = $record->tk_pendidikan_text;
-                $row []  = $record->NAMA_Sekolah;
+                $row []  = $record->NAMA_SEKOLAH;
                 $row []  = $record->TAHUN_LULUS;
                 $row []  = $record->NOMOR_IJASAH;
                 

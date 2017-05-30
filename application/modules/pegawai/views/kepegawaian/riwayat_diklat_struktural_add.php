@@ -8,8 +8,8 @@
     <?php echo form_open($this->uri->uri_string(), 'id="frm"'); ?>
         <fieldset>
             <input id='id_data' type='hidden' class="form-control" name='id_data' maxlength='32' value="<?php echo set_value('id_data', isset($id) ? trim($id) : ''); ?>" />
-            <input id='ID_PNS' type='hidden' class="form-control" name='ID_PNS' maxlength='32' value="<?php echo set_value('ID_PNS', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
-            <input nama='NIP_PNS' type='hidden' nama="">
+            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
+            <input nama='PNS_NIP' type='hidden' nama="">
             
             <div class="control-group<?php echo form_error('ID_DIKLAT') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label('NAMA', 'NAMA', array('class' => 'control-label')); ?>

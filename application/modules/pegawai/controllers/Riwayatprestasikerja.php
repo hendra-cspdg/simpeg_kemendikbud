@@ -232,22 +232,22 @@ class Riwayatprestasikerja extends Admin_Controller
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
         $data["PNS_ID"] = $pegawai_data->PNS_ID;
-        $data["NAMA_PNS"] = $pegawai_data->NAMA;
-        $data["NIP_PNS"] = $pegawai_data->NIP_BARU;
+        $data["PNS_NAMA"] = $pegawai_data->NAMA;
+        $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
        
         //data atasan langsung
         
         $this->pegawai_model->where("PNS_ID",$this->input->post("ATASAN_LANGSUNG_PNS_ID"));
         $atasan_pegawai_data = $this->pegawai_model->find_first_row();  
         $data["ATASAN_LANGSUNG_PNS_ID"] = $atasan_pegawai_data->PNS_ID;
-        $data["ATASAN_LANGSUNG_NAMA_PNS"] = $atasan_pegawai_data->NAMA;
-        $data["ATASAN_LANGSUNG_NIP_PNS"] = $atasan_pegawai_data->NIP_BARU;
+        $data["ATASAN_LANGSUNG_PNS_NAMA"] = $atasan_pegawai_data->NAMA;
+        $data["ATASAN_LANGSUNG_PNS_NIP"] = $atasan_pegawai_data->NIP_BARU;
 
         $this->pegawai_model->where("PNS_ID",$this->input->post("ATASAN_ATASAN_LANGSUNG_PNS_ID"));
         $atasan_atasan_pegawai_data = $this->pegawai_model->find_first_row();  
         $data["ATASAN_ATASAN_LANGSUNG_PNS_ID"] = $atasan_atasan_pegawai_data->PNS_ID;
-        $data["ATASAN_ATASAN_LANGSUNG_NAMA_PNS"] = $atasan_atasan_pegawai_data->NAMA;
-        $data["ATASAN_ATASAN_LANGSUNG_NIP_PNS"] = $atasan_atasan_pegawai_data->NIP_BARU;
+        $data["ATASAN_ATASAN_LANGSUNG_PNS_NAMA"] = $atasan_atasan_pegawai_data->NAMA;
+        $data["ATASAN_ATASAN_LANGSUNG_PNS_NIP"] = $atasan_atasan_pegawai_data->NIP_BARU;
 
         $jenis_jabatan_data = $this->jenis_jabatan_model->find($this->input->post("JABATAN_TIPE"));
         $data["JABATAN_TEXT"] = $jenis_jabatan_data->NAMA;

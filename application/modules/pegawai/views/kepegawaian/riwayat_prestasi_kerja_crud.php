@@ -8,7 +8,7 @@
     <?php echo form_open($this->uri->uri_string(), 'id="frm"'); ?>
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
-            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('ID_PNS', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
+            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
           
           <div class="control-group<?php echo form_error('JABATAN_TIPE') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('JENIS JABATAN', 'JENIS JABATAN', array('class' => 'control-label')); ?>

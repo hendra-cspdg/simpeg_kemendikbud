@@ -40,7 +40,7 @@ class Diklat_struktural_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'ID_PNS',
+			'field' => 'PNS_ID',
 			'label' => 'PNS ID',
 			'rules' => 'required',
 		),
@@ -77,7 +77,7 @@ class Diklat_struktural_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($PNS_ID!=""){
-			$this->db->where('ID_PNS',$PNS_ID);
+			$this->db->where('PNS_ID',$PNS_ID);
 		}
 		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.PENDIDIKAN_ID', 'left');
 		return parent::find_all();

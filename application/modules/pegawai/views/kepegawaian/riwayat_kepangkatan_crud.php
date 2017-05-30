@@ -8,7 +8,7 @@
     <?php echo form_open($this->uri->uri_string(), 'id="frm"'); ?>
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
-            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('ID_PNS', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
+            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
            
            <div class="control-group<?php echo form_error('GOLONGAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('Jenis KP', 'Jenis KP', array('class' => 'control-label')); ?>
@@ -17,7 +17,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_kps) && is_array($jenis_kps) && count($jenis_kps)):?>
 						<?php foreach($jenis_kps as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->ID) ? "selected" : ""; ?>><?php echo $record->ID." | ".$record->nama.""; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->KODE_JENIS_KP))  echo  ($detail_riwayat->KODE_JENIS_KP==$record->ID) ? "selected" : ""; ?>><?php echo $record->ID." | ".$record->NAMA.""; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>

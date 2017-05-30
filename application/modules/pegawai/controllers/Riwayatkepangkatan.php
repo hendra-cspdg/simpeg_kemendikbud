@@ -40,7 +40,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->riwayat_kepangkatan_model->where("ID_ORANG",$pegawai_data->ID);
+		$this->riwayat_kepangkatan_model->where("PNS_ID",$pegawai_data->ID);
 		$total= $this->riwayat_kepangkatan_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -63,7 +63,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_kepangkatan_model->order_by($iSortCol,$sSortCol);
         
-        $this->riwayat_kepangkatan_model->where("ID_ORANG",$pegawai_data->PNS_ID);  
+        $this->riwayat_kepangkatan_model->where("PNS_ID",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_kepangkatan_model->find_all();
             
@@ -169,12 +169,12 @@ class Riwayatkepangkatan extends Admin_Controller
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
         $pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["NIP"] = $pegawai_data->NIP_BARU;
-        $data["ID_ORANG"] = $pegawai_data->PNS_ID;
-        $data["NAMA"] = $pegawai_data->NAMA;
-        $this->jenis_kp_model->where("id",$data['KODE_JENIS_KP']);
-        $jenis_kp_data = $this->jenis_kp_model->find_first_row();
-        $data["JENIS_KP"] = $jenis_kp_data->nama;
+        $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
+        $data["PNS_ID"] = $pegawai_data->PNS_ID;
+        $data["PNS_NAMA"] = $pegawai_data->NAMA;
+        
+        $jenis_kp_data = $this->jenis_kp_model->find($data['KODE_JENIS_KP']);
+        $data["JENIS_KP"] = $jenis_kp_data->NAMA;
         
         $this->golongan_model->where("ID",$data['ID_GOLONGAN']);
         $golongan_data = $this->golongan_model->find_first_row();
