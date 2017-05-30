@@ -152,7 +152,8 @@ class Riwayatprestasikerja extends Admin_Controller
     public function show($PNS_ID,$record_id=''){
         $jenis_jabatans = $this->jenis_jabatan_model->find_all();
         Template::set('jenis_jabatans',$jenis_jabatans );  
-
+        Template::set('NILAI_PROSENTASE_SKP',60);
+        Template::set('NILAI_PROSENTASE_PERILAKU',40);
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
             Template::set_view("kepegawaian/riwayat_prestasi_kerja_crud");
@@ -269,9 +270,14 @@ class Riwayatprestasikerja extends Admin_Controller
                                   +$data['PERILAKU_ORIENTASI_PELAYANAN'] ;
         if($data['JABATAN_TIPE']==1){
              $data['NILAI_PERILAKU'] += $data['PERILAKU_KEPEMIMPINAN'] ;
+              $data['NILAI_PERILAKU'] = $data['NILAI_PERILAKU']/6;
+        }
+        else {
+            $data['NILAI_PERILAKU'] = $data['NILAI_PERILAKU']/5;
         }
         $data['NILAI_PERILAKU_AKHIR'] = $data['NILAI_PROSENTASE_PERILAKU']/100*$data['NILAI_PERILAKU'];
 
+         $data['NILAI_PPK'] = $data['NILAI_SKP_AKHIR']  + $data['NILAI_PERILAKU_AKHIR'];
 
         $id_data = $this->input->post("ID");
         if(isset($id_data) && !empty($id_data)){
