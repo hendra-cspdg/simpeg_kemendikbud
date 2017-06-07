@@ -105,6 +105,7 @@ if (defined('CI_VERSION') && substr(CI_VERSION, 0, 1) != '2') {
         'dbdriver'     => 'postgre',
         'schema'     => 'hris',
         'port'     => '5433',
+        'port'     => '5432',
         'dbprefix'     => '',
         'pconnect'     => false, // not supported with the database session driver
         'db_debug'     => true,

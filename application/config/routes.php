@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'users/login';
-$route['404_override'] = '';
+//$route['404_override'] = '';
 
 // Authentication
 Route::any(LOGIN_URL, 'users/login', array('as' => 'login'));
