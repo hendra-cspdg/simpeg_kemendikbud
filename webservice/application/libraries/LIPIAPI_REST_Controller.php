@@ -39,6 +39,7 @@ class LIPIAPI_REST_Controller extends REST_Controller {
         ]);
         // Remove any double slashes for safety
         $controller = str_replace('//', '/', $controller);
+        
 
         // Query the access table and get the number of results
         return $this->rest->db
