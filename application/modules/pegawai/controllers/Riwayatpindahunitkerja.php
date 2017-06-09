@@ -101,16 +101,83 @@ class Riwayatpindahunitkerja extends Admin_Controller
             echo json_encode($json);
     }
     
+     public function mig2(){
+        $uks = array();
+        $uks2 = array();
+        $unitkerjas = $this->unit_organisasi_model->find_all();
+        foreach($unitkerjas as $record){
+            $uks[$record->KODE_INTERNAL] = $record->ID;
+        }
+        $counter = 1;
+        foreach($unitkerjas as $record){
+            $split = explode(".",$record->KODE_INTERNAL);
+            $parent = "";
+            $has_parent = false;
+            if(!$has_parent && $split[3]!="00"){
+                $parent = $split[0].".".$split[1].".".$split[2].".00";
+                if(isset($uks[$parent])){
+                    $has_parent=true;
+                }
+            }        
+            if(!$has_parent && $split[2]!="00"){
+                $parent = $split[0].".".$split[1].".00".".00";
+                if(isset($uks[$parent])){
+                    $has_parent=true;
+                }
+            }        
+            if(!$has_parent && $split[1]!="00"){
+                $parent = $split[0].".00".".".".00".".00";
+                if(isset($uks[$parent])){
+                    $has_parent=true;
+                }
+            }   
+            if(!$has_parent && $split[0]!="00"){
+                $length = strlen($split[0]);
+                if($split[0][$length-0]=="0"){
+                    $parent = "00".".00".".00".".00";
+                    if(isset($uks[$parent])){
+                        $has_parent=true;
+                    }
+                }
+                else {
+                    $parent = substr($split[0],0,$length-1)."0".".00".".00".".00";
+                    if(isset($uks[$parent])){
+                        $has_parent=true;
+                    }
+                }
+            }
+            if($record->KODE_INTERNAL =='E10.00.01.00'){
+               // echo $record->KODE_INTERNAL."<Br>";
+               // echo $parent."<Br>";
+               // exit();
+            }
+            if($has_parent){
+                $parent_id =  $uks[$parent]; 
+                $uks2[$record->KODE_INTERNAL]=array(
+                    'KODE_INTERNAL'=>$record->KODE_INTERNAL,
+                    'PARENT_ID'=>$parent_id
+                );   
+            }
+          // if($counter>10){
+              //  echo json_encode($uks2);
+                //$this->db->update_batch('hris.unitkerja',$uks2,"KODE_INTERNAL");
+          //      //break;
+          // }
+          $counter++;
+        }
+        //echo json_encode($uks2);
+        $this->db->update_batch('hris.unitkerja',$uks2,"KODE_INTERNAL");
+    }
     public function mig(){
         $uks = array();
         $uks2 = array();
         $unitkerjas = $this->unit_organisasi_model->find_all();
         foreach($unitkerjas as $record){
-            $uks[$record->KODE_UNIT_KERJA] = $record->ID;
-            $uks2[$record->KODE_UNIT_KERJA] = null;
+            $uks[$record->KODE_INTERNAL] = $record->ID;
+            $uks2[$record->KODE_INTERNAL] = null;
         }
         foreach($unitkerjas as $record){
-            $split = explode(".",$record->KODE_UNIT_KERJA);
+            $split = explode(".",$record->KODE_INTERNAL);
             $parent = "";
 
             if($split[0]=="00"){
@@ -130,14 +197,14 @@ class Riwayatpindahunitkerja extends Admin_Controller
             }
             $parent_id =  $uks[$parent];
             
-            $uks2[$record->KODE_UNIT_KERJA]=array(
-                'KODE_UNIT_KERJA'=>$record->KODE_UNIT_KERJA,
+            $uks2[$record->KODE_INTERNAL]=array(
+                'KODE_INTERNAL'=>$record->KODE_INTERNAL,
                 'PARENT_ID'=>$parent_id
             );
            
         }
         echo json_encode($uks2);
-        $this->db->update_batch('hris.unitkerja',$uks2,"KODE_UNIT_KERJA");
+        $this->db->update_batch('hris.unitkerja',$uks2,"KODE_INTERNAL");
     }
     public function ajax_list(){
         
