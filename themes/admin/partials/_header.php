@@ -5,7 +5,7 @@
 	));
 
 	if (isset($shortcut_data) && is_array($shortcut_data['shortcut_keys'])) {
-		Assets::add_js($this->load->view('ui/shortcut_keys', $shortcut_data, true), 'inline');
+	//	Assets::add_js($this->load->view('ui/shortcut_keys', $shortcut_data, true), 'inline');
 	}
 	$mainmenu = $this->uri->segment(2);
 	$menu = $this->uri->segment(3);
@@ -24,6 +24,7 @@
    	<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/dist/css/AdminLTE.min.css">
    	<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/dist/css/skins/_all-skins.min.css">
    	<script src="<?php echo base_url(); ?>themes/admin/plugins/jQuery/jquery-2.2.3.min.js"></script>
+     
     <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>themes/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
@@ -48,6 +49,10 @@
 
      <link rel="stylesheet" href="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.css">
      <script src="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.js"></script>
+     <script src="<?php echo base_url(); ?>assets/plugins/jstree/dist/jstree.js"></script>
+     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/jstree/dist/themes/default/style.min.css">
+     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.min.css">
+     
 
    	<?php echo Assets::css(null, true); ?> 
 </head> 
@@ -184,6 +189,7 @@
             <?php if ($this->auth->has_permission('Golongan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/masters/golongan"><i class="fa fa-circle-o"></i>Golongan</a></li>
             <?php endif; ?>
+             <li><a href="<?php echo base_url();?>pegawai/manage_unitkerja/index"><i class="fa fa-circle-o"></i>Unit Kerja</a></li>
           </ul>
           
         </li>
