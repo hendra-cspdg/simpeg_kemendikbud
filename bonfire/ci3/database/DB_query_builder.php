@@ -1358,7 +1358,9 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 		$this->_reset_select();
 		return $result;
 	}
-
+	public function get_query_string(){
+		return $this->_compile_select();
+	}
 	// --------------------------------------------------------------------
 
 	/**

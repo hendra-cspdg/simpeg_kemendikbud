@@ -965,7 +965,9 @@ class CI_DB_active_record extends CI_DB_driver {
 		$this->_reset_select();
 		return $result;
 	}
-
+	public function get_query_string(){
+		return $this->_compile_select();
+	}
 	/**
 	 * "Count All Results" query
 	 *
