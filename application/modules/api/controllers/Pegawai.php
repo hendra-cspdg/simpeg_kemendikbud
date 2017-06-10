@@ -10,7 +10,7 @@ class Pegawai extends  LIPIAPI_REST_Controller {
 	public function list_get(){
         $data_pegawai = $this->db->from("hris.pegawai")->get()->result();
         $output = array(
-            'successx' => true,
+            'success' => true,
             'data'=>$data_pegawai
         );
         $this->response($output, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
