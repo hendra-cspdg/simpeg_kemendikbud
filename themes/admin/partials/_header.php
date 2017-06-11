@@ -51,7 +51,7 @@
      <script src="<?php echo base_url(); ?>assets/js/jquery-scrolling-tabs/jquery.scrolling-tabs.js"></script>
      <script src="<?php echo base_url(); ?>assets/plugins/jstree/dist/jstree.js"></script>
      <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/jstree/dist/themes/default/style.min.css">
-     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.min.css">
+     
      
 
    	<?php echo Assets::css(null, true); ?> 

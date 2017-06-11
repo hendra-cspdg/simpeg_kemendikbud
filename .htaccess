@@ -2,6 +2,7 @@ IndexIgnore *
  
 DirectoryIndex index.php
 RewriteEngine on
+# RewriteBase /myprojects/dikbudhr.adhiara.com/
 RewriteCond %{REQUEST_URI} ^sys.*
 RewriteRule ^(.*)$ /index.php/$1 [L]
 RewriteCond %{REQUEST_URI} ^app.*

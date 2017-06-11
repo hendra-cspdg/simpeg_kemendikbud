@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/components.min.css">
 <div id="manage_unitkerja_container" class="admin-box box box-primary">
 	<div class="box-header">
         <div class="btn-group">
