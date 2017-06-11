@@ -9,7 +9,7 @@ class Unit_organisasi_model extends BF_Model
 	protected $log_user 	= false;
 	protected $set_created	= false;
 	protected $set_modified = false;
-	protected $soft_deletes	= false;
+	protected $soft_deletes	= true;
 
 
 	// Customize the operations of the model without recreating the insert,
@@ -40,9 +40,9 @@ class Unit_organisasi_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'PNS_ID',
-			'label' => 'PNS ID',
-			'rules' => 'max_length[32]|required',
+			'field' => 'NAMA_UNOR',
+			'label' => 'NAMA UNOR',
+			'rules' => 'required',
 		),
 		
 	);

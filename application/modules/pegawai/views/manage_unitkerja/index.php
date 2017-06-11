@@ -1,6 +1,8 @@
-<div class="admin-box box box-primary">
+<div id="manage_unitkerja_container" class="admin-box box box-primary">
 	<div class="box-header">
-        
+        <div class="btn-group">
+            <a class="show-modal-custom btn btn-small btn-warning" href="<?php echo base_url(); ?>pegawai/manage_unitkerja/createNew" tooltip="Tambah Riwayat Diklat">Tambah Baru</a>
+        </div>
     </div>
 	<div class="box-body">
         <div id="tree_satker" class="tree-demo"> </div>
@@ -8,7 +10,55 @@
 </div>    
 
 
-<script type="application/javascript">
+<script type="application/javascript">  
+    var BASE_URL = '<?php echo base_url()?>';
+    $container =$("#manage_unitkerja_container");
+    $container.on('click','.show-modal-custom',function(event){
+        showModalX.call(this,'sukses-crud-unitkerja',function(){
+            $("#tree_satker").jstree(true).refresh();
+        },this);
+        event.preventDefault();
+    });
+    function confirmMoveNode(data,par){
+        swal({
+            title: "Anda Yakin?",
+            text: "Data "+data.node.text+" akan di pindah!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: 'btn-danger',
+            confirmButtonText: 'Ya, Pindah!',
+            cancelButtonText: "Tidak, Batalkan!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function (isConfirm) {
+            console.log(data);
+            if (isConfirm) {
+                
+                $.post("<?php echo base_url() ?>pegawai/manage_unitkerja/movenode",{
+                            _oldParentId : data.old_parent,
+                            _position : data.position,
+                            _currNodeId : data.node.id,
+                            _parentNodeId : data.parent,
+                            _nx:par.children
+                        },
+                        function (o) {
+                            if(o.success){
+                               swal("Data berhasil di pindah!", o.msg, "success");          
+                            }
+                            else {
+                               swal("Data gagal di pindah!", o.msg, "error");     
+                            }
+                            
+                            $("#tree_satker").jstree(true).refresh();
+                    },'json' );        
+                
+            } else {
+                    $("#tree_satker").jstree(true).refresh();
+                    swal("Batal", "", "error");
+            }
+        });
+    }
     $(document).ready(function(){
         //import { promiseAlert, swal } from 'promise-alert';
         //promiseAlert({  
@@ -51,46 +101,78 @@
                         "icon" : "fa fa-file icon-state-warning icon-lg"
                     }
                 },
+                "contextmenu":{         
+    "items": function($node) {
+        var tree = $("#tree").jstree(true);
+        return {
+            "Tambah Baru": {
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Tambah Baru",
+                "action": function (obj) { 
+                    $(this).attr("href",BASE_URL+"pegawai/manage_unitkerja/createNew/"+$node.id);
+                     showModalX.call(this,'sukses-crud-unitkerja',function(){
+                        $("#tree_satker").jstree(true).refresh();
+                    },this);
+                }
+            },
+            "Ubah"  :{
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Ubah",
+                "action": function (obj) { 
+                    $(this).attr("href",BASE_URL+"pegawai/manage_unitkerja/edit/"+$node.id);
+                     showModalX.call(this,'sukses-crud-unitkerja',function(){
+                        $("#tree_satker").jstree(true).refresh();
+                    },this);
+                    
+                }
+            },
+            "Hapus"  :{
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Hapus",
+                "action": function (obj) { 
+                   var kode =$(this).attr("kode");
+                    swal({
+                        title: "Anda Yakin?",
+                        text: "Hapus data Unit Kerja",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonClass: 'btn-danger',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: "Tidak, Batalkan!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                    url: "<?php echo base_url() ?>pegawai/manage_unitkerja/delete/"+$node.id,
+                                    dataType: "html",
+                                    timeout:180000,
+                                    success: function (result) {
+                                        swal("Data berhasil di hapus!", result, "success");
+                                        $("#tree_satker").jstree(true).refresh();
+                                },
+                                error : function(error) {
+                                    swal("Batal", "", "error");
+                                } 
+                            });        
+                            
+                        } else {
+                            swal("Batal", "", "error");
+                        }
+                    }); 
+                }
+            },
+        
+    }}},
                 "state" : { "key" : "demo3" },
                 "plugins" : [ "dnd",  "types","contextmenu" ]
             }).bind("move_node.jstree", function (e,data) {
-                swal({
-					title: "Anda Yakin?",
-					text: "Data akan di pindah!",
-					type: "warning",
-					showCancelButton: true,
-					confirmButtonClass: 'btn-danger',
-					confirmButtonText: 'Ya, Pindah!',
-					cancelButtonText: "Tidak, Batalkan!",
-					closeOnConfirm: false,
-					closeOnCancel: false
-				},
-				function (isConfirm) {
-					if (isConfirm) {
-						$.post({
-								url: "<?php echo base_url() ?>pegawai/manage_unitkerja/changenode",
-                                data:{
-                                    parent : data.par,
-                                    old_parent : data.old_par,
-                                    position : data.position,
-                                    currNode : data.node
-                                },
-								timeout:180000,
-								success: function (result) {
-									swal("Data berhasil di hapus!", result, "success");
-									$("#tree_satker").jstree(true).refresh();
-							},
-							error : function(error) {
-								swal("ERROR", "", "error");
-							} 
-						});        
-						
-					} else {
-						 $("#tree_satker").jstree(true).refresh();
-                         swal("Batal", "", "error");
-					}
-				});
-               
+                var par =  $("#tree_satker").jstree(true).get_node(data.parent);
+                confirmMoveNode(data,par);
             });
         
     });
