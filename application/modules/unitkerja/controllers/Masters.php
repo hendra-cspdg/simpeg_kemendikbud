@@ -82,9 +82,6 @@ class Masters extends Admin_Controller
             "results" => $data,
                 "pagination" => array(
                     "more" =>$morePages,
-                    "totalx"=>$total,
-                    "startx"=>$start,
-                    "limitx"=>$limit
                 )
             );   
             $this->db->flush_cache();
@@ -108,9 +105,6 @@ class Masters extends Admin_Controller
             "results" => $data,
                 "pagination" => array(
                     "more" =>$morePages,
-                    "totalx"=>$total,
-                    "startx"=>$start,
-                    "limitx"=>200
                 )
             );   
             $this->db->flush_cache();

@@ -60,7 +60,7 @@ Route::any(LOGIN_URL, 'users/login', array('as' => 'login'));
 Route::any(REGISTER_URL, 'users/register', array('as' => 'register'));
 Route::block('users/login');
 Route::block('users/register');
-
+Route::any('api2', 'api');
 Route::any('logout', 'users/logout');
 Route::any('forgot_password', 'users/forgot_password');
 Route::any('reset_password/(:any)/(:any)', 'users/reset_password/$1/$2');
