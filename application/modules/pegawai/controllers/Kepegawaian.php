@@ -146,7 +146,7 @@ class Kepegawaian extends Admin_Controller
 		if ($namafile != "")
 		{
 			$dataupdate = array(
-			'photo'	=> $namafile
+			'PHOTO'	=> $namafile
 			);
 			$this->pegawai_model->update_where("PNS_ID",$id_log, $dataupdate);
 		}

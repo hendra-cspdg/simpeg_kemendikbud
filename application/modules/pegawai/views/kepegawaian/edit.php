@@ -356,7 +356,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             </div>
             
 			<div class="control-group col-sm-3">
-				<label for="inputNAMA" class="control-label">TMT Golongan</label>
+				<label for="inputNAMA" class="control-label">TMT Jabatan</label>
 				<div class="input-group date">
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
