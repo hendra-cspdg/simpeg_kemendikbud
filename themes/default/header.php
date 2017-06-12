@@ -19,7 +19,7 @@ Assets::add_js(array('bootstrap/bootstrap.min.js', 'scrolltopcontrol.js','jquery
     <?php echo Assets::css(); ?>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,700,300' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>logo.ico">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>favicon.ico">
     <script>
     var base_url = "<?php echo base_url(); ?>";
     </script>
