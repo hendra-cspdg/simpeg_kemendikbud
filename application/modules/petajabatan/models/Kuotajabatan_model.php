@@ -9,7 +9,7 @@ class Kuotajabatan_model extends BF_Model
 	protected $log_user 	= false;
 	protected $set_created	= false;
 	protected $set_modified = false;
-	protected $soft_deletes	= true;
+	protected $soft_deletes	= false;
 
     protected $deleted_field     = 'deleted';
 
@@ -41,14 +41,19 @@ class Kuotajabatan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'NAMA',
-			'label' => 'lang:agama_field_NAMA',
-			'rules' => 'required|unique[agama.NAMA,agama.ID]|max_length[20]',
+			'field' => 'KODE_UNIT_KERJA',
+			'label' => 'Unit Kerja',
+			'rules' => 'required',
 		),
 		array(
-			'field' => 'NCSISTIME',
-			'label' => 'lang:agama_field_NCSISTIME',
-			'rules' => 'max_length[30]',
+			'field' => 'ID_JABATAN',
+			'label' => 'Jabatan',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'JUMLAH_PEMANGKU_JABATAN',
+			'label' => 'Kuota Jabatn',
+			'rules' => 'required',
 		),
 	);
 	protected $insert_validation_rules  = array();
@@ -74,6 +79,16 @@ class Kuotajabatan_model extends BF_Model
 			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
 		}
 		$this->db->join('ref_jabatan', 'kuota_jabatan.ID_JABATAN = ref_jabatan.ID_JABATAN', 'left');
+		$this->db->order_by("NAMA_JABATAN","ASC");
+		return parent::find_all();
+	}
+	public function find_det()
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
 		return parent::find_all();
 	}
 	 
