@@ -66,7 +66,7 @@ class Masters extends Admin_Controller
     private function data_model($key,$start,$limit){
           // update
             $this->db->start_cache();
-            //$this->db->like('lower("NAMA_ESELON_II")', $key);
+            $this->db->like('lower("NAMA_UNOR")', $key);
             //$this->db->where('"ESELON" LIKE \'II.%\'');
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
