@@ -74,10 +74,16 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('TEMPAT_LAHIR_ID') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label("Tempat Lahir", 'TEMPAT_LAHIR_ID', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('TEMPAT_LAHIR_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_TEMPAT_LAHIR_ID'), 'TEMPAT_LAHIR_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='TEMPAT_LAHIR_ID' type='text' class="form-control" name='TEMPAT_LAHIR_ID' maxlength='11' value="<?php echo set_value('TEMPAT_LAHIR_ID', isset($pegawai->TEMPAT_LAHIR_ID) ? $pegawai->TEMPAT_LAHIR_ID : ''); ?>" />
+                	<select name="TEMPAT_LAHIR_ID" id="TEMPAT_LAHIR_ID" class="form-control select2">
+                        <?php 
+                            if($selectedTempatLahirPegawai){
+                                echo "<option selected value='".$selectedTempatLahirPegawai->ID."'>".$selectedTempatLahirPegawai->NAMA."</option>";
+                            }
+                        ?>
+					</select>
                     <span class='help-inline'><?php echo form_error('TEMPAT_LAHIR_ID'); ?></span>
                 </div>
             </div>
@@ -331,11 +337,13 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             <div class="control-group<?php echo form_error('JENIS_JABATAN_ID') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label(lang('pegawai_field_JENIS_JABATAN_ID'), 'JENIS_JABATAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <select name="JENIS_JABATAN_ID" id="JENIS_JABATAN_ID" class="form-control select2">
+                   <select name="JENIS_JABATAN_ID" id="JENIS_JABATAN_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<option value="Fungsional Umum" <?php if(isset($pegawai->JENIS_JABATAN_ID))  echo  ($pegawai->JENIS_JABATAN_ID=="Fungsional Umum") ? "selected" : ""; ?>>Fungsional Umum</option>
-						<option value="Fungsional Tertentu" <?php if(isset($pegawai->JENIS_JABATAN_ID))  echo  ($pegawai->JENIS_JABATAN_ID=="Fungsional Tertentu") ? "selected" : ""; ?>>Fungsional Tertentu</option>
-						<option value="Struktural" <?php if(isset($pegawai->JENIS_JABATAN_ID))  echo  ($pegawai->JENIS_JABATAN_ID=="Struktural") ? "selected" : ""; ?>>Struktural</option>
+						<?php if (isset($jenis_jabatans) && is_array($jenis_jabatans) && count($jenis_jabatans)):?>
+						<?php foreach($jenis_jabatans as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->JENIS_JABATAN_ID))  echo  ($pegawai->JENIS_JABATAN_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
 					</select>
                     <span class='help-inline'><?php echo form_error('JENIS_JABATAN_ID'); ?></span>
                 </div>
@@ -513,7 +521,23 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 </script>
 
 <script>
-    
+    $("#TEMPAT_LAHIR_ID").select2({
+        placeholder: 'Cari Tempat Lahir...',
+        width: '100%',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("admin/lokasi/pegawai/ajax");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
     $("#LOKASI_KERJA_ID").select2({
         placeholder: 'Cari Lokasi Kerja...',
         width: '100%',

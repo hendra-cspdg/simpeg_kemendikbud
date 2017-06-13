@@ -72,7 +72,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'TEMPAT_LAHIR_ID',
 			'label' => 'lang:pegawai_field_TEMPAT_LAHIR_ID',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[60]',
 		),
 		array(
 			'field' => 'TGL_LAHIR',
@@ -82,7 +82,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'JENIS_KELAMIN',
 			'label' => 'lang:pegawai_field_JENIS_KELAMIN',
-			'rules' => 'max_length[2]',
+			'rules' => 'max_length[2]|required',
 		),
 		array(
 			'field' => 'AGAMA_ID',
@@ -281,8 +281,8 @@ class Pegawai_model extends BF_Model
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
 	public function find_all(){
-		$this->db->select("pegawai.*,unitkerja.NAMA_UNOR",false);
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID");
+		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR"',false);
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN");
 		return parent::find_all();
 	}
     public function find_detil($ID ="")

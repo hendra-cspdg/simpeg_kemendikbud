@@ -62,6 +62,10 @@ class Kepegawaian extends Admin_Controller
         $jabatans = $this->ref_jabatan_model->find_all();
 		Template::set('jabatans', $jabatans);
 		
+        $this->load->model('pegawai/jenis_jabatan_model');
+        $jenis_jabatans = $this->jenis_jabatan_model->find_all();
+		Template::set('jenis_jabatans', $jenis_jabatans);
+
 		$this->load->model('pegawai/lokasi_model');
 		$this->load->model('unitkerja/unitkerja_model');
     }
@@ -310,7 +314,11 @@ class Kepegawaian extends Admin_Controller
         
         $pegawaiData = $this->pegawai_model->find($id);
         Template::set('pegawai', $pegawaiData);
+
+
         Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
+        Template::set('selectedTempatLahirPegawai',$this->lokasi_model->find($pegawaiData->TEMPAT_LAHIR_ID));
+
         if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
         	$unor = $this->unitkerja_model->find((int)$pegawaiData->UNOR_ID);
         	Template::set('selectedUnorid',$unor);
