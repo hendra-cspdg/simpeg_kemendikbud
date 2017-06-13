@@ -203,7 +203,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('KEDUDUKAN_HUKUM_ID') ? ' error' : ''; ?> col-sm-12">
+            <div class="control-group<?php echo form_error('KEDUDUKAN_HUKUM_ID') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label("Kedudukan Hukum", 'KEDUDUKAN_HUKUM_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="KEDUDUKAN_HUKUM_ID" id="KEDUDUKAN_HUKUM_ID" class="form-control select2">
@@ -217,7 +217,16 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('KEDUDUKAN_HUKUM_ID'); ?></span>
                 </div>
             </div>
-
+			<div class="control-group col-sm-3">
+				<label for="inputNAMA" class="control-label">TMT Pensiun</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TMT_PENSIUN' type='text' class="form-control pull-right datepicker" name='TMT_PENSIUN'  value="<?php echo set_value('TMT_PENSIUN', isset($pegawai->TMT_PENSIUN) ? $pegawai->TMT_PENSIUN : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TMT_PENSIUN'); ?></span>
+				</div>
+			</div> 
             <div class="control-group<?php echo form_error('STATUS_CPNS_PNS') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label("Status CPNS/PNS", 'STATUS_CPNS_PNS', array('class' => 'control-label')); ?>
                 <div class='controls'>

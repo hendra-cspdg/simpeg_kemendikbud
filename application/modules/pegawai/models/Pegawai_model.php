@@ -62,12 +62,12 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'GELAR_DEPAN',
 			'label' => 'lang:pegawai_field_GELAR_DEPAN',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[20]',
 		),
 		array(
 			'field' => 'GELAR_BELAKANG',
 			'label' => 'lang:pegawai_field_GELAR_BELAKANG',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[20]',
 		),
 		array(
 			'field' => 'TEMPAT_LAHIR_ID',
@@ -341,6 +341,29 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('golongan.NAMA');
 		return parent::find_all();
 	}
+	public function grupbypangkat()
+	{
+		 
+		if(empty($this->selects))
+		{
+			$this->select('count(pegawai."JABATAN_ID") as jumlah');
+		}
+		//$this->db->join('ref_jabatan', 'pegawai.JABATAN_ID = ref_jabatan.ID_JABATAN', 'left');
+		$this->db->group_by('JABATAN_ID');
+		return parent::find_all();
+	}
+	public function grupbypendidikan()
+	{
+		 
+		if(empty($this->selects))
+		{
+			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,count("PENDIDIKAN_ID") as jumlah');
+		}
+		$this->db->join('tkpendidikan', 'pegawai.PENDIDIKAN_ID = tkpendidikan.ID', 'left');
+		$this->db->group_by('tkpendidikan.NAMA');
+		$this->db->group_by('tkpendidikan.ID');
+		return parent::find_all();
+	}
 	public function grupbyjk()
 	{
 		 
@@ -351,4 +374,23 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('pegawai.JENIS_KELAMIN');
 		return parent::find_all();
 	}
+	public function count_pensiun(){
+		$this->db->select('pegawai.*');
+		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 56');
+		return parent::count_all();
+	}
+	public function find_all_pensiun(){
+		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) as umur');
+		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 56');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
+		return parent::find_all();
+	}
+	public function find_pentiunpertahun(){
+		$this->db->select('EXTRACT(YEAR FROM "TMT_PENSIUN") TAHUN,count("ID") as jumlah');
+		$this->db->where('TMT_PENSIUN IS NOT NULL');
+		$this->db->group_by('EXTRACT(YEAR FROM "TMT_PENSIUN")');
+		return parent::find_all();
+	}
+	
+	 
 }

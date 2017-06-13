@@ -13,7 +13,7 @@ if ($can_delete) {
 ?>
 <div class="admin-box box box-primary">
 	<div class="box-header">
-              <h3 class="box-title">Data Pegawai</h3>
+              <h3 class="box-title">Estimasi Pegawai Pensiun Tahun ini</h3>
               
               <?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Create')) : ?>
               <a href="<?php echo site_url($areaUrl . '/create'); ?>">
@@ -26,7 +26,7 @@ if ($can_delete) {
 		<table class="slug-table table table-bordered table-striped table-responsive dt-responsive table-data table-hover">
 				 <thead>
 				 <tr><th style="width:10px">No</th>
-				 <th>NIP</th><th>NAMA Pegawai</th><th>Unit Kerja</th><th width="70px">#</th></tr>
+				 <th>NIP</th><th>NAMA Pegawai</th><th>Tgl Lahir</th><th>Umur</th><th>Unit Kerja</th><th width="70px">#</th></tr>
 				 </thead>
 				 </table>
 	<?php
@@ -43,12 +43,12 @@ $(".table-data").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-	  url: "<?php echo base_url() ?>admin/kepegawaian/pegawai/getdata",
+	  url: "<?php echo base_url() ?>admin/kepegawaian/pegawai/getdatapensiun",
 	  type:'POST',
 	}
 });
 
-$('body').on('click','.btn-hapus',function () { 
+$('body').on('click','.sweet-5',function () { 
 	var kode =$(this).attr("kode");
 	swal({
 		title: "Anda Yakin?",

@@ -67,4 +67,16 @@ class Tkpendidikan_model extends BF_Model
     {
         parent::__construct();
     }
+    public function grupbypendidikan()
+	{
+		 
+		if(empty($this->selects))
+		{
+			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,count(tkpendidikan."ID") as jumlah');
+		}
+		$this->db->join('pegawai', 'pegawai.PENDIDIKAN_ID = tkpendidikan.ID', 'left');
+		$this->db->group_by('tkpendidikan.NAMA');
+		$this->db->group_by('tkpendidikan.ID');
+		return parent::find_all();
+	}
 }
