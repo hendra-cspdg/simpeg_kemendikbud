@@ -64,13 +64,22 @@ class Masters extends Admin_Controller
     }
 
     private function data_model($key,$start,$limit){
-          
+          // update
             $this->db->start_cache();
+<<<<<<< HEAD
             $this->db->like('lower("NAMA_UNOR")', strtolower($key));
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
             $this->db->select('ID as id,NAMA_UNOR as text');
+=======
+            $this->db->like('lower("NAMA_UNOR")', $key);
+            //$this->db->where('"ESELON" LIKE \'II.%\'');
+            $this->db->from("hris.unitkerja");
+            $this->db->stop_cache();
+            $total = $this->db->get()->num_rows();
+            $this->db->select('KODE_INTERNAL as id,NAMA_UNOR as text');
+>>>>>>> 031c060adf397dbc46d75b1efb7c86a9a23a6925
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();

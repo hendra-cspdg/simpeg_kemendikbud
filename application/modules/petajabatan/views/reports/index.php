@@ -28,19 +28,7 @@
 </div>
 <script>
 	$("#Unit_Kerja_ID").change(function(){
-		 var ValUnit_Kerja_ID = $("#Unit_Kerja_ID").val();
-			var json_url = "<?php echo base_url() ?>admin/reports/petajabatan/viewdata?unitkerja="+ValUnit_Kerja_ID;
-			//alert(json_url);
-			$.ajax({    type: "POST",
-			   url: json_url,
-			   data: "unitkerja="+ValUnit_Kerja_ID,
-			   success: function(data){ 
-			   
-			    
-				   $('#divcontent').html(data);
-			   }});
-			return false; 
-		 return false;
+		showdata();
 	 }); 
     $("#Unit_Kerja_ID").select2({
         placeholder: 'Cari Unit Kerja...',
@@ -59,4 +47,18 @@
             cache: true
         }
     });
+    function showdata(){
+    	 var ValUnit_Kerja_ID = $("#Unit_Kerja_ID").val();
+		 var json_url = "<?php echo base_url() ?>admin/reports/petajabatan/viewdata?unitkerja="+ValUnit_Kerja_ID;
+		 $.ajax({    type: "POST",
+			url: json_url,
+			data: "unitkerja="+ValUnit_Kerja_ID,
+			success: function(data){ 
+			
+			 
+				$('#divcontent').html(data);
+			}});
+		 return false; 
+	  return false;
+    }
 </script>

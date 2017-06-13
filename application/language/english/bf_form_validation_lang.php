@@ -23,7 +23,7 @@
  * @link    http://cibonfire.com/docs/developer
  */
 
-$lang['form_validation_is_array']    = 'The {field} field must be an array.';
+$lang['form_validation_is_array']    = '{field} harus data array.';
 
 $lang['form_validation_bf_email']            = 'Email';
 $lang['form_validation_bf_language']         = 'Language';

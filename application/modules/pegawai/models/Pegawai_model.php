@@ -315,7 +315,6 @@ class Pegawai_model extends BF_Model
 	// update yanarazor
 	public function find_grupagama($eselon2 ="")
 	{
-		
 		if(empty($this->selects))
 		{
 			$this->select($this->table_name .'.AGAMA_ID,agama.NAMA AS label,count(pegawai."AGAMA_ID") as value');

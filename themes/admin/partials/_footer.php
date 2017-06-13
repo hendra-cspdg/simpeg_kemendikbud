@@ -12,7 +12,7 @@
 				Loading content...
 				</div>
 				<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+
 		    </div>
 		</div>
 	    </div>
@@ -51,8 +51,8 @@
 	<script src="<?php echo base_url(); ?>themes/admin/dist/js/demo.js"></script>
 	<?php echo Assets::js(); ?>
 <script type="text/javascript">
-
-$(".show-modal").unbind('click').on('click', function (event) {
+$('body').on('click','.show-modal',function (event) { 
+//$(".show-modal").unbind('click').on('click', function (event) {
 	$('.perhatian').fadeOut(300, function(){});
 	  event.preventDefault();
 	  var currentBtn = $(this);
