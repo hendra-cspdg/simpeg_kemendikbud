@@ -112,7 +112,7 @@ class reports extends Admin_Controller
 		// agama
 		$agamas = $this->pegawai_model->find_grupagama();
 		Template::set('agamas', $agamas);
-		print_r($agamas);
+		//print_r($agamas);
 		
 		// jenis kelamin
 		$jks = $this->pegawai_model->grupbyjk();
