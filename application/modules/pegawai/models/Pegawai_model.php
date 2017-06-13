@@ -72,7 +72,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'TEMPAT_LAHIR_ID',
 			'label' => 'lang:pegawai_field_TEMPAT_LAHIR_ID',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[60]',
 		),
 		array(
 			'field' => 'TGL_LAHIR',
@@ -82,7 +82,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'JENIS_KELAMIN',
 			'label' => 'lang:pegawai_field_JENIS_KELAMIN',
-			'rules' => 'max_length[2]',
+			'rules' => 'max_length[2]|required',
 		),
 		array(
 			'field' => 'AGAMA_ID',
@@ -120,8 +120,8 @@ class Pegawai_model extends BF_Model
 			'rules' => '',
 		),
 		array(
-			'field' => 'NPWP_NOMOR',
-			'label' => 'lang:pegawai_field_NPWP_NOMOR',
+			'field' => 'NPWP',
+			'label' => 'lang:pegawai_field_NPWP',
 			'rules' => 'max_length[25]',
 		),
 		array(
@@ -225,8 +225,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Lokasi_Kerja_ID',
-			'label' => 'lang:pegawai_field_Lokasi_Kerja_ID',
+			'field' => 'LOKASI_KERJA_ID',
+			'label' => 'lang:pegawai_field_LOKASI_KERJA_ID',
 			'rules' => 'max_length[32]',
 		),
 		array(
@@ -235,8 +235,8 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'Unor_induk_ID',
-			'label' => 'lang:pegawai_field_Unor_induk_ID',
+			'field' => 'UNOR_INDUK_ID',
+			'label' => 'lang:pegawai_field_UNOR_INDUK_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
@@ -245,18 +245,18 @@ class Pegawai_model extends BF_Model
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Instansi_Kerja_ID',
-			'label' => 'lang:pegawai_field_Instansi_Kerja_ID',
+			'field' => 'INSTANSI_KERJA_ID',
+			'label' => 'lang:pegawai_field_INSTANSI_KERJA_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Satuan_kerja_Induk_ID',
-			'label' => 'lang:pegawai_field_Satuan_kerja_Induk_ID',
+			'field' => 'SATUAN_KERJA_INDUK_ID',
+			'label' => 'lang:pegawai_field_SATUAN_KERJA_INDUK_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
-			'field' => 'Satuan_Kerja_Kerja_ID',
-			'label' => 'lang:pegawai_field_Satuan_Kerja_Kerja_ID',
+			'field' => 'SATUAN_KERJA_KERJA_ID',
+			'label' => 'lang:pegawai_field_SATUAN_KERJA_KERJA_ID',
 			'rules' => 'max_length[11]',
 		),
 		array(
@@ -279,6 +279,12 @@ class Pegawai_model extends BF_Model
     }
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
+	}
+	public function find_all(){
+		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR"',false);
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
+		$this->db->order_by("NAMA","ASC");
+		return parent::find_all();
 	}
     public function find_detil($ID ="")
 	{

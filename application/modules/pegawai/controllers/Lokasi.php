@@ -28,7 +28,7 @@ class Lokasi extends Admin_Controller
     private function data_model($key,$start,$limit){
           
             $this->db->start_cache();
-            $this->db->like('lower("NAMA")', $key);
+            $this->db->like('lower("NAMA")', strtolower($key));
             $this->db->from("hris.lokasi");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
@@ -42,10 +42,7 @@ class Lokasi extends Admin_Controller
             $o = array(
             "results" => $data,
                 "pagination" => array(
-                    "more" =>$morePages,
-                    "totalx"=>$total,
-                    "startx"=>$start,
-                    "limitx"=>$limit
+                    "more" =>$morePages
                 )
             );   
             $this->db->flush_cache();

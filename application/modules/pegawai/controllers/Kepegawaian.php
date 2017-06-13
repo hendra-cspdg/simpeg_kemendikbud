@@ -62,6 +62,10 @@ class Kepegawaian extends Admin_Controller
         $jabatans = $this->ref_jabatan_model->find_all();
 		Template::set('jabatans', $jabatans);
 		
+        $this->load->model('pegawai/jenis_jabatan_model');
+        $jenis_jabatans = $this->jenis_jabatan_model->find_all();
+		Template::set('jenis_jabatans', $jenis_jabatans);
+
 		$this->load->model('pegawai/lokasi_model');
 		$this->load->model('unitkerja/unitkerja_model');
     }
@@ -310,7 +314,11 @@ class Kepegawaian extends Admin_Controller
         
         $pegawaiData = $this->pegawai_model->find($id);
         Template::set('pegawai', $pegawaiData);
+
+
         Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
+        Template::set('selectedTempatLahirPegawai',$this->lokasi_model->find($pegawaiData->TEMPAT_LAHIR_ID));
+
         if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
         	$unor = $this->unitkerja_model->find((int)$pegawaiData->UNOR_ID);
         	Template::set('selectedUnorid',$unor);
@@ -415,28 +423,43 @@ class Kepegawaian extends Admin_Controller
 		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
-			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->SATUAN_KERJA_KERJA_ID,
-						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
-						<span class='fa-stack'>
-					   	<i class='fa fa-square fa-stack-2x'></i>
+			foreach ($records as $record) {
+                $row = array();
+                $row []  = $nomor_urut;
+                $row []  = $record->NIP_BARU;
+                $row []  = $record->NAMA;
+                $row []  = $record->NAMA_UNOR;
+                
+                $btn_actions = array();
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+					   <i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
+                ";
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='#' kode='$record->ID' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
+                ";
+                $btn_actions  [] = "
+                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	");
+                ";
+                
+                $row[] = implode(" ",$btn_actions);
+                
+
+                $output['data'][] = $row;
 				$nomor_urut++;
-			endforeach;
+			}
 		endif;
 		echo json_encode($output);
 		die();

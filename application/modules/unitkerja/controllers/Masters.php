@@ -66,12 +66,12 @@ class Masters extends Admin_Controller
     private function data_model($key,$start,$limit){
           // update
             $this->db->start_cache();
-            $this->db->like('lower("NAMA_UNOR")', $key);
-            //$this->db->where('"ESELON" LIKE \'II.%\'');
+            $this->db->like('lower("NAMA_UNOR")', strtolower($key));
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('KODE_INTERNAL as id,NAMA_UNOR as text');
+            $this->db->select('ID_BKN as id,NAMA_UNOR as text');
+
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
@@ -90,11 +90,11 @@ class Masters extends Admin_Controller
     private function data_modelall($key,$start,$limit){
           
             $this->db->start_cache();
-            $this->db->like('lower("NAMA_ESELON_IV")', $key);
+            $this->db->like('lower("NAMA_UNOR")', $key);
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID as id,CONCAT ("NAMA_ESELON_II",\' \',"NAMA_ESELON_III",\' \',"NAMA_ESELON_IV") as text');
+            $this->db->select('ID as id,"NAMA_UNOR" as text');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
