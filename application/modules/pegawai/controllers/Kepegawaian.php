@@ -416,7 +416,7 @@ class Kepegawaian extends Admin_Controller
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->SATUAN_KERJA_KERJA_ID,
+				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->NAMA_UNOR,
 						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
 						<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
