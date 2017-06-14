@@ -34,7 +34,13 @@ class reports extends Admin_Controller
 		$this->auth->restrict('Dashboard.Reports.View');
 		$this->load->model('pegawai/pegawai_model', null, true);
 		$this->load->model('golongan/golongan_model', null, true);
-		//pangkat
+		// jml pegawai
+		$total= $this->pegawai_model->count_all();
+		Template::set('totalpegawai', $total);
+		$jmlpensiun = $this->pegawai_model->count_pensiun();
+		Template::set('jmlpensiun', $jmlpensiun);
+
+		//pangkat golongan
 		$jsonpangkat = array();
 		$recordpangkat = $this->golongan_model->grupbygolongan(); 
 		$dataprov = array();
@@ -49,9 +55,65 @@ class reports extends Admin_Controller
 			endforeach;
 		endif;
 		Template::set('jsonpangkat', json_encode($jsonpangkat));
+		// pendidikan
+		$jsonpendidikan = array();
+		$recordpendidikan = $this->pegawai_model->grupbypendidikan(); 
+		$dataprov = array();
+		if (isset($recordpendidikan) && is_array($recordpendidikan) && count($recordpendidikan)) :
+			foreach ($recordpendidikan as $record) :
+				if($record->NAMA_PENDIDIKAN != "")
+					$dataprov["NAMA"] = $record->NAMA_PENDIDIKAN;
+				else
+					$dataprov["NAMA"] = "Belum ditentukan";
+				$dataprov["jumlah"] = $record->jumlah;
+				$jsonpendidikan[] 	= $dataprov;
+			endforeach;
+		endif;
+		Template::set('jsonpendidikan', json_encode($jsonpendidikan));
+		
+		$recordumur = $this->db->query('select sum(CASE  WHEN age < 25 THEN 1 END) "satu"
+											,sum(CASE  WHEN age >= 26  AND age < 40 THEN 1 END) "dua"
+											,sum(CASE WHEN age >= 41 THEN 1 END) "tiga"
+										FROM (
+											SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age
+											FROM hris.pegawai
+											) t',array($parent))->result();
+		
+		$ajsonumur = array();
+		$jsonumur = array("label"=>"<25","jumlah"=>isset($recordumur[0]->satu) ? $recordumur[0]->satu : 0);
+		$ajsonumur[] 	= $jsonumur;
+		$jsonumur = array("label"=>"26-40","jumlah"=>isset($recordumur[0]->dua) ? $recordumur[0]->dua : 0);
+		$ajsonumur[] 	= $jsonumur;
+		$jsonumur = array("label"=>">41","jumlah"=>isset($recordumur[0]->tiga) ? $recordumur[0]->tiga : 0);
+		$ajsonumur[] 	= $jsonumur;
+		//$jsonumur["<25"] = isset($recordumur[0]->satu) ? $recordumur[0]->satu : 0;
+		//$jsonumur["26-40"] = isset($recordumur[0]->dua) ? $recordumur[0]->dua : 0;
+		//$jsonumur["<41"] = isset($recordumur[0]->tiga) ? $recordumur[0]->tiga : 0;
+		//print_r($ajsonumur);
+		Template::set('jsonumur', json_encode($ajsonumur));
+		
+		// Jabatan
+		/*
+		$jsonjabatan = array();
+		$recordpangkat = $this->pegawai_model->grupbypangkat(); 
+		$dataprov = array();
+		if (isset($recordpangkat) && is_array($recordpangkat) && count($recordpangkat)) :
+			foreach ($recordpangkat as $record) :
+				if($record->NAMA != "")
+					$dataprov["NAMA"] = $record->NAMA_JABATAN;
+				else
+					$dataprov["NAMA"] = "Belum ditentukan";
+				$dataprov["jumlah"] = $record->jumlah;
+				$jsonjabatan[] 	= $dataprov;
+			endforeach;
+		endif;
+		Template::set('jsonjabatan', json_encode($jsonjabatan));
+		*/
 		// agama
 		$agamas = $this->pegawai_model->find_grupagama();
 		Template::set('agamas', $agamas);
+		//print_r($agamas);
+		
 		// jenis kelamin
 		$jks = $this->pegawai_model->grupbyjk();
 		$jsonjk = array();
@@ -67,6 +129,9 @@ class reports extends Admin_Controller
 			endforeach;
 		endif;
 		Template::set('jsonjk', json_encode($jsonjk));
+		// pensiun pertahun
+		$pensiuntahun = $this->pegawai_model->find_pentiunpertahun();
+		Template::set('jsonpensiuntahun', json_encode($pensiuntahun));
 		
 		Template::render();
 	}

@@ -17,7 +17,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Jumlah Pegawai</span>
-              <span class="info-box-number"><?php echo isset($jmlperjalanan) ? $jmlperjalanan : ""; ?> <small></small></span>
+              <span class="info-box-number"><?php echo isset($totalpegawai) ? number_format($totalpegawai,0,"",".") : ""; ?> <small></small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -26,7 +26,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-home"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Satker</span>
@@ -42,11 +42,13 @@
 
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-user"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Pensiun Bulan ini</span>
-               <span class="info-box-number"><?php echo isset($count_blmlaporan) ? $count_blmlaporan : ""; ?> <small> Orang</small></span>
+              <span class="info-box-text">Pensiun Tahun ini</span>
+               <span class="info-box-number">
+               <a href="<?php echo base_url(); ?>admin/kepegawaian/pegawai/listpensiun"><?php echo isset($jmlpensiun) ? number_format($jmlpensiun,0,"",".") : ""; ?></a>
+               <small> Orang</small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -58,7 +60,7 @@
             <span class="info-box-icon bg-yellow"><i class="fa fa-user"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">KP Bulan ini</span>
+              <span class="info-box-text">KP Tahun ini</span>
               <span class="info-box-number"><small>Orang</small></span>
             </div>
             <!-- /.info-box-content -->
@@ -82,9 +84,40 @@
             <!-- /.box-header -->
             <div class="box-body no-padding">	
                  	<div id="container" ></div>
-                 		<div id="chartrealisasi" style="width: 100%; height: 350px;"> </div>
+                 		<div id="chartgolongan" style="width: 100%; height: 350px;"> </div>
               		</div>
+          </div>
+        <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Pendidikan</h3>
 
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">	
+			   <div id="container" ></div>
+				   <div id="chartpendidikan" style="width: 100%; height: 350px;"> </div>
+			   </div>
+          </div> 
+        <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Pensiun Pertahun</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">	
+                 	<div id="container" ></div>
+                 		<div id="chartpensiuntahun" style="width: 100%; height: 350px;"> </div>
+              		</div>
           </div>
 	</div>
 	<div class="col-md-4">
@@ -159,6 +192,34 @@
             
             <!-- /.footer -->
           </div>
+          
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Umur</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="chart-responsive">
+                    <div id="divumur" style="width: 100%; height: 300px;"></div>
+                  </div>
+                  <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            
+            <!-- /.footer -->
+          </div>
     </div>
 </div>
 <script src="<?php echo base_url() ?>themes/admin/plugins/chartjs/Chart.min.js"></script>
@@ -198,14 +259,19 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
   
 </script>
 <script type="text/javascript">  
-	 var chart = AmCharts.makeChart("chartrealisasi", {
+var colors=    [ '#FCD202', '#B0DE09','#FF6600', '#0D8ECF', '#2A0CD0', '#CD0D74', '#CC0000', '#00CC00', '#0000CC', '#DDDDDD', '#999999', '#333333', '#990000']
+var input=<?php echo $jsonpangkat; ?>;
+//inject color attribute with value
+for (i = 0; i < input.length; i++) {input[i].color = colors[i];}	
+
+	 var chart = AmCharts.makeChart("chartgolongan", {
 				  "type": "serial",
-				  "dataProvider":  <?php echo $jsonpangkat; ?>,
+				  "dataProvider":  input,
 				   "theme": "light",
 				  "categoryField": "NAMA",
 				  "rotate": false,
 				  "startDuration": 0,
-				  "depth3D": 20,
+				  "depth3D": 2,
 				  "angle": 30,
 				  
 				  "chartCursor": {
@@ -220,9 +286,7 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
 					 "autoWrap":false,
 					 minHorizontalGap:0,
 				   },
-				  "legend": {
-					  "useGraphSettings": false
-					},
+				   
 					"titles" : [{
 						  "text": "NAMA"
 					  }, {
@@ -233,10 +297,10 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
 				  "graphs": [
 					  {
 						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "colorField": "color",
 						  "fillAlphas": 0.8,
 						  "id": "AmGraph-1",
 						  "lineAlpha": 0.2,
-						  "title": "jenjang",
 						  "type": "column",
 						  "valueField": "jumlah"
 					  } 
@@ -257,7 +321,133 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
 					  "enabled": true
 				   }
 
-			  });
+	});
+
+var inputpendidikan = <?php echo $jsonpendidikan; ?>;
+//inject color attribute with value
+for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[i];}	
+	var chart = AmCharts.makeChart("chartpendidikan", {
+				  "type": "serial",
+				  "dataProvider":  inputpendidikan,
+				   "theme": "light",
+				  "categoryField": "NAMA",
+				  "rotate": false,
+				  "startDuration": 0,
+				  "depth3D": 0,
+				  "colorField" : "#ffd900",
+				  "angle": 30,
+				  
+				  "chartCursor": {
+					  "categoryBalloonEnabled": false,
+					  "cursorAlpha": 0,
+					  "zoomable": false,
+				  },    
+				   "categoryAxis": {
+					 "gridPosition": "start",
+					 "labelRotation": 45,
+					 "axisAlpha": 0,
+					 "autoWrap":false,
+					 minHorizontalGap:0,
+				   },
+				   
+					"titles" : [{
+						  "text": "NAMA"
+					  }, {
+						  "text": "",
+						  "bold": false
+					  }],
+				  "trendLines": [],
+				  "graphs": [
+					  {
+						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "fillAlphas": 0.8,
+						  "id": "AmGraph-1",
+						  "lineAlpha": 0.2,
+						  "title": "Pendidikan",
+						  "type": "column",
+						  "colorField": "color",
+						  "valueField": "jumlah"
+					  } 
+				  ],
+				  "guides": [],
+				  "valueAxes": [
+					  {
+						  "id": "ValueAxis-1",
+						  "position": "top",
+						  "axisAlpha": 0
+					  }
+				  ],
+				  "allLabels": [],
+				  "balloon": {},
+				  "titles": [],
+				  
+				  "export": {
+					  "enabled": true
+				   }
+
+	});
+	
+	var inputpensiuntahun = <?php echo $jsonpensiuntahun; ?>;
+	//inject color attribute with value
+	for (i = 0; i < inputpensiuntahun.length; i++) {inputpensiuntahun[i].color = colors[i];}	
+	var chart = AmCharts.makeChart("chartpensiuntahun", {
+				  "type": "serial",
+				  "dataProvider":  inputpensiuntahun,
+				   "theme": "light",
+				  "categoryField": "tahun",
+				  "rotate": false,
+				  "startDuration": 0,
+				  "depth3D": 20,
+				  "angle": 30,
+				  
+				  "chartCursor": {
+					  "categoryBalloonEnabled": false,
+					  "cursorAlpha": 0,
+					  "zoomable": false,
+				  },    
+				   "categoryAxis": {
+					 "gridPosition": "start",
+					 "labelRotation": 45,
+					 "axisAlpha": 0,
+					 "autoWrap":false,
+					 minHorizontalGap:0,
+				   },
+				   
+					"titles" : [{
+						  "text": "TAHUN"
+					  }, {
+						  "text": "",
+						  "bold": false
+					  }],
+				  "trendLines": [],
+				  "graphs": [
+					  {
+						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "fillAlphas": 0.8,
+						  "id": "AmGraph-1",
+						  "lineAlpha": 0.2,
+						  "type": "column",
+						  "colorField": "color",
+						  "valueField": "jumlah"
+					  } 
+				  ],
+				  "guides": [],
+				  "valueAxes": [
+					  {
+						  "id": "ValueAxis-1",
+						  "position": "top",
+						  "axisAlpha": 0
+					  }
+				  ],
+				  "allLabels": [],
+				  "balloon": {},
+				  "titles": [],
+				  
+				  "export": {
+					  "enabled": true
+				   }
+
+	});
 			  
 			  
 	 AmCharts.makeChart("divjeniskelamin", {
@@ -270,6 +460,27 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
 		 "depth3D": 15,
 		 "outlineAlpha": 0.4,
 		 "angle": 30,
+		 "categoryBalloonEnabled": false,
+		 "export": {
+		   "enabled": true
+		 },
+		 "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+		 "legend": {
+			 "align": "center",
+			 "markerType": "circle"
+		 }
+
+	 });
+	 
+	 AmCharts.makeChart("divumur", {
+		 "type": "pie",
+		 "dataProvider":  <?php echo $jsonumur; ?>,
+		 "titleField": "label",
+		 "valueField": "jumlah",
+		 "pulledField": "pullOut",
+		 labelsEnabled: false,
+		 
+		 "outlineAlpha": 0.4,
 		 "categoryBalloonEnabled": false,
 		 "export": {
 		   "enabled": true

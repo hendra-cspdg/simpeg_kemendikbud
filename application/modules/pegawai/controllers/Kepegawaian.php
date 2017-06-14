@@ -423,28 +423,136 @@ class Kepegawaian extends Admin_Controller
 		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
-			foreach ($records as $record) :
-				$output['data'][]=array($nomor_urut.".",$record->NIP_BARU,$record->NAMA,$record->NAMA_UNOR,
-						"<a href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."' data-toggle='tooltip' title='Lihat Profile' >
-						<span class='fa-stack'>
-					   	<i class='fa fa-square fa-stack-2x'></i>
+			foreach ($records as $record) {
+                $row = array();
+                $row []  = $nomor_urut;
+                $row []  = $record->NIP_BARU;
+                $row []  = $record->NAMA;
+                $row []  = $record->NAMA_UNOR;
+                
+                $btn_actions = array();
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+					   <i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='tooltip' title='Edit Pegawai'><span class='fa-stack'>
+                ";
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	<a href='#' kode='$record->ID' class='sweet-5' data-toggle='tooltip' title='Lihat Profile' >
+                ";
+                $btn_actions  [] = "
+                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
-					   	");
+                ";
+                
+                $row[] = implode(" ",$btn_actions);
+                
+
+                $output['data'][] = $row;
 				$nomor_urut++;
-			endforeach;
+			}
+		endif;
+		echo json_encode($output);
+		die();
+
+	}
+	public function getdatapensiun(){
+		$draw = $this->input->post('draw');
+		$iSortCol = $this->input->post('iSortCol_1');
+		$sSortCol = $this->input->post('sSortDir_1');
+		
+		$length= $this->input->post('length');
+		$start= $this->input->post('start');
+
+		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
+		 
+		
+		$output=array();
+		
+
+		/*Jika $search mengandung nilai, berarti user sedang telah 
+		memasukan keyword didalam filed pencarian*/
+		if($search!=""){
+			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+		}
+		
+		$this->pegawai_model->limit($length,$start);
+		/*Urutkan dari alphabet paling terkahir*/
+		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
+		$sSortCol == "asc" ? "asc" : "desc";
+		$this->pegawai_model->order_by($iSortCol,$sSortCol);
+		$records=$this->pegawai_model->find_all_pensiun();
+
+		/*Ketika dalam mode pencarian, berarti kita harus
+		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
+		yang mengandung keyword tertentu
+		*/
+		if($search != "")
+		{
+			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
+			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			//$this->pegawai_model->or_where('NIP_BARU',$search);
+			$jum	= $this->pegawai_model->count_pensiun();
+			$output['recordsTotal']=$output['recordsFiltered']=$jum;
+		}else{
+			$total= $this->pegawai_model->count_pensiun();
+			$output['draw']=$draw;
+			$output['recordsTotal']= $output['recordsFiltered']=$total;
+			$output['data']=array();
+
+		}
+		
+		$nomor_urut=$start+1;
+		if(isset($records) && is_array($records) && count($records)):
+			foreach ($records as $record) {
+                $row = array();
+                $row []  = $nomor_urut;
+                $row []  = $record->NIP_BARU;
+                $row []  = $record->NAMA;
+                $row []  = $record->TGL_LAHIR;
+                $row []  = $record->umur;
+                $row []  = $record->NAMA_UNOR;
+                
+                $btn_actions = array();
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+					   <i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+					   	<i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                $btn_actions  [] = "
+                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus Pegawai' >
+					   	<span class='fa-stack'>
+					   	<i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                
+                $row[] = implode(" ",$btn_actions);
+                
+
+                $output['data'][] = $row;
+				$nomor_urut++;
+			}
 		endif;
 		echo json_encode($output);
 		die();
@@ -502,5 +610,15 @@ class Kepegawaian extends Admin_Controller
         }
 
         return $return;
+    }
+    
+    public function listpensiun()
+    {	
+    	$this->auth->restrict($this->permissionView);
+        $records = $this->pegawai_model->find_all_pensiun();
+        Template::set('records', $records);
+    	Template::set('toolbar_title', "Estimasi Pegawai Pensiun");
+		
+        Template::render();
     }
 }
