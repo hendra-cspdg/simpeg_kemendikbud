@@ -286,6 +286,17 @@ class Pegawai_model extends BF_Model
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
+	public function find_kelompokjabatan(){
+		$this->db->select('pegawai."ID",pegawai."NAMA","NIP_BARU",golongan."NAMA"  as "NAMA_GOLONGAN"',false);
+		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
+		$this->db->order_by("pegawai.GOL_ID","DESC");
+		return parent::find_all();
+	}
+	public function count_kelompokjabatan(){
+		$this->db->select('pegawai."ID",pegawai."NAMA","NIP_BARU",golongan."NAMA"  as "NAMA_GOLONGAN"',false);
+		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
+		return parent::count_all();
+	}
     public function find_detil($ID ="")
 	{
 		

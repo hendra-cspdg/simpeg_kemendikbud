@@ -1,3 +1,7 @@
+<?php
+	$this->load->library('convert');
+ 	$convert = new convert();
+?>
 <div class="tab-pane active" id="<?php echo $TAB_ID;?>">
 	
 	<div class="box box-info">
@@ -97,7 +101,7 @@
 						 TMT PNS
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-							 <b><?php echo isset($pegawai->TMT_PNS) ? $pegawai->TMT_PNS : ''; ?></b>
+							 <b><?php echo isset($pegawai->TMT_PNS) ? $convert->fmtDate($pegawai->TMT_PNS,"dd month yyyy"): ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
@@ -145,7 +149,7 @@
                     Instansi Kerja
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($pegawai->INSTANSI_KERJA_ID) ? $pegawai->INSTANSI_KERJA_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -155,7 +159,7 @@
                     Satuan Kerja Induk
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($pegawai->INSTANSI_KERJA_INDUK_ID) ? $pegawai->INSTANSI_KERJA_INDUK_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -165,7 +169,7 @@
                     Satuan kerja
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($pegawai->INSTANSI_KERJA_KERJA_ID) ? $pegawai->INSTANSI_KERJA_KERJA_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -175,7 +179,7 @@
                     Kanreg
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -185,7 +189,7 @@
                     Kanreg
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -195,7 +199,7 @@
                     Unit Organisasi
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -205,7 +209,7 @@
                     Eselon
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -215,7 +219,7 @@
                     Unit Organisasi Induk
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -225,127 +229,127 @@
                     Jenis Jabatan
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-9">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Jabatan Struktural
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-         <div class="form-group col-sm-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    TMT Jabatan Struktural
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-9">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Jabatan Fungsional
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-         <div class="form-group col-sm-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    TMT Jabatan Fungsional
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-9">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Jabatan Fungsional Umum
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-         <div class="form-group col-sm-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    TMT
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-9">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Lokasi Kerja
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Golongan Ruang Awal
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-3">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Golongan Ruang Akhir
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($JENIS_JABATAN) ? $JENIS_JABATAN  : ""; ?></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    TMT Golongan
+                    Jabatan Struktural
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; ?></b>
                 </div>
             </div>
         </div>
-        <div class="form-group col-sm-4">
+         <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    TMT Jabatan Struktural
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php if($pegawai->JENIS_JABATAN_ID == "1") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Jabatan Fungsional
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b></b>
+                </div>
+            </div>
+        </div>
+         <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    TMT Jabatan Fungsional
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php if($pegawai->JENIS_JABATAN_ID == "2") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Jabatan Fungsional Umum
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b></b>
+                </div>
+            </div>
+        </div>
+         <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    TMT
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Lokasi Kerja
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php echo isset($pegawai->LOKASI_KERJA) ? $pegawai->LOKASI_KERJA  : ""; ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-5">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Golongan Ruang Awal
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php echo isset($GOLONGAN_AWAL) ? $GOLONGAN_AWAL  : "-"; ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-5">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    Golongan Ruang Terakhir
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php echo isset($GOLONGAN_AKHIR) ? $GOLONGAN_AKHIR  : "-"; ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-2">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    TMT Golongan
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <b><?php echo isset($pegawai->TMT_GOLONGAN) ? $convert->fmtDate($pegawai->TMT_GOLONGAN ,"dd month yyyy") : ""; ?></b>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-sm-6">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     Gaji Pokok
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
-        <div class="form-group col-sm-8">
+        <div class="form-group col-sm-6">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     Masa Kerja (Tahun/Bulan)
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?>/</b>
+                    <b><?php echo isset($pegawai->MK_TAHUN) ? $pegawai->MK_TAHUN  : ""; ?>/<?php echo isset($pegawai->MK_BULAN) ? $pegawai->MK_BULAN  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -355,7 +359,7 @@
                     No.SPMT
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -365,7 +369,7 @@
                     Tgl SPMT1
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b></b>
                 </div>
             </div>
         </div>
@@ -375,7 +379,7 @@
                     KPPN
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($pegawai->KPPN_ID) ? $pegawai->KPPN_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -385,7 +389,7 @@
                     KTUA
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID  : ""; ?></b>
+                    <b><?php echo isset($pegawai->KTUA_ID) ? $pegawai->KTUA_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
@@ -400,17 +404,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Golongan
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->GOL_ID) ? $pegawai->GOL_ID : ''; ?></b>
-                </div>
-            </div>
-        </div>
-        
+         
 		<!-- /.table-responsive -->
 	  </div>
 	  <!-- /.box-body -->
