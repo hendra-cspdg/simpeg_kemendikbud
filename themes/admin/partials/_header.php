@@ -210,6 +210,23 @@
           </ul>
         </li>
          <?php endif; ?>
+         <?php if ($this->auth->has_permission('Site.Reports.View')) : ?>
+        <li class="treeview <?php echo $mainmenu == 'reports' ? 'active' : '' ?>">
+          <a href="#">
+            <i class="fa fa-folder"></i> <span>Laporan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Riwayat Pekerjaan Pegawai</a></li>
+            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Daftar Pegawai</a></li>
+            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Daftar urut Kepangkatan</a></li>
+            <li><a href="<?php echo base_url();?>admin/reports/pegawai/kelompokjabatan"><i class="fa fa-circle-o"></i>Daftar kelompok Jabatan</a></li>
+            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Daftar daftar kuota jabatan</a></li>
+          </ul>
+        </li>
+         <?php endif; ?>
     	<?php if ($this->auth->has_permission('Site.Developer.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'developer' ? 'active' : '' ?>">
           <a href="#">

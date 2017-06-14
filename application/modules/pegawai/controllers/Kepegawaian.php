@@ -79,36 +79,7 @@ class Kepegawaian extends Admin_Controller
     {	
 
     	$this->auth->restrict($this->permissionView);
-        // Deleting anything?
-        if (isset($_POST['delete'])) {
-            $this->auth->restrict($this->permissionDelete);
-            $checked = $this->input->post('checked');
-            if (is_array($checked) && count($checked)) {
-
-                // If any of the deletions fail, set the result to false, so
-                // failure message is set if any of the attempts fail, not just
-                // the last attempt
-
-                $result = true;
-                foreach ($checked as $pid) {
-                    $deleted = $this->pegawai_model->delete($pid);
-                    if ($deleted == false) {
-                        $result = false;
-                    }
-                }
-                if ($result) {
-                    Template::set_message(count($checked) . ' ' . lang('pegawai_delete_success'), 'success');
-                } else {
-                    Template::set_message(lang('pegawai_delete_failure') . $this->pegawai_model->error, 'error');
-                }
-            }
-        }
-        
-        
-        
-        $records = $this->pegawai_model->find_all();
-
-        Template::set('records', $records);
+         
         
     Template::set('toolbar_title', lang('pegawai_manage'));
 		
@@ -351,13 +322,23 @@ class Kepegawaian extends Admin_Controller
         $pegawai = $this->pegawai_model->find_detil($id);
         Template::set('pegawai', $pegawai);
         Template::set('PNS_ID', $pegawai->PNS_ID);
-        $this->riwayat_pendidikan_model->where("PNS_ID",$pegawai->PNS_ID);
-        $rwtpendidikan = $this->riwayat_pendidikan_model->find_all();
-        // satker
-        $unor = $this->unitkerja_model->find((int)$pegawai->UNOR_ID);
-        Template::set('unor', $unor);
-        
-		Template::set('records', $rwtpendidikan);
+		// lokasi kerja
+		$gol_id = $pegawai->GOL_ID;
+		$recgolongan = $this->golongan_model->find($gol_id);
+		Template::set('GOLONGAN_AKHIR', $recgolongan->NAMA);
+		
+		$gol_awal_id = $pegawai->GOL_AWAL_ID;
+		$recgolongan = $this->golongan_model->find($gol_awal_id);
+		Template::set('GOLONGAN_AWAL', $recgolongan->NAMA);
+		
+		$jenis_jabatan = $pegawai->JENIS_JABATAN_ID;
+		$recjenis_jabatan = $this->jenis_jabatan_model->find($jenis_jabatan);
+		Template::set('JENIS_JABATAN', $recjenis_jabatan->NAMA);
+		
+		$JABATAN_ID = $pegawai->JABATAN_ID;
+		$recjabatan = $this->ref_jabatan_model->find((int)$JABATAN_ID);
+		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN);
+		
         Template::set('toolbar_title',"View Profile");
         Template::render();
     }
@@ -587,6 +568,9 @@ class Kepegawaian extends Admin_Controller
         // Make sure we only pass in the fields we want
         
         $data = $this->pegawai_model->prep_data($this->input->post());
+        
+        $reclokasikerja = $this->lokasi_model->find($this->input->post('LOKASI_KERJA_ID'));
+		$data['LOKASI_KERJA']	= $reclokasikerja->NAMA;
 		$data['PNS_ID']	= $this->input->post('PNS_ID');
         // Additional handling for default values should be added below,
         // or in the model's prep_data() method
