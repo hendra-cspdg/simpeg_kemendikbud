@@ -61,18 +61,24 @@ class Manage_application_model extends BF_Model
     public function __construct()
     {
         parent::__construct();
+		$this->old_schema = $this->db->schema;
 		$this->db->schema =  "webservice";
     }
 
 	public function find_all(){
+		//$this->db->select("");
 		$this->db->where("active",1);
-		return parent::find_all();
+		$data =  parent::find_all();
+		$this->db->schema = $this->old_schema;
+		return $data;
 	}
 	public function delete($record_id){
 		$this->db->where("id",$record_id);
-		$this->db->update("webservice.api_controllers",array(
+		$this->db->update("webservice.api_keys",array(
 				'active'=>0
 		));
+		$this->db->schema = $this->old_schema;
+		return true;
 	}
 	
 }

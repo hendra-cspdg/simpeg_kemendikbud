@@ -53,7 +53,7 @@
 	});	
 	function submitdata(){
 		
-		var json_url = "<?php echo base_url() ?>api/manage_api/save";
+		var json_url = "<?php echo base_url() ?>api/manage_application/save";
 		 $.ajax({    
 		 	type: "POST",
 			url: json_url,
@@ -62,7 +62,7 @@
 			success: function(data){ 
                 if(data.success){
                     swal("Pemberitahuan!", data.msg, "success");
-                    $("#modal-custom-global").trigger("sukses-tambah-manage-api");
+                    $("#modal-custom-global").trigger("sukses-tambah-manage-application");
 					$("#modal-custom-global").modal("hide");
                 }
                 else {

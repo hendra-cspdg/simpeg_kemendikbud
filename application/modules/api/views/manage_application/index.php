@@ -72,7 +72,7 @@
 		});
 		
 		$container.on('click','.show-modal-custom',function(event){
-			showModalX.call(this,'sukses-tambah-manage-api',function(){
+			showModalX.call(this,'sukses-tambah-manage-application',function(){
 				grid_daftar.ajax.reload();
 			},this);
 			event.preventDefault();
