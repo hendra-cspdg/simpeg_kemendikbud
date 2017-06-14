@@ -133,6 +133,9 @@ class Manage_unitkerja extends Admin_Controller {
                     "text" => $record->NAMA_UNOR,  
                     "icon" => "fa fa-folder icon-lg icon-state-warning" ,
                     "children" => $record->num_child>0, 
+                    "state"=> array(
+                           "opened"   => boolean  // is the node open 
+                    ),
                     "type" => "root"
                 );
             }
