@@ -69,9 +69,9 @@ class Manage_application extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
-                $row []  = $record->name;
-                $row []  = $record->description;
-                $row []  = $record->url;
+                $row []  = $record->app_name;
+                $row []  = $record->key;
+                $row []  = $record->has_access;
                 $btn_actions = array();
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."api/Manage_application/crud/".$record->id."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>

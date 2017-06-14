@@ -23,10 +23,10 @@
 						<table class="table table-datatable">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>API</th>
+								<th width='50px' >No</th>
+								<th width='100px'>API</th>
 								<th width='100px'>Access Key</th>
-								<th width='100px'>Privilleges</th>
+								<th >Privilleges</th>
 								<th width='50px' align="center">#</th>
 							</tr>
 						</thead>
@@ -100,8 +100,12 @@
 								url: "<?php echo base_url() ?>api/manage_application/delete/"+kode,
 								dataType: "html",
 								timeout:180000,
+								dataType: "json",
 								success: function (result) {
-									swal("Data berhasil di hapus!", result, "success");
+									if(result.success){
+										swal("Pemberitahuan!", "Data berhasil di hapus", "success");	
+									}
+									else swal("Pemberitahuan!", result.msg, "error");
 									grid_daftar.ajax.reload();
 							},
 							error : function(error) {
