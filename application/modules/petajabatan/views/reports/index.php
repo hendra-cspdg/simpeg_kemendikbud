@@ -36,7 +36,7 @@
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("admin/masters/unitkerja/ajax");?>',
+            url: '<?php echo site_url("admin/masters/unitkerja/ajaxkodeinternal");?>',
             dataType: 'json',
             data: function(params) {
                 return {
@@ -50,12 +50,10 @@
     function showdata(){
     	 var ValUnit_Kerja_ID = $("#Unit_Kerja_ID").val();
 		 var json_url = "<?php echo base_url() ?>admin/reports/petajabatan/viewdata?unitkerja="+ValUnit_Kerja_ID;
-		 $.ajax({    type: "POST",
+		 $.ajax({    type: "GET",
 			url: json_url,
 			data: "unitkerja="+ValUnit_Kerja_ID,
 			success: function(data){ 
-			
-			 
 				$('#divcontent').html(data);
 			}});
 		 return false; 

@@ -387,12 +387,12 @@ class Pegawai_model extends BF_Model
 	}
 	public function count_pensiun(){
 		$this->db->select('pegawai.*');
-		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 56');
+		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
 		return parent::count_all();
 	}
 	public function find_all_pensiun(){
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) as umur');
-		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 56');
+		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
 		return parent::find_all();
 	}

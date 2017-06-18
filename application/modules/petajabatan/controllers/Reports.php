@@ -48,6 +48,8 @@ class Reports extends Admin_Controller
     	$this->load->model('pegawai/pegawai_model');
     	$this->load->model('unitkerja/unitkerja_model');
     	$datadetil = $this->unitkerja_model->find_by("KODE_INTERNAL",$unitkerja);
+    	//print_r($datadetil);
+    	//die();
     	$ideselon2 = isset($datadetil->KODE_INTERNAL) ? substr($datadetil->KODE_INTERNAL,0,5) : "";
     	$idsatker = isset($datadetil->ID) ? $datadetil->ID : "";
     	// eselon III

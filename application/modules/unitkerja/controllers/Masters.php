@@ -47,6 +47,17 @@ class Masters extends Admin_Controller
 		}
         echo json_encode($json);
     }
+    public function ajaxkodeinternal(){
+        $json = array();
+        $limit = 10;
+        $page = $this->input->get('page') ? $this->input->get('page') : "1";
+        $q= $this->input->get('term');
+        $start = ($page-1)*$limit;
+		if(!empty($q)){
+            $json = $this->data_modelinternal($q,$start,$limit);
+		}
+        echo json_encode($json);
+    }
     public function ajaxall(){
         $json = array();
         $limit = 10;
@@ -71,6 +82,30 @@ class Masters extends Admin_Controller
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
             $this->db->select('ID_BKN as id,NAMA_UNOR as text');
+
+            $this->db->limit($limit,$start);
+
+            $data = $this->db->get()->result();
+
+            $endCount = $start + $limit;
+            $morePages = $endCount > $total;
+            $o = array(
+            "results" => $data,
+                "pagination" => array(
+                    "more" =>$morePages,
+                )
+            );   
+            $this->db->flush_cache();
+            return $o;
+    }
+    private function data_modelinternal($key,$start,$limit){
+          // update
+            $this->db->start_cache();
+            $this->db->like('lower("NAMA_UNOR")', strtolower($key));
+            $this->db->from("hris.unitkerja");
+            $this->db->stop_cache();
+            $total = $this->db->get()->num_rows();
+            $this->db->select('KODE_INTERNAL as id,NAMA_UNOR as text');
 
             $this->db->limit($limit,$start);
 
@@ -190,4 +225,5 @@ class Masters extends Admin_Controller
 		echo json_encode($output);
 		die();
     }
+    
 }

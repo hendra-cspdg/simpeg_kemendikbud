@@ -51,8 +51,8 @@ class Kepegawaian extends Admin_Controller
 		Template::set('agamas', $agamas);
 		
 		$this->load->model('pegawai/tingkatpendidikan_model');
-        $pendidikans = $this->tingkatpendidikan_model->find_all();
-		Template::set('pendidikans', $pendidikans);
+        $tkpendidikans = $this->tingkatpendidikan_model->find_all();
+		Template::set('tkpendidikans', $tkpendidikans);
 		
 		$this->load->model('pegawai/kpkn_model');
         $kpkns = $this->kpkn_model->find_all();
@@ -65,7 +65,12 @@ class Kepegawaian extends Admin_Controller
         $this->load->model('pegawai/jenis_jabatan_model');
         $jenis_jabatans = $this->jenis_jabatan_model->find_all();
 		Template::set('jenis_jabatans', $jenis_jabatans);
+		$this->load->model('pegawai/jenis_kawin_model');
+        $jenis_kawins = $this->jenis_kawin_model->find_all();
+		Template::set('jenis_kawins', $jenis_kawins);
 
+		$this->load->model('pegawai/pendidikan_model');
+		
 		$this->load->model('pegawai/lokasi_model');
 		$this->load->model('unitkerja/unitkerja_model');
     }
@@ -289,6 +294,7 @@ class Kepegawaian extends Admin_Controller
 
         Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
         Template::set('selectedTempatLahirPegawai',$this->lokasi_model->find($pegawaiData->TEMPAT_LAHIR_ID));
+        Template::set('selectedPendidikan',$this->pendidikan_model->find($pegawaiData->PENDIDIKAN_ID));
 
         if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
         	$unor = $this->unitkerja_model->find((int)$pegawaiData->UNOR_ID);
@@ -301,6 +307,28 @@ class Kepegawaian extends Admin_Controller
         
         Template::set('toolbar_title', lang('pegawai_edit_heading'));
         Template::render();
+    }
+    public function updatemandiri(){
+         // Validate the data
+        $response = array(
+            'success'=>false,
+            'msg'=>'Unknown error'
+        );
+        $id_data = $this->input->post('ID');
+        $data = $this->pegawai_model->prep_data($this->input->post()); 
+        $data['TMT_PENSIUN']	= $this->input->post('TMT_PENSIUN') ? $this->input->post('TMT_PENSIUN') : null;
+		$data['TGL_SURAT_DOKTER']	= $this->input->post('TGL_SURAT_DOKTER') ? $this->input->post('TGL_SURAT_DOKTER') : null;
+		$data['TGL_BEBAS_NARKOBA']	= $this->input->post('TGL_BEBAS_NARKOBA') ? $this->input->post('TGL_BEBAS_NARKOBA') : null;
+		$data['TGL_CATATAN_POLISI']	= $this->input->post('TGL_CATATAN_POLISI') ? $this->input->post('TGL_CATATAN_POLISI') : null;
+		$data['TGL_MENINGGAL']	= $this->input->post('TGL_MENINGGAL') ? $this->input->post('TGL_MENINGGAL') : null;
+		$data['TGL_NPWP']	= $this->input->post('TGL_NPWP') ? $this->input->post('TGL_NPWP') : null;
+        $result = $this->pegawai_model->update($id_data,$data);
+        if($result){
+ 	       	$response ['success']= true;
+    		$response ['msg']= "Update berhasil";
+    	}
+        echo json_encode($response);    
+
     }
     public function profile($id='')
     {
@@ -338,6 +366,11 @@ class Kepegawaian extends Admin_Controller
 		$JABATAN_ID = $pegawai->JABATAN_ID;
 		$recjabatan = $this->ref_jabatan_model->find((int)$JABATAN_ID);
 		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN);
+		 
+		$unor = $this->unitkerja_model->find_by("ID_BKN",$pegawai->UNOR_ID);
+		Template::set('nama_unor',$unor->NAMA_UNOR);
+		$unor_induk = $this->unitkerja_model->find_by("ID_BKN",$unor->UNOR_INDUK);
+		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
         Template::set('toolbar_title',"View Profile");
         Template::render();
@@ -571,6 +604,9 @@ class Kepegawaian extends Admin_Controller
         
         $reclokasikerja = $this->lokasi_model->find($this->input->post('LOKASI_KERJA_ID'));
 		$data['LOKASI_KERJA']	= $reclokasikerja->NAMA;
+		$recpendidikan = $this->pendidikan_model->find($this->input->post('PENDIDIKAN_ID'));
+		$data['PENDIDIKAN']	= $recpendidikan->NAMA;
+		
 		$data['PNS_ID']	= $this->input->post('PNS_ID');
         // Additional handling for default values should be added below,
         // or in the model's prep_data() method
@@ -581,6 +617,14 @@ class Kepegawaian extends Admin_Controller
 		$data['TMT_PNS']	= $this->input->post('TMT_PNS') ? $this->input->post('TMT_PNS') : null;
 		$data['TMT_GOLONGAN']	= $this->input->post('TMT_GOLONGAN') ? $this->input->post('TMT_GOLONGAN') : null;
 		$data['TMT_JABATAN']	= $this->input->post('TMT_JABATAN') ? $this->input->post('TMT_JABATAN') : null;
+		
+		$data['TMT_PENSIUN']	= $this->input->post('TMT_PENSIUN') ? $this->input->post('TMT_PENSIUN') : null;
+		$data['TGL_SURAT_DOKTER']	= $this->input->post('TGL_SURAT_DOKTER') ? $this->input->post('TGL_SURAT_DOKTER') : null;
+		$data['TGL_BEBAS_NARKOBA']	= $this->input->post('TGL_BEBAS_NARKOBA') ? $this->input->post('TGL_BEBAS_NARKOBA') : null;
+		$data['TGL_CATATAN_POLISI']	= $this->input->post('TGL_CATATAN_POLISI') ? $this->input->post('TGL_CATATAN_POLISI') : null;
+		$data['TGL_MENINGGAL']	= $this->input->post('TGL_MENINGGAL') ? $this->input->post('TGL_MENINGGAL') : null;
+		$data['TGL_NPWP']	= $this->input->post('TGL_NPWP') ? $this->input->post('TGL_NPWP') : null;
+		
 
         $return = false;
         if ($type == 'insert') {

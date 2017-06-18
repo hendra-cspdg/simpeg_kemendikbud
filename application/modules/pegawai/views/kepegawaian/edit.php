@@ -124,13 +124,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('JENIS_KAWIN_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_JENIS_KAWIN_ID'), 'JENIS_KAWIN_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='JENIS_KAWIN_ID' type='text' class="form-control" name='JENIS_KAWIN_ID' maxlength='32' value="<?php echo set_value('JENIS_KAWIN_ID', isset($pegawai->JENIS_KAWIN_ID) ? $pegawai->JENIS_KAWIN_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('JENIS_KAWIN_ID'); ?></span>
-                </div>
-            </div>
+            
 
             <div class="control-group<?php echo form_error('NIK') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label(lang('pegawai_field_NIK'), 'NIK', array('class' => 'control-label')); ?>
@@ -172,21 +166,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 
-            <div class="control-group<?php echo form_error('NPWP') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_NPWP'), 'NPWP', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='NPWP' type='text' class="form-control" name='NPWP' maxlength='25' value="<?php echo set_value('NPWP', isset($pegawai->NPWP) ? $pegawai->NPWP : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('NPWP'); ?></span>
-                </div>
-            </div>
-
-            <div class="control-group<?php echo form_error('BPJS') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label(lang('pegawai_field_BPJS'), 'BPJS', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='BPJS' type='text' class="form-control" name='BPJS' maxlength='25' value="<?php echo set_value('BPJS', isset($pegawai->BPJS) ? $pegawai->BPJS : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('BPJS'); ?></span>
-                </div>
-            </div>
+            
 
             <div class="control-group<?php echo form_error('JENIS_PEGAWAI_ID') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label("Jenis Pegawai", 'JENIS_PEGAWAI_ID', array('class' => 'control-label')); ?>
@@ -382,16 +362,30 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 					<span class='help-inline'><?php echo form_error('TMT_GOLONGAN'); ?></span>
 				</div>
 			</div> 
-            <div class="control-group<?php echo form_error('PENDIDIKAN_ID') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label(lang('pegawai_field_PENDIDIKAN_ID'), 'PENDIDIKAN_ID', array('class' => 'control-label')); ?>
+			 <div class="control-group<?php echo form_error('TK_PENDIDIKAN') ? ' error' : ''; ?> col-sm-3">
+                <?php echo form_label("TINGKAT PENDIDIKAN", 'TK_PENDIDIKAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="PENDIDIKAN_ID" id="PENDIDIKAN_ID" class="form-control select2">
+                	<select name="TK_PENDIDIKAN" id="TK_PENDIDIKAN" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($pendidikans) && is_array($pendidikans) && count($pendidikans)):?>
-						<?php foreach($pendidikans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->PENDIDIKAN_ID))  echo  ($pegawai->PENDIDIKAN_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+						<?php if (isset($tkpendidikans) && is_array($tkpendidikans) && count($tkpendidikans)):?>
+						<?php foreach($tkpendidikans as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->TK_PENDIDIKAN))  echo  (TRIM($pegawai->TK_PENDIDIKAN)==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
+					</select>
+                    <span class='help-inline'><?php echo form_error('TK_PENDIDIKAN'); ?></span>
+                </div>
+            </div>
+
+            <div class="control-group<?php echo form_error('PENDIDIKAN_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Pendidikan", 'PENDIDIKAN_ID', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                	<select name="PENDIDIKAN_ID" id="PENDIDIKAN_ID" class="form-control select2">
+						 <?php 
+                            if($selectedPendidikan){
+                                echo "<option selected value='".$selectedPendidikan->ID."'>".$selectedPendidikan->NAMA."</option>";
+                            }
+                        ?>
 					</select>
                     <span class='help-inline'><?php echo form_error('PENDIDIKAN_ID'); ?></span>
                 </div>
@@ -461,39 +455,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('UNOR_INDUK_ID'); ?></span>
                 </div>
             </div>
-			<!--
-            <div class="control-group<?php echo form_error('INSTANSI_INDUK_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_INSTANSI_INDUK_ID'), 'INSTANSI_INDUK_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='INSTANSI_INDUK_ID' type='text' class="form-control" name='INSTANSI_INDUK_ID' maxlength='11' value="<?php echo set_value('INSTANSI_INDUK_ID', isset($pegawai->INSTANSI_INDUK_ID) ? $pegawai->INSTANSI_INDUK_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('INSTANSI_INDUK_ID'); ?></span>
-                </div>
-            </div>
-
-            <div class="control-group<?php echo form_error('INSTANSI_KERJA_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_INSTANSI_KERJA_ID'), 'INSTANSI_KERJA_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='INSTANSI_KERJA_ID' type='text' class="form-control" name='INSTANSI_KERJA_ID' maxlength='11' value="<?php echo set_value('INSTANSI_KERJA_ID', isset($pegawai->INSTANSI_KERJA_ID) ? $pegawai->INSTANSI_KERJA_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('INSTANSI_KERJA_ID'); ?></span>
-                </div>
-            </div>
-
-            <div class="control-group<?php echo form_error('SATUAN_KERJA_INDUK_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_SATUAN_KERJA_INDUK_ID'), 'SATUAN_KERJA_INDUK_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='SATUAN_KERJA_INDUK_ID' type='text' class="form-control" name='SATUAN_KERJA_INDUK_ID' maxlength='11' value="<?php echo set_value('SATUAN_KERJA_INDUK_ID', isset($pegawai->SATUAN_KERJA_INDUK_ID) ? $pegawai->SATUAN_KERJA_INDUK_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('SATUAN_KERJA_INDUK_ID'); ?></span>
-                </div>
-            </div>
-
-            <div class="control-group<?php echo form_error('SATUAN_KERJA_KERJA_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label(lang('pegawai_field_SATUAN_KERJA_KERJA_ID'), 'SATUAN_KERJA_KERJA_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='SATUAN_KERJA_KERJA_ID' type='text' class="form-control" name='SATUAN_KERJA_KERJA_ID' maxlength='11' value="<?php echo set_value('SATUAN_KERJA_KERJA_ID', isset($pegawai->SATUAN_KERJA_KERJA_ID) ? $pegawai->SATUAN_KERJA_KERJA_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('SATUAN_KERJA_KERJA_ID'); ?></span>
-                </div>
-            </div>
-			-->
+			 
             <div class="control-group<?php echo form_error('GOLONGAN_DARAH') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label(lang('pegawai_field_GOLONGAN_DARAH'), 'GOLONGAN_DARAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -507,6 +469,143 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('GOLONGAN_DARAH'); ?></span>
                 </div>
             </div>
+            
+           
+        </fieldset>
+        <fieldset>
+        	<legend>Data Lainnya</legend>
+        	<div class="control-group<?php echo form_error('JENIS_KAWIN_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label(lang('pegawai_field_JENIS_KAWIN_ID'), 'JENIS_KAWIN_ID', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                	<select name="JENIS_KAWIN_ID" id="JENIS_KAWIN_ID" class="form-control select2">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($jenis_kawins) && is_array($jenis_kawins) && count($jenis_kawins)):?>
+						<?php foreach($jenis_kawins as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->JENIS_KAWIN_ID))  echo  ($pegawai->JENIS_KAWIN_ID==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+					</select>
+                    <span class='help-inline'><?php echo form_error('JENIS_KAWIN_ID'); ?></span>
+                </div>
+            </div>
+            <div class="control-group<?php echo form_error('NO_SURAT_DOKTER') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NO SURAT KETERANGAN SEHAT DOKTER", 'NO_SURAT_DOKTER', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NO_SURAT_DOKTER' type='text' class="form-control" name='NO_SURAT_DOKTER' maxlength='25' value="<?php echo set_value('NO_SURAT_DOKTER', isset($pegawai->NO_SURAT_DOKTER) ? $pegawai->NO_SURAT_DOKTER : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NO_SURAT_DOKTER'); ?></span>
+                </div>
+            </div>
+            
+             
+            <div class="control-group col-sm-6">
+				<label for="inputNAMA" class="control-label">TANGGAL</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TGL_SURAT_DOKTER' type='text' class="form-control pull-right datepicker" name='TGL_SURAT_DOKTER' maxlength='25' value="<?php echo set_value('TGL_SURAT_DOKTER', isset($pegawai->TGL_SURAT_DOKTER) ? $pegawai->TGL_SURAT_DOKTER : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_SURAT_DOKTER'); ?></span>
+				</div>
+			</div> 
+			<div class="control-group<?php echo form_error('NO_BEBAS_NARKOBA') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NO SURAT BEBAS NARKOBA", 'NO_BEBAS_NARKOBA', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NO_BEBAS_NARKOBA' type='text' class="form-control" name='NO_BEBAS_NARKOBA' maxlength='25' value="<?php echo set_value('NO_BEBAS_NARKOBA', isset($pegawai->NO_BEBAS_NARKOBA) ? $pegawai->NO_BEBAS_NARKOBA : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NO_BEBAS_NARKOBA'); ?></span>
+                </div>
+            </div>
+            <div class="control-group col-sm-6">
+				<label for="inputNAMA" class="control-label">TANGGAL</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TGL_BEBAS_NARKOBA' type='text' class="form-control pull-right datepicker" name='TGL_BEBAS_NARKOBA' maxlength='25' value="<?php echo set_value('TGL_BEBAS_NARKOBA', isset($pegawai->TGL_BEBAS_NARKOBA) ? $pegawai->TGL_BEBAS_NARKOBA : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_BEBAS_NARKOBA'); ?></span>
+				</div>
+			</div> 
+			<div class="control-group<?php echo form_error('NO_CATATAN_POLISI') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NO CATATAN KEPOLISIAN", 'NO_CATATAN_POLISI', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NO_CATATAN_POLISI' type='text' class="form-control" name='NO_CATATAN_POLISI' maxlength='25' value="<?php echo set_value('NO_CATATAN_POLISI', isset($pegawai->NO_CATATAN_POLISI) ? $pegawai->NO_CATATAN_POLISI : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NO_CATATAN_POLISI'); ?></span>
+                </div>
+            </div>
+            <div class="control-group col-sm-6">
+				<label for="inputNAMA" class="control-label">TANGGAL</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TGL_CATATAN_POLISI' type='text' class="form-control pull-right datepicker" name='TGL_CATATAN_POLISI' maxlength='25' value="<?php echo set_value('TGL_CATATAN_POLISI', isset($pegawai->TGL_CATATAN_POLISI) ? $pegawai->TGL_CATATAN_POLISI : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_CATATAN_POLISI'); ?></span>
+				</div>
+			</div> 
+			<div class="control-group<?php echo form_error('AKTE_KELAHIRAN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("AKTE KELAHIRAN", 'AKTE_KELAHIRAN', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='AKTE_KELAHIRAN' type='text' class="form-control" name='AKTE_KELAHIRAN' maxlength='25' value="<?php echo set_value('AKTE_KELAHIRAN', isset($pegawai->AKTE_KELAHIRAN) ? $pegawai->AKTE_KELAHIRAN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('AKTE_KELAHIRAN'); ?></span>
+                </div>
+            </div>
+            <div class="control-group<?php echo form_error('STATUS_HIDUP') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("STATUS HIDUP", 'STATUS_HIDUP', array('class' => 'control-label')); ?>
+                <div class='controls'>
+				 <select class="validate[required] text-input form-control" name="STATUS_HIDUP" id="STATUS_HIDUP" class="chosen-select-deselect">
+					  <option value="">-- Pilih  --</option>
+					  <option value="Hidup" <?php if(isset($pegawai->STATUS_HIDUP))  echo  ("Hidup"==TRIM($pegawai->STATUS_HIDUP)) ? "selected" : ""; ?>>Hidup</option>
+					  <option value="Meninggal" <?php if(isset($pegawai->STATUS_HIDUP))  echo  ("Meninggal"== TRIM($pegawai->STATUS_HIDUP)) ? "selected" : ""; ?>>Meninggal</option>
+				  </select>
+				</div>
+            </div>
+			 <div class="control-group<?php echo form_error('AKTE_MENINGGAL') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("AKTE MENINGGAL", 'AKTE_MENINGGAL', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='AKTE_MENINGGAL' type='text' class="form-control" name='AKTE_MENINGGAL' maxlength='25' value="<?php echo set_value('AKTE_MENINGGAL', isset($pegawai->AKTE_MENINGGAL) ? $pegawai->AKTE_MENINGGAL : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('AKTE_MENINGGAL'); ?></span>
+                </div>
+            </div>
+            <div class="control-group col-sm-6">
+				<label for="inputNAMA" class="control-label">TANGGAL</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TGL_MENINGGAL' type='text' class="form-control pull-right datepicker" name='TGL_MENINGGAL' maxlength='25' value="<?php echo set_value('TGL_MENINGGAL', isset($pegawai->TGL_MENINGGAL) ? $pegawai->TGL_MENINGGAL : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_MENINGGAL'); ?></span>
+				</div>
+			</div> 
+             <div class="control-group<?php echo form_error('BPJS') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_BPJS'), 'BPJS', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='BPJS' type='text' class="form-control" name='BPJS' maxlength='25' value="<?php echo set_value('BPJS', isset($pegawai->BPJS) ? $pegawai->BPJS : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('BPJS'); ?></span>
+                </div>
+            </div>
+            <div class="control-group<?php echo form_error('NO_TASPEN') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NO TASPEN", 'NO_TASPEN', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NO_TASPEN' type='text' class="form-control" name='NO_TASPEN' maxlength='50' value="<?php echo set_value('NO_TASPEN', isset($pegawai->NO_TASPEN) ? $pegawai->NO_TASPEN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NO_TASPEN'); ?></span>
+                </div>
+            </div>
+            <div class="control-group<?php echo form_error('NPWP') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label(lang('pegawai_field_NPWP'), 'NPWP', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NPWP' type='text' class="form-control" name='NPWP' maxlength='25' value="<?php echo set_value('NPWP', isset($pegawai->NPWP) ? $pegawai->NPWP : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NPWP'); ?></span>
+                </div>
+            </div>
+            <div class="control-group col-sm-6">
+				<label for="inputNAMA" class="control-label">TGL NPWP</label>
+				<div class="input-group date">
+				  <div class="input-group-addon">
+					<i class="fa fa-calendar"></i>
+				  </div>
+				  	<input id='TGL_NPWP' type='text' class="form-control pull-right datepicker" name='TGL_NPWP' maxlength='25' value="<?php echo set_value('TGL_NPWP', isset($pegawai->TGL_NPWP) ? $pegawai->TGL_NPWP : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('TGL_NPWP'); ?></span>
+				</div>
+			</div> 
         </fieldset>
         </div>
   		<div class="box-footer">
@@ -554,6 +653,23 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
         allowClear: true,
         ajax: {
             url: '<?php echo site_url("admin/lokasi/pegawai/ajax");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
+     $("#PENDIDIKAN_ID").select2({
+        placeholder: 'Cari...',
+        width: '100%',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("pegawai/pendidikan/ajax");?>',
             dataType: 'json',
             data: function(params) {
                 return {

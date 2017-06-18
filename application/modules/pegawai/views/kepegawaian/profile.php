@@ -47,6 +47,7 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                 <div class="row">
                                     <div class="col-md-8 profile-info">
                                         <h1 class="font-green sbold uppercase"><?php echo isset($pegawai->GELAR_DEPAN) ? $pegawai->GELAR_DEPAN : ''; ?>  <?php echo isset($pegawai->NAMA) ? $pegawai->NAMA : ''; ?> <?php echo isset($pegawai->GELAR_BELAKANG) ? $pegawai->GELAR_BELAKANG : ''; ?></h1>
+                                        <h4><b>PNS ID</b> <?php echo isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : ''; ?></h4>
                                         <h4><b>NIP</b> <?php echo isset($pegawai->NIP_BARU) ? $pegawai->NIP_BARU : ''; ?></h4>
                                         <ul class="list-inline">
                                             <li>
@@ -58,28 +59,14 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                     <div class="col-md-4">
                                         <div class="portlet sale-summary">
                                             <div class="portlet-title" style="padding:5px;">
-                                                <div class="caption font-red sbold"> <strong><?php echo isset($unor->NAMA_ESELON_I) ? $unor->NAMA_ESELON_I : '-'; ?> </strong></div>
+                                                <div class="caption font-red sbold"> <strong><?php echo isset($unor_induk) ? $unor_induk : '-'; ?> </strong></div>
                                             </div>
                                             <div class="portlet-body" style="padding:5px;">
                                                 <ul class="list-unstyled">
                                                     <li>
-                                                        <strong>Satker</strong><br>
-                                                        <small>
-                                                            <?php echo isset($unor->NAMA_ESELON_II) ? $unor->NAMA_ESELON_II : '-'; ?>
-                                                       </small>
+                                                        <strong><?php echo isset($nama_unor) ? $nama_unor : '-'; ?></strong><br>
                                                     </li>
-                                                    <li>
-                                                        <strong>Bidang</strong><br>
-                                                        <small>
-                                                            <?php //echo isset($unor->NAMA_ESELON_III) ? $unor->NAMA_ESELON_III : '-'; ?>
-                                                        </small>
-                                                    </li>
-                                                    <li>
-                                                        <strong>Sub Bidang</strong><br>
-                                                        <small>
-                                                        	<?php //echo isset($unor->NAMA_ESELON_III) ? $unor->NAMA_ESELON_III : '-'; ?>
-                                                        </small>
-                                                    </li>
+                                                    
                                                 </ul>
                                             </div>
                                         </div>
