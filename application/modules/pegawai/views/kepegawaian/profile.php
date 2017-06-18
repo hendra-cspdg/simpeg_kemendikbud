@@ -50,10 +50,12 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                         <h4><b>PNS ID</b> <?php echo isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : ''; ?></h4>
                                         <h4><b>NIP</b> <?php echo isset($pegawai->NIP_BARU) ? $pegawai->NIP_BARU : ''; ?></h4>
                                         <ul class="list-inline">
+                                        	<li>
+                                                TEMPAT/TGL LAHIR <i class="fa fa-map-marker"></i> <?php echo isset($pegawai->TEMPAT_LAHIR) ? $pegawai->TEMPAT_LAHIR : 'ALAMAT'; ?> <i class="fa fa-calendar"></i> <?php echo isset($pegawai->TGL_LAHIR) ? $convert->fmtDate($pegawai->TGL_LAHIR,"dd month yyyy") : 'TGL_LAHIR'; ?> 
+                                            </li>
                                             <li>
                                                 <i class="fa fa-map-marker"></i> <?php echo isset($pegawai->ALAMAT) ? $pegawai->ALAMAT : 'ALAMAT'; ?></li>
-                                            <li>
-                                                <i class="fa fa-calendar"></i> <?php echo isset($pegawai->TGL_LAHIR) ? $convert->fmtDate($pegawai->TGL_LAHIR,"dd month yyyy") : 'TGL_LAHIR'; ?> </li>                                                                                                                                                                                                                                                                                                                                                                                                       </ul>
+                                        </ul>
                                     </div>
                                     <!--end col-md-8-->
                                     <div class="col-md-4">
