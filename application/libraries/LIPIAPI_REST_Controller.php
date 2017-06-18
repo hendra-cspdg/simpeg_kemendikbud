@@ -40,18 +40,28 @@ class LIPIAPI_REST_Controller extends REST_Controller {
         // Remove any double slashes for safety
         $controller = str_replace('//', '/', $controller);
         
-        
-        // Query the access table and get the number of results
-        return $this->rest->db
-			->group_start()
-            ->where('key', $this->rest->key)
-            ->where('controller', $controller)
-			->group_end()
-			->or_group_start()
-			->where('key is null')
-            ->where('controller', $controller)
-			->group_end()
-            ->get($this->config->item('rest_access_table'))
-            ->num_rows() > 0;
+        //
+        $data_controller = $this->db->from("webservice.api_controllers")->where("url",$controller)->get()->first_row();
+        $data_application =  $this->db->from("webservice.api_keys")->where("key",$this->rest->key)->get()->first_row();
+
+        if($data_controller && $data_application){
+             // Query the access table and get the number of results
+            return $this->rest->db
+                ->group_start()
+                ->where('app_id', $data_application->id)
+                ->where('controller_id', $data_controller->id)
+                ->group_end()
+                ->or_group_start()
+                ->where('app_id is null')
+                ->where('controller_id', $data_controller->id)
+                ->group_end()
+                ->get($this->config->item('rest_access_table'))
+                ->num_rows() > 0;
+        }
+        else {
+            return false;
+        }
+
+       
     }
 }

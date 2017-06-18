@@ -190,6 +190,8 @@
             <li><a href="<?php echo base_url();?>admin/masters/golongan"><i class="fa fa-circle-o"></i>Golongan</a></li>
             <?php endif; ?>
              <li><a href="<?php echo base_url();?>pegawai/manage_unitkerja/index"><i class="fa fa-circle-o"></i>Unit Kerja</a></li>
+             <li><a href="<?php echo base_url();?>api/manage_api/index"><i class="fa fa-circle-o"></i>WS API</a></li>
+             <li><a href="<?php echo base_url();?>api/manage_application/index"><i class="fa fa-circle-o"></i>WS Application</a></li>
           </ul>
           
         </li>
