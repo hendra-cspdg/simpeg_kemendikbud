@@ -300,13 +300,13 @@ class Kepegawaian extends Admin_Controller
         Template::set('selectedLokasiPegawai',$this->lokasi_model->find($pegawaiData->LOKASI_KERJA_ID));
         Template::set('selectedTempatLahirPegawai',$this->lokasi_model->find($pegawaiData->TEMPAT_LAHIR_ID));
         //Template::set('selectedPendidikan',$this->pendidikan_model->find($pegawaiData->PENDIDIKAN_ID));
-        if($pegawaiData->UNOR_ID == $pegawaiData->UNOR_INDUK_ID){
-        	$unor = $this->unitkerja_model->find_by("ID_BKN",$pegawaiData->UNOR_ID);
+        if(TRIM($pegawaiData->UNOR_ID) == TRIM($pegawaiData->UNOR_INDUK_ID)){
+        	$unor = $this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_ID));
         	Template::set('selectedUnorid',$unor);
         	Template::set('selectedUnorindukid',$unor);
         }else{
-        	Template::set('selectedUnorid',$this->unitkerja_model->find_by("ID_BKN",$pegawaiData->UNOR_ID));
-        	Template::set('selectedUnorindukid',$this->unitkerja_model->find_by("ID_BKN",$pegawaiData->UNOR_INDUK_ID));
+        	Template::set('selectedUnorid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_ID)));
+        	Template::set('selectedUnorindukid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_INDUK_ID)));
         }
         $jabataninstansis = $this->jabatan_model->find_all(trim($pegawaiData->JENIS_JABATAN_ID));
 		Template::set('jabataninstansis', $jabataninstansis);
