@@ -71,5 +71,18 @@ class Jabatan_model extends BF_Model
 		}
 		return parent::find_all();
 	}
+	public function find_select($jenis_jabatan ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		//if($jenis_jabatan != ""){
+			$this->jabatan_model->where("JENIS_JABATAN",$jenis_jabatan);
+		//}
+		return parent::find_all();
+	}
+	
 	 
 }

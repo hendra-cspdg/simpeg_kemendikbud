@@ -308,7 +308,7 @@ class Kepegawaian extends Admin_Controller
         	Template::set('selectedUnorid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_ID)));
         	Template::set('selectedUnorindukid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_INDUK_ID)));
         }
-        $jabataninstansis = $this->jabatan_model->find_all(trim($pegawaiData->JENIS_JABATAN_ID));
+        $jabataninstansis = $this->jabatan_model->find_select(trim($pegawaiData->JENIS_JABATAN_ID));
 		Template::set('jabataninstansis', $jabataninstansis);
         
         $pendidikans = $this->pendidikan_model->find_all(trim($pegawaiData->TK_PENDIDIKAN));
