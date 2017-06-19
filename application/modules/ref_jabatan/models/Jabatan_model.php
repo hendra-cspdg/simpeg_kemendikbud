@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Pendidikan_model extends BF_Model
+class Jabatan_model extends BF_Model
 {
-    protected $table_name	= 'pendidikan';
+    protected $table_name	= 'jabatan';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
@@ -11,6 +11,7 @@ class Pendidikan_model extends BF_Model
 	protected $set_modified = false;
 	protected $soft_deletes	= false;
 
+    protected $deleted_field     = 'deleted';
 
 	// Customize the operations of the model without recreating the insert,
     // update, etc. methods by adding the method names to act as callbacks here.
@@ -40,16 +41,11 @@ class Pendidikan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'PNS_ID',
-			'label' => 'PNS ID',
-			'rules' => 'max_length[32]|required',
+			'field' => 'NAMA_JABATAN',
+			'label' => 'NAMA JABATAN',
+			'rules' => 'required|unique[jabatan.NAMA_JABATAN,jabatan.ID]|max_length[255]',
 		),
-		array(
-			'field' => 'NIP_LAMA',
-			'label' => 'lang:pegawai_field_NIP_LAMA',
-			'rules' => 'max_length[9]|required',
-		),
-		
+		 
 	);
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
@@ -63,16 +59,17 @@ class Pendidikan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function find_all($tingkat ="")
+    public function find_all($jenis_jabatan ="")
 	{
 		
 		if(empty($this->selects))
 		{
 			$this->select($this->table_name .'.*');
 		}
-		if($tingkat != ""){
-			$this->pendidikan_model->where("TINGKAT_PENDIDIKAN_ID",$tingkat);
+		if($jenis_jabatan != ""){
+			$this->jabatan_model->where("JENIS_JABATAN",$jenis_jabatan);
 		}
 		return parent::find_all();
 	}
+	 
 }

@@ -256,7 +256,7 @@
         <div class="form-group col-sm-6">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
-                    Jabatan Fungsional
+                    JFT
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "2") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
@@ -276,10 +276,10 @@
         <div class="form-group col-sm-6">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Jabatan Fungsional Umum
+                    JFU
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($pegawai->JABATAN_NAMA) ? $pegawai->JABATAN_NAMA  : ""; } ?></b>
+                    <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
                 </div>
             </div>
         </div>

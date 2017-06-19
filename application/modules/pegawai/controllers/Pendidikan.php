@@ -49,4 +49,20 @@ class Pendidikan extends Admin_Controller
             $this->db->flush_cache();
             return $o;
     }
+    public function getbytingkat()
+	{
+		$this->load->model('pegawai/pendidikan_model');
+		$valuetingkat = $this->input->get('tingkat');
+		$json = array(); 
+		$records = $this->pendidikan_model->find_all($valuetingkat);
+		if(isset($records) && is_array($records) && count($records)):
+			foreach ($records as $record) :
+				$json['id'][] = $record->ID;
+				$json['nama'][] = $record->NAMA;
+			endforeach;
+		endif;
+		echo json_encode($json);
+		die();
+	}
+    
 }

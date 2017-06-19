@@ -47,7 +47,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'NIP_LAMA',
 			'label' => 'lang:pegawai_field_NIP_LAMA',
-			'rules' => 'max_length[9]|required',
+			'rules' => 'max_length[9]',
 		),
 		array(
 			'field' => 'NIP_BARU',
@@ -152,7 +152,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'NOMOR_SK_CPNS',
 			'label' => 'lang:pegawai_field_NOMOR_SK_CPNS',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[30]',
 		),
 		array(
 			'field' => 'TGL_SK_CPNS',

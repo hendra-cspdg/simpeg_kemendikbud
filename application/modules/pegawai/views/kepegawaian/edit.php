@@ -326,7 +326,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             <div class="control-group<?php echo form_error('JENIS_JABATAN_ID') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label(lang('pegawai_field_JENIS_JABATAN_ID'), 'JENIS_JABATAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                   <select name="JENIS_JABATAN_ID" id="JENIS_JABATAN_ID" class="form-control select2">
+                   <select name="JENIS_JABATAN_ID" id="JENIS_JABATAN_ID" class="form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_jabatans) && is_array($jenis_jabatans) && count($jenis_jabatans)):?>
 						<?php foreach($jenis_jabatans as $record):?>
@@ -337,21 +337,21 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('JENIS_JABATAN_ID'); ?></span>
                 </div>
             </div>
-			<div class="control-group<?php echo form_error('JABATAN_ID') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("Jabatan", 'KPKN_ID', array('class' => 'control-label')); ?>
+            
+            <div class="control-group<?php echo form_error('JABATAN_INSTANSI_ID') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("Jabatan", 'JABATAN_INSTANSI_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="JABATAN_ID" id="JABATAN_ID" class="form-control select2">
+                	<select name="JABATAN_INSTANSI_ID" id="JABATAN_INSTANSI_ID" class="form-control select2">
 						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
-						<?php foreach($jabatans as $record):?>
-							<option value="<?php echo $record->ID_JABATAN?>" <?php if(isset($pegawai->JABATAN_ID))  echo  ($pegawai->JABATAN_ID==$record->ID_JABATAN) ? "selected" : ""; ?>><?php echo $record->NAMA_JABATAN; ?></option>
+						<?php if (isset($jabataninstansis) && is_array($jabataninstansis) && count($jabataninstansis)):?>
+						<?php foreach($jabataninstansis as $record):?>
+							<option value="<?php echo $record->KODE_JABATAN?>" <?php if(isset($pegawai->JABATAN_INSTANSI_ID))  echo  (trim($pegawai->JABATAN_INSTANSI_ID)==trim($record->KODE_JABATAN)) ? "selected" : ""; ?>><?php echo $record->NAMA_JABATAN; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
-                    <span class='help-inline'><?php echo form_error('JABATAN_ID'); ?></span>
+                    <span class='help-inline'><?php echo form_error('JABATAN_INSTANSI_ID'); ?></span>
                 </div>
             </div>
-            
 			<div class="control-group col-sm-3">
 				<label for="inputNAMA" class="control-label">TMT Jabatan</label>
 				<div class="input-group date">
@@ -381,10 +381,12 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 <?php echo form_label("Pendidikan", 'PENDIDIKAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="PENDIDIKAN_ID" id="PENDIDIKAN_ID" class="form-control select2">
-						 <?php 
-                            if($selectedPendidikan){
-                                echo "<option selected value='".$selectedPendidikan->ID."'>".$selectedPendidikan->NAMA."</option>";
-                            }
+						<?php if (isset($pendidikans) && is_array($pendidikans) && count($pendidikans)):?>
+						<?php foreach($pendidikans as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($pegawai->PENDIDIKAN_ID))  echo  (TRIM($pegawai->PENDIDIKAN_ID)==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+						  }
                         ?>
 					</select>
                     <span class='help-inline'><?php echo form_error('PENDIDIKAN_ID'); ?></span>
@@ -456,7 +458,10 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                 </div>
             </div>
 			 
-            <div class="control-group<?php echo form_error('GOLONGAN_DARAH') ? ' error' : ''; ?> col-sm-12">
+        </fieldset>
+        <fieldset>
+        	<legend>Data Lainnya</legend>
+        	<div class="control-group<?php echo form_error('GOLONGAN_DARAH') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label(lang('pegawai_field_GOLONGAN_DARAH'), 'GOLONGAN_DARAH', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select class="validate[required] text-input form-control" name="GOLONGAN_DARAH" id="GOLONGAN_DARAH" class="chosen-select-deselect">
@@ -469,11 +474,6 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
                     <span class='help-inline'><?php echo form_error('GOLONGAN_DARAH'); ?></span>
                 </div>
             </div>
-            
-           
-        </fieldset>
-        <fieldset>
-        	<legend>Data Lainnya</legend>
         	<div class="control-group<?php echo form_error('JENIS_KAWIN_ID') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label(lang('pegawai_field_JENIS_KAWIN_ID'), 'JENIS_KAWIN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -629,6 +629,51 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
 </script>
 
 <script>
+	$('#JENIS_JABATAN_ID').change(function() {
+		var valuejenisjabatan = $('#JENIS_JABATAN_ID').val();
+			$("#JABATAN_INSTANSI_ID").empty().append("<option>loading...</option>"); //show loading...
+			 
+			var json_url = "<?php echo base_url(); ?>admin/masters/ref_jabatan/getbyjenis?jenis=" + encodeURIComponent(valuejenisjabatan);
+			//alert(json_url);
+			$.getJSON(json_url,function(data){
+				$("#JABATAN_INSTANSI_ID").empty(); 
+				if(data==""){
+					$("#JABATAN_INSTANSI_ID").append("<option value=\"\">Silahkan Pilih </option>");
+				}
+				else{
+					$("#JABATAN_INSTANSI_ID").append("<option value=\"\">Silahkan Pilih</option>");
+					for(i=0; i<data.id.length; i++){
+						$("#JABATAN_INSTANSI_ID").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
+					}
+				}
+				
+			});
+			$("#JABATAN_INSTANSI_ID").select2("updateResults");
+			return false;
+	});
+	$('#TK_PENDIDIKAN').change(function() {
+		var valuetingkat = $('#TK_PENDIDIKAN').val();
+			$("#PENDIDIKAN_ID").empty().append("<option>loading...</option>"); //show loading...
+			 
+			var json_url = "<?php echo base_url(); ?>pegawai/pendidikan/getbytingkat?tingkat=" + encodeURIComponent(valuetingkat);
+			//alert(json_url);
+			$.getJSON(json_url,function(data){
+				$("#PENDIDIKAN_ID").empty(); 
+				if(data==""){
+					$("#PENDIDIKAN_ID").append("<option value=\"\">Silahkan Pilih </option>");
+				}
+				else{
+					$("#PENDIDIKAN_ID").append("<option value=\"\">Silahkan Pilih</option>");
+					for(i=0; i<data.id.length; i++){
+						$("#PENDIDIKAN_ID").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
+					}
+				}
+				
+			});
+			$("#PENDIDIKAN_ID").select2("updateResults");
+			return false;
+	});
+	
     $("#TEMPAT_LAHIR_ID").select2({
         placeholder: 'Cari Tempat Lahir...',
         width: '100%',
@@ -663,23 +708,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             cache: true
         }
     });
-     $("#PENDIDIKAN_ID").select2({
-        placeholder: 'Cari...',
-        width: '100%',
-        minimumInputLength: 3,
-        allowClear: true,
-        ajax: {
-            url: '<?php echo site_url("pegawai/pendidikan/ajax");?>',
-            dataType: 'json',
-            data: function(params) {
-                return {
-                    term: params.term || '',
-                    page: params.page || 1
-                }
-            },
-            cache: true
-        }
-    });
+      
      $("#Unor_ID").select2({
         placeholder: 'Cari Unit Kerja...',
         width: '100%',

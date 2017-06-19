@@ -21,6 +21,7 @@ class Masters extends Admin_Controller
         
         $this->auth->restrict($this->permissionView);
         $this->load->model('ref_jabatan/ref_jabatan_model');
+        $this->load->model('ref_jabatan/jabatan_model');
         $this->lang->load('ref_jabatan');
         
             $this->form_validation->set_error_delimiters("<span class='error'>", "</span>");
@@ -263,4 +264,18 @@ class Masters extends Admin_Controller
 		echo json_encode($output);
 		die();
     }
+    public function getbyjenis()
+	{
+		$jenis = $this->input->get('jenis');
+		$json = array(); 
+		$records = $this->jabatan_model->find_all($jenis);
+		if(isset($records) && is_array($records) && count($records)):
+			foreach ($records as $record) :
+				$json['id'][] = $record->KODE_JABATAN;
+				$json['nama'][] = $record->NAMA_JABATAN;
+			endforeach;
+		endif;
+		echo json_encode($json);
+		die();
+	}
 }
