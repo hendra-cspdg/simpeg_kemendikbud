@@ -387,17 +387,14 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 
 	});
 	
-	var inputpensiuntahun = <?php echo $jsonpensiuntahun; ?>;
-	//inject color attribute with value
-	for (i = 0; i < inputpensiuntahun.length; i++) {inputpensiuntahun[i].color = colors[i];}	
-	var chart = AmCharts.makeChart("chartpensiuntahun", {
+	var chartPensiunTahun = AmCharts.makeChart("chartpensiuntahun", {
 				  "type": "serial",
-				  "dataProvider":  inputpensiuntahun,
+				  "dataProvider":   <?php echo $jsonpensiuntahun; ?>,
 				   "theme": "light",
 				  "categoryField": "tahun",
 				  "rotate": false,
 				  "startDuration": 0,
-				  "depth3D": 20,
+				  "depth3D": 2,
 				  "angle": 30,
 				  
 				  "chartCursor": {
@@ -414,7 +411,7 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				   },
 				   
 					"titles" : [{
-						  "text": "TAHUN"
+						  "text": "tahun"
 					  }, {
 						  "text": "",
 						  "bold": false
@@ -423,11 +420,11 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				  "graphs": [
 					  {
 						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "colorField": "color",
 						  "fillAlphas": 0.8,
 						  "id": "AmGraph-1",
 						  "lineAlpha": 0.2,
 						  "type": "column",
-						  "colorField": "color",
 						  "valueField": "jumlah"
 					  } 
 				  ],

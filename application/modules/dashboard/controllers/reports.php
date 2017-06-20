@@ -132,7 +132,12 @@ class reports extends Admin_Controller
 		endif;
 		Template::set('jsonjk', json_encode($jsonjk));
 		// pensiun pertahun
-		$pensiuntahun = $this->pegawai_model->find_pentiunpertahun();
+		$pensiuntahun = $this->pegawai_model->stats_pensiun_pertahun();
+		$index = 0;
+		foreach($pensiuntahun as &$row){
+			$row['color'] = $colors[$index];
+			$index++;
+		}
 		Template::set('jsonpensiuntahun', json_encode($pensiuntahun));
 		
 		Template::render();

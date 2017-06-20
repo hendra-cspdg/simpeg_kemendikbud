@@ -402,6 +402,29 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('EXTRACT(YEAR FROM "TMT_PENSIUN")');
 		return parent::find_all();
 	}
-	
+	public function stats_pensiun_pertahun($tahun_kedepan=5){
+		$db_stats =$this->db->query('
+			select perkiraan_tahun_pensiun,count(*)
+				as total from (
+				select "TGL_LAHIR","NIP_BARU","BUP","NAMA", date_part(\'year\', "TGL_LAHIR")+"BUP" as perkiraan_tahun_pensiun from hris.pegawai
+				) as temp
+				group by perkiraan_tahun_pensiun
+				order by  perkiraan_tahun_pensiun asc 
+		')->result('array');
+		$tahun = date('Y');
+		$tahuns = array();
+		for($t=$tahun;$t<=$tahun+$tahun_kedepan;$t++){
+			$tahuns[] = array("tahun"=>$t,"jumlah"=>0);
+		}
+		foreach($tahuns as &$tahun){
+			foreach($db_stats as $row){
+				if($tahun['tahun']==$row['perkiraan_tahun_pensiun']){
+					$tahun['jumlah'] = $row['total'];
+					break;
+				}
+			}
+		}
+		return $tahuns;
+	}
 	 
 }
