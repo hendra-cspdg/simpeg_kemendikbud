@@ -408,6 +408,7 @@ class Kepegawaian extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
+		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
 		 
 		$total= $this->pegawai_model->count_all();;
 		$output=array();
@@ -421,8 +422,19 @@ class Kepegawaian extends Admin_Controller
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		if($search!=""){
-			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			if($searchKey=='nip_baru'){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nip_lama'){
+				$this->pegawai_model->where('upper("NIP_LAMA") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nama_pegawai'){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');	
+			}
+			else if($searchKey=='nama_unit'){
+				//$this->pegawai_model->where('unitkerja."NAMA_UNOR" LIKE \''.strtoupper($search).'%\'');	
+			}
+			
 		}
 		
 		$this->pegawai_model->limit($length,$start);
@@ -436,15 +448,23 @@ class Kepegawaian extends Admin_Controller
 		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
 		yang mengandung keyword tertentu
 		*/
-		if($search != "")
-		{
-			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
-			//$this->pegawai_model->or_where('NIP_BARU',$search);
+		
+		if($search!=""){
+			if($searchKey=='nip_baru'){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nip_lama'){
+				$this->pegawai_model->where('upper("NIP_LAMA") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nama_pegawai'){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');	
+			}
+			else if($searchKey=='nama_unit'){
+				//$this->pegawai_model->where('unitkerja."NAMA_UNOR" LIKE \''.strtoupper($search).'%\'');	
+			}
 			$jum	= $this->pegawai_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
-		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {

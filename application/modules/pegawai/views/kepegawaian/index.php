@@ -22,7 +22,21 @@ if ($can_delete) {
               <?php endif; ?>
             </div>
 	<div class="box-body">
-	<?php echo form_open($this->uri->uri_string()); ?>
+	<?php echo form_open($this->uri->uri_string(),"id=form_search_pegawai"); ?>
+		<div class="row">
+			<div class="col-md-3">
+				<select class="form-control" name="searchKey">
+					<option value="nama_pegawai">Nama Pegawai</option>
+					<option value="nip_baru">NIP Baru</option>
+					<option value="nip_lama">NIP Lama</option>
+					<option style="display:none" value="nama_unit">Nama Unit</option>
+
+				</select>
+			</div>
+			<div class="col-md-9">
+				<input class="form-control" name="key" maxlength="200" value="" type="text">
+			</div>				
+		</div>
 		<table class="slug-table table table-bordered table-striped table-responsive dt-responsive table-data table-hover">
 				 <thead>
 				 <tr><th style="width:10px">No</th>
@@ -30,23 +44,34 @@ if ($can_delete) {
 				 </thead>
 				 </table>
 	<?php
-    echo form_close();
-    
+    echo form_close();    
     ?>
 </div>
 </div>
 
 
 <script type="text/javascript">
-$(".table-data").DataTable({
+$table = $(".table-data").DataTable({
 	ordering: false,
+	dom : "<'row'<'col-sm-6'><'col-sm-6'>>" +
+	"<'row'<'col-sm-12'tr>>" +
+	"<'row'<'col-sm-2'l><'col-sm-3'i><'col-sm-7'p>>",
 	processing: true,
 	serverSide: true,
 	ajax: {
 	  url: "<?php echo base_url() ?>admin/kepegawaian/pegawai/getdata",
 	  type:'POST',
+	  "data": function ( d ) {
+			d.search['value']=  $("[name=key]").val();
+			d.search['key'] = $("[name=searchKey]").val();
+		}
 	}
 });
+$("#form_search_pegawai").submit(function(){
+	$table.ajax.reload(null,false);
+	return false;
+});
+
 
 $('body').on('click','.btn-hapus',function () { 
 	var kode =$(this).attr("kode");
