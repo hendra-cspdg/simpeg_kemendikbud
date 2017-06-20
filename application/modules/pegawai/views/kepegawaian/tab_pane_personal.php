@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/daterangepicker/daterangepicker.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>themes/admin/plugins/datepicker/datepicker3.css">
 <?php
 	$this->load->library('convert');
  	$convert = new convert();
@@ -563,6 +566,13 @@
 	</div>        
     </form>
 </div>
+<script>
+    //Date picker
+    $('.datepicker').datepicker({
+      autoclose: true,format: 'yyyy-mm-dd'
+    });
+</script>
+
 <script>
 	$("#btnsaveprofile").click(function(){
 		submitdata();

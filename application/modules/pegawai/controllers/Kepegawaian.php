@@ -362,7 +362,7 @@ class Kepegawaian extends Admin_Controller
         Template::set('PNS_ID', $pegawai->PNS_ID);
 		// lokasi kerja
 		$gol_id = $pegawai->GOL_ID;
-		$recgolongan = $this->golongan_model->find($gol_id);
+		$recgolongan = $this->golongan_model->find(trim($gol_id));
 		Template::set('GOLONGAN_AKHIR', $recgolongan->NAMA);
 		
 		$gol_awal_id = $pegawai->GOL_AWAL_ID;
@@ -377,7 +377,7 @@ class Kepegawaian extends Admin_Controller
 		$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",TRIM($JABATAN_ID));
 		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN_FULL);
 		 
-		$unor = $this->unitkerja_model->find_by("ID_BKN",$pegawai->UNOR_ID);
+		$unor = $this->unitkerja_model->find_by("ID_BKN",trim($pegawai->UNOR_ID));
 		Template::set('nama_unor',$unor->NAMA_UNOR);
 		$unor_induk = $this->unitkerja_model->find_by("ID",$unor->PARENT_ID);
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
