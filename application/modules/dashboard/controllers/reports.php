@@ -75,8 +75,8 @@ class reports extends Admin_Controller
 											,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
 											,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
 											,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
-											,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "41-45"
-											,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "46-50"
+											,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
+											,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
 											,sum(CASE WHEN age > 50 THEN 1 END) ">50"
 										FROM (
 											SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age
