@@ -15,7 +15,7 @@
 					<select id="unit_id" width="100%" class="format-control"></select>
 				</div>
 				<div class="col-md-2">
-					<a type="button" class="show-modal-custom btn btn-default btn-warning margin pull-right " href="<?php echo base_url(); ?>pegawai/diklatfungsional/add/<?php echo $PNS_ID ?>" tooltip="Tambah Riwayat Diklat">
+					<a type="button" class="btn-cetak btn  btn-warning" href="<?php echo base_url(); ?>pegawai/duk/cetak" tooltip="Cetak DUK">
 						<i class="fa fa-peint"></i> Cetak
 					</a>
 				</div>
@@ -55,6 +55,10 @@
 
 <script type="text/javascript">
 	(function($){
+		$(".btn-cetak").on("click",function(){
+			window.open($(this).attr("href")+"/"+$("#unit_id").val());
+			return false;
+		});
 		$("#unit_id").select2({
 			placeholder: 'Cari Unit Kerja...',
 			width: '100%',

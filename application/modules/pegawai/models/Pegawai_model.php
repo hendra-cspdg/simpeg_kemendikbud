@@ -430,7 +430,7 @@ class Pegawai_model extends BF_Model
 	public function get_duk_list($unit_id=null,$start,$length){
 		if($unit_id){
 			$ids = $this->get_children_satker($unit_id);
-			$total = $this->db->from("hris.pegawai")->get()->num_rows();
+			$total = $this->db->from("hris.pegawai")->where_in("UNOR_ID",$ids)->get()->num_rows();
 			$data = $this->db->query('
 				SELECT
 					* FROM duk_list 

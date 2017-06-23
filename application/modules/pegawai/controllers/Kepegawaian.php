@@ -45,7 +45,7 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/golongan_model');
         $golongans = $this->golongan_model->find_all();
 		Template::set('golongans', $golongans);
-
+		
 		$this->load->model('pegawai/agama_model');
         $agamas = $this->agama_model->find_all();
 		Template::set('agamas', $agamas);
@@ -409,34 +409,55 @@ class Kepegawaian extends Admin_Controller
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
-		 
-		$total= $this->pegawai_model->count_all();;
-		$output=array();
-		$output['draw']=$draw;
-
+		$this->db->start_cache();
 		
-		$output['recordsTotal']= $output['recordsFiltered']=$total;
-		$output['data']=array();
-
-
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
-		if($search!=""){
-			if($searchKey=='nip_baru'){
-				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+		$advanced_search_filters  = $this->input->post("search[advanced_search_filters]");
+		if($advanced_search_filters){
+			$filters = array();
+			foreach($advanced_search_filters as  $filter){
+				$filters[$filter['name']] = $filter["value"];
 			}
-			else if($searchKey=='nip_lama'){
-				$this->pegawai_model->where('upper("NIP_LAMA") LIKE \''.strtoupper($search).'%\'');
+			if($filters['nama_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
 			}
-			else if($searchKey=='nama_pegawai'){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');	
+			if($filters['nip_cb']){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
 			}
-			else if($searchKey=='nama_unit'){
-				//$this->pegawai_model->where('unitkerja."NAMA_UNOR" LIKE \''.strtoupper($search).'%\'');	
+			if($filters['umur_cb']){
+				if($filters['umur_operator']=="="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") <=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")<',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="!="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") !=',$filters['umur_key']*12);	
+				}
 			}
-			
+			if($filters['eselon_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+			}
+			if($filters['golongan_cb']){
+				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
+			}
 		}
-		
+		$this->db->stop_cache();
+		$output=array();
+		$output['draw']=$draw;
+		$total= $this->pegawai_model->count_all();
+		$output['recordsTotal']= $output['recordsFiltered']=$total;
+		$output['data']=array();
 		$this->pegawai_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
@@ -506,8 +527,7 @@ class Kepegawaian extends Admin_Controller
 			}
 		endif;
 		echo json_encode($output);
-		die();
-
+		$this->db->flush_cache();
 	}
 	public function getdatapensiun(){
 		$draw = $this->input->post('draw');

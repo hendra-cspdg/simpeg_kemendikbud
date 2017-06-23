@@ -69,6 +69,14 @@ class Duk extends Admin_Controller
     public function index(){
         Template::render();
     }
+	public function cetak($unit_id){
+		$o = $this->pegawai_model->get_duk_list($unit_id,0,null);
+		$index=1;
+		foreach($o->data as $record){
+			echo $index."#".$record->NAMA." ".$record->TMT_GOLONGAN."<BR>";
+			$index++;
+		}
+	}
 	public function ajax_unit_list(){
 		$length = 10;
 		$term = $this->input->get('term');
