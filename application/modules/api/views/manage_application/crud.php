@@ -9,28 +9,50 @@
         <fieldset>
             <input id='id' type='hidden' class="form-control" name='id' maxlength='32' value="<?php echo set_value('id', isset($id) ? trim($id) : ''); ?>" />
             
-            <div class="control-group<?php echo form_error('name') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Nama API", 'Nama API', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('app_name') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Nama Aplikasi", 'Nama Aplikasi', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='name' type='text' class="form-control" name='name'  value="<?php echo set_value('name', isset($data->name) ? $data->name : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('name'); ?></span>
+                    <input id='app_name' type='text' class="form-control" name='app_name'  value="<?php echo set_value('name', isset($data->app_name) ? $data->app_name : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('app_name'); ?></span>
                 </div>
             </div>
-           <div class="control-group<?php echo form_error('url') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("Alamat metode", 'Alamat metode', array('class' => 'control-label')); ?>
+           <div class="control-group<?php echo form_error('key') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("API KEY", 'API KEY', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='url' type='text' class="form-control" name='url'  value="<?php echo set_value('url', isset($data->url) ? $data->url : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('url'); ?></span>
+                    <input id='key' type='text' readonly class="form-control" name='key'  value="<?php echo set_value('key', isset($data->key) ? $data->key : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('key'); ?></span>
                 </div>
             </div>
-            <div class="control-group<?php echo form_error('description') ? ' description' : ''; ?> col-sm-12">
-                <?php echo form_label("Keterangan", 'Keterangan', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('Controllers_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Unor", 'Controllers_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='description' type='text' class="form-control" name='description'  value="<?php echo set_value('description', isset($data->description) ? $data->description : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('description'); ?></span>
+                    <select name="Controllers_ID[]" multiple="multiple" id="Controllers_ID" class="form-control select2">
+                        <?php 
+                            if($data->selectedControllers && sizeof($data->selectedControllers)>0){
+                                foreach($data->selectedControllers as $row){
+                                    echo "<option selected value='".$row->id."'>".$row->name." | ".$row->url."</option>";
+                                }
+                            }
+                        ?>
+					</select>
+                    <span class='help-inline'><?php echo form_error('Controllers_ID'); ?></span>
                 </div>
             </div>
-            
+            <div class="control-group<?php echo form_error('Satker_Auth') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("Satker Auth", 'Satker_Auth', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <select name="Satker_Auth[]" multiple="multiple" id="Satker_Auth" class="form-control select2">
+                        <?php 
+                            if($data->selectedSatkers && sizeof($data->selectedSatkers)>0){
+                                foreach($data->selectedSatkers as $row){
+                                    echo "<option selected value='".$row->ID."'>".$row->NAMA_UNOR."</option>";
+                                }
+                            }
+                        ?>
+					</select>
+                    <span class='help-inline'><?php echo form_error('Controllers_ID'); ?></span>
+                </div>
+            </div>
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
@@ -43,6 +65,42 @@
     
 </script>
 <script>
+    $("#Controllers_ID").select2({
+        placeholder: 'Cari Hak Akses...',
+        width: '100%',
+        minimumInputLength: 0,
+        multiple:true,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("api/manage_application/get_controller_list");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
+     $("#Satker_Auth").select2({
+        placeholder: 'Cari Hak Akses Unor...',
+        width: '100%',
+        minimumInputLength: 3,
+        multiple:true,
+        allowClear: true,
+        ajax: {
+            url: '<?php echo site_url("api/manage_application/get_satker_list");?>',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+            cache: true
+        }
+    });
 	$("#btnsave").click(function(){
 		submitdata();
 		return false; 
