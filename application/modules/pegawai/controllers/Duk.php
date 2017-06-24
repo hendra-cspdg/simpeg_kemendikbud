@@ -69,13 +69,117 @@ class Duk extends Admin_Controller
     public function index(){
         Template::render();
     }
-	public function cetak($unit_id){
+	public function cetak($unit_id=null){
+		
+		$this->load->model("pegawai/unit_organisasi_model");
+		$unor = $this->unit_organisasi_model->where("ID_BKN",$unit_id)->find_first_row();
+		$satuan_kerja = "";
+		if($unor){
+			$satuan_kerja = $unor->NAMA_UNOR;
+		}
+		else {
+			echo "unor tidak diketahui";
+			die();
+		}
+		$this->load->library("tcpdf_lib");
+		$pdf=  new DUK_Template($satuan_kerja,PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+		$pdf->SetMargins(PDF_MARGIN_LEFT, 15, PDF_MARGIN_RIGHT);
+		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+		
+		$pdf->AddPage();
 		$o = $this->pegawai_model->get_duk_list($unit_id,0,null);
 		$index=1;
+		
+		//echo json_encode($o->data);
+		$pdf->SetFont('times', 'R', 7);
+		$html = '
+		<style type="text/css">
+			table td {
+				border : 0.1px solid black;	
+			}
+			table thead th {
+				border : 0.1px solid black;	
+			}
+			table { page-break-inside:auto }
+   			tr    { page-break-inside:avoid; page-break-after:auto }
+			
+		</style>
+		<table cellspacing=0 cellpadding="2">';
+		$html .= "<thead><tr class='header'>";
+				$html .= "<td>"; 
+						$html .= "NIP"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "NAMA"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "TMT CPNS"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "JABATAN"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "TMT JAB."; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "GOL."; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "TMT GOL."; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "MASA KERJA"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "PEND."; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= "UNIT KERJA"; 
+				$html .= "</td>";
+			$html .= "</tr></thead>";
+		
 		foreach($o->data as $record){
-			echo $index."#".$record->NAMA." ".$record->TMT_GOLONGAN."<BR>";
+			$html .= "<tr>";
+				$html .= "<td>"; 
+						$html .= $record->NIP_BARU; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->NAMA; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->TMT_CPNS; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->JABATAN_NAMA; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->TMT_JABATAN; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->GOLONGAN; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->TMT_GOLONGAN; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->MK_TAHUN." thn ".$record->MK_BULAN." bln"; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->PENDIDIKAN; 
+				$html .= "</td>";
+				$html .= "<td>"; 
+						$html .= $record->NAMA_UNOR; 
+				$html .= "</td>";
+			$html .= "</tr>";
 			$index++;
 		}
+		$html .= "</table>";
+//		echo $html;
+//		die();
+		//$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->Output('daftar_duk.pdf', 'I');
 	}
 	public function ajax_unit_list(){
 		$length = 10;
@@ -115,5 +219,19 @@ class Duk extends Admin_Controller
 		$output['pagination'] = array("more"=>false);
 		
 		echo json_encode($output);
+	}
+}
+require_once(APPPATH.'libraries/tcpdf/tcpdf.php');
+class DUK_Template extends TCPDF {
+	public $unit_kerja = "AA";
+	public function __construct($unit_kerja,$_PDF_PAGE_ORIENTATION, $_PDF_UNIT, $_PDF_PAGE_FORMAT, $_true, $_UTF, $_false){
+		parent::__construct($_PDF_PAGE_ORIENTATION, $_PDF_UNIT, $_PDF_PAGE_FORMAT, $_true, $_UTF, $_false);
+		$this->unit_kerja = strtoupper($unit_kerja);
+	}
+	public function Header() {
+		$this->SetFont('times', 'BR', 8);
+		$this->Cell(0, 2, 'DAFTAR URUTAN KEPANGKATAN', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+		$this->Ln();
+		$this->Cell(0, 2, $this->unit_kerja, 0, true, 'C', 0, '', 0, false, 'M', 'M');
 	}
 }

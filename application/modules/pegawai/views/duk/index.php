@@ -12,11 +12,11 @@
 		<div class="form-group">
 			<div class="row">
 				<div class="col-md-10">
-					<select id="unit_id" width="100%" class="format-control"></select>
+					<select id="unit_id" width="100%" class=" col-md-10 format-control"></select>
 				</div>
 				<div class="col-md-2">
-					<a type="button" class="btn-cetak btn  btn-warning" href="<?php echo base_url(); ?>pegawai/duk/cetak" tooltip="Cetak DUK">
-						<i class="fa fa-peint"></i> Cetak
+					<a type="button" class="btn-sm btn-cetak btn  btn-warning" href="<?php echo base_url(); ?>pegawai/duk/cetak" tooltip="Cetak DUK">
+						<i class="fa fa-print"></i>&nbsp; Cetak
 					</a>
 				</div>
 			</div>
