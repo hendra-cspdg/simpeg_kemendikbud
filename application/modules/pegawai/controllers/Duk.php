@@ -83,7 +83,7 @@ class Duk extends Admin_Controller
 		}
 		$this->load->library("tcpdf_lib");
 		$pdf=  new DUK_Template($satuan_kerja,PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-		$pdf->SetMargins(PDF_MARGIN_LEFT, 15, PDF_MARGIN_RIGHT);
+		$pdf->SetMargins(5, 15, 5);
 		$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 		
@@ -93,7 +93,7 @@ class Duk extends Admin_Controller
 		
 		//echo json_encode($o->data);
 		$pdf->SetFont('times', 'R', 7);
-		$html = '
+		$html = <<<EOD
 		<style type="text/css">
 			table td {
 				border : 0.1px solid black;	
@@ -102,83 +102,63 @@ class Duk extends Admin_Controller
 				border : 0.1px solid black;	
 			}
 			table { page-break-inside:auto }
-   			tr    { page-break-inside:avoid; page-break-after:auto }
-			
+   			tr,td    { page-break-inside:avoid; page-break-after:auto }
+           
 		</style>
-		<table cellspacing=0 cellpadding="2">';
-		$html .= "<thead><tr class='header'>";
-				$html .= "<td>"; 
-						$html .= "NIP"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "NAMA"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "TMT CPNS"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "JABATAN"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "TMT JAB."; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "GOL."; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "TMT GOL."; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "MASA KERJA"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "PEND."; 
-				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= "UNIT KERJA"; 
-				$html .= "</td>";
-			$html .= "</tr></thead>";
-		
+		<table  cellspacing=0 cellpadding="2">
+			<thead>
+				<tr class='header'>
+					<td width="20">NO</td>
+					<td width="100">PEGAWAI</td>
+					<td width="40">TMT CPNS</td>
+					<td width="100">JABATAN</td>
+					<td width="40">GOL.</td>
+					<td width="40">MASA KERJA</td>
+					<td width="100">PENDIDIKAN</td>
+					<td width="120">UNIT KERJA</td>
+				</tr>
+			</thead>
+		<tbody>
+EOD;
+		$index = 1;
 		foreach($o->data as $record){
 			$html .= "<tr>";
-				$html .= "<td>"; 
+				$html .= "<td style=\"text-align:center\" width=\"20\">"; 
+						$html .= $index;
+				$html .= "</td>";
+				$html .= "<td width=\"100\">"; 
 						$html .= $record->NIP_BARU; 
+						$html .= "<br>".$record->NAMA;
 				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= $record->NAMA; 
-				$html .= "</td>";
-				$html .= "<td>"; 
+				$html .= "<td width=\"40\">"; 
 						$html .= $record->TMT_CPNS; 
 				$html .= "</td>";
-				$html .= "<td>"; 
+				$html .= "<td width=\"100\">"; 
 						$html .= $record->JABATAN_NAMA; 
+						$html .= "<br>".$record->TMT_JABATAN; 
 				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= $record->TMT_JABATAN; 
-				$html .= "</td>";
-				$html .= "<td>"; 
+				$html .= "<td width=\"40\">"; 
 						$html .= $record->GOLONGAN; 
+						$html .= "<br>".$record->TMT_GOLONGAN;
 				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= $record->TMT_GOLONGAN; 
+				$html .= "<td width=\"40\">"; 
+						$html .= $record->MK_TAHUN." T ".$record->MK_BULAN." B"; 
 				$html .= "</td>";
-				$html .= "<td>"; 
-						$html .= $record->MK_TAHUN." thn ".$record->MK_BULAN." bln"; 
-				$html .= "</td>";
-				$html .= "<td>"; 
+				$html .= "<td  width=\"100\">"; 
 						$html .= $record->PENDIDIKAN; 
 				$html .= "</td>";
-				$html .= "<td>"; 
+				$html .= "<td  width=\"120\">"; 
 						$html .= $record->NAMA_UNOR; 
 				$html .= "</td>";
 			$html .= "</tr>";
 			$index++;
 		}
+		$html .= "</tbody>";
 		$html .= "</table>";
-//		echo $html;
-//		die();
+
 		//$pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->writeHTML($html, true, false, false, false, '');
+
 		$pdf->Output('daftar_duk.pdf', 'I');
 	}
 	public function ajax_unit_list(){
