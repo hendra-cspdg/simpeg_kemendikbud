@@ -71,13 +71,13 @@ class Duk extends Admin_Controller
     }
 	public function cetak($unit_id=null){
 		
-		$this->load->model("pegawai/unit_organisasi_model");
+		$this->load->model("pegawai/unitkerja_model");
 		if($unit_id == null || $unit_id == 'null'){
-			$unor = $this->unit_organisasi_model->where("ID",2)->find_first_row();
+			$unor = $this->unitkerja_model->where("ID",2)->find_first_row();
 			$unit_id = $unor->ID_BKN;
 		}
 		else {
-			$unor = $this->unit_organisasi_model->where("ID_BKN",$unit_id)->find_first_row();
+			$unor = $this->unitkerja_model->where("ID_BKN",$unit_id)->find_first_row();
 		}
 		$satuan_kerja = "";
 		if($unor){

@@ -9,7 +9,7 @@ class Manage_unitkerja extends Admin_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("pegawai/unit_organisasi_model");
+        $this->load->model("pegawai/unitkerja_model");
     }
     public function index(){
         Template::set('toolbar_title', "Manage Unit Kerja");
@@ -165,12 +165,12 @@ class Manage_unitkerja extends Admin_Controller {
     }
     public function delete($node_id){
         $satker_id = str_replace("node_","",$node_id);
-        $this->unit_organisasi_model->delete($satker_id);
+        $this->unitkerja_model->delete($satker_id);
     }
     public function edit($node_id){
         $satker_id = str_replace("node_","",$node_id);
-        $this->unit_organisasi_model->where("ID",$satker_id);
-        $data_unor =$this->unit_organisasi_model->find_first_row();
+        $this->unitkerja_model->where("ID",$satker_id);
+        $data_unor =$this->unitkerja_model->find_first_row();
         Template::set("ID",$data_unor->ID);
         Template::set("data",$data_unor);
         Template::set_view("manage_unitkerja/crud.php");
@@ -179,7 +179,8 @@ class Manage_unitkerja extends Admin_Controller {
         Template::render();
     }
     public function save(){
-        $this->form_validation->set_rules($this->unit_organisasi_model->get_validation_rules());
+        $this->cache->delete("unors");
+        $this->form_validation->set_rules($this->unitkerja_model->get_validation_rules());
 
         if ($this->form_validation->run() === false) {
             $response['msg'] = "
@@ -195,15 +196,25 @@ class Manage_unitkerja extends Admin_Controller {
             exit();
         }
         $id = $this->input->post("ID");
-        $data = $this->unit_organisasi_model->prep_data($this->input->post());
+        $data = $this->unitkerja_model->prep_data($this->input->post());
 
+        $data['IS_SATKER']=isset($data['IS_SATKER']) ? 1: 0;
         if(isset($id) && !empty($id)){
-            $this->unit_organisasi_model->update($id,$data);
+            $this->unitkerja_model->update($id,$data);
         }
-        else $this->unit_organisasi_model->insert($data);
+        else $this->unitkerja_model->insert($data);
         $response = array();
         $response ['success']= true;
         $response ['msg']= "Transaksi berhasil";
         echo json_encode($response);   
+    }
+    public function test_path(){
+        $this->load->model('pegawai/unitkerja_model');
+        echo $this->unitkerja_model->get_parent_path(103,true,false);    
+    }
+    public function test_parent(){
+        $this->load->model('pegawai/unitkerja_model');
+        echo json_encode($this->unitkerja_model->get_satker(103));    
+        echo 123;
     }
 }

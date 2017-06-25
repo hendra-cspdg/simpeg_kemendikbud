@@ -61,7 +61,7 @@ $autoload['packages'] = array(
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('database','Rest_authenticator');
+$autoload['libraries'] = array('cache','database','Rest_authenticator');
 
 
 /*

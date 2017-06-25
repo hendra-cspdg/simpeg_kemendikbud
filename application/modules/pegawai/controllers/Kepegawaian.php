@@ -47,6 +47,7 @@ class Kepegawaian extends Admin_Controller
 		Template::set('golongans', $golongans);
 		
 		$this->load->model('pegawai/agama_model');
+		$this->load->model('pegawai/unitkerja_model');
         $agamas = $this->agama_model->find_all();
 		Template::set('agamas', $agamas);
 		
@@ -382,6 +383,7 @@ class Kepegawaian extends Admin_Controller
 		$unor_induk = $this->unitkerja_model->find_by("ID",$unor->PARENT_ID);
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
+		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
         Template::set('toolbar_title',"View Profile");
         Template::render();
     }

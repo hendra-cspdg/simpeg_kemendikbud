@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Unit_organisasi_model extends BF_Model
+class Unitkerja_model extends BF_Model
 {
     protected $table_name	= 'unitkerja';
 	protected $key			= 'ID';
@@ -58,8 +58,62 @@ class Unit_organisasi_model extends BF_Model
     {
         parent::__construct();
     }
-
-	
+	public function get_satker($unor_id_inc,$withme = true){
+		$data = $this->cache->get('unors');
+		if($data==null){
+			$rows = $this->db->from("hris.unitkerja")->get()->result();
+			foreach($rows as $row){
+				$data[$row->ID] = $row;
+			}
+			$this->cache->write($data,'unors');
+		}
+		if($data!=null){
+			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
+			$parent = isset($data[$data[$unor_id_inc]->PARENT_ID])?$data[$data[$unor_id_inc]->PARENT_ID]:null;
+			while($parent!=NULL){
+				echo "tx";
+				if($parent->IS_SATKER) {
+					echo "found";
+					return $parent;
+				}					
+				$parent = isset($data[$data[$parent->ID]->PARENT_ID])?$data[$data[$parent->ID]->PARENT_ID]:null;
+			}
+		}
+		return null;
+	}
+	public function get_parent_path($unor_id_inc,$withme = true,$as_array = true){
+		$data = $this->cache->get('unors');
+		if($data==null){
+			$rows = $this->db->from("hris.unitkerja")->get()->result();
+			foreach($rows as $row){
+				$data[$row->ID] = $row;
+			}
+			$this->cache->write($data,'unors');
+		}
+		$path = array();
+		if($data!=null){
+			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
+			if($node && $withme){
+				$path[] = $node;
+			}
+			$parent = isset($data[$data[$unor_id_inc]->PARENT_ID])?$data[$data[$unor_id_inc]->PARENT_ID]:null;
+			while($parent!=NULL){
+				$path[] = $parent;
+				if($parent->IS_SATKER) break;
+				$parent = isset($data[$data[$parent->ID]->PARENT_ID])?$data[$data[$parent->ID]->PARENT_ID]:null;
+			}
+		}
+		if($as_array){
+			return $path;		
+		}
+		else {
+			$path_string = array();
+			foreach($path as $row){
+				$path_string[] = $row->NAMA_UNOR;
+			}
+			return implode(" - ",$path_string);
+		}
+	}
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}

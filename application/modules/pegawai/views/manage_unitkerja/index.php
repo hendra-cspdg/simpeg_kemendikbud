@@ -9,8 +9,6 @@
         <div id="tree_satker" class="tree-demo"> </div>
     </div>
 </div>    
-
-
 <script type="application/javascript">  
     var BASE_URL = '<?php echo base_url()?>';
     $container =$("#manage_unitkerja_container");

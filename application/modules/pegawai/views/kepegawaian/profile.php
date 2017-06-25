@@ -61,14 +61,20 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                     <div class="col-md-4">
                                         <div class="portlet sale-summary">
                                             <div class="portlet-title" style="padding:5px;">
-                                                <div class="caption font-red sbold"> <strong><?php echo isset($unor_induk) ? $unor_induk : '-'; ?> </strong></div>
+                                                <div class="hide caption font-red sbold"> <strong><?php echo isset($unor_induk) ? $unor_induk : '-'; ?> </strong></div>
                                             </div>
+                                            <style>
+                                                ul.path_unor > li + li::before {
+                                                    content: "> ";
+                                                }
+                                            </style>
                                             <div class="portlet-body" style="padding:5px;">
-                                                <ul class="list-unstyled">
-                                                    <li>
-                                                        <strong><?php echo isset($nama_unor) ? $nama_unor : '-'; ?></strong><br>
-                                                    </li>
-                                                    
+                                                <ul class="list-unstyled path_unor">
+                                                    <?php 
+                                                        foreach($parent_path_array_unor as $node){
+                                                            echo "<li><strong>".$node->NAMA_UNOR."</strong></li>";        
+                                                        }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
