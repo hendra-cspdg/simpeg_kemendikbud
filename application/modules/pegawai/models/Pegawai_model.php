@@ -282,7 +282,7 @@ class Pegawai_model extends BF_Model
 	}
 	
 	public function find_all(){
-		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR"',false);
+		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",unitkerja."ID" as "UNIT_ID" ',false);
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();

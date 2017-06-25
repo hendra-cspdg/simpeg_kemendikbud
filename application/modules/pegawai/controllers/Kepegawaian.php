@@ -495,7 +495,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $record->NAMA_UNOR;
+                $row []  = $this->unitkerja_model->get_parent_path($record->UNIT_ID,true,false);
                 
                 $btn_actions = array();
                 $btn_actions  [] = "

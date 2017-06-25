@@ -19,7 +19,7 @@ class Manage_unitkerja extends Admin_Controller {
     public function get_children($parent=null){
         if($parent==null){
             return $this->db->query('
-            select parent."ID",parent."NAMA_UNOR",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+            select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
             from unitkerja parent
             where 
             deleted is null 
@@ -29,7 +29,7 @@ class Manage_unitkerja extends Admin_Controller {
         }
         else {
             return $this->db->query('
-                        select parent."ID",parent."NAMA_UNOR",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+                        select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
                         from unitkerja parent
                         where 
                         deleted is null 
@@ -123,15 +123,21 @@ class Manage_unitkerja extends Admin_Controller {
     public function ajax_tree(){
         $parent = $this->input->get("parent");
         $data = array();
-
+        $default_icon = "fa fa-folder icon-lg icon-state-success";
         if ($parent == "#") {
             $children = $this->get_children(null);
             foreach($children as $record){
+                if($record->IS_SATKER) {
+                    $icon = "fa fa-cogs icon-lg icon-state-warning";
+                }
+                else {
+                    $icon = $default_icon;
+                }
                 $data [] =  array(
                     "x"=>$parent,
                     "id" => "node_" .$record->ID,  
                     "text" => $record->NAMA_UNOR,  
-                    "icon" => "fa fa-folder icon-lg icon-state-warning" ,
+                    "icon" => $icon ,
                     "children" => $record->num_child>0, 
                     "state"=> array(
                            "opened"   => boolean  // is the node open 
@@ -143,11 +149,17 @@ class Manage_unitkerja extends Admin_Controller {
             $splitnode = split("_",$parent);
             $children = $this->get_children($splitnode[1]);
             foreach($children as $record){
+                if($record->IS_SATKER) {
+                    $icon = "fa fa-cogs icon-lg icon-state-warning";
+                }
+                else {
+                    $icon = $default_icon;
+                }
                 $data [] =  array(
                     "xy"=>$splitnode[1],
                     "id" => "node_" .$record->ID,  
                     "text" => $record->NAMA_UNOR,  
-                    "icon" => "fa fa-folder icon-lg icon-state-success",
+                    "icon" => $icon ,
                     "children" => $record->num_child>0
                 );
             }
