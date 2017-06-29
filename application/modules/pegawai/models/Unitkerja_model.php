@@ -190,4 +190,32 @@ class Unitkerja_model extends BF_Model
 		}
 		return "-";
 	}
+	public function getChildren($parents=array(),&$children=array(),$onlyID = true,$include_sub=false,$includeMe = false,$first = true){
+		$data = $this->cache->get('unors');
+		if(!is_array($parents)){
+			$parents = array($parents);
+		}
+		
+		foreach($parents as $parent){
+			foreach($data as $node){
+				if($first && $includeMe){ //memasukan me sebagai child dari me
+					if($node->ID == $parent){
+						if($onlyID){
+							$children[] = $node->ID;
+						}
+						else $children[] = $node;
+					}
+				}
+				if($node->PARENT_ID == $parent){
+					if($onlyID){
+							$children[] = $node->ID;
+					}
+					else $children[] = $node;
+					if($include_sub){
+						$this->getChildren($node->ID,$children,$onlyID,$include_sub,$includeMe,false);
+					}
+				}
+			}
+		}
+	}
 }

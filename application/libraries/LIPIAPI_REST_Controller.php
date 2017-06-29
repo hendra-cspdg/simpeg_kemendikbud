@@ -16,7 +16,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 require "REST_Controller.php";
 class LIPIAPI_REST_Controller extends REST_Controller {
-	/**
+	
+    public function getApplicationKey(){
+        $api_key_variable = $this->config->item('rest_key_name');
+        
+         // Work out the name of the SERVER entry based on config
+        $key_name = 'HTTP_' . strtoupper(str_replace('-', '_', $api_key_variable));
+        if (($key = isset($this->_args[$api_key_variable]) ? $this->_args[$api_key_variable] : $this->input->server($key_name)))
+        return $this->rest->db->where($this->config->item('rest_key_column'), $key)->get($this->config->item('rest_keys_table'))->row();
+    }
+    
+    /**
      * Check to see if the API key has access to the controller and methods
      *
      * @access protected
