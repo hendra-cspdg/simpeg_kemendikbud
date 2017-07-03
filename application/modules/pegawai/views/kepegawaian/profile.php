@@ -9,6 +9,7 @@
     $tab_pane_prestasi_kerja = "tab_pane_prestasi_kerja";//uniqid("tab_pane_prestasi_kerja");
     $tab_pane_diklat_struktural_id = "tab_pane_diklat_struktural";//uniqid("tab_pane_diklat_struktural");
     $tab_pane_diklat_fungsional_id = "tab_pane_diklat_fungsional";//uniqid("tab_pane_diklat_fungsional");
+    $tab_pane_rwt_jabatan = "tab_pane_rwt_jabatan";
 ?>
 
 <?php
@@ -105,8 +106,11 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                          <li class="">
                                             <a href="#<?php echo $tab_pane_diklat_struktural_id;?>" data-toggle="tab" aria-expanded="false"> Diklat Struktural </a>
                                         </li>
-                                         <li class="">
+                                        <li class="">
                                             <a href="#<?php echo $tab_pane_diklat_fungsional_id;?>" data-toggle="tab" aria-expanded="false"> Diklat Fungsional </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#<?php echo $tab_pane_rwt_jabatan;?>" data-toggle="tab" aria-expanded="false"> Jabatan </a>
                                         </li>
                                          
                                     </ul>
@@ -119,6 +123,7 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                                             $this->load->view('kepegawaian/tab_pane_riwayat_prestasi_kerja',array('TAB_ID'=>$tab_pane_prestasi_kerja));
                                             $this->load->view('kepegawaian/tab_pane_riwayat_diklat_struktural',array('TAB_ID'=>$tab_pane_diklat_struktural_id));
                                             $this->load->view('kepegawaian/tab_pane_riwayat_diklat_fungsional',array('TAB_ID'=>$tab_pane_diklat_fungsional_id));
+                                            $this->load->view('kepegawaian/tab_pane_riwayat_jabatan',array('TAB_ID'=>$tab_pane_rwt_jabatan));
 
                                         ?>
                                         

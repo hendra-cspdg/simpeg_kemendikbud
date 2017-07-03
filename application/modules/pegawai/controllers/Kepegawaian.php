@@ -47,7 +47,7 @@ class Kepegawaian extends Admin_Controller
 		Template::set('golongans', $golongans);
 		
 		$this->load->model('pegawai/agama_model');
-		$this->load->model('pegawai/unitkerja_model');
+		
         $agamas = $this->agama_model->find_all();
 		Template::set('agamas', $agamas);
 		
@@ -78,7 +78,7 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/pendidikan_model');
 		
 		$this->load->model('pegawai/lokasi_model');
-
+		$this->load->model('pegawai/unitkerja_model');
     }
 
     /**
