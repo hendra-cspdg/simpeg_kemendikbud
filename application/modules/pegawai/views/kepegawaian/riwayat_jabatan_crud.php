@@ -155,7 +155,7 @@
 			success: function(data){ 
                 if(data.success){
                     swal("Pemberitahuan!", data.msg, "success");
-                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-kepangkatan");
+                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-jabatan");
 					 $("#modal-custom-global").modal("hide");
                 }
                 else {
