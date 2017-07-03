@@ -1,7 +1,7 @@
 <script src="<?php echo base_url(); ?>assets/js/amcharts/amcharts.js" type="text/javascript" ></script>
 <script src="<?php echo base_url(); ?>assets/js/amcharts/serial.js" type="text/javascript" ></script>  
 <script src="<?php echo base_url(); ?>assets/js/amcharts/pie.js" type="text/javascript" ></script>  
-
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <?php
 	$this->load->library('convert');
 	$convert = new convert();
@@ -449,14 +449,12 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 			  
 	 AmCharts.makeChart("divjeniskelamin", {
 		 "type": "pie",
+		 "theme": "light",
 		 "dataProvider":  <?php echo $jsonjk; ?>,
 		 "titleField": "Jenis_Kelamin",
 		 "valueField": "jumlah",
 		 "pulledField": "pullOut",
 		 labelsEnabled: false,
-		 "depth3D": 15,
-		 "outlineAlpha": 0.4,
-		 "angle": 30,
 		 "categoryBalloonEnabled": false,
 		 "export": {
 		   "enabled": true
