@@ -16,7 +16,13 @@
                     <span class='help-inline'><?php echo form_error('NAMA_UNOR'); ?></span>
                 </div>
             </div>
-           
+           <div class="control-group<?php echo form_error('IS_SATKER') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("SATKER ?", 'SATKER ?', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='IS_SATKER' type='checkbox' name='IS_SATKER'  <?php echo set_value('IS_SATKER', isset($data->IS_SATKER)&& $data->IS_SATKER=='1'? "CHECKED" : ''); ?> />
+                    <span class='help-inline'><?php echo form_error('IS_SATKER'); ?></span>
+                </div>
+            </div>
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 

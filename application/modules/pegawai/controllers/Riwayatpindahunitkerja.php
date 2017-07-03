@@ -22,7 +22,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
         $this->load->model('pegawai/jenis_kp_model');
         $this->load->model('pegawai/pegawai_model');
         $this->load->model('pegawai/instansi_model');
-        $this->load->model('pegawai/unit_organisasi_model');
+        $this->load->model('pegawai/unitkerja_model');
     }
     public function get_unor_ajax(){
         $json = array();
@@ -55,7 +55,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
             foreach($data as $record){
                 $rs [] = array(
                             'id'=>$record->ID,
-                            'text'=>$this->unit_organisasi_model->getFullNameWithData($record)
+                            'text'=>$this->unitkerja_model->getFullNameWithData($record)
                     );
             }
             $o = array(
@@ -104,7 +104,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
      public function mig2(){
         $uks = array();
         $uks2 = array();
-        $unitkerjas = $this->unit_organisasi_model->find_all();
+        $unitkerjas = $this->unitkerja_model->find_all();
         foreach($unitkerjas as $record){
             $uks[$record->KODE_INTERNAL] = $record->ID;
         }
@@ -171,7 +171,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
     public function mig(){
         $uks = array();
         $uks2 = array();
-        $unitkerjas = $this->unit_organisasi_model->find_all();
+        $unitkerjas = $this->unitkerja_model->find_all();
         foreach($unitkerjas as $record){
             $uks[$record->KODE_INTERNAL] = $record->ID;
             $uks2[$record->KODE_INTERNAL] = null;
@@ -301,7 +301,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
     public function show($PNS_ID,$record_id=''){
         
         Template::set('jenis_kps', $this->jenis_kp_model->find_all());
-        Template::set('unit_organisasis', $this->unit_organisasi_model->find_all());
+        Template::set('unit_organisasis', $this->unitkerja_model->find_all());
       
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
@@ -319,7 +319,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
             $detailRiwayat = $this->riwayat_pindah_unit_kerja_model->find($record_id);
             
             Template::set('detail_riwayat',$detailRiwayat );    
-            Template::set('selectedUnorBaru',$this->unit_organisasi_model->find($detailRiwayat->ID_UNOR_BARU));
+            Template::set('selectedUnorBaru',$this->unitkerja_model->find($detailRiwayat->ID_UNOR_BARU));
             Template::set('selectedInstansiBaru',$this->instansi_model->find($detailRiwayat->ID_INSTANSI));
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Ubah Riwayat Pindah Unit Kerja");
@@ -362,7 +362,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
         $data["PNS_NAMA"] = $pegawai_data->NAMA;
         $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
        
-        $unor_baru_data = $this->unit_organisasi_model->find($data['ID_UNOR_BARU']);
+        $unor_baru_data = $this->unitkerja_model->find($data['ID_UNOR_BARU']);
         $data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA_ESELON_I."-".$unor_baru_data->NAMA_ESELON_II."-".$unor_baru_data->NAMA_ESELON_III."-".$unor_baru_data->NAMA_ESELON_IV;
         
         $instansi_baru_data = $this->instansi_model->find($data['ID_INSTANSI']);

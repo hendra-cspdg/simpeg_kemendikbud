@@ -387,17 +387,14 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 
 	});
 	
-	var inputpensiuntahun = <?php echo $jsonpensiuntahun; ?>;
-	//inject color attribute with value
-	for (i = 0; i < inputpensiuntahun.length; i++) {inputpensiuntahun[i].color = colors[i];}	
-	var chart = AmCharts.makeChart("chartpensiuntahun", {
+	var chartPensiunTahun = AmCharts.makeChart("chartpensiuntahun", {
 				  "type": "serial",
-				  "dataProvider":  inputpensiuntahun,
+				  "dataProvider":   <?php echo $jsonpensiuntahun; ?>,
 				   "theme": "light",
 				  "categoryField": "tahun",
 				  "rotate": false,
 				  "startDuration": 0,
-				  "depth3D": 20,
+				  "depth3D": 2,
 				  "angle": 30,
 				  
 				  "chartCursor": {
@@ -414,7 +411,7 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				   },
 				   
 					"titles" : [{
-						  "text": "TAHUN"
+						  "text": "tahun"
 					  }, {
 						  "text": "",
 						  "bold": false
@@ -423,11 +420,11 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				  "graphs": [
 					  {
 						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "colorField": "color",
 						  "fillAlphas": 0.8,
 						  "id": "AmGraph-1",
 						  "lineAlpha": 0.2,
 						  "type": "column",
-						  "colorField": "color",
 						  "valueField": "jumlah"
 					  } 
 				  ],
@@ -472,24 +469,63 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 
 	 });
 	 
-	 AmCharts.makeChart("divumur", {
-		 "type": "pie",
-		 "dataProvider":  <?php echo $jsonumur; ?>,
-		 "titleField": "label",
-		 "valueField": "jumlah",
-		 "pulledField": "pullOut",
-		 labelsEnabled: false,
-		 
-		 "outlineAlpha": 0.4,
-		 "categoryBalloonEnabled": false,
-		 "export": {
-		   "enabled": true
-		 },
-		 "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-		 "legend": {
-			 "align": "center",
-			 "markerType": "circle"
-		 }
+	 var chartDivUmur = AmCharts.makeChart("divumur", {
+				  "type": "serial",
+				  "dataProvider":   <?php echo $jsonumur; ?>,
+				   "theme": "light",
+				  "categoryField": "label",
+				  "rotate": false,
+				  "startDuration": 0,
+				  "depth3D": 2,
+				  "angle": 30,
+				  
+				  "chartCursor": {
+					  "categoryBalloonEnabled": false,
+					  "cursorAlpha": 0,
+					  "zoomable": false,
+				  },    
+				   "categoryAxis": {
+					 "gridPosition": "start",
+					 "labelRotation": 45,
+					 "axisAlpha": 0,
+					 "autoWrap":false,
+					 minHorizontalGap:0,
+				   },
+				   
+					"titles" : [{
+						  "text": "label"
+					  }, {
+						  "text": "",
+						  "bold": false
+					  }],
+				  "trendLines": [],
+				  "graphs": [
+					  {
+						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "colorField": "color",
+						  "fillAlphas": 0.8,
+						  "id": "AmGraph-1",
+						  "lineAlpha": 0.2,
+						  "type": "column",
+						  "valueField": "jumlah"
+					  } 
+				  ],
+				  "guides": [],
+				  "valueAxes": [
+					  {
+						  "id": "ValueAxis-1",
+						  "position": "top",
+						  "axisAlpha": 0
+					  }
+				  ],
+				  "allLabels": [],
+				  "balloon": {},
+				  "titles": [],
+				  
+				  "export": {
+					  "enabled": true
+				   }
 
-	 });
+	});
+	 
  </script>

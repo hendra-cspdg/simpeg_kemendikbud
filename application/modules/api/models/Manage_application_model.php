@@ -66,9 +66,23 @@ class Manage_application_model extends BF_Model
     }
 
 	public function find_all(){
-		//$this->db->select("");
-		$this->db->where("active",1);
-		$data =  parent::find_all();
+		//select ak.id,ak.app_name,ak."key",array_to_string(array_agg(uk."NAMA_UNOR"),',') as satkers  from webservice.api_keys ak
+		//left join hris.unitkerja uk  on   regexp_split_to_array(ak.satker_auth,',') @>  ARRAY[uk."ID"::TEXT] 
+		//group by ak.id,ak.app_name,ak."key"
+		$data = $this->db->query('
+			select akx.id,akx.app_name,akx."key",akx.satkers,array_to_string("array_agg"(act."name"),\',\') as controllers
+			from
+					(
+						select ak.*,array_to_string(array_agg(uk."NAMA_UNOR"),\',\') as satkers  
+						from webservice.api_keys ak
+						left join hris.unitkerja uk  on   regexp_split_to_array(ak.satker_auth,\',\') @>  ARRAY[uk."ID"::TEXT] 
+						group by ak.id,ak.app_name,ak."key" 
+			)  akx
+			left join webservice.api_access acc on acc.app_id = akx.id 
+			left join webservice.api_controllers act on act.id = acc.controller_id
+			group by akx.id,akx.app_name,akx."key",akx.satkers
+		')->result();
+		//$data =  $this->db->get()->result();
 		$this->db->schema = $this->old_schema;
 		return $data;
 	}

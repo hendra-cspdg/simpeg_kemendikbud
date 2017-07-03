@@ -9,7 +9,7 @@ class Manage_unitkerja extends Admin_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("pegawai/unit_organisasi_model");
+        $this->load->model("pegawai/unitkerja_model");
     }
     public function index(){
         Template::set('toolbar_title', "Manage Unit Kerja");
@@ -19,7 +19,7 @@ class Manage_unitkerja extends Admin_Controller {
     public function get_children($parent=null){
         if($parent==null){
             return $this->db->query('
-            select parent."ID",parent."NAMA_UNOR",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+            select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
             from unitkerja parent
             where 
             deleted is null 
@@ -29,7 +29,7 @@ class Manage_unitkerja extends Admin_Controller {
         }
         else {
             return $this->db->query('
-                        select parent."ID",parent."NAMA_UNOR",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+                        select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
                         from unitkerja parent
                         where 
                         deleted is null 
@@ -123,15 +123,21 @@ class Manage_unitkerja extends Admin_Controller {
     public function ajax_tree(){
         $parent = $this->input->get("parent");
         $data = array();
-
+        $default_icon = "fa fa-folder icon-lg icon-state-success";
         if ($parent == "#") {
             $children = $this->get_children(null);
             foreach($children as $record){
+                if($record->IS_SATKER) {
+                    $icon = "fa fa-cogs icon-lg icon-state-warning";
+                }
+                else {
+                    $icon = $default_icon;
+                }
                 $data [] =  array(
                     "x"=>$parent,
                     "id" => "node_" .$record->ID,  
                     "text" => $record->NAMA_UNOR,  
-                    "icon" => "fa fa-folder icon-lg icon-state-warning" ,
+                    "icon" => $icon ,
                     "children" => $record->num_child>0, 
                     "state"=> array(
                            "opened"   => boolean  // is the node open 
@@ -143,11 +149,17 @@ class Manage_unitkerja extends Admin_Controller {
             $splitnode = split("_",$parent);
             $children = $this->get_children($splitnode[1]);
             foreach($children as $record){
+                if($record->IS_SATKER) {
+                    $icon = "fa fa-cogs icon-lg icon-state-warning";
+                }
+                else {
+                    $icon = $default_icon;
+                }
                 $data [] =  array(
                     "xy"=>$splitnode[1],
                     "id" => "node_" .$record->ID,  
                     "text" => $record->NAMA_UNOR,  
-                    "icon" => "fa fa-folder icon-lg icon-state-success",
+                    "icon" => $icon ,
                     "children" => $record->num_child>0
                 );
             }
@@ -165,12 +177,12 @@ class Manage_unitkerja extends Admin_Controller {
     }
     public function delete($node_id){
         $satker_id = str_replace("node_","",$node_id);
-        $this->unit_organisasi_model->delete($satker_id);
+        $this->unitkerja_model->delete($satker_id);
     }
     public function edit($node_id){
         $satker_id = str_replace("node_","",$node_id);
-        $this->unit_organisasi_model->where("ID",$satker_id);
-        $data_unor =$this->unit_organisasi_model->find_first_row();
+        $this->unitkerja_model->where("ID",$satker_id);
+        $data_unor =$this->unitkerja_model->find_first_row();
         Template::set("ID",$data_unor->ID);
         Template::set("data",$data_unor);
         Template::set_view("manage_unitkerja/crud.php");
@@ -179,7 +191,8 @@ class Manage_unitkerja extends Admin_Controller {
         Template::render();
     }
     public function save(){
-        $this->form_validation->set_rules($this->unit_organisasi_model->get_validation_rules());
+        $this->cache->delete("unors");
+        $this->form_validation->set_rules($this->unitkerja_model->get_validation_rules());
 
         if ($this->form_validation->run() === false) {
             $response['msg'] = "
@@ -195,15 +208,25 @@ class Manage_unitkerja extends Admin_Controller {
             exit();
         }
         $id = $this->input->post("ID");
-        $data = $this->unit_organisasi_model->prep_data($this->input->post());
+        $data = $this->unitkerja_model->prep_data($this->input->post());
 
+        $data['IS_SATKER']=isset($data['IS_SATKER']) ? 1: 0;
         if(isset($id) && !empty($id)){
-            $this->unit_organisasi_model->update($id,$data);
+            $this->unitkerja_model->update($id,$data);
         }
-        else $this->unit_organisasi_model->insert($data);
+        else $this->unitkerja_model->insert($data);
         $response = array();
         $response ['success']= true;
         $response ['msg']= "Transaksi berhasil";
         echo json_encode($response);   
+    }
+    public function test_path(){
+        $this->load->model('pegawai/unitkerja_model');
+        echo $this->unitkerja_model->get_parent_path(103,true,false);    
+    }
+    public function test_parent(){
+        $this->load->model('pegawai/unitkerja_model');
+        echo json_encode($this->unitkerja_model->get_satker(103));    
+        echo 123;
     }
 }

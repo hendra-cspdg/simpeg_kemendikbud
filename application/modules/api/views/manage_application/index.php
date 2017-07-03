@@ -26,6 +26,7 @@
 								<th width='50px' >No</th>
 								<th width='100px'>API</th>
 								<th width='100px'>Access Key</th>
+								<th width='100px'>Satkers</th>
 								<th >Privilleges</th>
 								<th width='50px' align="center">#</th>
 							</tr>

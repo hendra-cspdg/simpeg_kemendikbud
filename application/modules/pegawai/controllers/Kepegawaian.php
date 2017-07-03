@@ -45,8 +45,9 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/golongan_model');
         $golongans = $this->golongan_model->find_all();
 		Template::set('golongans', $golongans);
-
+		
 		$this->load->model('pegawai/agama_model');
+		$this->load->model('pegawai/unitkerja_model');
         $agamas = $this->agama_model->find_all();
 		Template::set('agamas', $agamas);
 		
@@ -382,6 +383,7 @@ class Kepegawaian extends Admin_Controller
 		$unor_induk = $this->unitkerja_model->find_by("ID",$unor->PARENT_ID);
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
+		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
         Template::set('toolbar_title',"View Profile");
         Template::render();
     }
@@ -408,23 +410,56 @@ class Kepegawaian extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		 
-		$total= $this->pegawai_model->count_all();;
-		$output=array();
-		$output['draw']=$draw;
-
+		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
+		$this->db->start_cache();
 		
-		$output['recordsTotal']= $output['recordsFiltered']=$total;
-		$output['data']=array();
-
-
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
-		if($search!=""){
-			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+		$advanced_search_filters  = $this->input->post("search[advanced_search_filters]");
+		if($advanced_search_filters){
+			$filters = array();
+			foreach($advanced_search_filters as  $filter){
+				$filters[$filter['name']] = $filter["value"];
+			}
+			if($filters['nama_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
+			}
+			if($filters['nip_cb']){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+			}
+			if($filters['umur_cb']){
+				if($filters['umur_operator']=="="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") <=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")<',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="!="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") !=',$filters['umur_key']*12);	
+				}
+			}
+			if($filters['eselon_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+			}
+			if($filters['golongan_cb']){
+				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
+			}
 		}
-		
+		$this->db->stop_cache();
+		$output=array();
+		$output['draw']=$draw;
+		$total= $this->pegawai_model->count_all();
+		$output['recordsTotal']= $output['recordsFiltered']=$total;
+		$output['data']=array();
 		$this->pegawai_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
@@ -436,15 +471,23 @@ class Kepegawaian extends Admin_Controller
 		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
 		yang mengandung keyword tertentu
 		*/
-		if($search != "")
-		{
-			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
-			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
-			//$this->pegawai_model->or_where('NIP_BARU',$search);
+		
+		if($search!=""){
+			if($searchKey=='nip_baru'){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nip_lama'){
+				$this->pegawai_model->where('upper("NIP_LAMA") LIKE \''.strtoupper($search).'%\'');
+			}
+			else if($searchKey=='nama_pegawai'){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');	
+			}
+			else if($searchKey=='nama_unit'){
+				//$this->pegawai_model->where('unitkerja."NAMA_UNOR" LIKE \''.strtoupper($search).'%\'');	
+			}
 			$jum	= $this->pegawai_model->count_all();
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}
-		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {
@@ -452,7 +495,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $record->NAMA_UNOR;
+                $row []  = $this->unitkerja_model->get_parent_path($record->UNIT_ID,true,false);
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -486,8 +529,7 @@ class Kepegawaian extends Admin_Controller
 			}
 		endif;
 		echo json_encode($output);
-		die();
-
+		$this->db->flush_cache();
 	}
 	public function getdatapensiun(){
 		$draw = $this->input->post('draw');

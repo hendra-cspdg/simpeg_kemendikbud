@@ -280,8 +280,9 @@ class Pegawai_model extends BF_Model
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
+	
 	public function find_all(){
-		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR"',false);
+		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",unitkerja."ID" as "UNIT_ID" ',false);
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
@@ -404,6 +405,82 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('EXTRACT(YEAR FROM "TMT_PENSIUN")');
 		return parent::find_all();
 	}
-	
-	 
+	public function stats_pensiun_pertahun($tahun_kedepan=5){
+		$db_stats =$this->db->query('
+			select perkiraan_tahun_pensiun,count(*)
+				as total from (
+				select "TGL_LAHIR","NIP_BARU","BUP","NAMA", date_part(\'year\', "TGL_LAHIR")+"BUP" as perkiraan_tahun_pensiun from hris.pegawai
+				) as temp
+				group by perkiraan_tahun_pensiun
+				order by  perkiraan_tahun_pensiun asc 
+		')->result('array');
+		$tahun = date('Y');
+		$tahuns = array();
+		for($t=$tahun;$t<=$tahun+$tahun_kedepan;$t++){
+			$tahuns[] = array("tahun"=>$t,"jumlah"=>0);
+		}
+		foreach($tahuns as &$tahun){
+			foreach($db_stats as $row){
+				if($tahun['tahun']==$row['perkiraan_tahun_pensiun']){
+					$tahun['jumlah'] = $row['total'];
+					break;
+				}
+			}
+		}
+		return $tahuns;
+	}
+	public function get_duk_list($unit_id=null,$start,$length){
+		if($unit_id){
+			$ids = $this->get_children_satker($unit_id);
+			$total = $this->db->from("hris.pegawai")->where_in("\"UNOR_ID\"",$ids)->get()->num_rows();
+			$data = $this->db->query('
+				SELECT
+					* FROM duk_list 
+					
+					where "UNOR_ID" in ?					
+					LIMIT ? OFFSET ?
+			',array($ids,$length,$start))->result();
+			
+			$output = new stdClass;
+			$output->total = $total;
+			$output->data = $data;
+		}
+		else {
+			
+			$total = $this->db->from("hris.pegawai")->get()->num_rows();
+			$data = $this->db->query('
+				SELECT
+					* FROM duk_list 				
+					LIMIT ? OFFSET ?
+			',array($length,$start))->result();
+			
+			$output = new stdClass;
+			$output->total = $total;
+			$output->data = $data;
+		}
+		
+		return  $output;
+	}	
+	public function get_children_satker($id_bkn){
+		$ids = array();
+		$data = $this->db->query('
+			select c."ID_BKN" as "ID",c2."ID_BKN" as "ID1",c3."ID_BKN" as "ID2",c4."ID_BKN" as "ID3",c5."ID_BKN" as "ID4",c6."ID_BKN" as "ID5" from unitkerja c
+			left join unitkerja c1 on c1."PARENT_ID" = c."ID"
+			left join unitkerja c2 on c2."PARENT_ID" = c1."ID"
+			left join unitkerja c3 on c3."PARENT_ID" = c2."ID"
+			left join unitkerja c4 on c4."PARENT_ID" = c3."ID"
+			left join unitkerja c5 on c5."PARENT_ID" = c4."ID"
+			left join unitkerja c6 on c6."PARENT_ID" = c5."ID"
+			where c."ID_BKN" = ?
+		',array($id_bkn))->result();
+		foreach($data as $row){
+			if($row->ID)$ids[$row->ID] = 1;
+			if($row->ID1)$ids[$row->ID1] = 1;
+			if($row->ID2)$ids[$row->ID2] = 1;
+			if($row->ID3)$ids[$row->ID3] = 1;
+			if($row->ID4)$ids[$row->ID4] = 1;
+			if($row->ID5)$ids[$row->ID5] = 1;
+		}
+		return array_keys($ids);
+	} 
 }
