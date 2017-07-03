@@ -64,7 +64,7 @@ class reports extends Admin_Controller
 				if($record->NAMA_PENDIDIKAN != "")
 					$dataprov["NAMA"] = $record->NAMA_PENDIDIKAN;
 				else
-					$dataprov["NAMA"] = "Belum ditentukan";
+					$dataprov["NAMA"] = "-";
 				$dataprov["jumlah"] = $record->jumlah;
 				$jsonpendidikan[] 	= $dataprov;
 			endforeach;

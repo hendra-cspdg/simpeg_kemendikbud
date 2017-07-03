@@ -73,6 +73,8 @@ class Golongan_model extends BF_Model
 		$this->db->join('pegawai', 'pegawai.GOL_ID = golongan.ID', 'left');
 		$this->db->group_by('pegawai.GOL_ID');
 		$this->db->group_by('golongan.NAMA');
+		$this->db->group_by('golongan.ID');
+		$this->db->order_by('golongan.ID',"ASC");
 		return parent::find_all();
 	}
 }
