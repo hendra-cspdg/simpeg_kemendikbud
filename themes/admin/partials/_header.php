@@ -159,6 +159,7 @@
           		</a>
           </li>
         <?php endif; ?>
+        <!--
          <?php if ($this->auth->has_permission('Petajabatan.Reports.View')) : ?>
         	<li class="treeview <?php echo $menu == 'petajabatan' ? 'active' : '' ?>">
         		<a href="<?php echo base_url();?>admin/reports/petajabatan">
@@ -167,6 +168,7 @@
           		</a>
           </li>
         <?php endif; ?>
+        -->
         <?php if ($this->auth->has_permission('Site.Masters.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?> <?php echo $menu == 'pegawai' ? 'active' : '' ?>">
           <a href="#">
@@ -223,7 +225,7 @@
             <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Daftar Pegawai</a></li>
             <li><a href="<?php echo base_url();?>pegawai/duk"><i class="fa fa-circle-o"></i>Daftar Urut Kepangkatan</a></li>
             <li><a href="<?php echo base_url();?>admin/reports/pegawai/kelompokjabatan"><i class="fa fa-circle-o"></i>Daftar kelompok Jabatan</a></li>
-            <li><a href="<?php echo base_url();?>admin/kepegawaian/pegawai"><i class="fa fa-circle-o"></i>Daftar daftar kuota jabatan</a></li>
+            <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-list"></i>Daftar daftar kuota jabatan</a></li>
           </ul>
         </li>
          <?php endif; ?>

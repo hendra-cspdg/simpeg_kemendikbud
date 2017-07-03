@@ -78,7 +78,7 @@ class Kepegawaian extends Admin_Controller
 		$this->load->model('pegawai/pendidikan_model');
 		
 		$this->load->model('pegawai/lokasi_model');
-		$this->load->model('unitkerja/unitkerja_model');
+
     }
 
     /**

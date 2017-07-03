@@ -46,7 +46,7 @@ class Reports extends Admin_Controller
     {
     	$unitkerja = $this->input->get('unitkerja');
     	$this->load->model('pegawai/pegawai_model');
-    	$this->load->model('unitkerja/unitkerja_model');
+    	$this->load->model('pegawai/unitkerja_model');
     	$datadetil = $this->unitkerja_model->find_by("KODE_INTERNAL",$unitkerja);
     	//print_r($datadetil);
     	//die();

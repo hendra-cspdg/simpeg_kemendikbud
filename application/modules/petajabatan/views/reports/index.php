@@ -30,13 +30,14 @@
 	$("#Unit_Kerja_ID").change(function(){
 		showdata();
 	 }); 
+	//alert('<?php echo site_url("admin/masters/unitkerja/ajaxkodeinternal");?>');
     $("#Unit_Kerja_ID").select2({
         placeholder: 'Cari Unit Kerja...',
         width: '100%',
         minimumInputLength: 3,
         allowClear: true,
         ajax: {
-            url: '<?php echo site_url("admin/masters/unitkerja/ajaxkodeinternal");?>',
+            url: '<?php echo site_url("pegawai/manage_unitkerja/ajaxkodeinternal");?>',
             dataType: 'json',
             data: function(params) {
                 return {

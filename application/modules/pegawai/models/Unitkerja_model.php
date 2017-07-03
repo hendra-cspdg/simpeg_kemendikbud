@@ -218,4 +218,32 @@ class Unitkerja_model extends BF_Model
 			}
 		}
 	}
+	public function find_eselon3($eselon2 ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		if($eselon2 != ""){
+			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			$this->unitkerja_model->where('"KODE_INTERNAL" LIKE \''.strtoupper($eselon2).'%\'');
+			//$this->unitkerja_model->where('"ESELON" LIKE \'III.%\'');
+		}
+		return parent::find_all();
+	}
+	public function find_eselon4($eselon2 ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		if($eselon2 != ""){
+			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			$this->unitkerja_model->where('"KODE_INTERNAL" LIKE \''.strtoupper($eselon2).'%\'');
+			//$this->unitkerja_model->where('"ESELON" LIKE \'IV.%\'');
+		}
+		return parent::find_all();
+	}
 }

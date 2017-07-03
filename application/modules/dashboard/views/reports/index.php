@@ -150,11 +150,13 @@
               	<?php
 				 if (isset($agamas) && is_array($agamas) && count($agamas)):
 					 foreach($agamas as $rec):
+					 if($rec->value > 0){
 				?>
 					<li><a href="#"><?=$rec->label;?>
  	               		<span class="pull-right text-red"><?=$rec->value?></span></a>
  	               	</li>
 				<?php
+					}
 					 endforeach;
 				 endif;
 		
