@@ -168,11 +168,11 @@ class Riwayatjabatan extends Admin_Controller
         }
 		
 		if($this->input->post('IS_ACTIVE') == "1"){
-			
+			// update semua jadi inactive
 			$dataupdate = array();
         	$dataupdate["IS_ACTIVE"] = '';
 			$this->riwayat_jabatan_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
-			
+			// update jadi active yang terpilih
 			$dataupdate = array();
 			$rec_jenis = $this->jenis_jabatan_model->find($this->input->post("ID_JENIS_JABATAN"));
         	$dataupdate["JENIS_JABATAN_ID"] = $this->input->post("ID_JENIS_JABATAN");
@@ -181,6 +181,20 @@ class Riwayatjabatan extends Admin_Controller
 			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
         	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
 			$this->pegawai_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
+			
+			// update tabel unirkerja jika pilihan adalah pejabat struktural
+			if($this->input->post("ID_JENIS_JABATAN") == "1"){
+			 
+			   $adata = array();
+			   $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
+			   $pegawai_data = $this->pegawai_model->find_first_row();  
+			   $adata["NAMA_PEJABAT"] = $pegawai_data->NAMA;
+			   $adata["PEMIMPIN_PNS_ID"] = trim($this->input->post("PNS_ID"));
+			   $this->unitkerja_model->update_where("ID_BKN",TRIM($this->input->post("ID_UNOR")), $adata);
+			   //die($this->input->post("ID_UNOR").$pegawai_data->NAMA."masuk");
+			}
+			// end
+			
 		}
         $data = $this->riwayat_jabatan_model->prep_data($this->input->post());
        

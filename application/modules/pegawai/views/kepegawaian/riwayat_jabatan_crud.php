@@ -11,7 +11,12 @@
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
             <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
-           
+           <div class="control-group col-sm-12">
+				<label for="inputNAMA" class="control-label">UNOR</label>
+				<div class='controls'>
+                    <select id="ID_UNOR" name="ID_UNOR" width="100%" class=" col-md-10 format-control"></select>
+                </div>
+			</div> 
            <div class="control-group<?php echo form_error('GOLONGAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('Jenis', 'Jenis Jabatan', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -100,6 +105,7 @@
                     <span class='help-inline'><?php echo form_error('IS_ACTIVE'); ?></span>
                 </div>
 			</div> 
+			
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
@@ -111,6 +117,23 @@
 	 $(".select2").select2({width: '100%'});
 </script>
 <script>
+	$("#ID_UNOR").select2({
+			placeholder: 'Cari Unit Kerja...',
+			width: '100%',
+			minimumInputLength: 3,
+			allowClear: true,
+			ajax: {
+				url: '<?php echo site_url("pegawai/duk/ajax_unit_list");?>',
+				dataType: 'json',
+				data: function(params) {
+					return {
+						term: params.term || '',
+						page: params.page || 1
+					}
+				},
+				cache: true
+			}
+	});
 	$('#ID_JENIS_JABATAN').change(function() {
 		var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
 			$("#ID_JABATAN").empty().append("<option>loading...</option>"); //show loading...
