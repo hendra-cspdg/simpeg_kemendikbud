@@ -235,12 +235,12 @@
         </div>
          
         <?php if($pegawai->JENIS_JABATAN_ID == "1") {  ?>
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-12">
             <div class="row">
                <div class="col-sm-3">
                     Jabatan Struktural
                 </div>
-               <div class="col-sm-6">
+               <div class="col-sm-9">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "1") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
                 </div>
             </div>
