@@ -166,7 +166,22 @@ class Riwayatjabatan extends Admin_Controller
             echo json_encode($response);
             exit();
         }
-
+		
+		if($this->input->post('IS_ACTIVE') == "1"){
+			
+			$dataupdate = array();
+        	$dataupdate["IS_ACTIVE"] = '';
+			$this->riwayat_jabatan_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
+			
+			$dataupdate = array();
+			$rec_jenis = $this->jenis_jabatan_model->find($this->input->post("ID_JENIS_JABATAN"));
+        	$dataupdate["JENIS_JABATAN_ID"] = $this->input->post("ID_JENIS_JABATAN");
+			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
+			$dataupdate['JABATAN_INSTANSI_ID']	= $this->input->post('ID_JABATAN');
+			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
+        	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
+			$this->pegawai_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
+		}
         $data = $this->riwayat_jabatan_model->prep_data($this->input->post());
        
         $this->pegawai_model->where("PNS_ID",$this->input->post("PNS_ID"));
@@ -180,7 +195,7 @@ class Riwayatjabatan extends Admin_Controller
         
         $rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
         $data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
-
+		
         if(empty($data["TMT_JABATAN"])){
             unset($data["TMT_JABATAN"]);
         }

@@ -93,6 +93,13 @@
 					<span class='help-inline'><?php echo form_error('TMT_PELANTIKAN'); ?></span>
 				</div>
 			</div> 
+			<div class="control-group col-sm-3">
+				<label for="inputNAMA" class="control-label">JABATAN AKTIF?</label>
+				<div class='controls'>
+                    <input id='IS_ACTIVE' type='checkbox' name='IS_ACTIVE' value="1" <?php echo $detail_riwayat->IS_ACTIVE == "1" ? "checked" : ""; ?> />
+                    <span class='help-inline'><?php echo form_error('IS_ACTIVE'); ?></span>
+                </div>
+			</div> 
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
