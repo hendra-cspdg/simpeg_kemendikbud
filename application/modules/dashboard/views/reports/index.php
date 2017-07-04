@@ -11,7 +11,7 @@
 ?>
 <div class="row">
 	
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
 
@@ -24,13 +24,13 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Satker</span>
-              <span class="info-box-number"><?php echo isset($count_blmspj) ? $count_blmspj : ""; ?> <small> Satker</small></span>
+              <span class="info-box-number"><?php echo isset($jmlsatker) ? $jmlsatker : ""; ?> <small> Satker</small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -40,7 +40,7 @@
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="col-md-4 col-sm-4 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
 
@@ -54,20 +54,7 @@
           </div>
           <!-- /.info-box -->
         </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-user"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">KP Tahun ini</span>
-              <span class="info-box-number"><small>Orang</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        
 </div>
 <div class="row">
 	<div class="col-md-8">

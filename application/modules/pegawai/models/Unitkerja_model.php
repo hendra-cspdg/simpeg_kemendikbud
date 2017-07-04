@@ -256,4 +256,14 @@ class Unitkerja_model extends BF_Model
 		$this->unitkerja_model->where('IS_SATKER',1);
 		return parent::find_all();
 	}
+	public function count_satker()
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		$this->unitkerja_model->where('IS_SATKER',1);
+		return parent::count_all();
+	}
 }

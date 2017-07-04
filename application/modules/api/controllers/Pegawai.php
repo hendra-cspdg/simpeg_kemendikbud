@@ -8,6 +8,7 @@ class Pegawai extends  LIPIAPI_REST_Controller {
     ];
 	
 	public function list_get(){
+		die("masuk");
         $this->load->model("pegawai/unitkerja_model");
         $appKeyData = $this->getApplicationKey();
         $children = array();

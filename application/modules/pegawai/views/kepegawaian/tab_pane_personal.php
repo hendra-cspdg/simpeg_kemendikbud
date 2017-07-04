@@ -19,33 +19,30 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                
 			  <div class="form-group col-sm-12">
 				  <div class="row">
-					  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					  <div class="col-sm-4">
 						  Tempat/Tanggal Lahir
 					  </div>
-					  <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					  <div class="col-sm-6">
 						  <b><?php echo isset($pegawai->TEMPAT_LAHIR) ? $pegawai->TEMPAT_LAHIR : ''; ?></b>/
 						  <b><?php echo isset($pegawai->TGL_LAHIR) ? $convert->fmtDate($pegawai->TGL_LAHIR,"dd month yyyy") : 'TGL_LAHIR'; ?></b>
 					  </div>
 				  </div>
 			  </div>
 			 <div class="form-group col-sm-12">
-				
-			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 EMAIL
 					 </div>
-					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					 <div class="col-sm-6">
 							 <b><?php echo isset($pegawai->EMAIL) ? $pegawai->EMAIL : ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
 			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 ALAMAT
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -55,7 +52,7 @@
 			 </div>
 			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 NO HP
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -65,7 +62,7 @@
 			 </div>
 			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 Jenis Pegawai
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -75,7 +72,7 @@
 			 </div>
 			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 Kedudukan PNS
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -85,27 +82,27 @@
 			 </div>
 			 <div class="form-group col-sm-6">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-8">
 						 Status Pegawai
 					 </div>
-					 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-8">
+					 <div class="col-sm-4">
 							 <b><?php echo $pegawai->STATUS_CPNS_PNS == "P" ? "PNS": ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
 			 <div class="form-group col-sm-6">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 TMT PNS
 					 </div>
-					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+					 <div class="col-sm-4">
 							 <b><?php echo isset($pegawai->TMT_PNS) ? $convert->fmtDate($pegawai->TMT_PNS,"dd month yyyy"): ''; ?></b>
 					 </div>
 				 </div>
 			 </div>
 			 <div class="form-group col-sm-12">
 				 <div class="row">
-					 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					 <div class="col-sm-4">
 						 Pendidikan Terakhir/ Tahun Lulus
 					 </div>
 					 <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
@@ -114,7 +111,7 @@
 				 </div>
 			 </div>
               <!-- /.table-responsive -->
-            </div>
+             
             <!-- /.box-body -->
             
             <!-- /.box-footer -->
@@ -228,55 +225,61 @@
         -->
         <div class="form-group col-sm-12">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
+                <div class="col-sm-3">
                     Jenis Jabatan
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->JENIS_JABATAN_NAMA) ? $pegawai->JENIS_JABATAN_NAMA  : ""; ?></b>
                 </div>
             </div>
         </div>
+         
+        <?php if($pegawai->JENIS_JABATAN_ID == "1") {  ?>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
+               <div class="col-sm-3">
                     Jabatan Struktural
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
+               <div class="col-sm-6">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "1") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
                 </div>
             </div>
         </div>
          <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-4 col-xs-4">
+                <div class="col-sm-3">
                     TMT
                 </div>
-                <div class="col-lg-8 col-md-6 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "1") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
                 </div>
             </div>
         </div>
+        <?php } ?>
+        <?php if($pegawai->JENIS_JABATAN_ID == "2") {  ?>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
+                <div class="col-sm-6">
                     JFT
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "2") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
                 </div>
             </div>
         </div>
          <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
+                <div class="col-sm-6">
                     TMT
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-6 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "2") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
                 </div>
             </div>
         </div>
-        <div class="form-group col-sm-6">
+        <?php } ?>
+        <?php if($pegawai->JENIS_JABATAN_ID == "4") { ?>
+        <div class="form-group col-sm-3">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                     JFU
@@ -288,121 +291,122 @@
         </div>
          <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-3">
                     TMT
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($pegawai->TMT_JABATAN) ? $convert->fmtDate($pegawai->TMT_JABATAN,"dd month yyyy")  : ""; } ?></b>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
+        <div class="form-group col-sm-6">
+            <div class="row">
+                <div class="col-sm-6">
+                    Lokasi Kerja
+                </div>
+                <div class="col-sm-6">
+                    <b><?php echo isset($pegawai->LOKASI_KERJA) ? $pegawai->LOKASI_KERJA  : ""; ?></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    Lokasi Kerja
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                    <b><?php echo isset($pegawai->LOKASI_KERJA) ? $pegawai->LOKASI_KERJA  : ""; ?></b>
-                </div>
-            </div>
-        </div>
-        <div class="form-group col-sm-5">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Golongan Ruang Awal
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($GOLONGAN_AWAL) ? $GOLONGAN_AWAL  : "-"; ?></b>
                 </div>
             </div>
         </div>
-        <div class="form-group col-sm-5">
+        <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Golongan Ruang Terakhir
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($GOLONGAN_AKHIR) ? $GOLONGAN_AKHIR  : "-"; ?></b>
                 </div>
             </div>
         </div>
-        <div class="form-group col-sm-2">
+        <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     TMT Golongan
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->TMT_GOLONGAN) ? $convert->fmtDate($pegawai->TMT_GOLONGAN ,"dd month yyyy") : ""; ?></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Gaji Pokok
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Masa Kerja (Tahun/Bulan)
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->MK_TAHUN) ? $pegawai->MK_TAHUN  : ""; ?>/<?php echo isset($pegawai->MK_BULAN) ? $pegawai->MK_BULAN  : ""; ?></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     No.SPMT
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Tgl SPMT1
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     KPPN
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->KPPN_ID) ? $pegawai->KPPN_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
         <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     KTUA
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->KTUA_ID) ? $pegawai->KTUA_ID  : ""; ?></b>
                 </div>
             </div>
         </div>
         
-		<div class="form-group">
+		<div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-sm-6">
                     Status Kepegawaian
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-6">
                     <b><?php echo isset($pegawai->STATUS_CPNS_PNS) ? $pegawai->STATUS_CPNS_PNS == "P" ? "PNS" : "" : ''; ?>   (<?php echo $this->convert->fmtDate($pegawai->TMT_PNS,"dd month yyyy"); ?>)</b>
                 </div>
             </div>
