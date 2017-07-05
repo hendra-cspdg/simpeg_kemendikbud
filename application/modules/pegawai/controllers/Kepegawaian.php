@@ -411,7 +411,6 @@ class Kepegawaian extends Admin_Controller
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
-<<<<<<< HEAD
 
 		$selectedUnors = array();
 		$advanced_search_filters  = $this->input->post("search[advanced_search_filters]");
@@ -434,10 +433,6 @@ class Kepegawaian extends Admin_Controller
 
 		$this->db->start_cache();
 		
-=======
-		//$this->db->start_cache();
-		 
->>>>>>> 9b480d1ebabb23139a3face1fde15f6859c41360
 		/*Jika $search mengandung nilai, berarti user sedang telah 
 		memasukan keyword didalam filed pencarian*/
 		$advanced_search_filters  = $this->input->post("search[advanced_search_filters]");
@@ -492,98 +487,9 @@ class Kepegawaian extends Admin_Controller
 		$output['data']=array();
 		
 		
-		
-		/*Urutkan dari alphabet paling terkahir*/
-		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
-		$sSortCol == "asc" ? "asc" : "desc";
-		$this->pegawai_model->order_by($iSortCol,$sSortCol);
-		if($advanced_search_filters){
-			$filters = array();
-			foreach($advanced_search_filters as  $filter){
-				$filters[$filter['name']] = $filter["value"];
-			}
-			if($filters['nama_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
-			}
-			if($filters['nip_cb']){
-				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
-			}
-			if($filters['umur_cb']){
-				if($filters['umur_operator']=="="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR")',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']==">="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") >=',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']==">"){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") >',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="<="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") <=',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="<"){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR")<',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="!="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") !=',$filters['umur_key']*12);	
-				}
-			}
-			if($filters['eselon_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
-			}
-			if($filters['golongan_cb']){
-				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
-			}
-			
-		}
 		$this->pegawai_model->limit($length,$start);
 		$records=$this->pegawai_model->find_all();
 
-		/*Ketika dalam mode pencarian, berarti kita harus
-		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
-		yang mengandung keyword tertentu
-		*/
-		
-		if($advanced_search_filters){
-			$filters = array();
-			foreach($advanced_search_filters as  $filter){
-				$filters[$filter['name']] = $filter["value"];
-			}
-			if($filters['nama_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
-			}
-			if($filters['nip_cb']){
-				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
-			}
-			if($filters['umur_cb']){
-				if($filters['umur_operator']=="="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR")',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']==">="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") >=',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']==">"){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") >',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="<="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") <=',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="<"){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR")<',$filters['umur_key']*12);	
-				}
-				if($filters['umur_operator']=="!="){
-					$this->pegawai_model->where('calc_age("TGL_LAHIR") !=',$filters['umur_key']*12);	
-				}
-			}
-			if($filters['eselon_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
-			}
-			if($filters['golongan_cb']){
-				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
-			}
-			$jum	= $this->pegawai_model->count_all();
-			$output['recordsTotal']=$output['recordsFiltered']=$jum;
-		}
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {
