@@ -4,6 +4,10 @@ class Struktur extends Admin_Controller{
         parent::__construct();
         $this->load->model('pegawai/unitkerja_model');
     }
+    public function index(){
+        Template::set_view("struktur/test.php");
+        Template::render();
+    }
     public function test(){
         Template::render();
     }
