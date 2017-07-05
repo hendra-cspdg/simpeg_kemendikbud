@@ -58,15 +58,26 @@ class Unitkerja_model extends BF_Model
     {
         parent::__construct();
     }
-	public function get_satker($unor_id_inc,$withme = true){
+	public function get_cache(){
 		$data = $this->cache->get('unors');
 		if($data==null){
-			$rows = $this->db->from("hris.unitkerja")->get()->result();
+			$rows=  $this->db->query('
+				select unor.*,pejabat."NAMA" AS "PEJABAT_NAMA",pejabat."NIP_BARU" AS "PEJABAT_NIP" from (
+					select uk."ID",uk."NO",uk."NAMA_UNOR",uk."PARENT_ID",count(children."ID")as "TOTAL_CHILD",uk."PEMIMPIN_PNS_ID" from hris.unitkerja uk
+					left join  hris.unitkerja children on uk."ID" = children."PARENT_ID"
+					group by uk."ID",uk."NO",uk."NAMA_UNOR",uk."PARENT_ID",uk."PEMIMPIN_PNS_ID"
+				) as unor 
+				left join hris.pegawai pejabat on pejabat."PNS_ID" = unor."PEMIMPIN_PNS_ID"	
+			')->result();
 			foreach($rows as $row){
 				$data[$row->ID] = $row;
 			}
 			$this->cache->write($data,'unors');
 		}
+		return $data;
+	}
+	public function get_satker($unor_id_inc,$withme = true){
+		$data = $this->get_cache();
 		if($data!=null){
 			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
 			$parent = isset($data[$data[$unor_id_inc]->PARENT_ID])?$data[$data[$unor_id_inc]->PARENT_ID]:null;
@@ -82,14 +93,7 @@ class Unitkerja_model extends BF_Model
 		return null;
 	}
 	public function get_parent_path($unor_id_inc,$withme = true,$as_array = true){
-		$data = $this->cache->get('unors');
-		if($data==null){
-			$rows = $this->db->from("hris.unitkerja")->get()->result();
-			foreach($rows as $row){
-				$data[$row->ID] = $row;
-			}
-			$this->cache->write($data,'unors');
-		}
+		$data = $data = $this->get_cache();
 		$path = array();
 		if($data!=null){
 			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
@@ -190,8 +194,8 @@ class Unitkerja_model extends BF_Model
 		}
 		return "-";
 	}
-	public function getChildren($parents=array(),&$children=array(),$onlyID = true,$include_sub=false,$includeMe = false,$first = true){
-		$data = $this->cache->get('unors');
+	public function getChildren($parents=array(),&$children=array(),$onlyID = true,$include_sub=false,$includeMe = false,$first = true,$propertyKey="ID"){
+		$data = $this->get_cache();
 		if(!is_array($parents)){
 			$parents = array($parents);
 		}
@@ -201,18 +205,28 @@ class Unitkerja_model extends BF_Model
 				if($first && $includeMe){ //memasukan me sebagai child dari me
 					if($node->ID == $parent){
 						if($onlyID){
-							$children[] = $node->ID;
+							if($propertyKey=="ID_BKN"){
+								$children[] = $node->ID_BKN;
+							}
+							else {
+								$children[] = $node->ID;
+							}
 						}
 						else $children[] = $node;
 					}
 				}
 				if($node->PARENT_ID == $parent){
 					if($onlyID){
-							$children[] = $node->ID;
+							if($propertyKey=="ID_BKN"){
+								$children[] = $node->ID_BKN;
+							}
+							else {
+								$children[] = $node->ID;
+							}
 					}
 					else $children[] = $node;
 					if($include_sub){
-						$this->getChildren($node->ID,$children,$onlyID,$include_sub,$includeMe,false);
+						$this->getChildren($node->ID,$children,$onlyID,$include_sub,$includeMe,false,$propertyKey);
 					}
 				}
 			}

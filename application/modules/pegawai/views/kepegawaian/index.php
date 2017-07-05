@@ -33,6 +33,11 @@ if ($can_delete) {
 			</style>
 			<table class="filter_pegawai" sborder=0 width='100%' cellpadding="10">
 				<tr>
+					<td width="20px"><input type="checkbox" name="unit_id_cb"></td>
+					<td width="200px"><label for="example-text-input" class="col-form-label">Satuan Kerja</label></td>
+					<td colspan=2><select id="unit_id_key" name="unit_id_key" width="100%" class=" col-md-10 format-control"></select></td>
+				</tr>
+				<tr>
 					<td width="20px"><input type="checkbox" name="nama_cb"></td>
 					<td width="200px"><label for="example-text-input" class="col-form-label">NAMA</label></td>
 					<td colspan=2><input class="form-control" type="text" name="nama_key" value="" ></td>
@@ -120,6 +125,23 @@ if ($can_delete) {
 </div>
 
 <script type="text/javascript">
+$("#unit_id_key").select2({
+	placeholder: 'Cari Unit Kerja...',
+	width: '100%',
+	minimumInputLength: 3,
+	allowClear: true,
+	ajax: {
+		url: '<?php echo site_url("pegawai/kepegawaian/ajax_unit_list");?>',
+		dataType: 'json',
+		data: function(params) {
+			return {
+				term: params.term || '',
+				page: params.page || 1
+			}
+		},
+		cache: true
+	}
+});
 $table = $(".table-data").DataTable({
 	ordering: false,
 	dom : "<'row'<'col-sm-6'><'col-sm-6'>>" +
@@ -136,7 +158,7 @@ $table = $(".table-data").DataTable({
 	}
 });
 $("#form_search_pegawai").submit(function(){
-	$table.ajax.reload(null,false);
+	$table.ajax.reload(null,true);
 	return false;
 });
 

@@ -16,6 +16,20 @@
                     <span class='help-inline'><?php echo form_error('NAMA_UNOR'); ?></span>
                 </div>
             </div>
+            <div class="control-group<?php echo form_error('NAMA_JABATAN') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("NAMA JABATAN", 'NAMA JABATAN', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NAMA_JABATAN' type='text' class="form-control" name='NAMA_JABATAN'  value="<?php echo set_value('NAMA_JABATAN', isset($data->NAMA_JABATAN) ? $data->NAMA_JABATAN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NAMA_JABATAN'); ?></span>
+                </div>
+            </div>
+            <div class="control-group<?php echo form_error('NAMA_PEJABAT') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("NAMA PEJABAT", 'NAMA PEJABAT', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='NAMA_PEJABAT' type='text' class="form-control" name='NAMA_PEJABAT'  value="<?php echo set_value('NAMA_PEJABAT', isset($data->NAMA_PEJABAT) ? $data->NAMA_PEJABAT : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('NAMA_PEJABAT'); ?></span>
+                </div>
+            </div>
            <div class="control-group<?php echo form_error('IS_SATKER') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label("SATKER ?", 'SATKER ?', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -23,6 +37,7 @@
                     <span class='help-inline'><?php echo form_error('IS_SATKER'); ?></span>
                 </div>
             </div>
+            
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 

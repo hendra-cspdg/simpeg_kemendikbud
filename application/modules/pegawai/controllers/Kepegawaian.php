@@ -411,6 +411,26 @@ class Kepegawaian extends Admin_Controller
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
+
+		$selectedUnors = array();
+		$advanced_search_filters  = $this->input->post("search[advanced_search_filters]");
+		if($advanced_search_filters){
+			$filters = array();
+			foreach($advanced_search_filters as  $filter){
+				$filters[$filter['name']] = $filter["value"];
+			}
+			if($filters['unit_id_cb']){
+				$unit_id =  $filters['unit_id_key'];
+				$this->load->model("pegawai/unitkerja_model");
+				$this->unitkerja_model->where("ID_BKN",$unit_id);
+				$unor_data = $this->unitkerja_model->find_first_row();
+				
+				if($unor_data){
+					$this->unitkerja_model->getChildren($unor_data->ID ,$selectedUnors,$onlyID = true,$include_sub=TRUE,$includeMe=true,$first=true);
+				}
+			}
+		}
+
 		$this->db->start_cache();
 		
 		/*Jika $search mengandung nilai, berarti user sedang telah 
@@ -424,6 +444,11 @@ class Kepegawaian extends Admin_Controller
 			if($filters['nama_cb']){
 				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
 			}
+			if($filters['unit_id_cb']){
+				$this->pegawai_model->where_in('unitkerja."ID"',$selectedUnors);	
+			}
+
+
 			if($filters['nip_cb']){
 				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
 			}
@@ -701,4 +726,43 @@ class Kepegawaian extends Admin_Controller
 		
         Template::render();
     }
+	public function ajax_unit_list(){
+		$length = 10;
+		$term = $this->input->get('term');
+		$page = $this->input->get('page');
+		$this->db->flush_cache();
+		$data = $this->db->query("
+			select 
+			uk.*,
+			parent.\"NAMA_UNOR\" as parent_name,
+			grand.\"NAMA_UNOR\" as grand_name
+			from 
+			hris.unitkerja uk
+			left join hris.unitkerja parent on parent.\"ID\" = uk.\"PARENT_ID\"
+			left join hris.unitkerja grand on grand.\"ID\" = parent.\"PARENT_ID\"
+			where uk.\"IS_SATKER\" = 1 AND lower(uk.\"NAMA_UNOR\") like ?
+			",array("%".strtolower($term)."%"))->result();
+		
+		$output = array();
+		$output['results'] = array();
+		foreach($data as $row){
+			$nama_unor = array();
+			if($row->grand_name){
+				$nama_unor[] = $row->grand_name;
+			}
+			if($row->parent_name){
+				$nama_unor[] = $row->parent_name;
+			}
+			if($row->NAMA_UNOR){
+				$nama_unor[] = $row->NAMA_UNOR;
+			}
+			$output['results'] [] = array(
+				'id'=>$row->ID_BKN,
+				'text'=>implode(" - ",$nama_unor)
+			);
+		}
+		$output['pagination'] = array("more"=>false);
+		
+		echo json_encode($output);
+	}
 }

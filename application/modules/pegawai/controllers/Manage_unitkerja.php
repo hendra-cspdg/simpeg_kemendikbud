@@ -192,6 +192,7 @@ class Manage_unitkerja extends Admin_Controller {
     }
     public function save(){
         $this->cache->delete("unors");
+        $this->cache->delete_group("unors");
         $this->form_validation->set_rules($this->unitkerja_model->get_validation_rules());
 
         if ($this->form_validation->run() === false) {
