@@ -374,9 +374,11 @@ class Pegawai_model extends BF_Model
 		{
 			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,count("PENDIDIKAN_ID") as jumlah');
 		}
-		$this->db->join('tkpendidikan', 'pegawai.PENDIDIKAN_ID = tkpendidikan.ID', 'left');
+		$this->db->join('pendidikan', 'pegawai.PENDIDIKAN_ID = pendidikan.ID', 'left');
+		$this->db->join('tkpendidikan', 'pendidikan.TINGKAT_PENDIDIKAN_ID = tkpendidikan.ID', 'left');
 		$this->db->group_by('tkpendidikan.NAMA');
 		$this->db->group_by('tkpendidikan.ID');
+		$this->db->order_by('tkpendidikan.ID',"ASC");
 		return parent::find_all();
 	}
 	public function grupbyjk()

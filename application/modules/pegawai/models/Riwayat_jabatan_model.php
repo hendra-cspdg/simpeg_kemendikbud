@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') || exit('No direct script access allowed');
 
-class Golongan_model extends BF_Model
+class Riwayat_jabatan_model extends BF_Model
 {
-    protected $table_name	= 'golongan';
+    protected $table_name	= 'rwt_jabatan';
 	protected $key			= 'ID';
 	protected $date_format	= 'datetime';
 
@@ -40,18 +40,28 @@ class Golongan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'NAMA',
-			'label' => 'lang:golongan_field_NAMA',
-			'rules' => 'max_length[255]',
+			'field' => 'PNS_ID',
+			'label' => 'PNS ID',
+			'rules' => 'max_length[32]',
 		),
 		array(
-			'field' => 'NAMA_PANGKAT',
-			'label' => 'lang:golongan_field_NAMA_PANGKAT',
-			'rules' => 'max_length[255]',
+			'field' => 'NOMOR_SK',
+			'label' => 'NO SK',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'TANGGAL_SK',
+			'label' => 'TANGGAL SK',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'TMT_JABATAN',
+			'label' => 'TMT JABATAN',
+			'rules' => 'required',
 		),
 	);
 	protected $insert_validation_rules  = array();
-	protected $skip_validation 			= false;
+	protected $skip_validation 			= true;
 
     /**
      * Constructor
@@ -62,19 +72,16 @@ class Golongan_model extends BF_Model
     {
         parent::__construct();
     }
-    public function grupbygolongan()
+    public function find_all($PNS_ID ="")
 	{
-		 
+		
 		if(empty($this->selects))
 		{
-			$this->select('golongan.NAMA,count(pegawai."GOL_ID") as jumlah');
+			$this->select($this->table_name .'.*');
 		}
-		 
-		$this->db->join('pegawai', 'pegawai.GOL_ID = golongan.ID', 'left');
-		$this->db->group_by('pegawai.GOL_ID');
-		$this->db->group_by('golongan.NAMA');
-		$this->db->group_by('golongan.ID');
-		$this->db->order_by('golongan.ID',"ASC");
+		if($PNS_ID!=""){
+			$this->db->where('PNS_ID',$PNS_ID);
+		}
 		return parent::find_all();
 	}
 }

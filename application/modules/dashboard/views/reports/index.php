@@ -1,7 +1,7 @@
 <script src="<?php echo base_url(); ?>assets/js/amcharts/amcharts.js" type="text/javascript" ></script>
 <script src="<?php echo base_url(); ?>assets/js/amcharts/serial.js" type="text/javascript" ></script>  
 <script src="<?php echo base_url(); ?>assets/js/amcharts/pie.js" type="text/javascript" ></script>  
-
+<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/light.js"></script>
 <?php
 	$this->load->library('convert');
 	$convert = new convert();
@@ -11,7 +11,7 @@
 ?>
 <div class="row">
 	
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
 
@@ -24,13 +24,13 @@
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-green"><i class="fa fa-home"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Satker</span>
-              <span class="info-box-number"><?php echo isset($count_blmspj) ? $count_blmspj : ""; ?> <small> Satker</small></span>
+              <span class="info-box-number"><?php echo isset($jmlsatker) ? $jmlsatker : ""; ?> <small> Satker</small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -40,7 +40,7 @@
         <!-- fix for small devices only -->
         <div class="clearfix visible-sm-block"></div>
 
-        <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="col-md-4 col-sm-4 col-xs-12">
           <div class="info-box">
             <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
 
@@ -54,20 +54,7 @@
           </div>
           <!-- /.info-box -->
         </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="fa fa-user"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">KP Tahun ini</span>
-              <span class="info-box-number"><small>Orang</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
+        
 </div>
 <div class="row">
 	<div class="col-md-8">
@@ -150,11 +137,13 @@
               	<?php
 				 if (isset($agamas) && is_array($agamas) && count($agamas)):
 					 foreach($agamas as $rec):
+					 if($rec->value > 0){
 				?>
 					<li><a href="#"><?=$rec->label;?>
  	               		<span class="pull-right text-red"><?=$rec->value?></span></a>
  	               	</li>
 				<?php
+					}
 					 endforeach;
 				 endif;
 		
@@ -449,14 +438,12 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 			  
 	 AmCharts.makeChart("divjeniskelamin", {
 		 "type": "pie",
+		 "theme": "light",
 		 "dataProvider":  <?php echo $jsonjk; ?>,
 		 "titleField": "Jenis_Kelamin",
 		 "valueField": "jumlah",
 		 "pulledField": "pullOut",
 		 labelsEnabled: false,
-		 "depth3D": 15,
-		 "outlineAlpha": 0.4,
-		 "angle": 30,
 		 "categoryBalloonEnabled": false,
 		 "export": {
 		   "enabled": true
