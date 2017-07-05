@@ -16,6 +16,13 @@ th.users {
 </style>
 <div class="admin-box">
 	<p class="intro"><?php e(lang('role_intro')); ?></p>
+	<?php if ($this->auth->has_permission('Bonfire.Roles.Add')) : ?>
+		<a href="<?php echo base_url(); ?>admin/settings/roles/create">
+			<button type="button" class="btn btn-warning pull-right"><i class="fa fa-plus"></i> Tambah Role</button>
+		</a>
+	<?php endif; ?>
+	<br/>
+	<br/>
     <?php if (isset($role_counts) && is_array($role_counts) && count($role_counts)) : ?>
 	<table class="table table-striped">
 		<thead>
