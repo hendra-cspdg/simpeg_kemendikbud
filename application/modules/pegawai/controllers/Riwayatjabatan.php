@@ -170,7 +170,7 @@ class Riwayatjabatan extends Admin_Controller
 		if($this->input->post('IS_ACTIVE') == "1"){
 			// update semua jadi inactive
 			$dataupdate = array();
-        	$dataupdate["IS_ACTIVE"] = '';
+        	$dataupdate["IS_ACTIVE"] = '0';
 			$this->riwayat_jabatan_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
 			// update jadi active yang terpilih
 			$dataupdate = array();
