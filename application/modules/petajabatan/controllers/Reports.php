@@ -53,7 +53,7 @@ class Reports extends Admin_Controller
     	$ideselon2 = isset($datadetil->KODE_INTERNAL) ? substr($datadetil->KODE_INTERNAL,0,5) : "";
     	$idsatker = isset($datadetil->ID) ? $datadetil->ID : "";
     	// eselon III
-    	//$eselon3 = $this->unitkerja_model->find_by("PARENT_ID",$idsatker);
+    	//$eselon3 = $this->unitkerja_model->find_by("DIATASAN_ID",$idsatker);
     	$eselon3[] = array(); 
     	$aeselon4[] = array(); 
     	$satker = $this->unitkerja_model->find_eselon3($ideselon2);
@@ -61,12 +61,12 @@ class Reports extends Admin_Controller
     	if (isset($satker) && is_array($satker) && count($satker)):
 			foreach($satker as $record):
 				//if(substr($datadetil->KODE_INTERNAL,6,2) == "00"){}
-				if($record->PARENT_ID == $idsatker){
+				if($record->DIATASAN_ID == $idsatker){
 					$eselon3["ID"][] = $record->ID;
 					$eselon3["NAMA_UNOR"][] 	= $record->NAMA_UNOR;
 				}else{
-					$aeselon4[$record->PARENT_ID][] = $record->NAMA_UNOR;
-					$aeselon4[$record->PARENT_ID."-ID"][] = $record->KODE_INTERNAL;
+					$aeselon4[$record->DIATASAN_ID][] = $record->NAMA_UNOR;
+					$aeselon4[$record->DIATASAN_ID."-ID"][] = $record->KODE_INTERNAL;
 				}
 			endforeach;
 		endif;

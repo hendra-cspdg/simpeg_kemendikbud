@@ -170,7 +170,7 @@ class Riwayatjabatan extends Admin_Controller
 		if($this->input->post('IS_ACTIVE') == "1"){
 			// update semua jadi inactive
 			$dataupdate = array();
-        	$dataupdate["IS_ACTIVE"] = '0';
+        	$dataupdate["IS_ACTIVE"] = '';
 			$this->riwayat_jabatan_model->update_where("PNS_ID",$this->input->post("PNS_ID"), $dataupdate);
 			// update jadi active yang terpilih
 			$dataupdate = array();
@@ -190,7 +190,7 @@ class Riwayatjabatan extends Admin_Controller
 			   $pegawai_data = $this->pegawai_model->find_first_row();  
 			   $adata["NAMA_PEJABAT"] = $pegawai_data->NAMA;
 			   $adata["PEMIMPIN_PNS_ID"] = trim($this->input->post("PNS_ID"));
-			   $this->unitkerja_model->update_where("ID_BKN",TRIM($this->input->post("ID_UNOR")), $adata);
+			   $this->unitkerja_model->update_where("ID",TRIM($this->input->post("ID_UNOR")), $adata);
 			   //die($this->input->post("ID_UNOR").$pegawai_data->NAMA."masuk");
 			}
 			// end

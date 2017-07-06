@@ -155,7 +155,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
                 $parent_id =  $uks[$parent]; 
                 $uks2[$record->KODE_INTERNAL]=array(
                     'KODE_INTERNAL'=>$record->KODE_INTERNAL,
-                    'PARENT_ID'=>$parent_id
+                    'DIATASAN_ID'=>$parent_id
                 );   
             }
           // if($counter>10){
@@ -199,7 +199,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
             
             $uks2[$record->KODE_INTERNAL]=array(
                 'KODE_INTERNAL'=>$record->KODE_INTERNAL,
-                'PARENT_ID'=>$parent_id
+                'DIATASAN_ID'=>$parent_id
             );
            
         }

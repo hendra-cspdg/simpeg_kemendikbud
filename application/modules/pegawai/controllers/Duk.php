@@ -74,10 +74,10 @@ class Duk extends Admin_Controller
 		$this->load->model("pegawai/unitkerja_model");
 		if($unit_id == null || $unit_id == 'null'){
 			$unor = $this->unitkerja_model->where("ID",2)->find_first_row();
-			$unit_id = $unor->ID_BKN;
+			$unit_id = $unor->ID;
 		}
 		else {
-			$unor = $this->unitkerja_model->where("ID_BKN",$unit_id)->find_first_row();
+			$unor = $this->unitkerja_model->where("ID",$unit_id)->find_first_row();
 		}
 		$satuan_kerja = "";
 		if($unor){
@@ -179,8 +179,8 @@ EOD;
 			grand.\"NAMA_UNOR\" as grand_name
 			from 
 			hris.unitkerja uk
-			left join hris.unitkerja parent on parent.\"ID\" = uk.\"PARENT_ID\"
-			left join hris.unitkerja grand on grand.\"ID\" = parent.\"PARENT_ID\"
+			left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
+			left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
 			where lower(uk.\"NAMA_UNOR\") like ?
 			",array("%".strtolower($term)."%"))->result();
 		
@@ -198,7 +198,7 @@ EOD;
 				$nama_unor[] = $row->NAMA_UNOR;
 			}
 			$output['results'] [] = array(
-				'id'=>$row->ID_BKN,
+				'id'=>$row->ID,
 				'text'=>implode(" - ",$nama_unor)
 			);
 		}

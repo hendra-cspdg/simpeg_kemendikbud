@@ -13,7 +13,10 @@ class Struktur extends Admin_Controller{
     }
     public function load_tree($state='',$id=''){
         if($state==''){ //first tree
-            $root =  $this->getRootNode(2);
+            if($id==''){
+                $id = ROOT_UNOR_ID;
+            }
+            $root =  $this->getRootNode($id);
             echo json_encode($root);
         }
         else if ($state=='children'){
@@ -35,8 +38,8 @@ class Struktur extends Admin_Controller{
         if($unor){
             $node = new stdClass;
             $node->id =  $unor->ID;
-           if($unor->PEJABAT_NAMA){
-              $node->name =  $unor->PEJABAT_NAMA;
+           if($unor->NAMA_PEJABAT){
+              $node->name =  $unor->NAMA_PEJABAT;
             }
             else $node->name =  "-";
             $node->title = $unor->NAMA_UNOR;
@@ -59,11 +62,11 @@ class Struktur extends Admin_Controller{
             }
         }
         foreach($unors as $unor){
-            if($unor->PARENT_ID==$id){
+            if($unor->DIATASAN_ID==$id){
                 $node = new stdClass;
                 $node->id =  $unor->ID;
-                if($unor->PEJABAT_NAMA){
-                    $node->name =  $unor->PEJABAT_NAMA;
+                if($unor->NAMA_PEJABAT){
+                    $node->name =  $unor->NAMA_PEJABAT;
                 }
                 else $node->name =  "-";
                 $node->title = $unor->NAMA_UNOR;

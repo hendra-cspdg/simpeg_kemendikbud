@@ -302,12 +302,12 @@ class Kepegawaian extends Admin_Controller
         Template::set('selectedTempatLahirPegawai',$this->lokasi_model->find($pegawaiData->TEMPAT_LAHIR_ID));
         //Template::set('selectedPendidikan',$this->pendidikan_model->find($pegawaiData->PENDIDIKAN_ID));
         if(TRIM($pegawaiData->UNOR_ID) == TRIM($pegawaiData->UNOR_INDUK_ID)){
-        	$unor = $this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_ID));
+        	$unor = $this->unitkerja_model->find_by("ID",TRIM($pegawaiData->UNOR_ID));
         	Template::set('selectedUnorid',$unor);
         	Template::set('selectedUnorindukid',$unor);
         }else{
-        	Template::set('selectedUnorid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_ID)));
-        	Template::set('selectedUnorindukid',$this->unitkerja_model->find_by("ID_BKN",TRIM($pegawaiData->UNOR_INDUK_ID)));
+        	Template::set('selectedUnorid',$this->unitkerja_model->find_by("ID",TRIM($pegawaiData->UNOR_ID)));
+        	Template::set('selectedUnorindukid',$this->unitkerja_model->find_by("ID",TRIM($pegawaiData->UNOR_INDUK_ID)));
         }
         $jabataninstansis = $this->jabatan_model->find_select(trim($pegawaiData->JENIS_JABATAN_ID));
 		Template::set('jabataninstansis', $jabataninstansis);
@@ -378,9 +378,9 @@ class Kepegawaian extends Admin_Controller
 		$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",TRIM($JABATAN_ID));
 		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN_FULL);
 		 
-		$unor = $this->unitkerja_model->find_by("ID_BKN",trim($pegawai->UNOR_ID));
+		$unor = $this->unitkerja_model->find_by("ID",trim($pegawai->UNOR_ID));
 		Template::set('nama_unor',$unor->NAMA_UNOR);
-		$unor_induk = $this->unitkerja_model->find_by("ID",$unor->PARENT_ID);
+		$unor_induk = $this->unitkerja_model->find_by("ID",$unor->DIATASAN_ID);
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
 		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
@@ -422,7 +422,7 @@ class Kepegawaian extends Admin_Controller
 			if($filters['unit_id_cb']){
 				$unit_id =  $filters['unit_id_key'];
 				$this->load->model("pegawai/unitkerja_model");
-				$this->unitkerja_model->where("ID_BKN",$unit_id);
+				$this->unitkerja_model->where("ID",$unit_id);
 				$unor_data = $this->unitkerja_model->find_first_row();
 				
 				if($unor_data){
@@ -721,8 +721,8 @@ class Kepegawaian extends Admin_Controller
 			grand.\"NAMA_UNOR\" as grand_name
 			from 
 			hris.unitkerja uk
-			left join hris.unitkerja parent on parent.\"ID\" = uk.\"PARENT_ID\"
-			left join hris.unitkerja grand on grand.\"ID\" = parent.\"PARENT_ID\"
+			left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
+			left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
 			where uk.\"IS_SATKER\" = 1 AND lower(uk.\"NAMA_UNOR\") like ?
 			",array("%".strtolower($term)."%"))->result();
 		
@@ -740,7 +740,7 @@ class Kepegawaian extends Admin_Controller
 				$nama_unor[] = $row->NAMA_UNOR;
 			}
 			$output['results'] [] = array(
-				'id'=>$row->ID_BKN,
+				'id'=>$row->ID,
 				'text'=>implode(" - ",$nama_unor)
 			);
 		}

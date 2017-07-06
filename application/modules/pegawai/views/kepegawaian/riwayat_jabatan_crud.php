@@ -81,7 +81,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
 						<?php foreach($recsatker as $record):?>
-							<option value="<?php echo $record->ID_BKN?>" <?php if(isset($detail_riwayat->ID_SATUAN_KERJA))  echo  (trim($detail_riwayat->ID_SATUAN_KERJA)==trim($record->KODE_JABATAN)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_SATUAN_KERJA))  echo  (trim($detail_riwayat->ID_SATUAN_KERJA)==trim($record->KODE_JABATAN)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>

@@ -281,12 +281,12 @@ class Pegawai_model extends BF_Model
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
 	public function count_all() {
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::count_all();
 	}
 	public function find_all(){
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",unitkerja."ID" as "UNIT_ID" ',false);
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
@@ -399,7 +399,7 @@ class Pegawai_model extends BF_Model
 	public function find_all_pensiun(){
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) as umur');
 		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID_BKN", 'left');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
 	public function find_pentiunpertahun(){
@@ -435,7 +435,7 @@ class Pegawai_model extends BF_Model
 	public function get_duk_list($unit_id=null,$start,$length){
 		if($unit_id){
 			$this->load->model("pegawai/unitkerja_model");
-			$this->unitkerja_model->where("ID_BKN",$unit_id);
+			$this->unitkerja_model->where("ID",$unit_id);
 			$unor_data = $this->unitkerja_model->find_first_row();
 			
 			$ids  = array();
@@ -443,7 +443,7 @@ class Pegawai_model extends BF_Model
 				$this->unitkerja_model->getChildren($unor_data->ID ,$ids,$onlyID = true,$include_sub=TRUE,$includeMe=true,$first=true);
 			}
 			
-			$total = $this->db->from("hris.pegawai peg")->join("hris.unitkerja uk","peg.UNOR_ID=uk.ID_BKN","LEFT")->where_in("uk.\"ID\"",$ids)->get()->num_rows();
+			$total = $this->db->from("hris.pegawai peg")->join("hris.unitkerja uk","peg.UNOR_ID=uk.ID","LEFT")->where_in("uk.\"ID\"",$ids)->get()->num_rows();
 			$data = $this->db->query('
 				SELECT
 					* FROM duk_list 

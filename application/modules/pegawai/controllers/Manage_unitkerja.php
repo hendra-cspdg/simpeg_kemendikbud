@@ -19,21 +19,21 @@ class Manage_unitkerja extends Admin_Controller {
     public function get_children($parent=null){
         if($parent==null){
             return $this->db->query('
-            select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+            select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."DIATASAN_ID" = parent."ID")as num_child
             from unitkerja parent
             where 
             deleted is null 
-            AND parent."PARENT_ID"   is null 
+            AND (parent."DIATASAN_ID"   is null OR parent."DIATASAN_ID" = \'\')
             ORDER BY parent."ORDER" asc 
             ')->result();
         }
         else {
             return $this->db->query('
-                        select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."PARENT_ID" = parent."ID")as num_child
+                        select parent."ID",parent."NAMA_UNOR","IS_SATKER",(select count(*) from unitkerja children where children."DIATASAN_ID" = parent."ID")as num_child
                         from unitkerja parent
                         where 
                         deleted is null 
-                        AND parent."PARENT_ID"  = ?
+                        AND parent."DIATASAN_ID"  = ?
                         ORDER BY parent."ORDER" asc 
             ',array($parent))->result();
         }
@@ -72,7 +72,7 @@ class Manage_unitkerja extends Admin_Controller {
             "success"=>true,
             "msg"=>'Transaksi berhasil'); 
         $this->db->where("ID",$currNodeId);
-        $this->db->set("PARENT_ID",$parentNodeId);
+        $this->db->set("DIATASAN_ID",$parentNodeId);
         $this->db->update("hris.unitkerja");    
         echo json_encode($output);
         exit;     
@@ -272,7 +272,7 @@ class Manage_unitkerja extends Admin_Controller {
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('ID_BKN as id,NAMA_UNOR as text');
+            $this->db->select('ID as id,NAMA_UNOR as text');
 
             $this->db->limit($limit,$start);
 

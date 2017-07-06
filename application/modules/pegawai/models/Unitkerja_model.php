@@ -62,10 +62,11 @@ class Unitkerja_model extends BF_Model
 		$data = $this->cache->get('unors');
 		if($data==null){
 			$rows=  $this->db->query('
-				select unor.*,pejabat."NAMA" AS "PEJABAT_NAMA",pejabat."NIP_BARU" AS "PEJABAT_NIP" from (
-					select uk."ID",uk."NO",uk."NAMA_UNOR",uk."PARENT_ID",count(children."ID")as "TOTAL_CHILD",uk."PEMIMPIN_PNS_ID" from hris.unitkerja uk
-					left join  hris.unitkerja children on uk."ID" = children."PARENT_ID"
-					group by uk."ID",uk."NO",uk."NAMA_UNOR",uk."PARENT_ID",uk."PEMIMPIN_PNS_ID"
+				select unor.* from (
+					select uk."ID",uk."NO",uk."NAMA_UNOR",uk."NAMA_JABATAN",uk."NAMA_PEJABAT",uk."DIATASAN_ID",count(children."ID")as "TOTAL_CHILD",uk."PEMIMPIN_PNS_ID" 
+					from hris.unitkerja uk
+					left join  hris.unitkerja children on uk."ID" = children."DIATASAN_ID"
+					group by uk."ID",uk."NO",uk."NAMA_UNOR",uk."DIATASAN_ID",uk."PEMIMPIN_PNS_ID",uk."NAMA_JABATAN",uk."NAMA_PEJABAT"
 				) as unor 
 				left join hris.pegawai pejabat on pejabat."PNS_ID" = unor."PEMIMPIN_PNS_ID"	
 			')->result();
@@ -80,14 +81,14 @@ class Unitkerja_model extends BF_Model
 		$data = $this->get_cache();
 		if($data!=null){
 			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
-			$parent = isset($data[$data[$unor_id_inc]->PARENT_ID])?$data[$data[$unor_id_inc]->PARENT_ID]:null;
+			$parent = isset($data[$data[$unor_id_inc]->DIATASAN_ID])?$data[$data[$unor_id_inc]->DIATASAN_ID]:null;
 			while($parent!=NULL){
 				echo "tx";
 				if($parent->IS_SATKER) {
 					echo "found";
 					return $parent;
 				}					
-				$parent = isset($data[$data[$parent->ID]->PARENT_ID])?$data[$data[$parent->ID]->PARENT_ID]:null;
+				$parent = isset($data[$data[$parent->ID]->DIATASAN_ID])?$data[$data[$parent->ID]->DIATASAN_ID]:null;
 			}
 		}
 		return null;
@@ -100,11 +101,11 @@ class Unitkerja_model extends BF_Model
 			if($node && $withme){
 				$path[] = $node;
 			}
-			$parent = isset($data[$data[$unor_id_inc]->PARENT_ID])?$data[$data[$unor_id_inc]->PARENT_ID]:null;
+			$parent = isset($data[$data[$unor_id_inc]->DIATASAN_ID])?$data[$data[$unor_id_inc]->DIATASAN_ID]:null;
 			while($parent!=NULL){
 				$path[] = $parent;
 				if($parent->IS_SATKER) break;
-				$parent = isset($data[$data[$parent->ID]->PARENT_ID])?$data[$data[$parent->ID]->PARENT_ID]:null;
+				$parent = isset($data[$data[$parent->ID]->DIATASAN_ID])?$data[$data[$parent->ID]->DIATASAN_ID]:null;
 			}
 		}
 		if($as_array){
@@ -205,8 +206,8 @@ class Unitkerja_model extends BF_Model
 				if($first && $includeMe){ //memasukan me sebagai child dari me
 					if($node->ID == $parent){
 						if($onlyID){
-							if($propertyKey=="ID_BKN"){
-								$children[] = $node->ID_BKN;
+							if($propertyKey=="ID"){
+								$children[] = $node->ID;
 							}
 							else {
 								$children[] = $node->ID;
@@ -215,10 +216,10 @@ class Unitkerja_model extends BF_Model
 						else $children[] = $node;
 					}
 				}
-				if($node->PARENT_ID == $parent){
+				if($node->DIATASAN_ID == $parent){
 					if($onlyID){
-							if($propertyKey=="ID_BKN"){
-								$children[] = $node->ID_BKN;
+							if($propertyKey=="ID"){
+								$children[] = $node->ID;
 							}
 							else {
 								$children[] = $node->ID;
@@ -240,7 +241,7 @@ class Unitkerja_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($eselon2 != ""){
-			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			//$this->unitkerja_model->where("DIATASAN_ID",strtoupper($eselon2));
 			$this->unitkerja_model->where('"KODE_INTERNAL" LIKE \''.strtoupper($eselon2).'%\'');
 			//$this->unitkerja_model->where('"ESELON" LIKE \'III.%\'');
 		}
@@ -254,7 +255,7 @@ class Unitkerja_model extends BF_Model
 			$this->select($this->table_name .'.*');
 		}
 		if($eselon2 != ""){
-			//$this->unitkerja_model->where("PARENT_ID",strtoupper($eselon2));
+			//$this->unitkerja_model->where("DIATASAN_ID",strtoupper($eselon2));
 			$this->unitkerja_model->where('"KODE_INTERNAL" LIKE \''.strtoupper($eselon2).'%\'');
 			//$this->unitkerja_model->where('"ESELON" LIKE \'IV.%\'');
 		}

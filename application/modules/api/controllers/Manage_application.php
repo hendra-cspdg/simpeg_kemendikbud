@@ -150,8 +150,8 @@ class Manage_application extends Admin_Controller
                 grand.\"NAMA_UNOR\" as grand_name
                 from 
                 hris.unitkerja uk
-                left join hris.unitkerja parent on parent.\"ID\" = uk.\"PARENT_ID\"
-                left join hris.unitkerja grand on grand.\"ID\" = parent.\"PARENT_ID\"
+                left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
+                left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
                 where lower(uk.\"NAMA_UNOR\") like ?
                 ",array("%".strtolower($term)."%"))->result();
             

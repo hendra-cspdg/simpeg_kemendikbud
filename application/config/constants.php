@@ -123,3 +123,7 @@ $ajax_request = (! empty($_SERVER['HTTP_X_REQUESTED_WITH'])
     ) ? true : false;
 define('IS_AJAX', $ajax_request);
 unset($ajax_request);
+
+
+define("ROOT_UNOR_ID","A8ACA7397AEB3912E040640A040269BB");
+define("ROOT_INSTANSI_ID","A5EB03E23BFAF6A0E040640A040252AD");

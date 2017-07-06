@@ -27,7 +27,7 @@ class Pegawai extends  LIPIAPI_REST_Controller {
         }
         $this->db->start_cache();
             $this->db->select("peg.*",false)->from("hris.pegawai peg")->
-            join("hris.unitkerja uk","uk.ID_BKN=peg.UNOR_ID");
+            join("hris.unitkerja uk","uk.ID=peg.UNOR_ID");
             if(sizeof($children)>0){
                 $this->db->where_in("uk.ID",$children);
             }
