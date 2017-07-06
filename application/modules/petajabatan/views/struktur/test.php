@@ -29,7 +29,11 @@
         'nodeContent': 'title',
         'nodeId': 'id',
         'exportFilename': 'Data Struktur',
-        'exportFileextension': 'pdf'
+        'exportFileextension': 'pdf',
+        'createNode': function($node, data) {
+            var secondMenu = '<div class="jabatan-menu">'+data.pejabat_nama+'</div>';
+            $node.append(secondMenu);
+        }
     });
 </script>
 <style>
@@ -46,9 +50,48 @@
     #chart-container .orgchart {
         background-image :none;
     }
+    #chart-container .orgchart .node .title {
+        height:auto;
+        overflow:auto;
+        white-space:normal;
+        background-color: #367fa9;
+        color : #fff;
+    }
+    #chart-container .orgchart .node .title i.fa {
+        display:none;
+    }
     #chart-container .orgchart .node .content {
         height:auto;
         overflow:auto;
         white-space:normal;
+    }
+    .orgchart .node .content {
+        background-color: #fff;
+        border: 1px solid rgba(217, 83, 79, 0.8);
+        border-radius: 0 0 0px 0px;
+        color: #333;
+        font-size: 11px;
+        height: 20px;
+        line-height: 18px;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-bottom:none;
+        width: 100%;
+    }
+    .orgchart .node .jabatan-menu {
+        background-color: #fff;
+        border: 1px solid rgba(217, 83, 79, 0.8);
+        border-radius: 0 0 4px 4px;
+        color: #333;
+        font-size: 11px;
+        height: 20px;
+        line-height: 18px;
+        overflow: hidden;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
     }
 </style>

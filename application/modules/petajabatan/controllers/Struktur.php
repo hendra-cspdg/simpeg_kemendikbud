@@ -38,11 +38,18 @@ class Struktur extends Admin_Controller{
         if($unor){
             $node = new stdClass;
             $node->id =  $unor->ID;
-           if($unor->NAMA_PEJABAT){
-              $node->name =  $unor->NAMA_PEJABAT;
+            $node->title = $unor->NAMA_JABATAN;
+            if($unor->NAMA_UNOR){
+              $node->name =  $unor->NAMA_UNOR;
             }
             else $node->name =  "-";
-            $node->title = $unor->NAMA_UNOR;
+
+            if($unor->NAMA_PEJABAT){
+              $node->pejabat_nama =  $unor->NAMA_PEJABAT;
+            }
+            else $node->pejabat_nama =  "-";
+              
+            
             if($unor->TOTAL_CHILD>0){
                 $node->relationship = '001';
             }
@@ -65,11 +72,18 @@ class Struktur extends Admin_Controller{
             if($unor->DIATASAN_ID==$id){
                 $node = new stdClass;
                 $node->id =  $unor->ID;
-                if($unor->NAMA_PEJABAT){
-                    $node->name =  $unor->NAMA_PEJABAT;
+                $node->title = $unor->NAMA_JABATAN;
+                if($unor->NAMA_UNOR){
+                $node->name =  $unor->NAMA_UNOR;
                 }
                 else $node->name =  "-";
-                $node->title = $unor->NAMA_UNOR;
+
+                if($unor->NAMA_PEJABAT){
+                $node->pejabat_nama =  $unor->NAMA_PEJABAT;
+                }
+                else $node->pejabat_nama =  "-";
+                
+
                 $relationship_flag = array();
                 $relationship_flag[]  = 1 ; //has parent
                  //has siblings
