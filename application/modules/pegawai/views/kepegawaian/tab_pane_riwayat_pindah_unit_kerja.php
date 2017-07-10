@@ -18,8 +18,9 @@
             <thead>
                 <tr>
                     <th width='100px' >No</th>
-                    <th>NAMA UNIT BARU</th>
-                    <th  >NAMA INSTANSI</th>
+                    <th>UNIT KERJA ASAL</th>
+                    <th>UNIT KERJA BARU</th>
+                    <th>NAMA INSTANSI</th>
                     <th width='100px' >NO SK</th>
 					<th width='100px' >SK TANGGAL</th>
                     <th width='100px' align="center">#</th>

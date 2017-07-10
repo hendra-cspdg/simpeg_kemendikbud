@@ -58,6 +58,18 @@ class Unitkerja_model extends BF_Model
     {
         parent::__construct();
     }
+    public function find_all($satker = "")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		if($satker != ""){
+			$this->unitkerja_model->where('UNOR_INDUK',$satker);
+		}
+		return parent::find_all();
+	}
 	public function get_cache(){
 		$data = $this->cache->get('unors');
 		if($data==null){
@@ -96,16 +108,22 @@ class Unitkerja_model extends BF_Model
 	public function get_parent_path($unor_id_inc,$withme = true,$as_array = true){
 		$data = $data = $this->get_cache();
 		$path = array();
+		$maxlooping = 10;
+		$loop = 0;
 		if($data!=null){
 			$node = isset($data[$unor_id_inc])?$data[$unor_id_inc] : null;
 			if($node && $withme){
 				$path[] = $node;
 			}
 			$parent = isset($data[$data[$unor_id_inc]->DIATASAN_ID])?$data[$data[$unor_id_inc]->DIATASAN_ID]:null;
+			
 			while($parent!=NULL){
+				if($loop>$maxlooping) break;
 				$path[] = $parent;
 				if($parent->IS_SATKER) break;
 				$parent = isset($data[$data[$parent->ID]->DIATASAN_ID])?$data[$data[$parent->ID]->DIATASAN_ID]:null;
+				
+				$loop++;
 			}
 		}
 		if($as_array){
@@ -268,7 +286,7 @@ class Unitkerja_model extends BF_Model
 		{
 			$this->select($this->table_name .'.*');
 		}
-		$this->unitkerja_model->where('IS_SATKER',1);
+		$this->unitkerja_model->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja)');
 		return parent::find_all();
 	}
 	public function count_satker()
@@ -280,5 +298,24 @@ class Unitkerja_model extends BF_Model
 		}
 		$this->unitkerja_model->where('IS_SATKER',1);
 		return parent::count_all();
+	}
+	public function find_satkerold()
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		$this->unitkerja_model->where('IS_SATKER',1);
+		return parent::find_all();
+	}
+	public function findnamajabatan($UNOR = "")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.*');
+		}
+		return parent::find_by('ID',$UNOR);
 	}
 }

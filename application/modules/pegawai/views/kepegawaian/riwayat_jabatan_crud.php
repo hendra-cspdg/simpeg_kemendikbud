@@ -11,13 +11,21 @@
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
             <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
-           <div class="control-group col-sm-12">
-				<label for="inputNAMA" class="control-label">UNOR</label>
-				<div class='controls'>
-                    <select id="ID_UNOR" name="ID_UNOR" width="100%" class=" col-md-10 format-control"></select>
+           <div class="control-group<?php echo form_error('ID_SATUAN_KERJA') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label('SATUAN KERJA', 'ID_SATUAN_KERJA', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" class="form-control select2  col-sm-12" width="100%">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
+						<?php foreach($recsatker as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_SATUAN_KERJA))  echo  (trim($detail_riwayat->ID_SATUAN_KERJA)==trim($record->ID)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+					</select>
+                    <span class='help-inline'><?php echo form_error('ID_SATUAN_KERJA'); ?></span>
                 </div>
-			</div> 
-           <div class="control-group<?php echo form_error('GOLONGAN') ? ' error' : ''; ?> col-sm-12">
+            </div>
+        	<div class="control-group<?php echo form_error('GOLONGAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('Jenis', 'Jenis Jabatan', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="ID_JENIS_JABATAN" id="ID_JENIS_JABATAN" class="form-control">
@@ -31,11 +39,26 @@
                     <span class='help-inline'><?php echo form_error('ID_JENIS_JABATAN'); ?></span>
                 </div>
             </div>
+           <div class="control-group col-sm-12">
+				<label for="inputNAMA" class="control-label">UNOR</label>
+				<div class='controls'>
+                    <select id="ID_UNOR" name="ID_UNOR" width="100%" class="select2 col-md-10 format-control">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($recunor) && is_array($recunor) && count($recunor)):?>
+						<?php foreach($recunor as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_UNOR))  echo  (trim($detail_riwayat->ID_UNOR)==trim($record->ID)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+					</select>
+                </div>
+			</div> 
+           
 
             <div class="control-group<?php echo form_error('ID_JABATAN') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label('JABATAN', 'ID_JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ID_JABATAN" id="ID_JABATAN" class="form-control select2  col-sm-12" width="100%">
+                	<div class='slcjabatan'>
+                	<select name="ID_JABATAN" id="ID_JABATAN" class="form-control select2  col-sm-12 slcjabatan" width="100%">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
@@ -43,6 +66,8 @@
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
+					</div>
+					<span class='divjabatan'></span>
                     <span class='help-inline'><?php echo form_error('ID_JABATAN'); ?></span>
                 </div>
             </div>            
@@ -73,21 +98,7 @@
 					<input type='text' class="form-control pull-right datepicker" name='TANGGAL_SK'  value="<?php echo set_value('TANGGAL_SK', isset($detail_riwayat->TANGGAL_SK) ? $detail_riwayat->TANGGAL_SK : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('TANGGAL_SK'); ?></span>
 				</div>
-			</div>
-			<div class="control-group<?php echo form_error('ID_SATUAN_KERJA') ? ' error' : ''; ?> col-sm-9">
-                <?php echo form_label('SATUAN KERJA', 'ID_SATUAN_KERJA', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" class="form-control select2  col-sm-12" width="100%">
-						<option value="">-- Silahkan Pilih --</option>
-						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
-						<?php foreach($recsatker as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_SATUAN_KERJA))  echo  (trim($detail_riwayat->ID_SATUAN_KERJA)==trim($record->KODE_JABATAN)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
-							<?php endforeach;?>
-						<?php endif;?>
-					</select>
-                    <span class='help-inline'><?php echo form_error('ID_SATUAN_KERJA'); ?></span>
-                </div>
-            </div>            
+			</div>   
 			<div class="control-group col-sm-3">
 				<label for="inputNAMA" class="control-label">TMT PELANTIKAN</label>
 				<div class="input-group date">
@@ -117,6 +128,49 @@
 	 $(".select2").select2({width: '100%'});
 </script>
 <script>
+	$('#ID_SATUAN_KERJA').change(function() {
+		var valuesatker = $('#ID_SATUAN_KERJA').val();
+			$("#ID_UNOR").empty().append("<option>loading...</option>"); //show loading...
+			 
+			var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getbysatker?satker=" + encodeURIComponent(valuesatker);
+			$.getJSON(json_url,function(data){
+				$("#ID_UNOR").empty(); 
+				if(data==""){
+					$("#ID_UNOR").append("<option value=\"\">Silahkan Pilih </option>");
+				}
+				else{
+					$("#ID_UNOR").append("<option value=\"\">Silahkan Pilih</option>");
+					for(i=0; i<data.id.length; i++){
+						$("#ID_UNOR").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
+					}
+				}
+				
+			});
+			$("#ID_UNOR").select2("updateResults");
+			return false;
+	});
+	$('#ID_UNOR').change(function() {
+		var val = $('#ID_UNOR').val();
+		var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getnamajabatan?unor=" + encodeURIComponent(val);
+		$.ajax({    
+		   type: "POST",
+		   url: json_url,
+		   data: "",
+		   dataType: "html",
+		   success: function(data){ 
+				
+				var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
+				if(valuejenisjabatan == "1"){
+					$('.slcjabatan').hide();
+					$('.divjabatan').html(data);
+				}else{
+					$('.slcjabatan').show();
+					$('.divjabatan').html("");
+				}	
+		   }});
+		 
+	});
+/*
 	$("#ID_UNOR").select2({
 			placeholder: 'Cari Unit Kerja...',
 			width: '100%',
@@ -134,6 +188,7 @@
 				cache: true
 			}
 	});
+	*/
 	$('#ID_JENIS_JABATAN').change(function() {
 		var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
 			$("#ID_JABATAN").empty().append("<option>loading...</option>"); //show loading...
