@@ -9,12 +9,12 @@
         </div>
     <?php echo form_open($this->uri->uri_string(), 'id="frm"'); ?>
     <fieldset>
-            <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
-            <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
+            <input id='ID' type='hidden'readonly class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
+            <input id='PNS_ID' type='hidden'readonly class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
            <div class="control-group<?php echo form_error('ID_SATUAN_KERJA') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('SATUAN KERJA', 'ID_SATUAN_KERJA', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" class="form-control select2  col-sm-12" width="100%">
+                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" readonly class="form-control  col-sm-12" width="100%">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
 						<?php foreach($recsatker as $record):?>
@@ -29,7 +29,7 @@
         	<div class="control-group<?php echo form_error('GOLONGAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('Jenis', 'Jenis Jabatan', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ID_JENIS_JABATAN" id="ID_JENIS_JABATAN" class="form-control">
+                	<select name="ID_JENIS_JABATAN" id="ID_JENIS_JABATAN" readonly class="form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_jabatans) && is_array($jenis_jabatans) && count($jenis_jabatans)):?>
 						<?php foreach($jenis_jabatans as $record):?>
@@ -43,7 +43,7 @@
            <div class="control-group col-sm-12">
 				<label for="inputNAMA" class="control-label">UNOR</label>
 				<div class='controls'>
-                    <select id="ID_UNOR" name="ID_UNOR" width="100%" class="select2 col-md-10 format-control">
+                    <select id="ID_UNOR" name="ID_UNOR" width="100%" readonly class="col-md-10 form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($recunor) && is_array($recunor) && count($recunor)):?>
 						<?php foreach($recunor as $record):?>
@@ -59,7 +59,7 @@
                 <?php echo form_label('JABATAN', 'ID_JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<div class='slcjabatan'>
-                	<select name="ID_JABATAN" id="ID_JABATAN" class="form-control select2  col-sm-12 slcjabatan" width="100%">
+                	<select name="ID_JABATAN" id="ID_JABATAN" readonly class="form-control  col-sm-12 slcjabatan" width="100%">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
@@ -78,7 +78,7 @@
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='TMT_JABATAN'  value="<?php echo set_value('TMT_JABATAN', isset($detail_riwayat->TMT_JABATAN) ? $detail_riwayat->TMT_JABATAN : ''); ?>" />
+					<input type='text'readonly class="form-control pull-right datepicker" name='TMT_JABATAN'  value="<?php echo set_value('TMT_JABATAN', isset($detail_riwayat->TMT_JABATAN) ? $detail_riwayat->TMT_JABATAN : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('TMT_JABATAN'); ?></span>
 				</div>
 			</div> 
@@ -86,7 +86,7 @@
             <div class="control-group<?php echo form_error('NOMOR_SK') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label("SK NOMOR", 'SK NOMOR', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NOMOR_SK' type='text' class="form-control" name='NOMOR_SK' maxlength='32' value="<?php echo set_value('NOMOR_SK', isset($detail_riwayat->NOMOR_SK) ? $detail_riwayat->NOMOR_SK : ''); ?>" />
+                    <input id='NOMOR_SK' type='text'readonly class="form-control" name='NOMOR_SK' maxlength='32' value="<?php echo set_value('NOMOR_SK', isset($detail_riwayat->NOMOR_SK) ? $detail_riwayat->NOMOR_SK : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NOMOR_SK'); ?></span>
                 </div>
             </div>
@@ -96,7 +96,7 @@
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='TANGGAL_SK'  value="<?php echo set_value('TANGGAL_SK', isset($detail_riwayat->TANGGAL_SK) ? $detail_riwayat->TANGGAL_SK : ''); ?>" />
+					<input type='text'readonly class="form-control pull-right datepicker" name='TANGGAL_SK'  value="<?php echo set_value('TANGGAL_SK', isset($detail_riwayat->TANGGAL_SK) ? $detail_riwayat->TANGGAL_SK : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('TANGGAL_SK'); ?></span>
 				</div>
 			</div>   
@@ -106,7 +106,7 @@
 				  <div class="input-group-addon">
 					<i class="fa fa-calendar"></i>
 				  </div>
-					<input type='text' class="form-control pull-right datepicker" name='TMT_PELANTIKAN'  value="<?php echo set_value('TMT_PELANTIKAN', isset($detail_riwayat->TMT_PELANTIKAN) ? $detail_riwayat->TMT_PELANTIKAN : ''); ?>" />
+					<input type='text'readonly class="form-control pull-right datepicker" name='TMT_PELANTIKAN'  value="<?php echo set_value('TMT_PELANTIKAN', isset($detail_riwayat->TMT_PELANTIKAN) ? $detail_riwayat->TMT_PELANTIKAN : ''); ?>" />
 					<span class='help-inline'><?php echo form_error('TMT_PELANTIKAN'); ?></span>
 				</div>
 			</div> 
@@ -123,169 +123,41 @@
 			<div class="control-group<?php echo form_error('eselon1') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('ESELON 1', 'ESELON1', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='ESELON1'  value="<?php echo set_value('ESELON1', isset($detail_riwayat->ESELON1) ? $detail_riwayat->ESELON1 : ''); ?>" />
+                	<input type='text'readonly class="form-control" name='ESELON1'  value="<?php echo set_value('ESELON1', isset($detail_riwayat->ESELON1) ? $detail_riwayat->ESELON1 : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON1'); ?></span>
                 </div>
             </div>
             <div class="control-group<?php echo form_error('eselon2') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('ESELON 2', 'eselon2', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='ESELON2'  value="<?php echo set_value('ESELON2', isset($detail_riwayat->ESELON2) ? $detail_riwayat->ESELON2 : ''); ?>" />
+                	<input type='text'readonly class="form-control" name='ESELON2'  value="<?php echo set_value('ESELON2', isset($detail_riwayat->ESELON2) ? $detail_riwayat->ESELON2 : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON1'); ?></span>
                 </div>
             </div>
             <div class="control-group<?php echo form_error('ESELON3') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('ESELON 3', 'ESELON3', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='ESELON3'  value="<?php echo set_value('ESELON3', isset($detail_riwayat->ESELON3) ? $detail_riwayat->ESELON3 : ''); ?>" />
+                	<input type='text'readonly class="form-control" name='ESELON3'  value="<?php echo set_value('ESELON3', isset($detail_riwayat->ESELON3) ? $detail_riwayat->ESELON3 : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON3'); ?></span>
                 </div>
             </div>
             <div class="control-group<?php echo form_error('ESELON4') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('ESELON 4', 'ESELON4', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='ESELON4'  value="<?php echo set_value('ESELON4', isset($detail_riwayat->ESELON4) ? $detail_riwayat->ESELON4 : ''); ?>" />
+                	<input type='text'readonly class="form-control" name='ESELON4'  value="<?php echo set_value('ESELON4', isset($detail_riwayat->ESELON4) ? $detail_riwayat->ESELON4 : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON4'); ?></span>
                 </div>
             </div>
             <div class="control-group<?php echo form_error('NAMA_JABATAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('NAMA JABATAN', 'NAMA_JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='NAMA_JABATAN'  value="<?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?>" />
+                	<input type='text'readonly class="form-control" name='NAMA_JABATAN'  value="<?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON4'); ?></span>
                 </div>
             </div>
             </fieldset>
         </div>
-  		<div class="box-footer">
-            <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
-        </div>
     <?php echo form_close(); ?>
 </div>
 <script src="<?php echo base_url(); ?>themes/admin/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script>
-	 $(".select2").select2({width: '100%'});
-</script>
-<script>
-	$('#ID_SATUAN_KERJA').change(function() {
-		var valuesatker = $('#ID_SATUAN_KERJA').val();
-			$("#ID_UNOR").empty().append("<option>loading...</option>"); //show loading...
-			 
-			var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getbysatker?satker=" + encodeURIComponent(valuesatker);
-			$.getJSON(json_url,function(data){
-				$("#ID_UNOR").empty(); 
-				if(data==""){
-					$("#ID_UNOR").append("<option value=\"\">Silahkan Pilih </option>");
-				}
-				else{
-					$("#ID_UNOR").append("<option value=\"\">Silahkan Pilih</option>");
-					for(i=0; i<data.id.length; i++){
-						$("#ID_UNOR").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
-					}
-				}
-				
-			});
-			$("#ID_UNOR").select2("updateResults");
-			return false;
-	});
-	$('#ID_UNOR').change(function() {
-		var val = $('#ID_UNOR').val();
-		var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getnamajabatan?unor=" + encodeURIComponent(val);
-		$.ajax({    
-		   type: "POST",
-		   url: json_url,
-		   data: "",
-		   dataType: "html",
-		   success: function(data){ 
-				
-				var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
-				if(valuejenisjabatan == "1"){
-					$('.slcjabatan').hide();
-					$('.divjabatan').html(data);
-				}else{
-					$('.slcjabatan').show();
-					$('.divjabatan').html("");
-				}	
-		   }});
-		 
-	});
-/*
-	$("#ID_UNOR").select2({
-			placeholder: 'Cari Unit Kerja...',
-			width: '100%',
-			minimumInputLength: 3,
-			allowClear: true,
-			ajax: {
-				url: '<?php echo site_url("pegawai/duk/ajax_unit_list");?>',
-				dataType: 'json',
-				data: function(params) {
-					return {
-						term: params.term || '',
-						page: params.page || 1
-					}
-				},
-				cache: true
-			}
-	});
-	*/
-	$('#ID_JENIS_JABATAN').change(function() {
-		var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
-			$("#ID_JABATAN").empty().append("<option>loading...</option>"); //show loading...
-			 
-			var json_url = "<?php echo base_url(); ?>admin/masters/ref_jabatan/getbyjenis?jenis=" + encodeURIComponent(valuejenisjabatan);
-			//alert(json_url);
-			$.getJSON(json_url,function(data){
-				$("#ID_JABATAN").empty(); 
-				if(data==""){
-					$("#ID_JABATAN").append("<option value=\"\">Silahkan Pilih </option>");
-				}
-				else{
-					$("#ID_JABATAN").append("<option value=\"\">Silahkan Pilih</option>");
-					for(i=0; i<data.id.length; i++){
-						$("#ID_JABATAN").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
-					}
-				}
-				
-			});
-			$("#ID_JABATAN").select2("updateResults");
-			return false;
-	});
-    var form = $("#form-riwayat-jabatan-add");
-    //Date picker
-    $('.datepicker').datepicker({
-      autoclose: true,format: 'yyyy-mm-dd'
-    }).on("input change", function (e) {
-        var date = $(this).datepicker('getDate');
-        if(date)$("[name=TAHUN]",form).val(date.getFullYear());
-    });
-</script>
-<script>
-	$("#btnsave").click(function(){
-		submitdata();
-		return false; 
-	});	
-	$("#frmA").submit(function(){
-		submitdata();
-		return false; 
-	});	
-	function submitdata(){
-		
-		var json_url = "<?php echo base_url() ?>pegawai/riwayatjabatan/save";
-		 $.ajax({    
-		 	type: "POST",
-			url: json_url,
-			data: $("#frm").serialize(),
-            dataType: "json",
-			success: function(data){ 
-                if(data.success){
-                    swal("Pemberitahuan!", data.msg, "success");
-                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-jabatan");
-					 $("#modal-custom-global").modal("hide");
-                }
-                else {
-                    $("#form-riwayat-jabatan-add .messages").empty().append(data.msg);
-                }
-			}});
-		return false; 
-	}
-</script>
+  

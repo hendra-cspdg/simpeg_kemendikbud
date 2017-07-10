@@ -23,7 +23,7 @@
                     <th width='100px' >Nilai SKP</th>
                     <th width='100px' >Nilai Perilaku</th>
 					<th width='100px' >Jabatan</th>
-                    <th width='100px' align="center">#</th>
+                    <th width='100px' align="center">AKSI</th>
                 </tr>
             </thead>
             <tfoot>

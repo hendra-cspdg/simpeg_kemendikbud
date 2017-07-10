@@ -35,7 +35,8 @@ class reports extends Admin_Controller
 		$this->load->model('pegawai/pegawai_model', null, true);
 		$this->load->model('golongan/golongan_model', null, true);
 		$this->load->model('pegawai/unitkerja_model');
-		Template::set('jmlsatker', $this->unitkerja_model->count_satker());
+		$recsatker = $this->unitkerja_model->count_satker();
+		Template::set('jmlsatker', $recsatker[0]->jumlah ? $recsatker[0]->jumlah : 0);
 		// jml pegawai
 		$total= $this->pegawai_model->count_all();
 		Template::set('totalpegawai', $total);

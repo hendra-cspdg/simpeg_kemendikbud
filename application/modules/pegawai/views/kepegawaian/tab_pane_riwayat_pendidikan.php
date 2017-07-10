@@ -22,7 +22,7 @@
                     <th width='50%'>NAMA Sekolah</th>
                     <th width='100px'>Tahun Lulus</th>
                     <th>Nomor Ijazah</th>
-                    <th width='50px' align="center">#</th>
+                    <th width='100px' align="center">Aksi</th>
                 </tr>
             </thead>
             <tfoot>

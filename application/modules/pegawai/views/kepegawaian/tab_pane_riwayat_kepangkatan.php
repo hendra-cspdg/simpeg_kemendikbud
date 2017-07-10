@@ -22,7 +22,7 @@
                     <th width='100px' >Golongan</th>
                     <th width='100px' >TMT</th>
 					<th width='100px' >MK GOLONGAN</th>
-                    <th width='100px' align="center">#</th>
+                    <th width='100px' align="center">Aksi</th>
                 </tr>
             </thead>
             <tfoot>

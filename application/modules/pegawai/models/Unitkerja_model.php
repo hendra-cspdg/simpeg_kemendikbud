@@ -294,10 +294,9 @@ class Unitkerja_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*');
+			$this->select('count(distinct "UNOR_INDUK") AS jumlah');
 		}
-		$this->unitkerja_model->where('IS_SATKER',1);
-		return parent::count_all();
+		return parent::find_all();
 	}
 	public function find_satkerold()
 	{

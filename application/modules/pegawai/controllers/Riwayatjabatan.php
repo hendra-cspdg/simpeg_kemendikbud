@@ -93,7 +93,7 @@ class Riwayatjabatan extends Admin_Controller
                 $btn_actions = array();
                 
                 $btn_actions  [] = "
-                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatjabatan/viewdetil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Lihat detil'><span class='fa-stack'>
+                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatjabatan/detil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Lihat detil'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
@@ -162,6 +162,22 @@ class Riwayatjabatan extends Admin_Controller
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
     }
+    public function detil($PNS_ID,$record_id=''){
+        $datadetil = $this->riwayat_jabatan_model->find($record_id); 
+		$recordunors = $this->unitkerja_model->find_all($datadetil->ID_SATUAN_KERJA);
+		Template::set('recunor', $recordunors);
+	   
+		$this->auth->restrict($this->permissionEdit);
+		Template::set_view("kepegawaian/detiljabatan");
+	  
+		Template::set('jabatans', $this->jabatan_model->find_select($datadetil->ID_JENIS_JABATAN));    
+		Template::set('detail_riwayat', $datadetil);    
+		Template::set('PNS_ID', $PNS_ID);
+		Template::set('toolbar_title', "Riwayat Jabatan");
+
+		Template::render();
+    }
+    
     public function save(){
          // Validate the data
         $this->form_validation->set_rules($this->riwayat_jabatan_model->get_validation_rules());
@@ -224,11 +240,15 @@ class Riwayatjabatan extends Admin_Controller
         $data["ID_JENIS_JABATAN"] = $rec_jenis->ID;
         // jika jabatannya struktural
         if($this->input->post("ID_JENIS_JABATAN") == "1"){
+        	if($this->input->post("ID_UNOR") != ""){
         	$rec_jabatan = $this->unitkerja_model->find_by("ID",$this->input->post("ID_UNOR"));
         	$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	}
         }else{
-        	$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
-        	$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	if($this->input->post("ID_JABATAN") != ""){
+        		$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
+        		$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	}
 		}
 		$data["ID_SATUAN_KERJA"] 	= trim($this->input->post("ID_SATUAN_KERJA"));
         if(empty($data["TMT_JABATAN"])){
