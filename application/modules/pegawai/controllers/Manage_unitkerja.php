@@ -336,4 +336,25 @@ class Manage_unitkerja extends Admin_Controller {
             $this->db->flush_cache();
             return $o;
     }
+    public function getbysatker()
+	{
+		$satker = $this->input->get('satker');
+		$json = array(); 
+		$records = $this->unitkerja_model->find_all($satker);
+		if(isset($records) && is_array($records) && count($records)):
+			foreach ($records as $record) :
+				$json['id'][] = $record->ID;
+				$json['nama'][] = $record->NAMA_UNOR;
+			endforeach;
+		endif;
+		echo json_encode($json);
+		die();
+	}
+	public function getnamajabatan()
+	{
+		$unor = $this->input->get('unor');
+		$json = array(); 
+		$records = $this->unitkerja_model->findnamajabatan($unor);
+		echo isset($records->NAMA_JABATAN) ? $records->NAMA_JABATAN : "";
+	}
 }

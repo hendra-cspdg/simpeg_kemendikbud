@@ -90,12 +90,22 @@ class Riwayatkepangkatan extends Admin_Controller
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatkepangkatan/detil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Lihat detil'><span class='fa-stack'>
+					   	<i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                if($this->auth->has_permission("RiwayatKepangkatan.Kepegawaian.Edit")){
+                $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."pegawai/riwayatkepangkatan/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
+                }
+                if($this->auth->has_permission("RiwayatKepangkatan.Kepegawaian.Edit")){
                 $btn_actions  [] = "
                         <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
@@ -104,7 +114,7 @@ class Riwayatkepangkatan extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
@@ -143,6 +153,16 @@ class Riwayatkepangkatan extends Admin_Controller
     }
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
+    }
+    public function detil($PNS_ID,$record_id=''){
+        Template::set('golongans', $this->golongan_model->find_all());
+        Template::set('jenis_kps', $this->jenis_kp_model->find_all());
+		Template::set_view("kepegawaian/detilkepangkatan");
+		Template::set('detail_riwayat', $this->riwayat_kepangkatan_model->find($record_id));    
+		Template::set('PNS_ID', $PNS_ID);
+		Template::set('toolbar_title', "Detil Riwayat Diklat Kepangkatan");
+
+		Template::render();
     }
     public function save(){
          // Validate the data

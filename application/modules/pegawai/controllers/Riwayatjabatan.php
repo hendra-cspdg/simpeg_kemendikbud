@@ -64,12 +64,12 @@ class Riwayatjabatan extends Admin_Controller
 		$this->riwayat_jabatan_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
         
-		$kolom = $iSortCol != "" ? $iSortCol : "NAMA_JABATAN";
-		$sSortCol == "asc" ? "asc" : "desc";
+		$kolom = $iSortCol != "" ? $iSortCol : "TMT_JABATAN";
+		$sSortCol == "desc" ? "desc" : "asc";
 		$this->riwayat_jabatan_model->order_by($iSortCol,$sSortCol);
         
         $this->riwayat_jabatan_model->where("PNS_ID",$pegawai_data->PNS_ID);  
-		
+		$this->riwayat_jabatan_model->ORDER_BY($kolom,$sSortCol);
         $records=$this->riwayat_jabatan_model->find_all();
             
 		/*Ketika dalam mode pencarian, berarti kita harus
@@ -91,14 +91,26 @@ class Riwayatjabatan extends Admin_Controller
                 $row []  = $record->NAMA_JABATAN;
                 $row []  = $record->TMT_JABATAN;
                 $btn_actions = array();
+                
                 $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatjabatan/detil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Lihat detil'><span class='fa-stack'>
+					   	<i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                
+                if($this->auth->has_permission("riwayatjabatan.Kepegawaian.Edit")){
+                	$btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."pegawai/riwayatjabatan/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
-                $btn_actions  [] = "
+                }
+                if($this->auth->has_permission("riwayatjabatan.Kepegawaian.Delete")){
+                	$btn_actions  [] = "
                         <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
@@ -106,7 +118,7 @@ class Riwayatjabatan extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
@@ -129,9 +141,13 @@ class Riwayatjabatan extends Admin_Controller
             Template::render();
         }
         else {
+    		$datadetil = $this->riwayat_jabatan_model->find($record_id); 
+        	$recordunors = $this->unitkerja_model->find_all($datadetil->ID_SATUAN_KERJA);
+        	Template::set('recunor', $recordunors);
+        	
             $this->auth->restrict($this->permissionEdit);
             Template::set_view("kepegawaian/riwayat_jabatan_crud");
-            $datadetil = $this->riwayat_jabatan_model->find($record_id);
+           
             Template::set('jabatans', $this->jabatan_model->find_select($datadetil->ID_JENIS_JABATAN));    
             Template::set('detail_riwayat', $datadetil);    
             Template::set('PNS_ID', $PNS_ID);
@@ -146,6 +162,22 @@ class Riwayatjabatan extends Admin_Controller
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
     }
+    public function detil($PNS_ID,$record_id=''){
+        $datadetil = $this->riwayat_jabatan_model->find($record_id); 
+		$recordunors = $this->unitkerja_model->find_all($datadetil->ID_SATUAN_KERJA);
+		Template::set('recunor', $recordunors);
+	   
+		$this->auth->restrict($this->permissionEdit);
+		Template::set_view("kepegawaian/detiljabatan");
+	  
+		Template::set('jabatans', $this->jabatan_model->find_select($datadetil->ID_JENIS_JABATAN));    
+		Template::set('detail_riwayat', $datadetil);    
+		Template::set('PNS_ID', $PNS_ID);
+		Template::set('toolbar_title', "Riwayat Jabatan");
+
+		Template::render();
+    }
+    
     public function save(){
          // Validate the data
         $this->form_validation->set_rules($this->riwayat_jabatan_model->get_validation_rules());
@@ -206,10 +238,19 @@ class Riwayatjabatan extends Admin_Controller
         
         $rec_jenis = $this->jenis_jabatan_model->find($this->input->post("ID_JENIS_JABATAN"));
         $data["ID_JENIS_JABATAN"] = $rec_jenis->ID;
-        
-        $rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
-        $data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
-		
+        // jika jabatannya struktural
+        if($this->input->post("ID_JENIS_JABATAN") == "1"){
+        	if($this->input->post("ID_UNOR") != ""){
+        	$rec_jabatan = $this->unitkerja_model->find_by("ID",$this->input->post("ID_UNOR"));
+        	$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	}
+        }else{
+        	if($this->input->post("ID_JABATAN") != ""){
+        		$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$this->input->post("ID_JABATAN"));
+        		$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	}
+		}
+		$data["ID_SATUAN_KERJA"] 	= trim($this->input->post("ID_SATUAN_KERJA"));
         if(empty($data["TMT_JABATAN"])){
             unset($data["TMT_JABATAN"]);
         }

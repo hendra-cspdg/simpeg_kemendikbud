@@ -406,8 +406,8 @@ class Kepegawaian extends Admin_Controller
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
 		
-		$length= $this->input->post('length');
-		$start= $this->input->post('start');
+		$length= $this->input->post('length') != "" ? $this->input->post('length') : 10;
+		$start= $this->input->post('start') != "" ? $this->input->post('start') : 0;
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
 		$searchKey = isset($_REQUEST['search']["key"]) ? $_REQUEST['search']["key"] : "";
@@ -486,7 +486,7 @@ class Kepegawaian extends Admin_Controller
 		$output['recordsTotal']= $output['recordsFiltered']=$total;
 		$output['data']=array();
 		
-		
+		//die($start."masuk".$start);
 		$this->pegawai_model->limit($length,$start);
 		$records=$this->pegawai_model->find_all();
 

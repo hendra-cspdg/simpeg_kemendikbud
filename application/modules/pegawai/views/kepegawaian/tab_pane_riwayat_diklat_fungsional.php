@@ -21,7 +21,7 @@
                     <th>NAMA Diklat</th>
                     <th width='100px' >Tanggal</th>
                     <th width='100px' >Tahun</th>
-                    <th width='100px' align="center">#</th>
+                    <th width='100px' align="center">AKSI</th>
                 </tr>
             </thead>
             <tfoot>

@@ -18,11 +18,11 @@
             <thead>
                 <tr>
                     <th width='100px' >No</th>
-                    <th>NAMA UNIT BARU</th>
-                    <th  >NAMA INSTANSI</th>
+                    <th>Unit Kerja</th>
+                    <th>Instansi</th>
                     <th width='100px' >NO SK</th>
 					<th width='100px' >SK TANGGAL</th>
-                    <th width='100px' align="center">#</th>
+                    <th width='100px' align="center">AKSI</th>
                 </tr>
             </thead>
             <tfoot>
