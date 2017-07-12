@@ -23,6 +23,7 @@
                     <span class='help-inline'><?php echo form_error('ID_UNOR_BARU'); ?></span>
                 </div>
             </div>
+            
             <div class="control-group<?php echo form_error('ID_INSTANSI') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('INSTANSI BARU', 'ID INSTANSI', array('class' => 'control-label')); ?>
                 <div class='controls'>
