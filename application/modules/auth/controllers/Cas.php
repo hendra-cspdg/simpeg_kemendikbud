@@ -54,6 +54,6 @@ class Cas extends Front_Controller {
          
         }
         $ci->auth->setup_session($user_data->id, trim($username), $user_data->password_hash, $userattrib['email'], ROLE_PEGAWAI, $remember=false,'', trim($username));
-        
+        Template::redirect(site_url('admin/kepegawaian/pegawai/profile'));
     }
 }
