@@ -71,7 +71,15 @@
 					<span class='divjabatan'></span>
                     <span class='help-inline'><?php echo form_error('ID_JABATAN'); ?></span>
                 </div>
-            </div>            
+            </div>   
+            <div class="control-group col-sm-3">
+				<label for="inputNAMA" class="control-label">ESELON</label>
+				<div class="input-group date">
+				   
+					<input type='text' class="form-control pull-right" name='ESELON'  value="<?php echo set_value('ESELON', isset($detail_riwayat->ESELON) ? trim($detail_riwayat->ESELON) : ''); ?>" />
+					<span class='help-inline'><?php echo form_error('ESELON'); ?></span>
+				</div>
+			</div>          
 			<div class="control-group col-sm-3">
 				<label for="inputNAMA" class="control-label">TMT</label>
 				<div class="input-group date">
@@ -86,7 +94,7 @@
             <div class="control-group<?php echo form_error('NOMOR_SK') ? ' error' : ''; ?> col-sm-9">
                 <?php echo form_label("SK NOMOR", 'SK NOMOR', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='NOMOR_SK' type='text' class="form-control" name='NOMOR_SK' maxlength='32' value="<?php echo set_value('NOMOR_SK', isset($detail_riwayat->NOMOR_SK) ? $detail_riwayat->NOMOR_SK : ''); ?>" />
+                    <input id='NOMOR_SK' type='text' class="form-control" name='NOMOR_SK' maxlength='32' value="<?php echo set_value('NOMOR_SK', isset($detail_riwayat->NOMOR_SK) ? trim($detail_riwayat->NOMOR_SK) : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NOMOR_SK'); ?></span>
                 </div>
             </div>
