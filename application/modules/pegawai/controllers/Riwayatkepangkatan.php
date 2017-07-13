@@ -62,7 +62,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_kepangkatan_model->order_by($iSortCol,$sSortCol);
-        
+         $this->riwayat_kepangkatan_model->order_by("TMT_GOLONGAN","asc");
         $this->riwayat_kepangkatan_model->where("PNS_ID",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_kepangkatan_model->find_all();

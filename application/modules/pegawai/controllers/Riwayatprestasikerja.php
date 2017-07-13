@@ -96,7 +96,7 @@ class Riwayatprestasikerja extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_prestasi_kerja_model->order_by($iSortCol,$sSortCol);
-        
+        $this->riwayat_prestasi_kerja_model->order_by("TAHUN","ASC");
         $this->riwayat_prestasi_kerja_model->where("PNS_ID",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_prestasi_kerja_model->find_all();

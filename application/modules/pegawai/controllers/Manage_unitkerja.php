@@ -296,7 +296,7 @@ class Manage_unitkerja extends Admin_Controller {
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('KODE_INTERNAL as id,NAMA_UNOR as text');
+            $this->db->select('ID as id,NAMA_UNOR as text');
 
             $this->db->limit($limit,$start);
 

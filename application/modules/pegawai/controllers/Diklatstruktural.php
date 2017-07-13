@@ -52,6 +52,7 @@ class Diklatstruktural extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_struktural_model->order_by($iSortCol,$sSortCol);
+        $this->diklat_struktural_model->order_by("TAHUN","ASC");
         $this->diklat_struktural_model->where("PNS_ID",$PNS_ID);    
 		$records=$this->diklat_struktural_model->find_all();
 

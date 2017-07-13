@@ -57,7 +57,7 @@ class Diklatfungsional extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->diklat_fungsional_model->order_by($iSortCol,$sSortCol);
-        
+        $this->diklat_fungsional_model->order_by("TAHUN","ASC");
         $this->diklat_fungsional_model->where("NIP_BARU",$pegawai_data->NIP_BARU);  
 		
         $records=$this->diklat_fungsional_model->find_all();
