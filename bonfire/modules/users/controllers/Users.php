@@ -49,11 +49,51 @@ class Users extends Front_Controller
 		$this->load->library('users/auth');
 
 		$this->lang->load('users');
+		
 
 	}//end __construct()
 
 	//--------------------------------------------------------------------
-
+	public function check_login_type(){
+		$ci = &get_instance();
+		$login_type_data = $ci->db->from("hris.settings")->where("name","login_type")->get()->first_row();
+		if(trim($login_type_data->value)==LOGIN_TYPE_SSO){
+			Template::redirect('auth/cas/index');
+		}
+		else if(trim($login_type_data->value)==LOGIN_TYPE_LDAP){
+			if (isset($_POST['log-me-in']))
+			{
+				$this->form_validation->set_rules('login', 'NIP', 'trim|required');
+        		$this->form_validation->set_rules('password', 'Password', 'trim|required');	
+				$username = $this->security->xss_clean($this->input->post('login'));
+        		$password = $this->security->xss_clean($this->input->post('password'));	
+				
+				$return = Modules::run('auth/ldap/login_ldap',$username,$password);
+				if($return==1){
+					Template::redirect(site_url('admin/kepegawaian/pegawai/profile'));
+				}
+				
+			}
+		}
+		else if(trim($login_type_data->value)==LOGIN_TYPE_MANUAL){
+			
+		}
+	}
+	public function check_logout_type(){
+		$ci = &get_instance();
+		$login_type_data = $ci->db->from("hris.settings")->where("name","login_type")->get()->first_row();
+		if(trim($login_type_data->value)==LOGIN_TYPE_SSO){
+			$this->load->library('phpCAS');
+		    phpCAS::client(CAS_VERSION_3_0, "cas.sdm.kemdikbud.go.id", 8443, "/cas",false);
+		    phpCAS::logout();
+		}
+		else if(trim($login_type_data->value)==LOGIN_TYPE_LDAP){
+			
+		}
+		else if(trim($login_type_data->value)==LOGIN_TYPE_MANUAL){
+			
+		}
+	}
 	/**
 	 * Presents the login function and allows the user to actually login.
 	 *
@@ -63,10 +103,10 @@ class Users extends Front_Controller
 	 */
 	public function login()
 	{
-	
 		// if the user is not logged in continue to show the login page
 		if ($this->auth->is_logged_in() === FALSE)
 		{
+			$this->check_login_type();
 			if (isset($_POST['log-me-in']))
 			{
 				$remember = $this->input->post('remember_me') == '1' ? TRUE : FALSE;
@@ -112,8 +152,8 @@ class Users extends Front_Controller
 			Template::redirect('/admin/content');
 		}//end if
 		Template::set_view('users/users/login');
-			Template::set('page_title', 'Login');
-			Template::render('login');
+		Template::set('page_title', 'Login');
+		Template::render('login');
 
 	}//end login()
 
@@ -134,7 +174,8 @@ class Users extends Front_Controller
 			// Login session is valid.  Log the Activity
 			log_activity($this->current_user->id, lang('us_log_logged_out') . ': ' . $this->input->ip_address(), 'users');
 		}
-
+		$this->check_logout_type();
+		
 		// Always clear browser data (don't silently ignore user requests :).
 		$this->auth->logout();
 

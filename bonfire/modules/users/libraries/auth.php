@@ -300,7 +300,6 @@ class Auth
 		}
 
 		$this->user = FALSE;
-
 		// Is there any session data we can use?
 		if ($this->ci->session->userdata('identity') && $this->ci->session->userdata('user_id'))
 		{
@@ -368,6 +367,8 @@ class Auth
 		// If user isn't logged in, don't need to check permissions
 		if ($this->is_logged_in() === FALSE)
 		{
+			echo "ga bisa login";
+			die();
 			$this->ci->load->library('Template');
 			Template::set_message($this->ci->lang->line('us_must_login'), 'error');
 			Template::redirect(LOGIN_URL);
@@ -990,7 +991,7 @@ class Auth
 	 *
 	 * @return bool TRUE/FALSE on success/failure.
 	 */
-	private function setup_session($user_id, $username, $password_hash, $email, $role_id, $remember=FALSE, $old_token=NULL,$user_name='',$atasan='',$bidang="",$sub_bidang="")
+	public function setup_session($user_id, $username, $password_hash, $email, $role_id, $remember=FALSE, $old_token=NULL,$user_name='',$atasan='',$bidang="",$sub_bidang="")
 	{
 		// What are we using as login identity?
 		// Should I use _identity_login() and move below code?
