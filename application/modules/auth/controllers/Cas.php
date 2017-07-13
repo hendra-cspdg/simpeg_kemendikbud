@@ -41,7 +41,7 @@ class Cas extends Front_Controller {
             //ADHIARACHECK seharusnya, pke generate password kirim email, biar secure.
             $insert_data = array(
                 'username'=>trim($username),
-                'password'=>trim($username),
+                'password'=>uniqid("gen"),
                 'role_id'=>ROLE_PEGAWAI,
                 'email'=>$userattrib['email'],
                 'display_name'=>$userDisplayName,

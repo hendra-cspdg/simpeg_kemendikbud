@@ -24,12 +24,14 @@ class Ldap extends Front_Controller {
         if(($username != '') && ($password != '')){
             if ($ldapbind) {
                 $filter= "employeeID=$username*";
-                $justthese = array("displayname", "employeeID");
+                $justthese = array("displayname", "employeeID","mail");
                 
                 $sr = ldap_search($ldapconn, $ldap_staftdn, $filter, $justthese) or die ("Search failed");
                 $info = ldap_get_entries($ldapconn, $sr);
                 $displayName = ucwords(strtolower($info[0]["displayname"][0]));
-                $this->do_after_login($username,$userDisplayName);
+                $email = strtolower(strtolower($info[0]["mail"][0]));
+                $this->do_after_login($username,$password,$email,$displayName);
+                return $info;
             }
             else {
                 		
@@ -37,7 +39,7 @@ class Ldap extends Front_Controller {
         }	
     }
     
-    private function do_after_login($username,$userDisplayName){
+    private function do_after_login($username,$password,$email,$userDisplayName){
         $ci = &get_instance();
         $this->load->library("users/auth");
         $this->load->model('users/user_model');
@@ -45,13 +47,12 @@ class Ldap extends Front_Controller {
 		$user_data = $ci->db->from("hris.users")->where("username",$username)->get()->first_row();
 		if(!$user_data){
             $ci->load->helper('security');
-            $userDisplayName = '';
             //ADHIARACHECK seharusnya, pke generate password kirim email, biar secure.
             $insert_data = array(
                 'username'=>trim($username),
-                'password'=>trim($username),
+                'password'=>trim($password),
                 'role_id'=>ROLE_PEGAWAI,
-                'email'=>$userattrib['email'],
+                'email'=>$email,
                 'display_name'=>$userDisplayName,
                 'active'=>1
             );
@@ -59,9 +60,12 @@ class Ldap extends Front_Controller {
             $user_data = $ci->db->from("hris.users")->where("username",$username)->get()->first_row();
         }
         else {
-         
+            $update_data = array('display_name'=>$userDisplayName,'email'=>$email,'password'=>trim($password));
+            $this->user_model->update($user_data->id,$update_data);
+            $user_data = $ci->db->from("hris.users")->where("username",$username)->get()->first_row();
         }
-        $ci->auth->setup_session($user_data->id, trim($username), $user_data->password_hash, $userattrib['email'], ROLE_PEGAWAI, $remember=false,'', trim($username));
-        Template::redirect(trim($this->auth->login_destination));
+        
+        $ci->auth->setup_session($user_data->id, trim($username), $user_data->password_hash,$email, ROLE_PEGAWAI, $remember=false,'', trim($username));
+       
     }
 }

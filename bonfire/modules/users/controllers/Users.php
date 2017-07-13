@@ -58,9 +58,11 @@ class Users extends Front_Controller
 		$ci = &get_instance();
 		$login_type_data = $ci->db->from("hris.settings")->where("name","login_type")->get()->first_row();
 		if(trim($login_type_data->value)==LOGIN_TYPE_SSO){
+			echo "sso";
 			Template::redirect('auth/cas/index');
 		}
 		else if(trim($login_type_data->value)==LOGIN_TYPE_LDAP){
+			
 			if (isset($_POST['log-me-in']))
 			{
 				$this->form_validation->set_rules('login', 'NIP', 'trim|required');
@@ -69,11 +71,16 @@ class Users extends Front_Controller
         		$password = $this->security->xss_clean($this->input->post('password'));	
 				
 				$return = Modules::run('auth/ldap/login_ldap',$username,$password);
-				if($return==1){
+				if($return){
 					Template::redirect(site_url('admin/kepegawaian/pegawai/profile'));
+				}
+				else {
+					echo "gagal #".$username."#".$password."#".$return;
+					die();
 				}
 				
 			}
+			
 		}
 		else if(trim($login_type_data->value)==LOGIN_TYPE_MANUAL){
 			

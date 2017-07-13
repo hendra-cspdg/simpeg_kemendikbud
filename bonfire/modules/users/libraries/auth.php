@@ -303,14 +303,13 @@ class Auth
 		// Is there any session data we can use?
 		if ($this->ci->session->userdata('identity') && $this->ci->session->userdata('user_id'))
 		{
+			
 			// Grab the user account
 			$user = $this->ci->user_model->find($this->ci->session->userdata('user_id'));
 
 			if ($user !== FALSE)
 			{
-				// load do_hash()
 				$this->ci->load->helper('security');
-
 				// Ensure user_token is still equivalent to the SHA1 of the user_id and password_hash
 				if (do_hash($this->ci->session->userdata('user_id') . $user->password_hash) === $this->ci->session->userdata('user_token'))
 				{
@@ -367,8 +366,6 @@ class Auth
 		// If user isn't logged in, don't need to check permissions
 		if ($this->is_logged_in() === FALSE)
 		{
-			echo "ga bisa login";
-			die();
 			$this->ci->load->library('Template');
 			Template::set_message($this->ci->lang->line('us_must_login'), 'error');
 			Template::redirect(LOGIN_URL);
@@ -1022,7 +1019,7 @@ class Auth
 
 		// load do_hash()
 		$this->ci->load->helper('security');
-
+		
 		$data = array(
 			'user_id'		=> $user_id,
 			'auth_custom'	=> $us_custom,
