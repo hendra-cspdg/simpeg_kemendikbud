@@ -471,4 +471,13 @@ class Pegawai_model extends BF_Model
 		
 		return  $output;
 	}	
+
+	public function get_jumlah_pegawai_per_golongan(){
+		return $this->db->query('
+			select golongan."ID" as "id",golongan."NAMA" as "nama",count(*) as total from hris.golongan
+			left join hris.pegawai on  golongan."ID" = pegawai."GOL_ID"
+			group by golongan."ID",golongan."NAMA"
+			order by golongan."ID" asc 
+		')->result('array');
+	}
 }

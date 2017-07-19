@@ -90,6 +90,22 @@
 				   <div id="chartpendidikan" style="width: 100%; height: 350px;"> </div>
 			   </div>
           </div> 
+					<div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Pangkat dan Golongan</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">	
+                 	<div id="container" ></div>
+                 		<div id="chart_rekap_pegawai_pangkat_golongan" style="width: 100%; height: 350px;"> </div>
+              		</div>
+          </div>
         <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Pensiun Pertahun</h3>
@@ -514,5 +530,62 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				   }
 
 	});
-	 
+	 var chartRekapGolongan =  AmCharts.makeChart("chart_rekap_pegawai_pangkat_golongan", {
+				  "type": "serial",
+				  "dataProvider":   <?php echo $data_jumlah_pegawai_per_golongan; ?>,
+				   "theme": "light",
+				  "categoryField": "nama",
+				  "rotate": false,
+				  "startDuration": 0,
+				  "depth3D": 2,
+				  "angle": 30,
+				  
+				  "chartCursor": {
+					  "categoryBalloonEnabled": false,
+					  "cursorAlpha": 0,
+					  "zoomable": false,
+				  },    
+				   "categoryAxis": {
+					 "gridPosition": "start",
+					 "labelRotation": 45,
+					 "axisAlpha": 0,
+					 "autoWrap":false,
+					 minHorizontalGap:0,
+				   },
+				   
+					"titles" : [{
+						  "text": "nama"
+					  }, {
+						  "text": "",
+						  "bold": false
+					  }],
+				  "trendLines": [],
+				  "graphs": [
+					  {
+						  "balloonText": "<b>[[category]]: [[value]]</b>",
+						  "colorField": "color",
+						  "fillAlphas": 0.8,
+						  "id": "AmGraph-1",
+						  "lineAlpha": 0.2,
+						  "type": "column",
+						  "valueField": "total"
+					  } 
+				  ],
+				  "guides": [],
+				  "valueAxes": [
+					  {
+						  "id": "ValueAxis-1",
+						  "position": "top",
+						  "axisAlpha": 0
+					  }
+				  ],
+				  "allLabels": [],
+				  "balloon": {},
+				  "titles": [],
+				  
+				  "export": {
+					  "enabled": true
+				   }
+
+	});
  </script>

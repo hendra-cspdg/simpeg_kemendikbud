@@ -30,7 +30,6 @@ class reports extends Admin_Controller
 	 */
 	public function index()
 	{
-		
 		$this->auth->restrict('Dashboard.Reports.View');
 		$this->load->model('pegawai/pegawai_model', null, true);
 		$this->load->model('golongan/golongan_model', null, true);
@@ -142,6 +141,16 @@ class reports extends Admin_Controller
 			$index++;
 		}
 		Template::set('jsonpensiuntahun', json_encode($pensiuntahun));
+
+		// rekap_pangkat_golongan
+		$data_jumlah_pegawai_per_golongan = $this->pegawai_model->get_jumlah_pegawai_per_golongan();
+		$index = 0;
+		foreach($data_jumlah_pegawai_per_golongan as &$row){
+			$row['color'] = $colors[$index];
+			$index++;
+		}
+		Template::set('data_jumlah_pegawai_per_golongan', json_encode($data_jumlah_pegawai_per_golongan));
+		
 		
 		Template::render();
 	}
