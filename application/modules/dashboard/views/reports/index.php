@@ -106,6 +106,22 @@
                  		<div id="chart_rekap_pegawai_pangkat_golongan" style="width: 100%; height: 350px;"> </div>
               		</div>
           </div>
+					<div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Agama dan Jenis Kelamin</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">	
+                 	<div id="container" ></div>
+                 		<div id="chart_agama_jenis_kelamin" style="width: 100%; height: 350px;"> </div>
+              		</div>
+          </div>
         <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Pensiun Pertahun</h3>
@@ -530,6 +546,39 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				   }
 
 	});
+	var chart = AmCharts.makeChart("chart_agama_jenis_kelamin", {
+    "theme": "light",
+    "type": "serial",
+		 minimum :-10,
+    "dataProvider": <?php echo $data_jumlah_pegawai_per_agama_jeniskelamin; ?>,
+    "startDuration": 1,
+    "graphs": [{
+        "balloonText": "Jumlah Pegawai [[category]] (Laki-Laki): <b>[[value]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "2004",
+        "type": "column",
+        "valueField": "m"
+    }, {
+        "balloonText": "Jumlah Pegawai [[category]] (Perempuan): <b>[[value]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "2005",
+        "type": "column",
+        "clustered":false,
+        "columnWidth":0.5,
+        "valueField": "f"
+    }],
+    "plotAreaFillAlphas": 0.1,
+    "categoryField": "nama",
+    "categoryAxis": {
+        "gridPosition": "start"
+    },
+    "export": {
+    	"enabled": true
+     }
+
+});
 	 var chartRekapGolongan =  AmCharts.makeChart("chart_rekap_pegawai_pangkat_golongan", {
 				  "type": "serial",
 				  "dataProvider":   <?php echo $data_jumlah_pegawai_per_golongan; ?>,

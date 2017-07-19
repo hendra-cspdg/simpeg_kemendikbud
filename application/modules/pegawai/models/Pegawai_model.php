@@ -480,4 +480,72 @@ class Pegawai_model extends BF_Model
 			order by golongan."ID" asc 
 		')->result('array');
 	}
+
+	public function get_jumlah_pegawai_per_agama_jeniskelamin(){
+		$data = $this->db->query('
+			SELECT
+				pegawai."JENIS_KELAMIN" as "jenis_kelamin",
+				agama."ID" as "id",
+				agama."NAMA" as "nama",
+				COUNT (*) AS total
+			FROM
+				(
+					hris.pegawai
+					LEFT JOIN hris.agama ON (
+						(
+							pegawai."AGAMA_ID" = agama."ID"
+						)
+					)
+				)
+			GROUP BY
+				pegawai."JENIS_KELAMIN",
+				agama."ID",
+				agama."NAMA"
+			ORDER BY
+				agama."NAMA";
+		')->result('array');
+
+		$agamas = array('Budha','Hindu','Islam','Katholik','Protestan','Lainnya','Belum terdata');
+		$output = array();
+		foreach($agamas as $agama){
+			if(isset($output[$agama])){
+				$rec = new stdClass;
+			}
+			else {
+				$rec = $output[$agama];
+			}
+			$rec->nama = $agama;
+			$rec->m = 0;
+			$rec->f = 0;
+			foreach($data as $row){
+				if($agama==$row['nama']){
+					if($row['jenis_kelamin']=='M'){
+						$rec->m =  $row['total'];
+					}
+					else if($row['jenis_kelamin']=='F'){
+						$rec->f =  $row['total'];
+					}
+				}
+				else if('Kristen'==$row['nama'] && $agama=='Protestan'){ 
+					if($row['jenis_kelamin']=='M'){
+						$rec->m =  $row['total'];
+					}
+					else if($row['jenis_kelamin']=='F'){
+						$rec->f =  $row['total'];
+					}
+				}
+				else if(null==$row['nama'] && $agama=='Belum terdata'){ 
+					if($row['jenis_kelamin']=='M'){
+						$rec->m =  $row['total'];
+					}
+					else if($row['jenis_kelamin']=='F'){
+						$rec->f =  $row['total'];
+					}
+				}
+			}
+			$output[$agama] = $rec;
+		}
+		
+		return array_values($output);
+	}
 }

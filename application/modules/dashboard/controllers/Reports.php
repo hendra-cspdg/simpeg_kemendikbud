@@ -151,6 +151,14 @@ class reports extends Admin_Controller
 		}
 		Template::set('data_jumlah_pegawai_per_golongan', json_encode($data_jumlah_pegawai_per_golongan));
 		
+		$data_jumlah_pegawai_per_agama_jeniskelamin = $this->pegawai_model->get_jumlah_pegawai_per_agama_jeniskelamin();
+		$index = 0;
+		foreach($data_jumlah_pegawai_per_agama_jeniskelamin as &$row){
+			$row->color = $colors[$index];
+			$index++;
+		}
+		Template::set('data_jumlah_pegawai_per_agama_jeniskelamin', json_encode($data_jumlah_pegawai_per_agama_jeniskelamin));
+		
 		
 		Template::render();
 	}
