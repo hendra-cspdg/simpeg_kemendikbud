@@ -106,7 +106,7 @@
                  		<div id="chart_rekap_pegawai_pangkat_golongan" style="width: 100%; height: 350px;"> </div>
               		</div>
           </div>
-					<div class="box box-success">
+					<div class="box box-success hide">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Agama dan Jenis Kelamin</h3>
 
@@ -186,6 +186,31 @@
             <!-- /.footer -->
           </div>
           <!-- /.box -->
+						<div class="box box-warning">
+							<div class="box-header with-border">
+								<h3 class="box-title">Rekap Agama dan Jenis Kelamin</h3>
+
+								<div class="box-tools pull-right">
+									<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+									</button>
+									<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								</div>
+							</div>
+							<!-- /.box-header -->
+							<div class="box-body">
+								<div class="row">
+									<div class="col-md-12">
+											<?php 
+												echo "<table class='table table-list table-bordered'><thead><tr><th>Agama</th><th>Laki-Laki</th><th>Perempuan</th></tr></thead><tbody>";
+												 foreach(json_decode($data_jumlah_pegawai_per_agama_jeniskelamin) as $agama){
+													 echo "<tr><td>$agama->nama</td><td>$agama->m</td><td>$agama->f</td></tr>";
+												 }
+												 echo "</tbody></table>";
+											?>
+									</div>
+								</div>
+							</div>
+						</div>			
            <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Jenis Kelamin</h3>
