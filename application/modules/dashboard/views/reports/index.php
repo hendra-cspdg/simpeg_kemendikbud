@@ -90,39 +90,53 @@
 				   <div id="chartpendidikan" style="width: 100%; height: 350px;"> </div>
 			   </div>
           </div> 
+					<div class="box box-success ">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart BUP dan Umur</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">	
+                 	<div id="container" ></div>
+                 		<div id="chart_bup_umur" style="width: 100%; height: 350px;"> </div>
+              		</div>
+          </div>
+					 <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Chart Umur</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="chart-responsive">
+                    <div id="divumur" style="width: 100%; height: 300px;"></div>
+                  </div>
+                  <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+            
+            <!-- /.footer -->
+          </div>
+        
+	</div>
+	<div class="col-md-4">
 					<div class="box box-success">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart Pangkat dan Golongan</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">	
-                 	<div id="container" ></div>
-                 		<div id="chart_rekap_pegawai_pangkat_golongan" style="width: 100%; height: 350px;"> </div>
-              		</div>
-          </div>
-					<div class="box box-success hide">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart Agama dan Jenis Kelamin</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body no-padding">	
-                 	<div id="container" ></div>
-                 		<div id="chart_agama_jenis_kelamin" style="width: 100%; height: 350px;"> </div>
-              		</div>
-          </div>
-        <div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Pensiun Pertahun</h3>
 
@@ -138,8 +152,6 @@
                  		<div id="chartpensiuntahun" style="width: 100%; height: 350px;"> </div>
               		</div>
           </div>
-	</div>
-	<div class="col-md-4">
           <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Chart Agama</h3>
@@ -239,33 +251,7 @@
             <!-- /.footer -->
           </div>
           
-          <div class="box box-warning">
-            <div class="box-header with-border">
-              <h3 class="box-title">Chart Umur</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="chart-responsive">
-                    <div id="divumur" style="width: 100%; height: 300px;"></div>
-                  </div>
-                  <!-- ./chart-responsive -->
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- /.box-body -->
-            
-            <!-- /.footer -->
-          </div>
+         
     </div>
 </div>
 <script src="<?php echo base_url() ?>themes/admin/plugins/chartjs/Chart.min.js"></script>
@@ -571,31 +557,31 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 				   }
 
 	});
-	var chart = AmCharts.makeChart("chart_agama_jenis_kelamin", {
+	var chart = AmCharts.makeChart("chart_bup_umur", {
     "theme": "light",
     "type": "serial",
 		 minimum :-10,
-    "dataProvider": <?php echo $data_jumlah_pegawai_per_agama_jeniskelamin; ?>,
+    "dataProvider": <?php echo $data_bup_per_range_umur; ?>,
     "startDuration": 1,
     "graphs": [{
-        "balloonText": "Jumlah Pegawai [[category]] (Laki-Laki): <b>[[value]]</b>",
+        "balloonText": "Jumlah Pegawai [[category]] (56): <b>[[value]]</b>",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "title": "2004",
         "type": "column",
-        "valueField": "m"
+        "valueField": "56"
     }, {
-        "balloonText": "Jumlah Pegawai [[category]] (Perempuan): <b>[[value]]</b>",
+        "balloonText": "Jumlah Pegawai [[category]] (58): <b>[[value]]</b>",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "title": "2005",
         "type": "column",
         "clustered":false,
         "columnWidth":0.5,
-        "valueField": "f"
+        "valueField": "58"
     }],
     "plotAreaFillAlphas": 0.1,
-    "categoryField": "nama",
+    "categoryField": "range",
     "categoryAxis": {
         "gridPosition": "start"
     },
