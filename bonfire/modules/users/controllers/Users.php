@@ -75,8 +75,7 @@ class Users extends Front_Controller
 					Template::redirect(site_url('admin/kepegawaian/pegawai/profile'));
 				}
 				else {
-					echo "gagal #".$username."#".$password."#".$return;
-					die();
+					
 				}
 				
 			}
@@ -143,7 +142,6 @@ class Users extends Front_Controller
 					}
 					else
 					{
-					die("masuk");
 						 
 						Template::redirect(trim($this->auth->login_destination));
 					}
