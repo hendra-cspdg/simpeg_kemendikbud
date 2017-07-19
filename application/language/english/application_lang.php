@@ -46,6 +46,7 @@ $lang['bf_language_help'] = 'Choose the languages available to the user.';
 //------------------------------------------------------------------------------
 $lang['bf_security'] = 'Security';
 $lang['bf_login_type'] = 'Login Type';
+$lang['bf_login_authentication_model'] = 'Login Authentication Model Type';
 $lang['bf_login_type_email'] = 'Email Only';
 $lang['bf_login_type_username'] = 'Username Only';
 $lang['bf_allow_register'] = 'Allow User Registrations?';

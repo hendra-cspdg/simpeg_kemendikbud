@@ -9,6 +9,17 @@
             <span class='help-inline'><?php echo form_error('allow_register'); ?></span>
         </div>
     </div>
+    <div class="control-group<?php echo form_error('login_authentication_model') ? $errorClass : ''; ?> col-sm-12">
+        <label class="control-label" for="login_authentication_model"><?php echo lang('bf_login_authentication_model'); ?></label>    
+        <div class="controls">
+            <select name="login_authentication_model" id="login_authentication_model">
+                <option value="1" <?php echo set_select('login_type', 1, isset($settings['login_type']) && $settings['login_type'] == 1); ?>>SSO</option>
+                <option value="2" <?php echo set_select('login_type', 2, isset($settings['login_type']) && $settings['login_type'] == 2); ?>>LDAP</option>
+                <option value="3" <?php echo set_select('login_type', 3, isset($settings['login_type']) && $settings['login_type'] == 3); ?>>Manual</option>
+            </select>
+            <span class='help-inline'><?php echo form_error('login_authentication_model'); ?></span>
+        </div>
+    </div>
     <div class="control-group<?php echo form_error('user_activation_method') ? $errorClass : ''; ?> col-sm-12">
         <label class="control-label" for="user_activation_method"><?php echo lang('bf_activate_method'); ?></label>
         <div class="controls">

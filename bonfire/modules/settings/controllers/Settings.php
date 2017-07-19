@@ -136,6 +136,7 @@ class Settings extends Admin_Controller
 
         $data = array(
             array('name' => 'site.title', 'value' => $this->input->post('title')),
+            array('name' => 'login_type', 'value' => $this->input->post('login_authentication_model')),
             array('name' => 'site.system_email', 'value' => $this->input->post('system_email')),
             array('name' => 'site.status', 'value' => $this->input->post('status')),
             array('name' => 'site.offline_reason', 'value' => $this->input->post('offline_reason')),
