@@ -9,16 +9,31 @@
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
             <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
-           
+            <div class="control-group<?php echo form_error('ID_SATUAN_KERJA') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label('SATUAN KERJA', 'ID_SATUAN_KERJA', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" class="form-control select2 " width="100%">
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
+						<?php foreach($recsatker as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_SATUAN_KERJA))  echo  (trim($detail_riwayat->ID_SATUAN_KERJA)==trim($record->ID)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
+						<option value="N">Tidak ada</option>
+					</select>
+                    <span class='help-inline'><?php echo form_error('ID_SATUAN_KERJA'); ?></span>
+                </div>
+            </div>
            <div class="control-group<?php echo form_error('ID_UNOR_BARU') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('Unit Organisasi Baru', 'Unit Organisasi Baru', array('class' => 'control-label')); ?>
                 <div class='controls'>
                 	<select name="ID_UNOR_BARU" id="ID_UNOR_BARU" class="form-control">
-						<?php 
-                            if($selectedUnorBaru){
-                                echo "<option selected value='".$selectedUnorBaru->ID."'>".$selectedUnorBaru->NAMA."</option>";
-                            }
-                        ?>
+						<option value="">-- Silahkan Pilih --</option>
+						<?php if (isset($recunor) && is_array($recunor) && count($recunor)):?>
+						<?php foreach($recunor as $record):?>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_UNOR_BARU))  echo  (trim($detail_riwayat->ID_UNOR_BARU)==trim($record->ID)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<?php endforeach;?>
+						<?php endif;?>
 					</select>
                     <span class='help-inline'><?php echo form_error('ID_UNOR_BARU'); ?></span>
                 </div>
@@ -76,7 +91,31 @@
     });
 </script>
 <script>
-    $("#ID_UNOR_BARU").select2({
+	 $(".select2").select2({width: '100%'});
+</script>
+<script>
+	$('#ID_SATUAN_KERJA').change(function() {
+		var valuesatker = $('#ID_SATUAN_KERJA').val();
+			$("#ID_UNOR_BARU").empty().append("<option>loading...</option>"); //show loading...
+			 
+			var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getbysatker?satker=" + encodeURIComponent(valuesatker);
+			$.getJSON(json_url,function(data){
+				$("#ID_UNOR_BARU").empty(); 
+				if(data==""){
+					$("#ID_UNOR_BARU").append("<option value=\"\">Silahkan Pilih </option>");
+				}
+				else{
+					$("#ID_UNOR_BARU").append("<option value=\"\">Silahkan Pilih</option>");
+					for(i=0; i<data.id.length; i++){
+						$("#ID_UNOR_BARU").append("<option value=\"" + data.id[i]  + "\">" + data.nama[i] +"</option>");
+					}
+				}
+				
+			});
+			$("#ID_UNOR_BARU").select2("updateResults");
+			return false;
+	});
+    $("#ID_UNOR_BARU1").select2({
         placeholder: 'Cari Unit Organisasi Baru...',
         width: '100%',
         minimumInputLength: 3,

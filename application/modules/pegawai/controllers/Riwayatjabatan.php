@@ -134,10 +134,8 @@ class Riwayatjabatan extends Admin_Controller
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
             Template::set_view("kepegawaian/riwayat_jabatan_crud");
-            
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Tambah Riwayat Jabatan");
-
             Template::render();
         }
         else {
