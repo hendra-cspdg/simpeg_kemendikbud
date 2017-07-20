@@ -480,6 +480,39 @@ class Pegawai_model extends BF_Model
 			order by golongan."ID" asc 
 		')->result('array');
 	}
+	public function get_bup_per_range_umur(){
+		$data = $this->db->query('
+								select sum(CASE  WHEN age < 25 THEN 1 END) "<25"
+																,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
+																,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
+																,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
+																,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
+																,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
+																,sum(CASE WHEN age > 50 THEN 1 END) ">50",TEMPx."bup"
+					FROM (
+					SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age,pegawai."BUP" as "bup"
+					FROM hris.pegawai
+					) AS TEMPx 
+					group by TEMPx."bup"
+		')->result('array');
+		$bups = array('56','58');
+		$range_umur = array('<25'=>array(),'25-30'=>array(),'31-35'=>array(),'36-40'=>array(),'41-45'=>array(),'46-50'=>array(),'>50'=>array());
+
+		foreach($range_umur as $key=>&$rumur){
+			$rumur['range'] = $key;
+			foreach($bups as $bup){
+				$rumur[$bup] = 0;
+				foreach($data as $row){
+					$rec = new stdClass;
+					if(isset($row[$key]) && $row['bup'] == $bup){
+						//echo 2;
+						$rumur[$bup] = $row[$key];	
+					}
+				}
+			}
+		}
+		return array_values($range_umur);
+	}
 
 	public function get_jumlah_pegawai_per_agama_jeniskelamin(){
 		$data = $this->db->query('

@@ -58,6 +58,7 @@ class reports extends Admin_Controller
 		endif;
 		Template::set('jsonpangkat', json_encode($jsonpangkat));
 		// pendidikan
+		
 		$jsonpendidikan = array();
 		$recordpendidikan = $this->pegawai_model->grupbypendidikan(); 
 		$dataprov = array();
@@ -151,13 +152,13 @@ class reports extends Admin_Controller
 		}
 		Template::set('data_jumlah_pegawai_per_golongan', json_encode($data_jumlah_pegawai_per_golongan));
 		
-		$data_jumlah_pegawai_per_agama_jeniskelamin = $this->pegawai_model->get_jumlah_pegawai_per_agama_jeniskelamin();
+		$data_bup_per_range_umur = $this->pegawai_model->get_bup_per_range_umur(); 
 		$index = 0;
-		foreach($data_jumlah_pegawai_per_agama_jeniskelamin as &$row){
+		foreach($data_bup_per_range_umur as &$row){
 			$row->color = $colors[$index];
 			$index++;
 		}
-		Template::set('data_jumlah_pegawai_per_agama_jeniskelamin', json_encode($data_jumlah_pegawai_per_agama_jeniskelamin));
+		Template::set('data_bup_per_range_umur', json_encode($data_bup_per_range_umur));
 		
 		
 		Template::render();
