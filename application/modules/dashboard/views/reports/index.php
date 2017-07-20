@@ -146,49 +146,6 @@
 							</div>
 						</div>	
 					
-								
-					<div class="box box-success ">
-            <div class="box-header with-border">
-              <h3 class="box-title">Matriks BUP dan Umur</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body ">	
-                 	<div class="row">
-											<div class="col-md-12">
-												<table class="table table-list table-bordered">
-															<thead>
-																<tr>
-																		<th>Usia</th>
-																		<th>58</th>
-																		<th>60</th>
-																</tr>
-															</thead>
-															<tbody>
-																
-																		<?php 
-																			foreach($data_bup_per_range_umur as $row){
-																				?>
-																				<tr>
-																						<td align='center'><?php echo $row['range'];?></td>
-																						<td align='center'><?php echo $row['bup_58'];?></td>
-																						<td align='center'><?php echo $row['bup_60'];?></td>
-																				</tr>
-																				<?php 
-																			}
-																		?>
-																	
-															</tbody>
-												</table>
-										 	</div>	
-										</div>	
-              		</div>
-          </div>
 					<div class="box box-warning">
 					<div class="box-header with-border">
 						<h3 class="box-title">Matriks Jenis Kelamin dan Usia</h3>
@@ -393,7 +350,50 @@
             <!-- /.footer -->
           </div>
           <!-- /.box -->
+					
+								
+					<div class="box box-success ">
+            <div class="box-header with-border">
+              <h3 class="box-title">Matriks BUP dan Umur</h3>
 
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body ">	
+                 	<div class="row">
+											<div class="col-md-12">
+												<table class="table table-list table-bordered">
+															<thead>
+																<tr>
+																		<th>Usia</th>
+																		<th>58</th>
+																		<th>60</th>
+																</tr>
+															</thead>
+															<tbody>
+																
+																		<?php 
+																			foreach($data_bup_per_range_umur as $row){
+																				?>
+																				<tr>
+																						<td align='center'><?php echo $row['range'];?></td>
+																						<td align='center'><?php echo $row['bup_58'];?></td>
+																						<td align='center'><?php echo $row['bup_60'];?></td>
+																				</tr>
+																				<?php 
+																			}
+																		?>
+																	
+															</tbody>
+												</table>
+										 	</div>	
+										</div>	
+              		</div>
+          </div>
 					<div class="box box-warning">
 								<div class="box-header with-border">
 									<h3 class="box-title">Matriks Golongan dan Jenis Kelamin</h3>
