@@ -158,9 +158,32 @@ class reports extends Admin_Controller
 			$row->color = $colors[$index];
 			$index++;
 		}
-		Template::set('data_bup_per_range_umur', json_encode($data_bup_per_range_umur));
+		Template::set('data_bup_per_range_umur', $data_bup_per_range_umur);
 		
+
+		$data_rekap_golongan_per_usia = $this->pegawai_model->get_rekap_golongan_per_usia();
+		Template::set('data_rekap_golongan_per_usia', $data_rekap_golongan_per_usia);
+
+		$data_rekap_golongan_per_jenis_kelamin = $this->pegawai_model->get_rekap_golongan_per_jenis_kelamin();
+		Template::set('data_rekap_golongan_per_jenis_kelamin', $data_rekap_golongan_per_jenis_kelamin);
+
+		$data_rekap_golongan_per_pendidikan = $this->pegawai_model->get_rekap_golongan_per_pendidikan();
+		Template::set('data_rekap_golongan_per_pendidikan', $data_rekap_golongan_per_pendidikan);
 		
+		$data_rekap_pendidikan_per_usia = $this->pegawai_model->get_rekap_pendidikan_per_usia();
+		Template::set('data_rekap_pendidikan_per_usia', $data_rekap_pendidikan_per_usia);
+
+		$data_rekap_jenis_kelamin_per_usia = $this->pegawai_model->get_rekap_jenis_kelamin_per_usia();
+		Template::set('data_rekap_jenis_kelamin_per_usia', $data_rekap_jenis_kelamin_per_usia);
+
+		$data_rekap_pendidikan_per_jenis_kelamin = $this->pegawai_model->get_rekap_pendidikan_per_jenis_kelamin();
+		Template::set('data_rekap_pendidikan_per_jenis_kelamin', $data_rekap_pendidikan_per_jenis_kelamin);
+
+		
+
+		$data_jumlah_pegawai_per_agama_jeniskelamin = $this->pegawai_model->get_jumlah_pegawai_per_agama_jeniskelamin();
+		Template::set('data_jumlah_pegawai_per_agama_jeniskelamin', $data_jumlah_pegawai_per_agama_jeniskelamin);
+
 		Template::render();
 	}
 	 

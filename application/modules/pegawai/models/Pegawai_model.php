@@ -495,25 +495,139 @@ class Pegawai_model extends BF_Model
 					) AS TEMPx 
 					group by TEMPx."bup"
 		')->result('array');
-		$bups = array('56','58');
+		$bups = array('58','60');
 		$range_umur = array('<25'=>array(),'25-30'=>array(),'31-35'=>array(),'36-40'=>array(),'41-45'=>array(),'46-50'=>array(),'>50'=>array());
 
 		foreach($range_umur as $key=>&$rumur){
 			$rumur['range'] = $key;
 			foreach($bups as $bup){
-				$rumur[$bup] = 0;
+				$rumur["bup_".$bup] = 0;	
 				foreach($data as $row){
 					$rec = new stdClass;
 					if(isset($row[$key]) && $row['bup'] == $bup){
-						//echo 2;
-						$rumur[$bup] = $row[$key];	
+						$rumur["bup_".$bup] = $row[$key];	
+					}
+					else if( !isset($row[$key]) && $row['bup'] == $bup){
+						$rumur["bup_".$bup] = 0;	
 					}
 				}
 			}
 		}
 		return array_values($range_umur);
 	}
+	public function get_rekap_golongan_per_jenis_kelamin(){
+		$data = $this->db->query('
+			select TEMPx."nama",sum(CASE  WHEN jenis_kelamin =\'M\' THEN 1 ELSE 0 END) "M"
+																			,sum(CASE  WHEN jenis_kelamin =\'F\' THEN 1 ELSE 0 END) "F"
+																			,sum(CASE  WHEN jenis_kelamin =NULL THEN 1 ELSE 0 END) "-"
+								FROM (
+										select golongan."NAMA" as "nama",pegawai."JENIS_KELAMIN" as "jenis_kelamin" from hris.golongan  
+										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
+			)AS TEMPx 
+								group by TEMPx."nama"
+			order by TEMPx."nama"
+		')->result('array');
+		return $data;
+	}
+	public function get_rekap_golongan_per_pendidikan(){
+		$data = $this->db->query('
+			select TEMPx."golongan" as "GOLONGAN"
+				,sum(case when TEMPx."nama" = \'SLTP Kejuruan\' then 1 else 0  end) as "SLTP Kejuruan"
+				,sum(case when TEMPx."nama" = \'SLTA Kejuruan\' then 1 else 0  end) as "SLTA Kejuruan"
+				,sum(case when TEMPx."nama" = \'Sekolah Dasar\' then 1 else 0  end) as "Sekolah Dasar"
+				,sum(case when TEMPx."nama" = \'SLTP\' then 1 else 0  end) as "SLTP"
+				,sum(case when TEMPx."nama" = \'SLTA\' then 1 else 0  end) as "SLTA"
+				,sum(case when TEMPx."nama" = \'Diploma I\' then 1 else 0  end) as "Diploma I"
+				,sum(case when TEMPx."nama" = \'Diploma II\' then 1 else 0  end) as "Diploma II"
+				,sum(case when TEMPx."nama" = \'Diploma III/Sarjana Muda\' then 1 else 0  end) as "Diploma III/Sarjana Muda"
+				,sum(case when TEMPx."nama" = \'Diploma IV\' then 1 else 0  end) as "Diploma IV"
+				,sum(case when TEMPx."nama" = \'S-1/Sarjana\' then 1 else 0  end) as "S-1/Sarjana"
+				,sum(case when TEMPx."nama" = \'S-2\' then 1 else 0  end) as "S-2"
+				,sum(case when TEMPx."nama" = \'S-3/Doktor\' then 1 else 0  end) as "S-3/Doktor"
+				,sum(case when TEMPx."nama" = \'SLTA Keguruan\' then 1 else 0  end) as "SLTA Keguruan"
+								FROM (
+										select golongan."NAMA" as "golongan",tkpendidikan."NAMA" as "nama" from hris.golongan  
+										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
+										left join hris.pendidikan on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
+										left join hris.tkpendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
 
+			)AS TEMPx 
+								group by TEMPx."golongan"
+			order by TEMPx."golongan"	
+		')->result('array');
+		return $data;
+	}
+	public function get_rekap_jenis_kelamin_per_usia(){
+		$data = $this->db->query('
+			select tempx."JENIS KELAMIN",sum(CASE  WHEN age < 25 THEN 1 else 0 END) "<25"
+																,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 else 0  END) "25-30"
+																,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 else 0  END) "31-35"
+																,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 else 0  END) "36-40"
+																,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 else 0  END) "41-45"
+																,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 else 0  END) "46-50"
+																,sum(CASE WHEN age > 50 THEN 1 END) ">50"
+			from (
+										select pegawai."JENIS_KELAMIN" as "JENIS KELAMIN",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age 
+										from hris.pegawai
+			) as tempx
+			group by tempx."JENIS KELAMIN"
+
+		')->result('array');
+		return $data;
+	}
+	public function get_rekap_pendidikan_per_jenis_kelamin(){
+		$data = $this->db->query('
+			select tempx."nama",sum(CASE  WHEN tempx.jenis_kelamin = \'M\' THEN 1 else 0 END) "M"
+																,sum(CASE  WHEN tempx.jenis_kelamin = \'F\' THEN 1 else 0 END) "F"
+																,sum(CASE  WHEN tempx.jenis_kelamin = null  THEN 1 else 0 END) "-"
+			from (
+										select tkpendidikan."NAMA" as "nama",pegawai."JENIS_KELAMIN" as "jenis_kelamin" 
+										from hris.tkpendidikan 
+										left join hris.pendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
+										left join hris.pegawai  on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
+			) as tempx
+			group by tempx."nama"
+		')->result('array');
+		return $data;
+	}
+	public function get_rekap_pendidikan_per_usia (){
+		$data = $this->db->query('
+			select tempx."TK PENDIDIKAN",sum(CASE  WHEN age < 25 THEN 1 else 0 END) "<25"
+																			,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 else 0  END) "25-30"
+																			,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 else 0  END) "31-35"
+																			,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 else 0  END) "36-40"
+																			,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 else 0  END) "41-45"
+																			,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 else 0  END) "46-50"
+																			,sum(CASE WHEN age > 50 THEN 1 else 0 END) ">50"
+			from (
+										select tkpendidikan."NAMA" as "TK PENDIDIKAN",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age 
+										from hris.tkpendidikan 
+										left join hris.pendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
+										left join hris.pegawai  on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
+			) as tempx
+			group by tempx."TK PENDIDIKAN"
+
+		')->result('array');
+		return $data;
+	}
+	public function get_rekap_golongan_per_usia(){
+		$data = $this->db->query('
+			select TEMPx."nama",sum(CASE  WHEN age < 25 THEN 1 END) "<25"
+																			,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
+																			,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
+																			,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
+																			,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
+																			,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
+																			,sum(CASE WHEN age > 50 THEN 1 END) ">50"
+								FROM (
+										select golongan."NAMA" as "nama",EXTRACT(YEAR FROM age(cast(pegawai."TGL_LAHIR" as date))) age from hris.golongan  
+										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
+			)AS TEMPx 
+								group by TEMPx."nama"
+			order by TEMPx."nama"
+		')->result('array');
+		return $data;
+	}
 	public function get_jumlah_pegawai_per_agama_jeniskelamin(){
 		$data = $this->db->query('
 			SELECT
