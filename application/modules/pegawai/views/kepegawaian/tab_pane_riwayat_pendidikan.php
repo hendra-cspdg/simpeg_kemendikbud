@@ -54,7 +54,7 @@
 				serverSide: true,
 				"columnDefs": [
 					//{"className": "dt-center", "targets": "_all"}
-					{"className": "dt-center", "targets": [0,4,5]}
+					{"className": "dt-center", "targets": [0,4,5,6]}
 				],
 				ajax: {
 					url: "<?php echo base_url() ?>pegawai/riwayatpendidikan/ajax_list",

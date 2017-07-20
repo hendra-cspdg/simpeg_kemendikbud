@@ -87,6 +87,7 @@ class Riwayat_pindah_unit_kerja_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
+		$this->db->order_by('SK_TANGGAL',"ASC");
 		return parent::find_all();
 	}
 }

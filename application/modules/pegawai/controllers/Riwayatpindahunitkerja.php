@@ -273,12 +273,22 @@ class Riwayatpindahunitkerja extends Admin_Controller
 
                 $btn_actions = array();
                 $btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."pegawai/riwayatpindahunitkerja/detil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+					   	<i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
+                if($this->auth->has_permission("RiwayatPindahUnitKerja.Kepegawaian.Edit")){
+                $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."pegawai/riwayatpindahunitkerja/edit/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
+                }
+                if($this->auth->has_permission("RiwayatPindahUnitKerja.Kepegawaian.Delete")){
                 $btn_actions  [] = "
                         <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
@@ -287,7 +297,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
