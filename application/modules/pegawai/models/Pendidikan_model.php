@@ -73,6 +73,7 @@ class Pendidikan_model extends BF_Model
 		if($tingkat != ""){
 			$this->pendidikan_model->where("TINGKAT_PENDIDIKAN_ID",$tingkat);
 		}
+		
 		return parent::find_all();
 	}
 }

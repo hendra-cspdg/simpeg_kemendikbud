@@ -82,12 +82,13 @@ class Riwayat_pendidikan_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*,tk.NAMA as tk_pendidikan_text');
+			$this->select($this->table_name .'.*,tk.NAMA as tk_pendidikan_text,pendidikan.NAMA AS NAMA_PENDIDIKAN');
 		}
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
 		$this->db->join('tkpendidikan as tk', 'tk.ID = rwt_pendidikan.TINGKAT_PENDIDIKAN_ID', 'left');
+		$this->db->join('pendidikan', 'rwt_pendidikan.PENDIDIKAN_ID = pendidikan.ID', 'left');
 		return parent::find_all();
 	}
 }
