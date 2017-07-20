@@ -79,6 +79,8 @@ class Diklat_struktural_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
+		$this->db->order_by('TAHUN',"ASC");
+		$this->db->order_by('TANGGAL',"ASC");
 		//$this->db->join('tkpendidikan', 'tkpendidikan.ID = rwt_pendidikan.PENDIDIKAN_ID', 'left');
 		return parent::find_all();
 	}

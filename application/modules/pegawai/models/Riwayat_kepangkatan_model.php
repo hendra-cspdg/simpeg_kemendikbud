@@ -82,6 +82,7 @@ class Riwayat_kepangkatan_model extends BF_Model
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
+		$this->db->order_by('SK_TANGGAL',"ASC");
 		return parent::find_all();
 	}
 }

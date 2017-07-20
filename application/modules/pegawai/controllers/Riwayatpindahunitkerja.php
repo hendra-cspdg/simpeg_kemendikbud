@@ -267,7 +267,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
                 $row = array();
                 $row []  = $nomor_urut;
                 $row []  = $record->NAMA_UNOR_BARU;
-                $row []  = $record->NAMA_INSTANSI;
+                $row []  = $record->NAMA_SATKER;
                 $row []  = $record->SK_NOMOR;
                 $row []  = $record->SK_TANGGAL;
 
@@ -275,7 +275,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."pegawai/riwayatpindahunitkerja/detil/".$PNS_ID."/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
-					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
@@ -342,6 +342,19 @@ class Riwayatpindahunitkerja extends Admin_Controller
     }
     public function edit($PNS_ID,$record_id=''){
         $this->show($PNS_ID,$record_id);
+    }
+     public function detil($PNS_ID,$record_id=''){
+       	Template::set('jenis_kps', $this->jenis_kp_model->find_all());
+    	Template::set('unit_organisasis', $this->unitkerja_model->find_all());
+		Template::set_view("kepegawaian/detilunitkerja");
+		$detailRiwayat = $this->riwayat_pindah_unit_kerja_model->find($record_id);
+
+		Template::set('detail_riwayat',$detailRiwayat );    
+		Template::set('selectedUnorBaru',$this->unitkerja_model->find($detailRiwayat->ID_UNOR_BARU));
+		Template::set('selectedInstansiBaru',$this->instansi_model->find($detailRiwayat->ID_INSTANSI));
+		Template::set('PNS_ID', $PNS_ID);
+		Template::set('toolbar_title', "Detil Riwayat Pindah Unit Kerja");
+		Template::render();
     }
     public function save(){
          // Validate the data
