@@ -480,21 +480,26 @@ class Pegawai_model extends BF_Model
 			order by golongan."ID" asc 
 		')->result('array');
 	}
-	public function get_bup_per_range_umur(){
-		$data = $this->db->query('
-								select sum(CASE  WHEN age < 25 THEN 1 END) "<25"
-																,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
-																,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
-																,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
-																,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
-																,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
-																,sum(CASE WHEN age > 50 THEN 1 END) ">50",TEMPx."bup"
-					FROM (
-					SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age,pegawai."BUP" as "bup"
-					FROM hris.pegawai
-					) AS TEMPx 
-					group by TEMPx."bup"
-		')->result('array');
+	public function get_bup_per_range_umur($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
+			$data = $this->db->query('
+				select sum(CASE  WHEN age < 25 THEN 1 END) "<25"
+					,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
+					,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
+					,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
+					,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
+					,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
+					,sum(CASE WHEN age > 50 THEN 1 END) ">50",TEMPx."bup"
+				FROM (
+				SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age,pegawai."BUP" as "bup"
+				FROM hris.pegawai
+				where 1=1  '.$where_clause.'
+				) AS TEMPx 
+				group by TEMPx."bup"
+			')->result('array');
 		$bups = array('58','60');
 		$range_umur = array('<25'=>array(),'25-30'=>array(),'31-35'=>array(),'36-40'=>array(),'41-45'=>array(),'46-50'=>array(),'>50'=>array());
 
@@ -515,21 +520,30 @@ class Pegawai_model extends BF_Model
 		}
 		return array_values($range_umur);
 	}
-	public function get_rekap_golongan_per_jenis_kelamin(){
-		$data = $this->db->query('
+	public function get_rekap_golongan_per_jenis_kelamin($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
+			$data = $this->db->query('
 			select TEMPx."nama",sum(CASE  WHEN jenis_kelamin =\'M\' THEN 1 ELSE 0 END) "M"
 																			,sum(CASE  WHEN jenis_kelamin =\'F\' THEN 1 ELSE 0 END) "F"
 																			,sum(CASE  WHEN jenis_kelamin =NULL THEN 1 ELSE 0 END) "-"
 								FROM (
 										select golongan."NAMA" as "nama",pegawai."JENIS_KELAMIN" as "jenis_kelamin" from hris.golongan  
 										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
+										where 1=1 '.$where_clause.'
 			)AS TEMPx 
 								group by TEMPx."nama"
 			order by TEMPx."nama"
 		')->result('array');
 		return $data;
 	}
-	public function get_rekap_golongan_per_pendidikan(){
+	public function get_rekap_golongan_per_pendidikan($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
 		$data = $this->db->query('
 			select TEMPx."golongan" as "GOLONGAN"
 				,sum(case when TEMPx."nama" = \'SLTP Kejuruan\' then 1 else 0  end) as "SLTP Kejuruan"
@@ -550,6 +564,7 @@ class Pegawai_model extends BF_Model
 										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
 										left join hris.pendidikan on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
 										left join hris.tkpendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
+										where 1=1 '.$where_clause.'
 
 			)AS TEMPx 
 								group by TEMPx."golongan"
@@ -557,7 +572,11 @@ class Pegawai_model extends BF_Model
 		')->result('array');
 		return $data;
 	}
-	public function get_rekap_jenis_kelamin_per_usia(){
+	public function get_rekap_jenis_kelamin_per_usia($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
 		$data = $this->db->query('
 			select tempx."JENIS KELAMIN",sum(CASE  WHEN age < 25 THEN 1 else 0 END) "<25"
 																,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 else 0  END) "25-30"
@@ -569,13 +588,18 @@ class Pegawai_model extends BF_Model
 			from (
 										select pegawai."JENIS_KELAMIN" as "JENIS KELAMIN",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age 
 										from hris.pegawai
+										WHERE 1=1 '.$where_clause.'
 			) as tempx
 			group by tempx."JENIS KELAMIN"
 
 		')->result('array');
 		return $data;
 	}
-	public function get_rekap_pendidikan_per_jenis_kelamin(){
+	public function get_rekap_pendidikan_per_jenis_kelamin($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
 		$data = $this->db->query('
 			select tempx."nama",sum(CASE  WHEN tempx.jenis_kelamin = \'M\' THEN 1 else 0 END) "M"
 																,sum(CASE  WHEN tempx.jenis_kelamin = \'F\' THEN 1 else 0 END) "F"
@@ -584,13 +608,19 @@ class Pegawai_model extends BF_Model
 										select tkpendidikan."NAMA" as "nama",pegawai."JENIS_KELAMIN" as "jenis_kelamin" 
 										from hris.tkpendidikan 
 										left join hris.pendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
-										left join hris.pegawai  on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
+										left join hris.pegawai  on pendidikan."ID" = pegawai."PENDIDIKAN_ID"  '.$where_clause.'
+										WHERE 1=1 
 			) as tempx
 			group by tempx."nama"
 		')->result('array');
+		
 		return $data;
 	}
-	public function get_rekap_pendidikan_per_usia (){
+	public function get_rekap_pendidikan_per_usia ($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
 		$data = $this->db->query('
 			select tempx."TK PENDIDIKAN",sum(CASE  WHEN age < 25 THEN 1 else 0 END) "<25"
 																			,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 else 0  END) "25-30"
@@ -604,54 +634,59 @@ class Pegawai_model extends BF_Model
 										from hris.tkpendidikan 
 										left join hris.pendidikan on tkpendidikan."ID" = pendidikan."TINGKAT_PENDIDIKAN_ID"
 										left join hris.pegawai  on pendidikan."ID" = pegawai."PENDIDIKAN_ID"
+										where 1=1 '.$where_clause.'
 			) as tempx
 			group by tempx."TK PENDIDIKAN"
 
 		')->result('array');
 		return $data;
 	}
-	public function get_rekap_golongan_per_usia(){
-		$data = $this->db->query('
+	public function get_rekap_golongan_per_usia($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
+			$data = $this->db->query('
 			select TEMPx."nama",sum(CASE  WHEN age < 25 THEN 1 ELSE 0 END) "<25"
 																			,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
 																			,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
 																			,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
 																			,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
 																			,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
-																			,sum(CASE WHEN age > 50 THEN 1 END) ">50"
+																			,sum(CASE WHEN age > 50 THEN 1 else 0 END) ">50"
 								FROM (
 										select golongan."NAMA" as "nama",EXTRACT(YEAR FROM age(cast(pegawai."TGL_LAHIR" as date))) age from hris.golongan  
 										left join hris.pegawai on golongan."ID" = pegawai."GOL_ID"
+										where 1=1 '.$where_clause.'
 			)AS TEMPx 
 								group by TEMPx."nama"
 			order by TEMPx."nama"
 		')->result('array');
+		
 		return $data;
 	}
-	public function get_jumlah_pegawai_per_agama_jeniskelamin(){
-		$data = $this->db->query('
-			SELECT
-				pegawai."JENIS_KELAMIN" as "jenis_kelamin",
-				agama."ID" as "id",
-				agama."NAMA" as "nama",
-				COUNT (*) AS total
-			FROM
-				(
+	public function get_jumlah_pegawai_per_agama_jeniskelamin($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (pegawai."UNOR_ID" = \''.$satker_id.'\' OR pegawai."UNOR_INDUK_ID" = \''.$satker_id.'\')' ;
+		}
+			$data = $this->db->query('
+				SELECT
+					pegawai."JENIS_KELAMIN" as "jenis_kelamin",
+					agama."ID" as "id",
+					agama."NAMA" as "nama",
+					COUNT (*) AS total
+				FROM
 					hris.pegawai
-					LEFT JOIN hris.agama ON (
-						(
-							pegawai."AGAMA_ID" = agama."ID"
-						)
-					)
-				)
-			GROUP BY
-				pegawai."JENIS_KELAMIN",
-				agama."ID",
-				agama."NAMA"
-			ORDER BY
-				agama."NAMA";
-		')->result('array');
-
+					LEFT JOIN hris.agama ON pegawai."AGAMA_ID" = agama."ID"
+					where 1=1 '.$where_clause.'
+				GROUP BY
+					pegawai."JENIS_KELAMIN",
+					agama."ID",
+					agama."NAMA"
+				ORDER BY
+					agama."NAMA";
+			')->result('array');
 		$agamas = array('Budha','Hindu','Islam','Katholik','Protestan','Lainnya','Belum terdata');
 		$output = array();
 		foreach($agamas as $agama){

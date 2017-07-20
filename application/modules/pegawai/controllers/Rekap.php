@@ -42,6 +42,7 @@ class rekap extends Admin_Controller
 			$satker = $this->unitkerja_model->find_first_row();
 			$satker_id = $satker->ID;
 			Template::set('selectedSatker', $satker);
+			
 		}
 		
 		$data_bup_per_range_umur = $this->pegawai_model->get_bup_per_range_umur($satker_id); 
