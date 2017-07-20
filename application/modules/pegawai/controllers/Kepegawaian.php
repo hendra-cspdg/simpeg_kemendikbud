@@ -533,6 +533,51 @@ class Kepegawaian extends Admin_Controller
 		echo json_encode($output);
 		$this->db->flush_cache();
 	}
+	public function download()
+	{
+		$satker 		= $this->input->get('satker');
+		$nama 			= $this->input->get('nama');
+	  
+		//$datapegwai = $this->pegawai_model->limit(100)->find_all(); 
+		$datapegwai = $this->pegawai_model->find_all(); 
+		$this->load->library('Excel');
+		$objPHPExcel = new PHPExcel();
+		$objPHPExcel = PHPExcel_IOFactory::load(trim($this->settings_lib->item('site.pathuploaded')).'template.xls');
+
+		$objPHPExcel->setActiveSheetIndex(0);
+		$col = 0;
+		$itemfield = $this->db->list_fields('pegawai');
+		foreach($itemfield as $field)
+		{
+			 
+			   $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,1,$field);
+			   $col++;
+		}
+		$row = 2;
+		if (isset($datapegwai) && is_array($datapegwai) && count($datapegwai)) :
+			foreach ($datapegwai as $record) :
+				$col = 0;
+				foreach($itemfield as $field)
+				{
+					$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field);
+					$col++;
+				}
+			   
+			$row++;
+			endforeach;
+		endif;
+		  
+		$filename = "pegawai".mt_rand(1,100000).'.xls'; //just some random filename
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="'.$filename.'"');
+		header('Cache-Control: max-age=0');
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+		//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+		$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+		exit; //done.. exiting!
+		
+	}
 	public function getdatapensiun(){
 		$draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');

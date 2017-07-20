@@ -100,15 +100,22 @@ if ($can_delete) {
 		?>
 	</div>
 </div>
-<div class="box">
-	<div class="box-header">
-		<div class="box-tools">
-			<?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Create')) : ?>
-					<a href="<?php echo site_url($areaUrl . '/create'); ?>">
-						<button type="button" class="btn btn-box-tool btn-warning "><i class="fa fa-plus"></i> Tambah Pegawai</button>
-					</a>
+<div class="admin-box box box-primary">
+	<div class="box-header box-tools">
+			<div class="btn-group pull-right">
+			   <button type="button" class="btn btn-warning">Silahkan Pilih</button>
+			   <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				 <span class="caret"></span>
+				 <span class="sr-only">Toggle Dropdown</span>
+			   </button>
+			   <ul class="dropdown-menu" role="menu">
+				<?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Create')) : ?>
+				<li><a href="<?php echo site_url($areaUrl . '/create'); ?>"><i class="fa fa-plus"></i>Tambah Pegawai</a></li>
 				<?php endif; ?>
-		</div>
+				 <li><a href="<?php echo site_url($areaUrl . '/download'); ?>" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+				 <li><a href="<?php echo site_url($areaUrl . '/upload'); ?>" target="_blank"><i class="fa fa-upload" aria-hidden="true"></i>Upload data</a></li>
+			   </ul>
+			 </div>
 	</div>
 	<div class="box-body">
 		<table class="slug-table table table-bordered table-striped table-responsive dt-responsive table-data table-hover">
