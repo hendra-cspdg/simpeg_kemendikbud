@@ -159,6 +159,14 @@
           		</a>
           </li>
         <?php endif; ?>
+         <?php if ($this->auth->has_permission('Rekap.Reports.View')) : ?>
+        	<li class="treeview ">
+        		<a href="<?php echo base_url();?>pegawai/rekap">
+	            	<i class="fa fa-dashboard"></i>
+    	        	<span>Rekap </span>    
+          		</a>
+          </li>
+        <?php endif; ?>
         <!--
          <?php if ($this->auth->has_permission('Petajabatan.Reports.View')) : ?>
         	<li class="treeview <?php echo $menu == 'petajabatan' ? 'active' : '' ?>">
