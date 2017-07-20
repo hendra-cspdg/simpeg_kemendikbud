@@ -806,7 +806,9 @@ class Kepegawaian extends Admin_Controller
 			hris.unitkerja uk
 			where  lower(uk.\"NAMA_UNOR\") like ?
 			AND \"ID\" in (select distinct \"UNOR_INDUK\" from hris.unitkerja)
-			",array("%".strtolower($term)."%"))->result();
+			order by uk.\"NAMA_UNOR\" ASC
+			",array("%".strtolower($term)."%")
+			)->result();
 		
 		$output = array();
 		$output['results'] = array();
