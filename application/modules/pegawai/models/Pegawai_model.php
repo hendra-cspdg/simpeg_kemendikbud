@@ -612,7 +612,7 @@ class Pegawai_model extends BF_Model
 	}
 	public function get_rekap_golongan_per_usia(){
 		$data = $this->db->query('
-			select TEMPx."nama",sum(CASE  WHEN age < 25 THEN 1 END) "<25"
+			select TEMPx."nama",sum(CASE  WHEN age < 25 THEN 1 ELSE 0 END) "<25"
 																			,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
 																			,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
 																			,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"

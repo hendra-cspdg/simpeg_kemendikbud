@@ -793,4 +793,33 @@ class Kepegawaian extends Admin_Controller
 		
 		echo json_encode($output);
 	}
+
+	public function ajax_satker_list(){
+		$length = 10;
+		$term = $this->input->get('term');
+		$page = $this->input->get('page');
+		$this->db->flush_cache();
+		$data = $this->db->query("
+			select 
+			uk.*
+			from 
+			hris.unitkerja uk
+			where  lower(uk.\"NAMA_UNOR\") like ?
+			AND \"ID\" in (select distinct \"UNOR_INDUK\" from hris.unitkerja)
+			",array("%".strtolower($term)."%"))->result();
+		
+		$output = array();
+		$output['results'] = array();
+		foreach($data as $row){
+			$nama_unor = array();
+			
+			$output['results'] [] = array(
+				'id'=>$row->ID,
+				'text'=>$row->NAMA_UNOR
+			);
+		}
+		$output['pagination'] = array("more"=>false);
+		
+		echo json_encode($output);
+	}
 }
