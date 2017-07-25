@@ -28,11 +28,14 @@ Dropzone.autoDiscover = true;
 		 dictInvalidFileType:"Type file ini tidak dizinkan",
 		 addRemoveLinks:true,
 		 init: function () {
-			   this.on("success", function (file,response) {
-			   		var data_n=JSON.parse(response);
-				   swal("Upload selesai", "Warning");
-				   location.reload(true);
-			   });
+			   	this.on("success", function (file,response) {
+			   	var data_n=JSON.parse(response);
+			   	if(data_n.namafile!=""){
+					swal("Pemberitahuan!", "Upload Selesai", "success");
+					$('#photopegawai').attr('src',"<?php echo base_url(); ?>assets/images/"+data_n.namafile);
+					$("#modal-global").modal("hide");
+				}
+			});
 		   }
 		 });
 		foto_upload.on("sending",function(a,b,c){

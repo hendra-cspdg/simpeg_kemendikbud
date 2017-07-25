@@ -100,6 +100,7 @@ class Kepegawaian extends Admin_Controller
 	{
 		$PNS_ID = $this->uri->segment(5);
 		Template::set('PNS_ID', $PNS_ID);
+		//echo $PNS_ID." PNS_ID";
 		Template::render();
 	}
 	function savefoto(){
