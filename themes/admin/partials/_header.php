@@ -150,7 +150,12 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-         
+        	<li class="treeview <?php echo $menu == 'dashboard' ? 'active' : '' ?>">
+        		<a href="<?php echo base_url();?>admin/kepegawaian/pegawai/profile">
+	            	<i class="fa fa-user"></i>
+    	        	<span>Profile</span>    
+          		</a>
+          </li>
         <?php if ($this->auth->has_permission('Dashboard.Reports.View')) : ?>
         	<li class="treeview <?php echo $menu == 'dashboard' ? 'active' : '' ?>">
         		<a href="<?php echo base_url();?>admin/reports/dashboard">
