@@ -150,7 +150,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        	<li class="treeview <?php echo $menu == 'dashboard' ? 'active' : '' ?>">
+        	<li class="treeview <?php echo $submenu == 'profile' ? 'active' : '' ?>">
         		<a href="<?php echo base_url();?>admin/kepegawaian/pegawai/profile">
 	            	<i class="fa fa-user"></i>
     	        	<span>Data Pribadi</span>    
@@ -183,7 +183,7 @@
         <?php endif; ?>
         -->
         <?php if ($this->auth->has_permission('Site.Masters.View')) : ?>
-        <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?> <?php echo $menu == 'pegawai' ? 'active' : '' ?>">
+        <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?>">
           <a href="#">
             <i class="fa fa-laptop"></i>
             <span>MASTER DATA</span>
@@ -253,6 +253,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>admin/developer/sysinfo"><i class="fa fa-circle-o"></i> Informasi Sistem</a></li>
+            <!--
             <li><a href="<?php echo base_url();?>admin/developer/builder"><i class="fa fa-circle-o"></i> Module Builder</a></li>
              <li>
               <a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Database Tools
@@ -266,6 +267,7 @@
               	<li><a href="<?php echo base_url();?>admin/developer/migrations"><i class="fa fa-circle-o"></i> Migrations</a></li>
               </ul>
             </li>
+            -->
           </ul>
         </li>
     <?php endif; ?>
@@ -282,6 +284,7 @@
             <li><a href="<?php echo base_url();?>admin/settings/roles"><i class="fa fa-circle-o"></i> Role</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/users"><i class="fa fa-circle-o"></i> User</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/permissions"><i class="fa fa-circle-o"></i> Permissions</a></li>
+            <!--
             <li>
               <a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Email
                 <span class="pull-right-container">
@@ -291,9 +294,12 @@
               <ul class="treeview-menu">
               	<li><a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Setting</a></li>
                 <li><a href="<?php echo base_url();?>admin/settings/emailer/template"><i class="fa fa-circle-o"></i> Template</a></li>
+				
 				<li><a href="<?php echo base_url();?>admin/settings/emailer/queue"><i class="fa fa-circle-o"></i> Antrian</a></li>
+				
               </ul>
             </li>
+            -->
           </ul>
         </li>
     <?php endif; ?>
