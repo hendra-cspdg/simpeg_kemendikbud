@@ -272,13 +272,13 @@
     <?php if ($this->auth->has_permission('Site.Settings.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'settings' ? 'active' : '' ?>">
           <a href="#">
-            <i class="fa fa-share"></i> <span>Settings</span>
+            <i class="fa fa-share"></i> <span>Pengatuan Aplikasi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-          	<li><a href="<?php echo base_url();?>admin/settings/settings"><i class="fa fa-circle-o"></i> Setting</a></li>
+          	<li><a href="<?php echo base_url();?>admin/settings/settings"><i class="fa fa-circle-o"></i> Pengaturan</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/roles"><i class="fa fa-circle-o"></i> Role</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/users"><i class="fa fa-circle-o"></i> User</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/permissions"><i class="fa fa-circle-o"></i> Permissions</a></li>
