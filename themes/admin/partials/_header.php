@@ -238,7 +238,7 @@
             <!--
             <li><a href="<?php echo base_url();?>admin/reports/pegawai/kelompokjabatan"><i class="fa fa-circle-o"></i>Daftar kelompok Jabatan</a></li>
             -->
-            <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-list"></i>Daftar daftar kuota jabatan</a></li>
+            <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-list"></i>Daftar kuota jabatan</a></li>
             <li><a href="<?php echo base_url();?>petajabatan/struktur"><i class="fa fa-circle-o"></i>Struktur Organisasi</a></li>
           </ul>
         </li>
