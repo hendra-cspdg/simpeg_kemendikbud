@@ -279,12 +279,12 @@
         </div>
         <?php } ?>
         <?php if($pegawai->JENIS_JABATAN_ID == "4") { ?>
-        <div class="form-group col-sm-3">
+        <div class="form-group col-sm-12">
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    JFU
+                <div class="col-sm-3">
+                     
                 </div>
-                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <div class="col-sm-9">
                     <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
                 </div>
             </div>

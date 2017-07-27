@@ -389,7 +389,7 @@ class Kepegawaian extends Admin_Controller
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
 		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
-        Template::set('toolbar_title',"View Profile");
+        Template::set('toolbar_title',"Lihat Profile");
         Template::render();
     }
 

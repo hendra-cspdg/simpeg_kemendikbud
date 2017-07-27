@@ -13,7 +13,7 @@
             <div class="control-group<?php echo form_error('TINGKAT_PENDIDIKAN_ID') ? ' error' : ''; ?> col-sm-3">
                 <?php echo form_label('Jenjang Pendidikan', 'TINGKAT_PENDIDIKAN_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="TINGKAT_PENDIDIKAN_ID" id="TINGKAT_PENDIDIKAN_ID" readonly class="form-control">
+                	<select name="TINGKAT_PENDIDIKAN_ID" disabled id="TINGKAT_PENDIDIKAN_ID" readonly class="form-control">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($tk_pendidikans) && is_array($tk_pendidikans) && count($tk_pendidikans)):?>
 						<?php foreach($tk_pendidikans as $record):?>
@@ -78,43 +78,4 @@
     <?php echo form_close(); ?>
 </div>
 <script src="<?php echo base_url(); ?>themes/admin/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script>
-    var form = $("#form-pendidikan-add");
-    //Date picker
-    $('.datepicker').datepicker({
-      autoclose: true,format: 'yyyy-mm-dd'
-    }).on("input change", function (e) {
-        var date = $(this).datepicker('getDate');
-        if(date)$("[name=TAHUN_LULUS]",form).val(date.getFullYear());
-    });
-</script>
-<script>
-	$("#btnsave").click(function(){
-		submitdata();
-		return false; 
-	});	
-	$("#frma").submit(function(){
-		submitdata();
-		return false; 
-	});	
-	function submitdata(){
-		
-		var json_url = "<?php echo base_url() ?>pegawai/riwayatpendidikan/save";
-		 $.ajax({    
-		 	type: "POST",
-			url: json_url,
-			data: $("#frm").serialize(),
-            dataType: "json",
-			success: function(data){ 
-                if(data.success){
-                    swal("Pemberitahuan!", data.msg, "success");
-                    $("#modal-custom-global").trigger("sukses-tambah-riwayat-pendidikan");
-					$("#modal-custom-global").modal("hide");
-                }
-                else {
-                    $("#form-pendidikan-add .messages").empty().append(data.msg);
-                }
-			}});
-		return false; 
-	}
-</script>
+ 
