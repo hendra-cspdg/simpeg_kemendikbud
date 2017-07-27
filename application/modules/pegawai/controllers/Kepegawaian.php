@@ -381,7 +381,7 @@ class Kepegawaian extends Admin_Controller
 		
 		$JABATAN_ID = $pegawai->JABATAN_INSTANSI_ID;
 		$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",TRIM($JABATAN_ID));
-		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN_FULL);
+		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN);
 		 
 		$unor = $this->unitkerja_model->find_by("ID",trim($pegawai->UNOR_ID));
 		Template::set('nama_unor',$unor->NAMA_UNOR);
