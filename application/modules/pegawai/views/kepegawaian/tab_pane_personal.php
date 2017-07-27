@@ -423,9 +423,7 @@
 		<h3 class="box-title">Data Lainnya</h3>
 
 		<div class="box-tools pull-right">
-			<?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Updatemandiri')) : ?>
-			<input type='button' name='save' id="btnsaveprofile" class='btn btn-warning' value="Simpan" />
-			<?PHP endif; ?>
+			
 		  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
 		  </button>
 		</div>
@@ -563,6 +561,11 @@
 				   </div>
 			   </div> 
 		<!-- /.table-responsive -->
+	  </div>
+	  <div class="box-footer">
+	  	<?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Updatemandiri')) : ?>
+			<input type='button' name='save' id="btnsaveprofile" class='btn btn-warning' value="Simpan" />
+			<?PHP endif; ?>
 	  </div>
 	  <!-- /.box-body -->
 	  
