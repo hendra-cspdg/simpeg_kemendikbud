@@ -237,7 +237,7 @@ class Pegawai_model extends BF_Model
 		array(
 			'field' => 'UNOR_INDUK_ID',
 			'label' => 'lang:pegawai_field_UNOR_INDUK_ID',
-			'rules' => 'max_length[11]',
+			'rules' => 'max_length[32]',
 		),
 		array(
 			'field' => 'INSTANSI_INDUK_ID',
@@ -273,23 +273,37 @@ class Pegawai_model extends BF_Model
      *
      * @return void
      */
-    public function __construct()
+   	protected $CI;
+   	protected $UNOR_ID;
+	function __construct()
     {
-        parent::__construct();
-    }
+		$this->CI = &get_instance();
+		if($this->CI->auth->role_id() =="5"){
+			$this->UNOR_ID = $this->getunor_id($this->CI->auth->username());
+		}
+    }//end __construct
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
 	public function count_all() {
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+			 
+		}
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::count_all();
 	}
 	public function find_all(){
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+			 
+		}
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",unitkerja."ID" as "UNIT_ID" ',false);
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
+	
 	public function find_kelompokjabatan(){
 		$this->db->select('pegawai."ID",pegawai."NAMA","NIP_BARU",golongan."NAMA"  as "NAMA_GOLONGAN"',false);
 		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
@@ -729,5 +743,22 @@ class Pegawai_model extends BF_Model
 		}
 		
 		return array_values($output);
+	}
+	public function getunor_id($nip = ""){
+		$where_clause = 'AND pegawai."NIP_BARU" = \''.trim($nip).'\'' ;
+		$unor_id = "";
+		$data = $this->db->query('
+				SELECT
+					"UNOR_ID" 
+				FROM
+					hris.pegawai
+					 
+					where 1=1 '.$where_clause.';
+			')->result('array');
+		foreach($data as $row){
+			//echo "masuk bro";
+			$unor_id = $row['UNOR_ID'];
+		}
+		return $unor_id;
 	}
 }

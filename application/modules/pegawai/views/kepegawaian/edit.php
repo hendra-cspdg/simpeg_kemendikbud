@@ -614,7 +614,7 @@ $id = isset($pegawai->ID) ? $pegawai->ID : '';
             <?php echo anchor(SITE_AREA . '/kepegawaian/pegawai', lang('pegawai_cancel'), 'class="btn btn-warning"'); ?>
             
         </div>
-    <?php echo form_close(); ?>
+    </form>
 </div>
 
 <script>

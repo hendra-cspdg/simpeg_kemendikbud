@@ -478,6 +478,18 @@ class Auth
 		return $this->user()->bidang;
 
 	}
+	public function unor_id()
+	{
+		$this->ci->load->model('pegawai/pegawai_model');
+		if ( ! $this->is_logged_in())
+		{
+			return FALSE;
+		}
+		$resultunor = $this->ci->pegawai_model->getunor_id($this->username());
+		$UNOR_ID = ISSET($resultunor->UNOR_ID) ? $resultunor->UNOR_ID : "";
+		
+		return $UNOR_ID;
+	}
 	public function get_nip()
     {
         if (! $this->is_logged_in()) {

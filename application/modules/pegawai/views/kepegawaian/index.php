@@ -125,7 +125,7 @@ if ($can_delete) {
 				<th>NIP</th>
 				<th>NAMA Pegawai</th>
 				<th>Unit Kerja</th>
-				<th width="70px">#</th></tr>
+				<th width="70px" align="center">#</th></tr>
 			</thead>
 		</table>
 	</div>
@@ -156,6 +156,9 @@ $table = $(".table-data").DataTable({
 	"<'row'<'col-sm-2'l><'col-sm-3'i><'col-sm-7'p>>",
 	processing: true,
 	serverSide: true,
+	"columnDefs": [
+					{"className": "dt-center", "targets": [4]}
+				],
 	ajax: {
 	  url: "<?php echo base_url() ?>admin/kepegawaian/pegawai/getdata",
 	  type:'POST',
