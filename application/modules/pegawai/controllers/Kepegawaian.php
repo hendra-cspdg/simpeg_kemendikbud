@@ -390,6 +390,9 @@ class Kepegawaian extends Admin_Controller
 		
 		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
         Template::set('toolbar_title',"Lihat Profile");
+		Template::set('view_back_button',true);
+		Template::set('back_button_label',"<< Kembali ke Daftar Pegawai");
+		Template::set('back_button_url',base_url("admin/kepegawaian/pegawai"));
         Template::render();
     }
 
