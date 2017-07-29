@@ -86,7 +86,8 @@
 				"bLengthChange": false,
 				serverSide: true,
 				"columnDefs": [
-					{"className": "dt-center", "targets": [0,2,3,4]}
+					{"className": "dt-center", "targets": [0,1,4,5]},
+					{"className": "dt-left", "targets": [2,3]},
 				],
 				ajax: {
 					url: "<?php echo base_url() ?>pegawai/duk/ajax_list",
