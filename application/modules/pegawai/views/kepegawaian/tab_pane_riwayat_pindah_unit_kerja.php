@@ -19,8 +19,8 @@
                 <tr>
                     <th width='100px' >No</th>
                     <th>Unit Kerja</th>
-                    <th>Satker</th>
-                    <th width='100px'>NO SK</th>
+                    <th>Satuan Kerja</th>
+                    <th width='100px' >NO SK</th>
 					<th width='100px' >SK TANGGAL</th>
                     <th width='100px' align="center">AKSI</th>
                 </tr>

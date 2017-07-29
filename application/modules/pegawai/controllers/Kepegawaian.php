@@ -100,6 +100,7 @@ class Kepegawaian extends Admin_Controller
 	{
 		$PNS_ID = $this->uri->segment(5);
 		Template::set('PNS_ID', $PNS_ID);
+		//echo $PNS_ID." PNS_ID";
 		Template::render();
 	}
 	function savefoto(){
@@ -340,6 +341,7 @@ class Kepegawaian extends Admin_Controller
         echo json_encode($response);    
 
     }
+    
     public function profile($id='')
     {
     	
@@ -351,9 +353,12 @@ class Kepegawaian extends Admin_Controller
     	}
     	 
         if (empty($id)) {
-            Template::set_message(lang('pegawai_invalid_id'), 'error');
-
-            redirect(SITE_AREA . '/kepegawaian/pegawai');
+            $pegawai = $this->pegawai_model->find_by("NIP_BARU",trim($this->auth->username()));
+    		$id = isset($pegawai->ID) ? $pegawai->ID : "";
+    		if($id == ""){
+	            Template::set_message(lang('pegawai_invalid_id'), 'error');
+            	redirect(SITE_AREA . '/kepegawaian/pegawai');
+            }
         }
         
         $this->load->library('convert');
@@ -376,7 +381,7 @@ class Kepegawaian extends Admin_Controller
 		
 		$JABATAN_ID = $pegawai->JABATAN_INSTANSI_ID;
 		$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",TRIM($JABATAN_ID));
-		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN_FULL);
+		Template::set('NAMA_JABATAN', $recjabatan->NAMA_JABATAN);
 		 
 		$unor = $this->unitkerja_model->find_by("ID",trim($pegawai->UNOR_ID));
 		Template::set('nama_unor',$unor->NAMA_UNOR);
@@ -384,7 +389,7 @@ class Kepegawaian extends Admin_Controller
 		Template::set('unor_induk',$unor_induk->NAMA_UNOR);
 		
 		Template::set("parent_path_array_unor",$this->unitkerja_model->get_parent_path($unor->ID,true,true));
-        Template::set('toolbar_title',"View Profile");
+        Template::set('toolbar_title',"Lihat Profile");
         Template::render();
     }
 

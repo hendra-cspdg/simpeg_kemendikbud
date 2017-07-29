@@ -56,12 +56,12 @@ class Riwayat_pindah_unit_kerja_model extends BF_Model
 		),
 		array(
 			'field' => 'ID_UNOR_BARU',
-			'label' => 'TANGGAL SK',
+			'label' => 'UNOR',
 			'rules' => 'required',
 		),
 		array(
 			'field' => 'ID_INSTANSI',
-			'label' => 'TANGGAL SK',
+			'label' => 'INSTANSI',
 			'rules' => 'required',
 		),
 	);

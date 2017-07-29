@@ -88,7 +88,7 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo base_url();?>assets/images/noimage.jpg" class="user-image" alt="User Image">
+              <img src="<?php echo base_url();?>assets/images/<?php echo (isset($pegawai->PHOTO) && $pegawai->PHOTO != "") ? $pegawai->PHOTO : 'noimage.jpg'; ?>" class="user-image" alt="Photo Profile">
               <span class="hidden-xs"><?php echo (isset($current_user->display_name) && !empty($current_user->display_name)) ? $current_user->display_name : ($this->settings_lib->item('auth.use_usernames') ? $current_user->username : $current_user->email); ?></span>
             </a>
             <ul class="dropdown-menu">
@@ -129,7 +129,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url();?>assets/images/noimage.jpg" class="img-circle" alt="User Image">
+          <img src="<?php echo base_url();?>assets/images/<?php echo (isset($pegawai->PHOTO) && $pegawai->PHOTO != "") ? $pegawai->PHOTO : 'noimage.jpg'; ?>" class="img-circle" alt="Profile Photo">
         </div>
         <div class="pull-left info">
           <p><?php echo (isset($current_user->display_name) && !empty($current_user->display_name)) ? $current_user->display_name : ($this->settings_lib->item('auth.use_usernames') ? $current_user->username : $current_user->email); ?></p>
@@ -150,7 +150,12 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-         
+        	<li class="treeview <?php echo $submenu == 'profile' ? 'active' : '' ?>">
+        		<a href="<?php echo base_url();?>admin/kepegawaian/pegawai/profile">
+	            	<i class="fa fa-user"></i>
+    	        	<span>Data Pribadi</span>    
+          		</a>
+          </li>
         <?php if ($this->auth->has_permission('Dashboard.Reports.View')) : ?>
         	<li class="treeview <?php echo $menu == 'dashboard' ? 'active' : '' ?>">
         		<a href="<?php echo base_url();?>admin/reports/dashboard">
@@ -232,7 +237,7 @@
         <?php endif; ?>
         -->
         <?php if ($this->auth->has_permission('Site.Masters.View')) : ?>
-        <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?> <?php echo $menu == 'pegawai' ? 'active' : '' ?>">
+        <li class="treeview <?php echo $mainmenu == 'masters' ? 'active' : '' ?>">
           <a href="#">
             <i class="fa fa-laptop"></i>
             <span>MASTER DATA</span>
@@ -264,7 +269,11 @@
     	<?php if ($this->auth->has_permission('Site.Kepegawaian.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'kepegawaian' ? 'active' : '' ?>">
           <a href="#">
+<<<<<<< HEAD
             <i class="fa fa-folder"></i> <span>Profil Pegawai</span>
+=======
+            <i class="fa fa-folder"></i> <span>Profile Pegawai</span>
+>>>>>>> 654e5db1392831e5b131cec13acc4e1704278a97
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -284,7 +293,14 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>pegawai/duk"><i class="fa fa-circle-o"></i>Daftar Urut Kepangkatan</a></li>
+<<<<<<< HEAD
             <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-list"></i>Daftar daftar kuota jabatan</a></li>
+=======
+            <!--
+            <li><a href="<?php echo base_url();?>admin/reports/pegawai/kelompokjabatan"><i class="fa fa-circle-o"></i>Daftar kelompok Jabatan</a></li>
+            -->
+            <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-table"></i>Daftar kuota jabatan</a></li>
+>>>>>>> 654e5db1392831e5b131cec13acc4e1704278a97
             <li><a href="<?php echo base_url();?>petajabatan/struktur"><i class="fa fa-circle-o"></i>Struktur Organisasi</a></li>
           </ul>
         </li>
@@ -299,6 +315,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>admin/developer/sysinfo"><i class="fa fa-circle-o"></i> Informasi Sistem</a></li>
+            <!--
             <li><a href="<?php echo base_url();?>admin/developer/builder"><i class="fa fa-circle-o"></i> Module Builder</a></li>
              <li>
               <a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Database Tools
@@ -312,22 +329,24 @@
               	<li><a href="<?php echo base_url();?>admin/developer/migrations"><i class="fa fa-circle-o"></i> Migrations</a></li>
               </ul>
             </li>
+            -->
           </ul>
         </li>
     <?php endif; ?>
     <?php if ($this->auth->has_permission('Site.Settings.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'settings' ? 'active' : '' ?>">
           <a href="#">
-            <i class="fa fa-share"></i> <span>Settings</span>
+            <i class="fa fa-share"></i> <span>Pengatuan Aplikasi</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-          	<li><a href="<?php echo base_url();?>admin/settings/settings"><i class="fa fa-circle-o"></i> Setting</a></li>
+          	<li><a href="<?php echo base_url();?>admin/settings/settings"><i class="fa fa-circle-o"></i> Pengaturan</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/roles"><i class="fa fa-circle-o"></i> Role</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/users"><i class="fa fa-circle-o"></i> User</a></li>
             <li><a href="<?php echo base_url();?>admin/settings/permissions"><i class="fa fa-circle-o"></i> Permissions</a></li>
+            <!--
             <li>
               <a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Email
                 <span class="pull-right-container">
@@ -337,9 +356,12 @@
               <ul class="treeview-menu">
               	<li><a href="<?php echo base_url();?>admin/settings/emailer"><i class="fa fa-circle-o"></i> Setting</a></li>
                 <li><a href="<?php echo base_url();?>admin/settings/emailer/template"><i class="fa fa-circle-o"></i> Template</a></li>
+				
 				<li><a href="<?php echo base_url();?>admin/settings/emailer/queue"><i class="fa fa-circle-o"></i> Antrian</a></li>
+				
               </ul>
             </li>
+            -->
           </ul>
         </li>
     <?php endif; ?>

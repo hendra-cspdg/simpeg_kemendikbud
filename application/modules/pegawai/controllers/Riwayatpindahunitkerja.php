@@ -267,7 +267,7 @@ class Riwayatpindahunitkerja extends Admin_Controller
                 $row = array();
                 $row []  = $nomor_urut;
                 $row []  = $record->NAMA_UNOR_BARU;
-                $row []  = $record->NAMA_SATKER;
+                $row []  = $record->NAMA_SATUAN_KERJA;
                 $row []  = $record->SK_NOMOR;
                 $row []  = $record->SK_TANGGAL;
 
@@ -309,9 +309,9 @@ class Riwayatpindahunitkerja extends Admin_Controller
 		die();
     }
     public function show($PNS_ID,$record_id=''){
-        
+        Template::set('recsatker', $this->unitkerja_model->find_satker());
         Template::set('jenis_kps', $this->jenis_kp_model->find_all());
-        Template::set('unit_organisasis', $this->unitkerja_model->find_all());
+       //Template::set('unit_organisasis', $this->unitkerja_model->find_all());
       
         if(empty($record_id)){
             $this->auth->restrict($this->permissionCreate);
@@ -327,7 +327,10 @@ class Riwayatpindahunitkerja extends Admin_Controller
            
             Template::set_view("kepegawaian/riwayat_pindah_unit_kerja_crud");
             $detailRiwayat = $this->riwayat_pindah_unit_kerja_model->find($record_id);
-            
+            //die($detailRiwayat->ID_SATUAN_KERJA." addas");
+            $recordunors = $this->unitkerja_model->find_all(trim($detailRiwayat->ID_SATUAN_KERJA));
+        	Template::set('recunor', $recordunors);
+        	
             Template::set('detail_riwayat',$detailRiwayat );    
             Template::set('selectedUnorBaru',$this->unitkerja_model->find($detailRiwayat->ID_UNOR_BARU));
             Template::set('selectedInstansiBaru',$this->instansi_model->find($detailRiwayat->ID_INSTANSI));
@@ -344,15 +347,19 @@ class Riwayatpindahunitkerja extends Admin_Controller
         $this->show($PNS_ID,$record_id);
     }
      public function detil($PNS_ID,$record_id=''){
+     	Template::set('recsatker', $this->unitkerja_model->find_satker());
        	Template::set('jenis_kps', $this->jenis_kp_model->find_all());
     	Template::set('unit_organisasis', $this->unitkerja_model->find_all());
 		Template::set_view("kepegawaian/detilunitkerja");
 		$detailRiwayat = $this->riwayat_pindah_unit_kerja_model->find($record_id);
-
-		Template::set('detail_riwayat',$detailRiwayat );    
-		Template::set('selectedUnorBaru',$this->unitkerja_model->find($detailRiwayat->ID_UNOR_BARU));
-		Template::set('selectedInstansiBaru',$this->instansi_model->find($detailRiwayat->ID_INSTANSI));
-		Template::set('PNS_ID', $PNS_ID);
+            //die($detailRiwayat->ID_SATUAN_KERJA." addas");
+            $recordunors = $this->unitkerja_model->find_all(trim($detailRiwayat->ID_SATUAN_KERJA));
+        	Template::set('recunor', $recordunors);
+        	
+            Template::set('detail_riwayat',$detailRiwayat );    
+            Template::set('selectedUnorBaru',$this->unitkerja_model->find($detailRiwayat->ID_UNOR_BARU));
+            Template::set('selectedInstansiBaru',$this->instansi_model->find($detailRiwayat->ID_INSTANSI));
+            Template::set('PNS_ID', $PNS_ID);
 		Template::set('toolbar_title', "Detil Riwayat Pindah Unit Kerja");
 		Template::render();
     }
@@ -386,10 +393,15 @@ class Riwayatpindahunitkerja extends Admin_Controller
         $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
        
         $unor_baru_data = $this->unitkerja_model->find($data['ID_UNOR_BARU']);
-        $data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA_ESELON_I."-".$unor_baru_data->NAMA_ESELON_II."-".$unor_baru_data->NAMA_ESELON_III."-".$unor_baru_data->NAMA_ESELON_IV;
-        
+        //$data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA_ESELON_I."-".$unor_baru_data->NAMA_ESELON_II."-".$unor_baru_data->NAMA_ESELON_III."-".$unor_baru_data->NAMA_ESELON_IV;
+        $data["NAMA_UNOR_BARU"] = $unor_baru_data->NAMA_UNOR;
         $instansi_baru_data = $this->instansi_model->find($data['ID_INSTANSI']);
         $data["NAMA_INSTANSI"] = $instansi_baru_data->NAMA;
+        
+        $recordunors = $this->unitkerja_model->find($this->input->post("ID_SATUAN_KERJA"));
+        $NAMA_SATKER = ISSET($recordunors->NAMA_UNOR) ? $recordunors->NAMA_UNOR : "";
+ //       die($NAMA_SATKER."ini");
+        $data["NAMA_SATUAN_KERJA"] = $NAMA_SATKER;
 
 
         if(empty($data["SK_TANGGAL"])){

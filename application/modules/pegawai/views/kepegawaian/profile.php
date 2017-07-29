@@ -35,7 +35,7 @@ $PNS_ID = isset($pegawai->PNS_ID) ? $pegawai->PNS_ID : '';
                             <div class="col-md-2">
                                 <ul class="list-unstyled profile-nav">
                                     <li>
-                                        <img src="<?php echo base_url(); ?>assets/images/<?php echo (isset($pegawai->PHOTO) && $pegawai->PHOTO != "") ? $pegawai->PHOTO : 'noimage.jpg'; ?>" class="img-responsive pic-bordered" alt="">
+                                        <img src="<?php echo base_url(); ?>assets/images/<?php echo (isset($pegawai->PHOTO) && $pegawai->PHOTO != "") ? $pegawai->PHOTO : 'noimage.jpg'; ?>" class="img-responsive pic-bordered" id="photopegawai" alt="">
                                         <center>
                                         <?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Ubahfoto')) : ?>
                                         <a href="<?php echo base_url();?>admin/kepegawaian/pegawai/uploadfoto/<?php echo $PNS_ID; ?>" tooltip="Upload Foto" class="show-modal btn btn-small btn-warning margin"><i class="fa fa-photo"></i> Ubah foto </a>

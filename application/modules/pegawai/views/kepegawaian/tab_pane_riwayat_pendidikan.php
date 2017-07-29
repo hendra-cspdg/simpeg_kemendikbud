@@ -18,9 +18,9 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Pendidikan</th>
+                    <th>Jenjang Pendidikan</th>
                     <th width='50%'>NAMA Sekolah</th>
-                    <th width='20%'>Jurusan</th>
+                    <th width='40%'>Jurusan</th>
                     <th width='100px'>Tahun Lulus</th>
                     <th>Nomor Ijazah</th>
                     <th width='100px' align="center">Aksi</th>
