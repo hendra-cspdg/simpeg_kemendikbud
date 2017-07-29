@@ -175,50 +175,50 @@
           	</a>
               <ul class="treeview-menu">
                 <li>
-                  <a href="<?php echo base_url();?>rekap/golongan-usia">
+                  <a href="<?php echo base_url();?>rekap/golongan_usia">
                       <i class="fa fa-circle-o"></i>
                       <span>Golongan dan Range Usia </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/bup-usia">
+                  <a href="<?php echo base_url();?>rekap/bup_usia">
                       <i class="fa fa-circle-o"></i>
                       <span>BUP dan Usia </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/gender-usia">
+                  <a href="<?php echo base_url();?>rekap/gender_usia">
                       <i class="fa fa-circle-o"></i>
                       <span>Gender dan Usia </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/pendidikan-usia">
+                  <a href="<?php echo base_url();?>rekap/pendidikan_usia">
                       <i class="fa fa-circle-o"></i>
                       <span>Pendidikan dan Usia </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/golongan-gender">
+                  <a href="<?php echo base_url();?>rekap/golongan_gender">
                       <i class="fa fa-circle-o"></i>
                       <span>Golongan dan Gender </span>    
                   </a>
                 </li>
 
                 <li>
-                  <a href="<?php echo base_url();?>rekap/golongan-pendidikan">
+                  <a href="<?php echo base_url();?>rekap/golongan_pendidikan">
                       <i class="fa fa-circle-o"></i>
                       <span>Golongan dan Pendidikan </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/pendidikan-gender">
+                  <a href="<?php echo base_url();?>rekap/pendidikan_gender">
                       <i class="fa fa-circle-o"></i>
                       <span>Pendidikan dan Gender </span>    
                   </a>
                 </li>
                 <li>
-                  <a href="<?php echo base_url();?>rekap/agama-gender">
+                  <a href="<?php echo base_url();?>rekap/agama_gender">
                       <i class="fa fa-circle-o"></i>
                       <span>Agama dan Gender </span>    
                   </a>
