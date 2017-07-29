@@ -38,19 +38,7 @@ class Pendidikan_model extends BF_Model
 	// $insert_validation_rules array and out of the standard validation array.
 	// That way it is only required during inserts, not updates which may only
 	// be updating a portion of the data.
-	protected $validation_rules 		= array(
-		array(
-			'field' => 'PNS_ID',
-			'label' => 'PNS ID',
-			'rules' => 'max_length[32]|required',
-		),
-		array(
-			'field' => 'NIP_LAMA',
-			'label' => 'lang:pegawai_field_NIP_LAMA',
-			'rules' => 'max_length[9]|required',
-		),
-		
-	);
+	protected $validation_rules 		= array("");
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
 
@@ -65,14 +53,17 @@ class Pendidikan_model extends BF_Model
     }
     public function find_all($tingkat ="")
 	{
+		$this->db->join("tkpendidikan","tkpendidikan.ID=".$this->table_name.".TINGKAT_PENDIDIKAN_ID","LEFT");
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*');
+			$this->select($this->table_name .'.*,tkpendidikan."NAMA" as "TK_TEXT"',false);
 		}
 		if($tingkat != ""){
 			$this->pendidikan_model->where("TINGKAT_PENDIDIKAN_ID",$tingkat);
 		}
+		$this->db->order_by("tkpendidikan.ID","DESC");
+		$this->db->order_by($this->table_name .".NAMA","ÄSC");
 		
 		return parent::find_all();
 	}
