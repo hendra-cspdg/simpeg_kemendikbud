@@ -269,11 +269,7 @@
     	<?php if ($this->auth->has_permission('Site.Kepegawaian.View')) : ?>
         <li class="treeview <?php echo $mainmenu == 'kepegawaian' ? 'active' : '' ?>">
           <a href="#">
-<<<<<<< HEAD
             <i class="fa fa-folder"></i> <span>Profil Pegawai</span>
-=======
-            <i class="fa fa-folder"></i> <span>Profile Pegawai</span>
->>>>>>> 654e5db1392831e5b131cec13acc4e1704278a97
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -293,14 +289,10 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>pegawai/duk"><i class="fa fa-circle-o"></i>Daftar Urut Kepangkatan</a></li>
-<<<<<<< HEAD
-            <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-list"></i>Daftar daftar kuota jabatan</a></li>
-=======
             <!--
             <li><a href="<?php echo base_url();?>admin/reports/pegawai/kelompokjabatan"><i class="fa fa-circle-o"></i>Daftar kelompok Jabatan</a></li>
             -->
             <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-table"></i>Daftar kuota jabatan</a></li>
->>>>>>> 654e5db1392831e5b131cec13acc4e1704278a97
             <li><a href="<?php echo base_url();?>petajabatan/struktur"><i class="fa fa-circle-o"></i>Struktur Organisasi</a></li>
           </ul>
         </li>
