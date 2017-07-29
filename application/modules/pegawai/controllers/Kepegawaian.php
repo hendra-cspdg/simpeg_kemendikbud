@@ -499,7 +499,7 @@ class Kepegawaian extends Admin_Controller
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {
                 $row = array();
-                $row []  = $nomor_urut;
+                $row []  = $nomor_urut.".";
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
                 $row []  = $this->unitkerja_model->get_parent_path($record->UNIT_ID,true,false);
@@ -512,6 +512,7 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
+                if($this->auth->has_permission("Pegawai.Kepegawaian.Edit")){
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
@@ -519,6 +520,8 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
+                }
+                if($this->auth->has_permission("Pegawai.Kepegawaian.Delete")){
                 $btn_actions  [] = "
                         <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
 					   	<span class='fa-stack'>
@@ -527,7 +530,7 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
@@ -649,6 +652,7 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
+                if($this->auth->has_permission("Pegawai.Kepegawaian.Edit")){
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
@@ -656,6 +660,8 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
+            	}
+            	if($this->auth->has_permission("Pegawai.Kepegawaian.Delete")){
                 $btn_actions  [] = "
                         <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus Pegawai' >
 					   	<span class='fa-stack'>
@@ -664,7 +670,7 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
