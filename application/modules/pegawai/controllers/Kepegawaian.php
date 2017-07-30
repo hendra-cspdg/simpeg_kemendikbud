@@ -140,6 +140,61 @@ class Kepegawaian extends Admin_Controller
        echo '{"namafile":"'.$namafile.'"}';
        exit();
 	}
+	public function importdatapegawai()
+	{
+		Template::set('toolbar_title', "Import data");
+		Template::render();
+	}
+	function runimport(){
+		$fileName = time().$_FILES['file']['name'];
+         
+        $config['upload_path'] = './assets/uploaded/'; //buat folder dengan nama assets di root folder
+        $config['file_name'] = $fileName;
+        $config['allowed_types'] = 'xls|xlsx|csv';
+        $config['max_size'] = 10000;
+         
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+         
+        if(! $this->upload->do_upload('file') )
+        $this->upload->display_errors();
+             
+        $media = $this->upload->data('file');
+        $inputFileName = './assets/uploaded/'.$media['file_name'];
+         
+        try {
+                $inputFileType = IOFactory::identify($inputFileName);
+                $objReader = IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($inputFileName);
+            } catch(Exception $e) {
+                die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+            }
+ 
+            $sheet = $objPHPExcel->getSheet(0);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+             
+            for ($row = 2; $row <= $highestRow; $row++){                  //  Read a row of data into an array                 
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                                                NULL,
+                                                TRUE,
+                                                FALSE);
+                                                 
+                //Sesuaikan sama nama kolom tabel di database                                
+                 $data = array(
+                    "idimport"=> $rowData[0][0],
+                    "nama"=> $rowData[0][1],
+                    "alamat"=> $rowData[0][2],
+                    "kontak"=> $rowData[0][3]
+                );
+                 
+                //sesuaikan nama dengan nama tabel
+                $insert = $this->db->insert("eimport",$data);
+                delete_files($media['file_path']);
+                     
+            }
+	}
+	
     /**
      * Create a pegawai object.
      *
@@ -496,7 +551,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut.".";
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $record->NAMA_SATKER;
+                $row []  = $record->NAMA_UNOR."<br>".$record->NAMA_SATKER;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "

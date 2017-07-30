@@ -19,6 +19,7 @@
                 <tr>
                     <th width='100px' >No</th>
                     <th>Jabatan</th>
+                    <th>Unit Kerja</th>
                     <th width='100px' >TMT</th>
                     <th width='100px' align="center">Aksi</th>
                 </tr>
