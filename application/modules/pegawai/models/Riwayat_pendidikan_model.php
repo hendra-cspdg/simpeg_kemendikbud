@@ -42,7 +42,7 @@ class Riwayat_pendidikan_model extends BF_Model
 		array(
 			'field' => 'PNS_ID',
 			'label' => 'PNS ID',
-			'rules' => 'max_length[32]',
+			'rules' => 'max_length[32]|required',
 		),
 		array(
 			'field' => 'TINGKAT_PENDIDIKAN_ID',
@@ -65,7 +65,9 @@ class Riwayat_pendidikan_model extends BF_Model
 			'rules' => 'required',
 		), 
 	);
-	protected $insert_validation_rules  = array();
+	protected $insert_validation_rules  = array(
+		
+	);
 	protected $skip_validation 			= true;
 
     /**

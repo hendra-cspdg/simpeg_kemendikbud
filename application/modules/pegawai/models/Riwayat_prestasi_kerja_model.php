@@ -42,7 +42,12 @@ class Riwayat_prestasi_kerja_model extends BF_Model
 		array(
 			'field' => 'PNS_ID',
 			'label' => 'PNS ID',
-			'rules' => 'max_length[32]',
+			'rules' => 'max_length[32]|required',
+		),
+		array(
+			'field' => 'JABATAN_TIPE',
+			'label' => 'TIPE JABATAN',
+			'rules' => 'numeric|required',
 		),
 		array(
 			'field' => 'NILAI_SKP',
