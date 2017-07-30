@@ -33,7 +33,11 @@
             
         </div>
   		<div class="box-footer">
-            <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
+             <fieldset class='form-actions'>
+                <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
+                or
+                <a class='btn btn-warning' href='<?php echo base_url('pegawai/masterpendidikan');?>'>Cancel</a> 
+            </fieldset>                
         </div>
     <?php echo form_close(); ?>
 </div>
