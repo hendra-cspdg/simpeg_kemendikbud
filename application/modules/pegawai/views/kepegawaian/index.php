@@ -135,7 +135,7 @@ if ($can_delete) {
 $("#unit_id_key").select2({
 	placeholder: 'Cari Unit Kerja...',
 	width: '100%',
-	minimumInputLength: 3,
+	minimumInputLength: 0,
 	allowClear: true,
 	ajax: {
 		url: '<?php echo site_url("pegawai/kepegawaian/ajax_unit_list");?>',
