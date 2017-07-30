@@ -427,16 +427,7 @@ class Kepegawaian extends Admin_Controller
 			foreach($advanced_search_filters as  $filter){
 				$filters[$filter['name']] = $filter["value"];
 			}
-			if($filters['unit_id_cb']){
-				$unit_id =  $filters['unit_id_key'];
-				$this->load->model("pegawai/unitkerja_model");
-				$this->unitkerja_model->where("ID",$unit_id);
-				$unor_data = $this->unitkerja_model->find_first_row();
-				
-				if($unor_data){
-					$this->unitkerja_model->getChildren($unor_data->ID ,$selectedUnors,$onlyID = true,$include_sub=TRUE,$includeMe=true,$first=true);
-				}
-			}
+			
 		}
 
 		$this->db->start_cache();
@@ -453,7 +444,7 @@ class Kepegawaian extends Admin_Controller
 				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
 			}
 			if($filters['unit_id_cb']){
-				$this->pegawai_model->where_in('unitkerja."ID"',$selectedUnors);	
+				$this->pegawai_model->where_in('satker."ID"',$filters['unit_id_key']);	
 			}
 
 
@@ -496,7 +487,7 @@ class Kepegawaian extends Admin_Controller
 		
 		//die($start."masuk".$start);
 		$this->pegawai_model->limit($length,$start);
-		$records=$this->pegawai_model->find_all();
+		$records=$this->pegawai_model->find_all_by_satker_id();
 
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
@@ -505,7 +496,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut.".";
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $this->unitkerja_model->get_parent_path($record->UNIT_ID,true,false);
+                $row []  = $record->NAMA_SATKER;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -773,17 +764,9 @@ class Kepegawaian extends Admin_Controller
 		$term = $this->input->get('term');
 		$page = $this->input->get('page');
 		$this->db->flush_cache();
-		$data = $this->db->query("
-			select 
-			uk.*,
-			parent.\"NAMA_UNOR\" as parent_name,
-			grand.\"NAMA_UNOR\" as grand_name
-			from 
-			hris.unitkerja uk
-			left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
-			left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
-			where uk.\"IS_SATKER\" = 1 AND lower(uk.\"NAMA_UNOR\") like ?
-			",array("%".strtolower($term)."%"))->result();
+		$this->db->like("lower(\"NAMA_UNOR\")",strtolower($term),"BOTH");
+		$this->db->order_by("NAMA_UNOR","ASC");
+		$data = $this->unitkerja_model->find_satker();
 		
 		$output = array();
 		$output['results'] = array();
@@ -813,16 +796,8 @@ class Kepegawaian extends Admin_Controller
 		$term = $this->input->get('term');
 		$page = $this->input->get('page');
 		$this->db->flush_cache();
-		$data = $this->db->query("
-			select 
-			uk.*
-			from 
-			hris.unitkerja uk
-			where  lower(uk.\"NAMA_UNOR\") like ?
-			AND \"ID\" in (select distinct \"UNOR_INDUK\" from hris.unitkerja)
-			order by uk.\"NAMA_UNOR\" ASC
-			",array("%".strtolower($term)."%")
-			)->result();
+		$this->db->like("lower(\"NAMA_UNOR\")",strtolower($term),"BOTH");
+		$data = $this->unitkerja_model->find_satker();
 		
 		$output = array();
 		$output['results'] = array();
