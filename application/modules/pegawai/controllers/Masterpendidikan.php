@@ -148,7 +148,7 @@ class MasterPendidikan extends Admin_Controller
           }
         }
         
-        Template::set('toolbar_title', "Ubah Jurusan Pendidikan");
+        Template::set('toolbar_title', "Tambah Jurusan Pendidikan");
 
         Template::render();
     }
