@@ -89,7 +89,7 @@ class Riwayatjabatan extends Admin_Controller
                 $row = array();
                 $row []  = $nomor_urut;
                 $row []  = $record->NAMA_JABATAN;
-                $row []  = $record->UNOR;
+                $row []  = $record->NAMA_UNOR."<BR>".$record->NAMA_SATKER;
                 $row []  = $record->TMT_JABATAN;
                 $btn_actions = array();
                 

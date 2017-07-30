@@ -77,11 +77,13 @@ class Riwayat_jabatan_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*');
+			$this->select($this->table_name .'.*,satker."NAMA_UNOR" AS "NAMA_SATKER", unit."NAMA_UNOR"');
 		}
 		if($PNS_ID!=""){
 			$this->db->where('PNS_ID',$PNS_ID);
 		}
+		$this->db->join("hris.unitkerja as unit","rwt_jabatan.ID_UNOR=unit.ID", 'left');
+		$this->db->join("hris.unitkerja as satker",'unit.UNOR_INDUK=satker.ID', 'left');
 		return parent::find_all();
 	}
 }
