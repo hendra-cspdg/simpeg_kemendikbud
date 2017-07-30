@@ -5,10 +5,10 @@
  */
 class Manage_api extends Admin_Controller
 {
-    protected $permissionCreate = 'ManageApi.Kepegawaian.Create';
-    protected $permissionDelete = 'ManageApi.Kepegawaian.Delete';
-    protected $permissionEdit   = 'ManageApi.Kepegawaian.Edit';
-    protected $permissionView   = 'ManageApi.Kepegawaian.View';
+    protected $permissionCreate = 'ManageApi.Masters.Create';
+    protected $permissionDelete = 'ManageApi.Masters.Delete';
+    protected $permissionEdit   = 'ManageApi.Masters.Edit';
+    protected $permissionView   = 'ManageApi.Masters.View';
 
     /**
      * Constructor
@@ -73,21 +73,25 @@ class Manage_api extends Admin_Controller
                 $row []  = $record->description;
                 $row []  = $record->url;
                 $btn_actions = array();
-                $btn_actions  [] = "
-                    <a class='show-modal-custom' href='".base_url()."api/manage_api/crud/".$record->id."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
-					   	<i class='fa fa-square fa-stack-2x'></i>
-					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
-					   	</span>
-					   	</a>
-                ";
-                $btn_actions  [] = "
-                        <a href='#' kode='$record->id' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
-					   	<span class='fa-stack'>
-					   	<i class='fa fa-square fa-stack-2x'></i>
-					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
-					   	</span>
-					   	</a>
-                ";
+                if($this->auth->has_permission($this->permissionEdit)){
+                    $btn_actions  [] = "
+                        <a class='show-modal-custom' href='".base_url()."api/manage_api/crud/".$record->id."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+                            <i class='fa fa-square fa-stack-2x'></i>
+                            <i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
+                            </span>
+                            </a>
+                    ";
+                }   
+                if($this->auth->has_permission($this->permissionDelete)){
+                    $btn_actions  [] = "
+                            <a href='#' kode='$record->id' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
+                            <span class='fa-stack'>
+                            <i class='fa fa-square fa-stack-2x'></i>
+                            <i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
+                            </span>
+                            </a>
+                    ";
+                }
                 
                 $row[] = implode(" ",$btn_actions);
                 
