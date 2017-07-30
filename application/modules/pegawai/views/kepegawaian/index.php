@@ -13,7 +13,7 @@ if ($can_delete) {
 ?>
 
 
-<div class="admin-box box box-primary collapsed-box">
+<div class="admin-box box box-primary expanded-box">
 	<div class="box-header">
               <h3 class="box-title">Pencarian Lanjut</h3>
 			   <div class="box-tools pull-right">

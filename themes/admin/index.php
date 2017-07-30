@@ -6,8 +6,12 @@
 <?php echo theme_view('partials/_header'); ?> 
 <div class="content-wrapper">
 	<section class="content-header">
-   	<h1>
-        
+	<?php 
+		if($view_back_button){
+			echo "<a href='".$back_button_url."' class='btn btn-warning'>".$back_button_label."</a>";
+		}
+	?>
+   	<h1>        
         <small><?php if (isset($toolbar_title)) : ?>
 				  <?php echo $toolbar_title ?>
 			  <?php endif; ?></small>

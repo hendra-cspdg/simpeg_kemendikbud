@@ -63,4 +63,9 @@ class Tingkatpendidikan_model extends BF_Model
     {
         parent::__construct();
     }
-}
+	public function find_all()
+	{
+		$this->db->order_by("ID","DESC");
+		return parent::find_all();
+	}
+}	

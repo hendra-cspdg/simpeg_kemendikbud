@@ -40,18 +40,28 @@ class Pendidikan_model extends BF_Model
 	// be updating a portion of the data.
 	protected $validation_rules 		= array(
 		array(
-			'field' => 'PNS_ID',
-			'label' => 'PNS ID',
-			'rules' => 'max_length[32]|required',
+			'field' => 'NAMA',
+			'label' => 'NAMA',
+			'rules' => 'required',
 		),
 		array(
-			'field' => 'NIP_LAMA',
-			'label' => 'lang:pegawai_field_NIP_LAMA',
-			'rules' => 'max_length[9]|required',
+			'field' => 'TINGKAT_PENDIDIKAN_ID',
+			'label' => 'TINGKAT PENDIDIKAN',
+			'rules' => 'required',
 		),
-		
 	);
-	protected $insert_validation_rules  = array();
+	protected $insert_validation_rules  = array(
+		array(
+			'field' => 'NAMA',
+			'label' => 'NAMA',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'TINGKAT_PENDIDIKAN_ID',
+			'label' => 'TINGKAT PENDIDIKAN',
+			'rules' => 'required',
+		),
+	);
 	protected $skip_validation 			= true;
 
     /**
@@ -65,14 +75,17 @@ class Pendidikan_model extends BF_Model
     }
     public function find_all($tingkat ="")
 	{
+		$this->db->join("tkpendidikan","tkpendidikan.ID=".$this->table_name.".TINGKAT_PENDIDIKAN_ID","LEFT");
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.*');
+			$this->select($this->table_name .'.*,tkpendidikan."NAMA" as "TK_TEXT"',false);
 		}
 		if($tingkat != ""){
 			$this->pendidikan_model->where("TINGKAT_PENDIDIKAN_ID",$tingkat);
 		}
+		$this->db->order_by("tkpendidikan.ID","DESC");
+		$this->db->order_by($this->table_name .".NAMA","ÄSC");
 		
 		return parent::find_all();
 	}

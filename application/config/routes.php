@@ -65,6 +65,19 @@ Route::any('logout', 'users/logout');
 Route::any('forgot_password', 'users/forgot_password');
 Route::any('reset_password/(:any)/(:any)', 'users/reset_password/$1/$2');
 
+Route::any('rekap/bup-usia','rekap/bup_usia');
+Route::any('rekap/golongan-usia','rekap/golongan_usia');
+Route::any('rekap/gender-usia','rekap/jenis_kelamin_per_usia');
+Route::any('rekap/pendidikan-usia','rekap/pendidikan_usia');
+Route::any('rekap/golongan-gender','rekap/golongan_gender');
+Route::any('rekap/golongan-pendidikan','rekap/golongan_pendidikan');
+Route::any('rekap/pendidikan-gender','rekap/pendidikan_gender');
+Route::any('rekap/agama-gender','rekap/agama_gender');
+
+
+
+
+
 // Activation
 Route::any('activate', 'users/activate');
 Route::any('activate/(:any)', 'users/activate/$1');

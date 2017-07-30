@@ -287,23 +287,36 @@ class Pegawai_model extends BF_Model
 	}
 	public function count_all() {
 		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
-			 
-		}
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
+			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}		
+		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
+		$this->db->join("hris.unitkerja as satker",'unit.DIATASAN_ID=satker.ID', 'left');
+		
 		return parent::count_all();
 	}
 	public function find_all(){
 		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
 			 
 		}
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",unitkerja."ID" as "UNIT_ID" ',false);
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
+		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
+		$this->db->join("hris.unitkerja as satker",'unit.DIATASAN_ID=satker.ID', 'left');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
 	
+	public function find_all_by_satker_id($id=null){
+		$this->db->select('pegawai.*,satker."NAMA_UNOR" AS "NAMA_SATKER", unit."NAMA_UNOR",unit."ID" as "UNIT_ID" ',false);
+		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
+		$this->db->join("hris.unitkerja as satker",'unit.DIATASAN_ID=satker.ID', 'left');
+		if($id){
+			$this->db->where('unit."DIATASAN_ID"',$id);
+		}
+		$this->db->order_by("NAMA","ASC");
+		return parent::find_all();
+
+	}
 	public function find_kelompokjabatan(){
 		$this->db->select('pegawai."ID",pegawai."NAMA","NIP_BARU",golongan."NAMA"  as "NAMA_GOLONGAN"',false);
 		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');

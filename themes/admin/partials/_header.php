@@ -252,7 +252,7 @@
             <?php if ($this->auth->has_permission('Ref_jabatan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/masters/ref_jabatan"><i class="fa fa-circle-o"></i>Jabatan</a></li>
             <?php endif; ?>
-            <?php if ($this->auth->has_permission('Tkpendidikan.Masters.View')) : ?>
+            <?php if ($this->auth->has_permission('MasterPendidikan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>pegawai/masterpendidikan"><i class="fa fa-circle-o"></i>Pendidikan</a></li>
             <?php endif; ?>
             <?php if ($this->auth->has_permission('Golongan.Masters.View')) : ?>
