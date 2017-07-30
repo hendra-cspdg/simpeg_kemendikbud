@@ -15,8 +15,8 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-21 col-xs-12">
-						<?php if ($this->auth->has_permission('ManageApi.Kepegawaian.Create')) : ?>
-						<a type="button" class="show-modal-custom btn btn-default btn-warning margin pull-right " href="<?php echo base_url(); ?>api/manage_api/crud/<?php echo $PNS_ID ?>" tooltip="Tambah Riwayat Diklat">
+						<?php if ($this->auth->has_permission('ManageApi.Masters.Create')) : ?>
+						<a type="button" class="show-modal-custom btn btn-default btn-warning margin pull-right " href="<?php echo base_url(); ?>api/manage_api/crud" tooltip="Tambah API">
 							<i class="fa fa-plus"></i> Tambah
 						</a>
 						<?php endif; ?>
