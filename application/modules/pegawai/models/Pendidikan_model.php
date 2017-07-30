@@ -38,8 +38,30 @@ class Pendidikan_model extends BF_Model
 	// $insert_validation_rules array and out of the standard validation array.
 	// That way it is only required during inserts, not updates which may only
 	// be updating a portion of the data.
-	protected $validation_rules 		= array("");
-	protected $insert_validation_rules  = array();
+	protected $validation_rules 		= array(
+		array(
+			'field' => 'NAMA',
+			'label' => 'NAMA',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'TINGKAT_PENDIDIKAN_ID',
+			'label' => 'TINGKAT PENDIDIKAN',
+			'rules' => 'required',
+		),
+	);
+	protected $insert_validation_rules  = array(
+		array(
+			'field' => 'NAMA',
+			'label' => 'NAMA',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'TINGKAT_PENDIDIKAN_ID',
+			'label' => 'TINGKAT PENDIDIKAN',
+			'rules' => 'required',
+		),
+	);
 	protected $skip_validation 			= true;
 
     /**

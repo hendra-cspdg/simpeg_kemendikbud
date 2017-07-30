@@ -5,10 +5,10 @@
  */
 class MasterPendidikan extends Admin_Controller
 {
-    protected $permissionCreate = 'MasterPendidikan.Kepegawaian.Create';
-    protected $permissionDelete = 'MasterPendidikan.Kepegawaian.Delete';
-    protected $permissionEdit   = 'MasterPendidikan.Kepegawaian.Edit';
-    protected $permissionView   = 'MasterPendidikan.Kepegawaian.View';
+    protected $permissionCreate = 'MasterPendidikan.Masters.Create';
+    protected $permissionDelete = 'MasterPendidikan.Masters.Delete';
+    protected $permissionEdit   = 'MasterPendidikan.Masters.Edit';
+    protected $permissionView   = 'MasterPendidikan.Masters.View';
 
     /**
      * Constructor
@@ -81,22 +81,23 @@ class MasterPendidikan extends Admin_Controller
                 $row []  = $record->NAMA;
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a href='".base_url()."pegawai/masterpendidikan/edit/".$record->ID."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
+                    <a  href='".base_url()."pegawai/masterpendidikan/edit/".$record->ID."'  data-toggle='tooltip' title='Ubah Data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>
 					   	</a>
                 ";
+                if($this->auth->has_permission($this->permissionDelete))   {
+                    $btn_actions  [] = "
+                            <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
+                            <span class='fa-stack'>
+                            <i class='fa fa-square fa-stack-2x'></i>
+                            <i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
+                            </span>
+                            </a>
+                    ";
 
-                $btn_actions  [] = "
-                        <a href='#' kode='$record->ID' class='btn-hapus' data-toggle='tooltip' title='Hapus data' >
-					   	<span class='fa-stack'>
-					   	<i class='fa fa-square fa-stack-2x'></i>
-					   	<i class='fa fa-trash-o fa-stack-1x fa-inverse'></i>
-					   	</span>
-					   	</a>
-                ";
-                
+                }
                 $row[] = implode(" ",$btn_actions);
                 
 
@@ -112,6 +113,20 @@ class MasterPendidikan extends Admin_Controller
         Template::set('TAB_ID', uniqid("TAB_CONTOH"));
         Template::render();
     }
+    public function delete($record_id){
+        if($this->auth->has_permission($this->permissionDelete)){
+            if ($this->pendidikan_model->delete($record_id)) {
+                log_activity($this->auth->user_id(), 'delete data master pendidikan : ' . $record_id . ' : ' . $this->input->ip_address(), 'pegawai');
+                Template::set_message("Sukses Hapus data", 'success');
+                echo "Sukses";
+            }else{
+                echo "Gagal";
+            }
+        }
+        else {
+            Template::set_message("Sukses Hapus data", 'error');
+        }
+    }
 	/**
      * Create a Agama object.
      *
@@ -119,49 +134,69 @@ class MasterPendidikan extends Admin_Controller
      */
     public function create()
     {
-		//$this->auth->restrict($this->permissionCreate); 
-		Template::set('toolbar_title', "Tambah Jurusan Pendidikan");
+        $this->auth->restrict($this->permissionCreate); 
+		if($this->input->post('save')){
+          $response = $this->save();
+          if($response['success']){
+                Template::set_message($response['msg'], 'success');
+                redirect(base_url('pegawai/masterpendidikan'));
+          }
+          else {
+              if(isset($response['msg'])){
+                Template::set_message($response['msg'], 'error');
+              } 
+          }
+        }
+        
+        Template::set('toolbar_title', "Ubah Jurusan Pendidikan");
 
-		Template::render();
+        Template::render();
     }
 	public function edit($ID)
     {
-		//$this->auth->restrict($this->permissionCreate); 
-		Template::set('toolbar_title', "Ubah Jurusan Pendidikan");
+        $this->auth->restrict($this->permissionEdit); 
+        if($this->input->post('save')){
+          $response = $this->save();
+          if($response['success']){
+                Template::set_message($response['msg'], 'success');
+                redirect(base_url('pegawai/masterpendidikan'));
+          }
+          else {
+              if(isset($response['msg'])){
+                Template::set_message($response['msg'], 'error');
+              } 
+          }
+        }
+        //$this->auth->restrict($this->permissionCreate); 
+        $selectedData = $this->pendidikan_model->find($ID);
+        Template::set('selectedData',$selectedData);
+        Template::set('toolbar_title', "Ubah Jurusan Pendidikan");
 
-		Template::render();
+        Template::render();
+       
     }
 	public function save(){
          // Validate the data
         $this->form_validation->set_rules($this->pendidikan_model->get_validation_rules());
         $response = array(
-            'success'=>false,
-            'msg'=>'Unknown error'
+            'success'=>false
         );
         if ($this->form_validation->run() === false) {
-            $response['msg'] = "
-            <div class='alert alert-block alert-error fade in'>
-                <a class='close' data-dismiss='alert'>&times;</a>
-                <h4 class='alert-heading'>
-                    Error
-                </h4>
-                ".validation_errors()."
-            </div>
-            ";
-            echo json_encode($response);
-            exit();
+                       
         }
-
-        $data = $this->pendidikan_model->prep_data($this->input->post());
-       
-		$id_data = $this->INPUT->POST("ID");
-        if(isset($id_data) && !empty($id_data)){
-            $this->diklat_struktural_model->update($id_data,$data);
+        else {
+            $data = $this->pendidikan_model->prep_data($this->input->post());
+            
+            $id_data = $this->input->post("ID");
+            if(isset($id_data) && !empty($id_data)){    
+                $this->pendidikan_model->update($id_data,$data);
+            }
+            else {
+                $this->pendidikan_model->insert($data);
+            }                
+            $response ['success']= true;
+            $response ['msg']= "Transaksi berhasil";
         }
-        else $this->diklat_struktural_model->insert($data);
-        $response ['success']= true;
-        $response ['msg']= "Transaksi berhasil";
-        echo json_encode($response);    
-
+        return $response;
     }
 }
