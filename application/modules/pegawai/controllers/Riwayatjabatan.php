@@ -45,7 +45,8 @@ class Riwayatjabatan extends Admin_Controller
 		$start= $this->input->post('start');
 
 		$search = isset($_REQUEST['search']["value"]) ? $_REQUEST['search']["value"] : "";
-		$this->riwayat_jabatan_model->where("PNS_ID",$pegawai_data->ID);
+		//$this->riwayat_jabatan_model->where("PNS_ID",$pegawai_data->ID);
+		$this->riwayat_jabatan_model->where("PNS_NIP",$pegawai_data->NIP_BARU);
 		$total= $this->riwayat_jabatan_model->count_all();;
 		$output=array();
 		$output['draw']=$draw;
@@ -68,7 +69,8 @@ class Riwayatjabatan extends Admin_Controller
 		$sSortCol == "desc" ? "desc" : "asc";
 		$this->riwayat_jabatan_model->order_by($iSortCol,$sSortCol);
         
-        $this->riwayat_jabatan_model->where("PNS_ID",$pegawai_data->PNS_ID);  
+        //$this->riwayat_jabatan_model->where("PNS_ID",$pegawai_data->PNS_ID); 
+        $this->riwayat_jabatan_model->where("PNS_NIP",$pegawai_data->NIP_BARU); 
 		$this->riwayat_jabatan_model->ORDER_BY($kolom,$sSortCol);
         $records=$this->riwayat_jabatan_model->find_all();
             
