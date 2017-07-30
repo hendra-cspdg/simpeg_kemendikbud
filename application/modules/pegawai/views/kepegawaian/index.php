@@ -113,7 +113,7 @@ if ($can_delete) {
 				<li><a href="<?php echo site_url($areaUrl . '/create'); ?>"><i class="fa fa-plus"></i>Tambah Pegawai</a></li>
 				<?php endif; ?>
 				 <li><a href="<?php echo site_url($areaUrl . '/download'); ?>" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
-				 <li><a href="<?php echo site_url($areaUrl . '/upload'); ?>" target="_blank"><i class="fa fa-upload" aria-hidden="true"></i>Upload data</a></li>
+				 <li><a href="<?php echo site_url($areaUrl . '/importdatapegawai'); ?>" target="_blank" tooltip="Import data pegawai" class="show-modal" ><i class="fa fa-upload" aria-hidden="true"></i>Upload data</a></li>
 			   </ul>
 			 </div>
 	</div>

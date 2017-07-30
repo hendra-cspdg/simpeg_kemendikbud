@@ -140,6 +140,75 @@ class Kepegawaian extends Admin_Controller
        echo '{"namafile":"'.$namafile.'"}';
        exit();
 	}
+	public function importdatapegawai()
+	{
+		Template::set('toolbar_title', "Import data");
+		Template::render();
+	}
+	function runimport(){
+    	 //$this->auth->restrict($this->permissionCreate);
+    	 $this->load->helper('handle_upload');
+		 $uploadData = array();
+		 $upload = true;
+		 $id = $this->input->post('id');
+		 $message = "";
+		 $index = 0;
+		 if (isset($_FILES['userfile']) && is_array($_FILES['userfile']) && $_FILES['userfile']['error'] != 4)
+		 {
+			$tmp_name = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
+			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.pathuploaded')),$tmp_name);
+			 if (isset($uploadData['error']) && !empty($uploadData['error']))
+			 {
+			 	$tipefile=$_FILES['userfile']['type'];
+				 $upload = false;
+				 $message = "Gagal upload data".$uploadData['error'];
+				 log_activity($this->auth->user_id(), 'Gagal : '.$uploadData['error'].$this->pegawai_model->error.$tipefile.$this->input->ip_address(), 'pegawai');
+			 }else{
+			 	
+				if(isset($uploadData['data']['file_name']))
+					$file = trim($this->settings_lib->item('site.pathuploaded')).$uploadData['data']['file_name'];
+				else
+					$file ="";
+				$this->load->library('Excel');
+				$objPHPExcel = PHPExcel_IOFactory::load($file);
+				 //  Get worksheet dimensions
+				$sheet = $objPHPExcel->getSheet(0); 
+				$highestRow = $sheet->getHighestRow(); 
+				$highestColumn = $sheet->getHighestColumn();
+				$itemfield = $this->db->list_fields('pegawai');
+   				for ($row = 2; $row <= $highestRow; $row++)
+				{ 
+					//  Read a row of data into an array
+					$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+													  NULL,
+													  TRUE,
+													  FALSE);
+					$data = array();
+					$col = 0;
+					foreach($itemfield as $field)
+					{
+						if(trim($rowData[0][$col]) != ''){
+						   $data[$field] 	= trim($rowData[0][$col]); 
+						}
+						$col++;
+					}
+					if($rowData[0][1] != ""){
+						if($this->pegawai_model->insert($data)){
+							$index++;
+						}
+					}
+				}
+				$message = "Upload sukses :".$index." data";
+			 	log_activity($this->auth->user_id(), 'Berhasil  : '.$this->pegawai_model->error.$this->input->ip_address(), 'pegawai');
+			 	
+			 }
+		 }else{
+		 	log_activity($this->auth->user_id(), 'File tidak ditemukan : ' . $this->input->ip_address(), 'pegawai');
+		 } 
+		 echo '{"message":"'.$message.'"}';
+		 exit();
+	}
+	
     /**
      * Create a pegawai object.
      *
@@ -496,7 +565,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut.".";
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $record->NAMA_SATKER;
+                $row []  = $record->NAMA_UNOR."<br>".$record->NAMA_SATKER;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -559,9 +628,13 @@ class Kepegawaian extends Admin_Controller
 		if (isset($datapegwai) && is_array($datapegwai) && count($datapegwai)) :
 			foreach ($datapegwai as $record) :
 				$col = 0;
+				$type = PHPExcel_Cell_DataType::TYPE_STRING;
 				foreach($itemfield as $field)
 				{
-					$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field);
+					if($col == 3)
+						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field." ",PHPExcel_Cell_DataType::TYPE_STRING);
+					else
+						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field);
 					$col++;
 				}
 			   
