@@ -146,53 +146,67 @@ class Kepegawaian extends Admin_Controller
 		Template::render();
 	}
 	function runimport(){
-		$fileName = time().$_FILES['file']['name'];
-         
-        $config['upload_path'] = './assets/uploaded/'; //buat folder dengan nama assets di root folder
-        $config['file_name'] = $fileName;
-        $config['allowed_types'] = 'xls|xlsx|csv';
-        $config['max_size'] = 10000;
-         
-        $this->load->library('upload');
-        $this->upload->initialize($config);
-         
-        if(! $this->upload->do_upload('file') )
-        $this->upload->display_errors();
-             
-        $media = $this->upload->data('file');
-        $inputFileName = './assets/uploaded/'.$media['file_name'];
-         
-        try {
-                $inputFileType = IOFactory::identify($inputFileName);
-                $objReader = IOFactory::createReader($inputFileType);
-                $objPHPExcel = $objReader->load($inputFileName);
-            } catch(Exception $e) {
-                die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
-            }
- 
-            $sheet = $objPHPExcel->getSheet(0);
-            $highestRow = $sheet->getHighestRow();
-            $highestColumn = $sheet->getHighestColumn();
-             
-            for ($row = 2; $row <= $highestRow; $row++){                  //  Read a row of data into an array                 
-                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
-                                                NULL,
-                                                TRUE,
-                                                FALSE);
-                                                 
-                //Sesuaikan sama nama kolom tabel di database                                
-                 $data = array(
-                    "idimport"=> $rowData[0][0],
-                    "nama"=> $rowData[0][1],
-                    "alamat"=> $rowData[0][2],
-                    "kontak"=> $rowData[0][3]
-                );
-                 
-                //sesuaikan nama dengan nama tabel
-                $insert = $this->db->insert("eimport",$data);
-                delete_files($media['file_path']);
-                     
-            }
+    	 //$this->auth->restrict($this->permissionCreate);
+    	 $this->load->helper('handle_upload');
+		 $uploadData = array();
+		 $upload = true;
+		 $id = $this->input->post('id');
+		 $message = "";
+		 $index = 0;
+		 if (isset($_FILES['userfile']) && is_array($_FILES['userfile']) && $_FILES['userfile']['error'] != 4)
+		 {
+			$tmp_name = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
+			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.pathuploaded')),$tmp_name);
+			 if (isset($uploadData['error']) && !empty($uploadData['error']))
+			 {
+			 	$tipefile=$_FILES['userfile']['type'];
+				 $upload = false;
+				 $message = "Gagal upload data".$uploadData['error'];
+				 log_activity($this->auth->user_id(), 'Gagal : '.$uploadData['error'].$this->pegawai_model->error.$tipefile.$this->input->ip_address(), 'pegawai');
+			 }else{
+			 	
+				if(isset($uploadData['data']['file_name']))
+					$file = trim($this->settings_lib->item('site.pathuploaded')).$uploadData['data']['file_name'];
+				else
+					$file ="";
+				$this->load->library('Excel');
+				$objPHPExcel = PHPExcel_IOFactory::load($file);
+				 //  Get worksheet dimensions
+				$sheet = $objPHPExcel->getSheet(0); 
+				$highestRow = $sheet->getHighestRow(); 
+				$highestColumn = $sheet->getHighestColumn();
+				$itemfield = $this->db->list_fields('pegawai');
+   				for ($row = 2; $row <= $highestRow; $row++)
+				{ 
+					//  Read a row of data into an array
+					$rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+													  NULL,
+													  TRUE,
+													  FALSE);
+					$data = array();
+					$col = 0;
+					foreach($itemfield as $field)
+					{
+						if(trim($rowData[0][$col]) != ''){
+						   $data[$field] 	= trim($rowData[0][$col]); 
+						}
+						$col++;
+					}
+					if($rowData[0][1] != ""){
+						if($this->pegawai_model->insert($data)){
+							$index++;
+						}
+					}
+				}
+				$message = "Upload sukses :".$index." data";
+			 	log_activity($this->auth->user_id(), 'Berhasil  : '.$this->pegawai_model->error.$this->input->ip_address(), 'pegawai');
+			 	
+			 }
+		 }else{
+		 	log_activity($this->auth->user_id(), 'File tidak ditemukan : ' . $this->input->ip_address(), 'pegawai');
+		 } 
+		 echo '{"message":"'.$message.'"}';
+		 exit();
 	}
 	
     /**
@@ -614,9 +628,13 @@ class Kepegawaian extends Admin_Controller
 		if (isset($datapegwai) && is_array($datapegwai) && count($datapegwai)) :
 			foreach ($datapegwai as $record) :
 				$col = 0;
+				$type = PHPExcel_Cell_DataType::TYPE_STRING;
 				foreach($itemfield as $field)
 				{
-					$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field);
+					if($col == 3)
+						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field." ",PHPExcel_Cell_DataType::TYPE_STRING);
+					else
+						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field);
 					$col++;
 				}
 			   

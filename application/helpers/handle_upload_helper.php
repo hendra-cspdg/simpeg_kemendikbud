@@ -13,7 +13,7 @@
 			$path=$CI->settings_lib->item('site.pathuploaded');	
 		}
 		$config['upload_path']		= $path;//$CI->settings_lib->item('site.pathuploaded');
-		$config['allowed_types']	= 'png|jpg|jpeg';
+		$config['allowed_types']	= 'png|jpg|jpeg|xls|xlsx';
 		if($newfilename!= ""){
 		$config['file_name']		= $newfilename;
 		}

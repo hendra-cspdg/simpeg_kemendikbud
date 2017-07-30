@@ -22,7 +22,7 @@ Dropzone.autoDiscover = true;
 		 maxFilesize: 20,
 		 parallelUploads : 10,
 		 method:"post",
-		 acceptedFiles:"image/*",
+		 acceptedFiles: 'application/xls,application/excel,application/vnd.ms-excel,application/vnd.ms-excel; charset=binary,application/msexcel,application/x-excel,application/x-msexcel',
 		 paramName:"userfile",
 		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>Drop/Browse file(.xls) pegawai disini",
 		 dictInvalidFileType:"Type file ini tidak dizinkan",
@@ -31,7 +31,8 @@ Dropzone.autoDiscover = true;
 			   	this.on("success", function (file,response) {
 			   	var data_n=JSON.parse(response);
 			   	if(data_n.namafile!=""){
-					swal("Pemberitahuan!", "Upload Selesai", "success");
+					swal("Pemberitahuan!", data_n.message, "success");
+					//$('#photopegawai').attr('src',"<?php echo base_url(); ?>assets/images/"+data_n.namafile);
 					$("#modal-global").modal("hide");
 				}
 			});
