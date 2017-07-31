@@ -149,7 +149,15 @@ class Riwayatjabatan extends Admin_Controller
             $this->auth->restrict($this->permissionEdit);
             Template::set_view("kepegawaian/riwayat_jabatan_crud");
            
-            Template::set('jabatans', $this->jabatan_model->find_select($datadetil->ID_JENIS_JABATAN));    
+            $jenis_jabatan = $datadetil->ID_JENIS_JABATAN;
+		  
+			if($datadetil->ID_JENIS_JABATAN == ""){
+				$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",TRIM($datadetil->ID_JABATAN));
+				$jenis_jabatan = ISSET($recjabatan->JENIS_JABATAN) ? TRIM($recjabatan->JENIS_JABATAN) : "";
+			}
+	  
+			Template::set('jabatans', $this->jabatan_model->find_select($jenis_jabatan));    
+		    Template::set('jenis_jabatan', $jenis_jabatan);    
             Template::set('detail_riwayat', $datadetil);    
             Template::set('PNS_ID', $PNS_ID);
             Template::set('toolbar_title', "Ubah Riwayat Jabatan");
@@ -166,12 +174,19 @@ class Riwayatjabatan extends Admin_Controller
     public function detil($PNS_ID,$record_id=''){
         $datadetil = $this->riwayat_jabatan_model->find($record_id); 
 		$recordunors = $this->unitkerja_model->find_all($datadetil->ID_SATUAN_KERJA);
+		$jenis_jabatan = $datadetil->ID_JENIS_JABATAN;
+		 
+		if($datadetil->ID_JENIS_JABATAN == ""){
+			
+			$recjabatan = $this->jabatan_model->find_by("KODE_JABATAN",$datadetil->ID_JABATAN);
+			$jenis_jabatan = ISSET($recjabatan->JENIS_JABATAN) ? $recjabatan->JENIS_JABATAN : "";
+		}
 		Template::set('recunor', $recordunors);
 	   
 		$this->auth->restrict($this->permissionEdit);
 		Template::set_view("kepegawaian/detiljabatan");
 	  
-		Template::set('jabatans', $this->jabatan_model->find_select($datadetil->ID_JENIS_JABATAN));    
+		Template::set('jabatans', $this->jabatan_model->find_select($jenis_jabatan));    
 		Template::set('detail_riwayat', $datadetil);    
 		Template::set('PNS_ID', $PNS_ID);
 		Template::set('toolbar_title', "Riwayat Jabatan");

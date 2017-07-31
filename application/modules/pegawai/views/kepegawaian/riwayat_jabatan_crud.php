@@ -33,7 +33,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jenis_jabatans) && is_array($jenis_jabatans) && count($jenis_jabatans)):?>
 						<?php foreach($jenis_jabatans as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_JENIS_JABATAN))  echo  ($detail_riwayat->ID_JENIS_JABATAN==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
+							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_JENIS_JABATAN))  echo  ($detail_riwayat->ID_JENIS_JABATAN==$record->ID) ? "selected" : ""; ?>  <?php if(isset($jenis_jabatan))  echo  ($jenis_jabatan==$record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
@@ -47,7 +47,7 @@
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($recunor) && is_array($recunor) && count($recunor)):?>
 						<?php foreach($recunor as $record):?>
-							<option value="<?php echo $record->ID?>" <?php if(isset($detail_riwayat->ID_UNOR))  echo  (trim($detail_riwayat->ID_UNOR)==trim($record->ID)) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
+							<option value="<?php echo $record->KODE_INTERNAL?>" <?php if(isset($detail_riwayat->ID_UNOR))  echo  (trim($detail_riwayat->ID_UNOR)==trim($record->KODE_INTERNAL)) ? "selected" : ""; ?> <?php if(isset($detail_riwayat->ID_JENIS_JABATAN))  echo  ($jenis_jabatan == $record->ID) ? "selected" : ""; ?>><?php echo $record->NAMA_UNOR; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
