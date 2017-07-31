@@ -569,7 +569,7 @@ class Kepegawaian extends Admin_Controller
                 
                 $btn_actions = array();
                 $btn_actions  [] = "
-                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/profile/".$record->ID."'  data-toggle='tooltip' title='Lihat Profile'><span class='fa-stack'>
 					   <i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-eye fa-stack-1x fa-inverse'></i>
 					   	</span>
@@ -577,7 +577,7 @@ class Kepegawaian extends Admin_Controller
                 ";
                 if($this->auth->has_permission("Pegawai.Kepegawaian.Edit")){
                 $btn_actions  [] = "
-                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."' data-toggle='tooltip' title='Ubah data'><span class='fa-stack'>
 					   	<i class='fa fa-square fa-stack-2x'></i>
 					   	<i class='fa fa-pencil fa-stack-1x fa-inverse'></i>
 					   	</span>

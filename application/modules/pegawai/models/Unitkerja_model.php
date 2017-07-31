@@ -54,10 +54,16 @@ class Unitkerja_model extends BF_Model
      *
      * @return void
      */
-    public function __construct()
+    protected $CI;
+   	protected $UNOR_ID;
+	function __construct()
     {
-        parent::__construct();
-    }
+		$this->CI = &get_instance();
+		if($this->CI->auth->role_id() =="5"){
+			$this->load->model('pegawai/pegawai_model');
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
+		}
+    }//end __construct
     public function find_all($satker = "")
 	{
 		
@@ -291,6 +297,9 @@ class Unitkerja_model extends BF_Model
 	}
 	public function count_satker()
 	{
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(ID = '".$this->UNOR_ID."' or ESELON_1 = '".$this->UNOR_ID."' or ESELON_2 = '".$this->UNOR_ID."' or ESELON_3 = '".$this->UNOR_ID."' or ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		
 		if(empty($this->selects))
 		{

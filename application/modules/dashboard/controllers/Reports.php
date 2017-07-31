@@ -135,6 +135,7 @@ class reports extends Admin_Controller
 		endif;
 		Template::set('jsonjk', json_encode($jsonjk));
 		// pensiun pertahun
+		// belum di kasih filter buat role executive
 		$pensiuntahun = $this->pegawai_model->stats_pensiun_pertahun();
 		$index = 0;
 		foreach($pensiuntahun as &$row){
@@ -152,6 +153,7 @@ class reports extends Admin_Controller
 		}
 		Template::set('data_jumlah_pegawai_per_golongan', json_encode($data_jumlah_pegawai_per_golongan));
 		
+		// belum di kasih filter buat role executive
 		$data_bup_per_range_umur = $this->pegawai_model->get_bup_per_range_umur(); 
 		$index = 0;
 		foreach($data_bup_per_range_umur as &$row){

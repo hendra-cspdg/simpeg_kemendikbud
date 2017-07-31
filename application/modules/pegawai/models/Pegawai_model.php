@@ -398,7 +398,9 @@ class Pegawai_model extends BF_Model
 	}
 	public function grupbypendidikan()
 	{
-		 
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		if(empty($this->selects))
 		{
 			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,count("PENDIDIKAN_ID") as jumlah');
@@ -408,33 +410,48 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('tkpendidikan.NAMA');
 		$this->db->group_by('tkpendidikan.ID');
 		$this->db->order_by('tkpendidikan.ID',"ASC");
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
 	public function grupbyjk()
 	{
-		 
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		if(empty($this->selects))
 		{
 			$this->select('pegawai.JENIS_KELAMIN,count(pegawai."JENIS_KELAMIN") as jumlah');
 		}
 		$this->db->group_by('pegawai.JENIS_KELAMIN');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
 	public function count_pensiun(){
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
+		}		
 		$this->db->select('pegawai.*');
 		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
+		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
 		return parent::count_all();
 	}
 	public function find_all_pensiun(){
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) as umur');
 		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
 	public function find_pentiunpertahun(){
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		$this->db->select('EXTRACT(YEAR FROM "TMT_PENSIUN") TAHUN,count("ID") as jumlah');
 		$this->db->where('TMT_PENSIUN IS NOT NULL');
 		$this->db->group_by('EXTRACT(YEAR FROM "TMT_PENSIUN")');
+		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
 		return parent::find_all();
 	}
 	public function stats_pensiun_pertahun($tahun_kedepan=5){

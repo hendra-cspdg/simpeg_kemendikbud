@@ -58,13 +58,21 @@ class Golongan_model extends BF_Model
      *
      * @return void
      */
-    public function __construct()
+    protected $CI;
+   	protected $UNOR_ID;
+	function __construct()
     {
-        parent::__construct();
-    }
+		$this->CI = &get_instance();
+		if($this->CI->auth->role_id() =="5"){
+			$this->load->model('pegawai/pegawai_model');
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
+		}
+    }//end __construct
     public function grupbygolongan()
 	{
-		 
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}
 		if(empty($this->selects))
 		{
 			$this->select('golongan.NAMA,count(pegawai."GOL_ID") as jumlah');
@@ -75,6 +83,7 @@ class Golongan_model extends BF_Model
 		$this->db->group_by('golongan.NAMA');
 		$this->db->group_by('golongan.ID');
 		$this->db->order_by('golongan.ID',"ASC");
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
 }
