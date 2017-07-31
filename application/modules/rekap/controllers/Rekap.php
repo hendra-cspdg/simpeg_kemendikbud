@@ -81,7 +81,7 @@ class rekap extends Admin_Controller
 		Template::set_view('rekap/golongan_usia');
 		Template::render();
 	} 
-	public function jenis_kelamin_per_usia(){
+	public function gender_usia(){
 		$unit_id = $this->input->get("unit_id");
 		$satker_id = null;
 		if($unit_id){
