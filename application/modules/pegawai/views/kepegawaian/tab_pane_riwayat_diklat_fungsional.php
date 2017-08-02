@@ -17,10 +17,13 @@
             <table class="table table-datatable">
             <thead>
                 <tr>
-                    <th width='100px' >No</th>
-                    <th>NAMA Diklat</th>
+                    <th width='20px' >No</th>
+                    <th>Jenis Diklat</th>
+                    <th>Nama Diklat</th>
                     <th width='100px' >Tanggal</th>
                     <th width='100px' >Tahun</th>
+                    <th>Institusi <BR> Penyelenggara</th>
+                    <th>Nomor<BR> Sertifikat</th>
                     <th width='100px' align="center">AKSI</th>
                 </tr>
             </thead>
@@ -52,7 +55,7 @@
 				serverSide: true,
 				"columnDefs": [
 					//{"className": "dt-center", "targets": "_all"}
-					{"className": "dt-center", "targets": [0,2,3,4]}
+					{"className": "dt-center", "targets": [0,3,7]}
 				],
 				ajax: {
 					url: "<?php echo base_url() ?>pegawai/diklatfungsional/ajax_list",
