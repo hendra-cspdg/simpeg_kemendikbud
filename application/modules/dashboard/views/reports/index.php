@@ -9,6 +9,7 @@
 	$menu = $this->uri->segment(3);
 	$submenu = $this->uri->segment(4);
 ?>
+
 <div class="row">
 	
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -56,6 +57,51 @@
         </div>
         
 </div>
+
+<div class="row " style="margin:10px 0px;">
+	<div class="col-md-12x">
+		<table class="filter_unit_kerja" sborder=0 width='100%' cellpadding="10">
+				<tr>
+					<td><label for="example-text-input" class="col-form-label">Unit Kerja</label></td>
+				</tr>	
+				<tr>
+					<td colspan=2>
+						<select id="unit_id_key" name="unit_id_key" width="100%" class=" col-md-10 format-control">
+							<?php 
+								if($selectedSatker){
+									echo "<option value='$selectedSatker->ID' SELECTED>$selectedSatker->NAMA_UNOR_FULL</option>";
+								}
+							?>
+						</select>
+					</td>
+				</tr>
+		</table>		
+	</div>
+</div>
+<script type="text/javascript">
+	$("#unit_id_key").select2({
+		placeholder: 'Cari Unit Kerja...',
+		width: '100%',
+		minimumInputLength: 0,
+		allowClear: true,
+		ajax: {
+			url: '<?php echo site_url("pegawai/kepegawaian/ajax_unit_list");?>',
+			dataType: 'json',
+			data: function(params) {
+				return {
+					term: params.term || '',
+					page: params.page || 1
+				}
+			},
+			cache: true
+		}
+	}).change(function(){
+		if($(this).val()){
+			window.location = "?unit_id="+$(this).val();
+		}
+		else window.location = "?";
+	});
+</script>	
 <div class="row">
 	<div class="col-md-8">
 		<div class="box box-success">
@@ -253,68 +299,6 @@ var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
 </script>
 <script type="text/javascript">  
 var colors=    [ '#FCD202', '#B0DE09','#FF6600', '#0D8ECF', '#2A0CD0', '#CD0D74', '#CC0000', '#00CC00', '#0000CC', '#DDDDDD', '#999999', '#333333', '#990000']
-var input=<?php echo $jsonpangkat; ?>;
-//inject color attribute with value
-for (i = 0; i < input.length; i++) {input[i].color = colors[i];}	
-
-	 var chart = AmCharts.makeChart("chartgolongan", {
-				  "type": "serial",
-				  "dataProvider":  input,
-				   "theme": "light",
-				  "categoryField": "NAMA",
-				  "rotate": false,
-				  "startDuration": 0,
-				  "depth3D": 2,
-				  "angle": 30,
-				  
-				  "chartCursor": {
-					  "categoryBalloonEnabled": false,
-					  "cursorAlpha": 0,
-					  "zoomable": false,
-				  },    
-				   "categoryAxis": {
-					 "gridPosition": "start",
-					 "labelRotation": 45,
-					 "axisAlpha": 0,
-					 "autoWrap":false,
-					 minHorizontalGap:0,
-				   },
-				   
-					"titles" : [{
-						  "text": "NAMA"
-					  }, {
-						  "text": "",
-						  "bold": false
-					  }],
-				  "trendLines": [],
-				  "graphs": [
-					  {
-						  "balloonText": "<b>[[category]]: [[value]]</b>",
-						  "colorField": "color",
-						  "fillAlphas": 0.8,
-						  "id": "AmGraph-1",
-						  "lineAlpha": 0.2,
-						  "type": "column",
-						  "valueField": "jumlah"
-					  } 
-				  ],
-				  "guides": [],
-				  "valueAxes": [
-					  {
-						  "id": "ValueAxis-1",
-						  "position": "top",
-						  "axisAlpha": 0
-					  }
-				  ],
-				  "allLabels": [],
-				  "balloon": {},
-				  "titles": [],
-				  
-				  "export": {
-					  "enabled": true
-				   }
-
-	});
 
 var inputpendidikan = <?php echo $jsonpendidikan; ?>;
 //inject color attribute with value
@@ -519,7 +503,7 @@ for (i = 0; i < inputpendidikan.length; i++) {inputpendidikan[i].color = colors[
 
 	});
 	
-	 var chartRekapGolongan =  AmCharts.makeChart("chart_rekap_pegawai_pangkat_golongan", {
+	 var chartRekapGolongan =  AmCharts.makeChart("chartgolongan", {
 				  "type": "serial",
 				  "dataProvider":   <?php echo $data_jumlah_pegawai_per_golongan; ?>,
 				   "theme": "light",

@@ -281,6 +281,10 @@ class Pegawai_model extends BF_Model
 		if($this->CI->auth->role_id() =="5"){
 			$this->UNOR_ID = $this->getunor_id($this->CI->auth->username());
 		}
+		$selected_unit = $this->CI->input->get('unit_id');
+		if($selected_unit){
+			$this->UNOR_ID = $selected_unit;
+		}
     }//end __construct
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
@@ -358,11 +362,15 @@ class Pegawai_model extends BF_Model
 		return parent::find_all();
 	}
 	// update yanarazor
-	public function find_grupagama($eselon2 ="")
-	{
+	public function find_grupagama($satker_id){		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
+		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.AGAMA_ID,agama.NAMA AS label,count(pegawai."AGAMA_ID") as value');
+			$this->select($this->table_name .'.AGAMA_ID,agama.NAMA AS label,sum(case when vw."ID" is not null  then 1 else 0  end) as value');
 		}
 		if($eselon2 != ""){
 			$this->db->where('"UNOR_ID" LIKE \''.strtoupper($eselon2).'%\'');
@@ -372,16 +380,21 @@ class Pegawai_model extends BF_Model
 		$this->db->join('agama', 'pegawai.AGAMA_ID = agama.ID', 'left');
 		return parent::find_all();
 	}
-	public function group_by_range_umur(){
-		$this->db->select('sum(CASE  WHEN "AGE" < 25 THEN 1 else 0 END) "<25"
-											,sum(CASE  WHEN "AGE" >= 25  AND "AGE" <= 30 THEN 1 else 0 END) "25-30"
-											,sum(CASE  WHEN "AGE" >= 31  AND "AGE" <= 35 THEN 1 else 0 END) "31-35"
-											,sum(CASE  WHEN "AGE" >= 36  AND "AGE" <= 40 THEN 1 else 0 END) "36-40"
-											,sum(CASE  WHEN "AGE" >= 41  AND "AGE" <= 45 THEN 1 else 0 END) "41-45"
-											,sum(CASE  WHEN "AGE" >= 46  AND "AGE" <= 50 THEN 1 else 0 END) "46-50"
-											,sum(CASE WHEN "AGE" > 50 THEN 1 END) ">50"
+	public function group_by_range_umur($satker_id){		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
+		$this->db->select('	 sum(CASE WHEN vw."ID" is not null AND  "AGE" < 25 THEN 1 else 0 END) "<25"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 25  AND "AGE" <= 30 THEN 1 else 0 END) "25-30"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 31  AND "AGE" <= 35 THEN 1 else 0 END) "31-35"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 36  AND "AGE" <= 40 THEN 1 else 0 END) "36-40"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 41  AND "AGE" <= 45 THEN 1 else 0 END) "41-45"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 46  AND "AGE" <= 50 THEN 1 else 0 END) "46-50"
+							,sum(CASE WHEN vw."ID" is not null AND  "AGE" > 50 THEN 1 END) ">50"
 										',false);
 		$this->db->from("daftar_pegawai");
+		$this->db->join("vw_unit_list as vw","daftar_pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		return $this->db->get()->result('array');								
 	}
 	public function grupbygolongan()
@@ -408,34 +421,38 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by('JABATAN_ID');
 		return parent::find_all();
 	}
-	public function grupbypendidikan()
-	{
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+	public function grupbypendidikan($satker_id){		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
 		}
+
 		if(empty($this->selects))
 		{
-			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,count("PENDIDIKAN_ID") as jumlah');
+			$this->select('tkpendidikan.NAMA as NAMA_PENDIDIKAN,sum(case when vw."ID" is not null  then 1 else 0  end) as jumlah');
 		}
 		$this->db->join('pendidikan', 'pegawai.PENDIDIKAN_ID = pendidikan.ID', 'left');
 		$this->db->join('tkpendidikan', 'pendidikan.TINGKAT_PENDIDIKAN_ID = tkpendidikan.ID', 'left');
+		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		$this->db->group_by('tkpendidikan.NAMA');
 		$this->db->group_by('tkpendidikan.ID');
 		$this->db->order_by('tkpendidikan.ID',"ASC");
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::find_all();
 	}
-	public function grupbyjk()
-	{
+	public function grupbyjk($satker_id){		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
 		if($this->CI->auth->role_id() =="5"){
 			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
 		}
 		if(empty($this->selects))
 		{
-			$this->select('pegawai.JENIS_KELAMIN,count(pegawai."JENIS_KELAMIN") as jumlah');
+			$this->select('pegawai.JENIS_KELAMIN,sum(case when vw."ID" is not null  then 1 else 0  end) as jumlah');
 		}
 		$this->db->group_by('pegawai.JENIS_KELAMIN');
-		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
+		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		return parent::find_all();
 	}
 	public function count_pensiun(){
@@ -466,19 +483,19 @@ class Pegawai_model extends BF_Model
 		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
 		return parent::find_all();
 	}
-	public function stats_pensiun_pertahun($tahun_kedepan=5){
-		$where_unor = "";
-		if($this->CI->auth->role_id() =="5" || true){
-			$where_unor = "AND (unit.\"ID\" = '".$this->UNOR_ID."' or unit.\"ESELON_1\" = '".$this->UNOR_ID."' or unit.\"ESELON_2\" = '".$this->UNOR_ID."' or unit.\"ESELON_3\" = '".$this->UNOR_ID."' or unit.\"ESELON_4\" = '".$this->UNOR_ID."')";
+	public function stats_pensiun_pertahun($satker_id,$tahun_kedepan=5){		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
 		}
-		$db_stats =$this->db->query('
-			select perkiraan_tahun_pensiun,count(*)
-				as total from (
-				select "TGL_LAHIR","NIP_BARU","BUP","NAMA", date_part(\'year\', "TGL_LAHIR")+"BUP" as perkiraan_tahun_pensiun 
-					from hris.pegawai
-					left join hris.unitkerja as unit on pegawai."UNOR_ID" = unit."ID"
-					where 1=1  '.$where_unor.'
 
+		$db_stats =$this->db->query('
+			select perkiraan_tahun_pensiun,sum(CASE  WHEN  temp."ID" is not null THEN 1 else 0 END) 
+				as total from (
+				select vw."ID","TGL_LAHIR","NIP_BARU","BUP","NAMA", date_part(\'year\', "TGL_LAHIR")+"BUP" as perkiraan_tahun_pensiun 
+					from hris.pegawai
+					left join vw_unit_list as vw on pegawai."UNOR_ID" = vw."ID" '.$where_clause.'
+					where 1=1  
 				) as temp
 				group by perkiraan_tahun_pensiun
 				order by  perkiraan_tahun_pensiun asc 
@@ -538,10 +555,15 @@ class Pegawai_model extends BF_Model
 		return  $output;
 	}	
 
-	public function get_jumlah_pegawai_per_golongan(){
+	public function get_jumlah_pegawai_per_golongan($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
 		return $this->db->query('
-			select golongan."ID" as "id",golongan."NAMA" as "nama",count(*) as total from hris.golongan
+			select golongan."ID" as "id",golongan."NAMA" as "nama",count(vw."ID") as total from hris.golongan
 			left join hris.pegawai on  golongan."ID" = pegawai."GOL_ID"
+			left join vw_unit_list vw on pegawai."UNOR_ID"= vw."ID" '.$where_clause.'
 			group by golongan."ID",golongan."NAMA"
 			order by golongan."ID" asc 
 		')->result('array');
