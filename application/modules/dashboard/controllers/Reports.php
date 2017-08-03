@@ -8,7 +8,7 @@ class reports extends Admin_Controller
 
 	//--------------------------------------------------------------------
 
-
+	protected $CI;
 	/**
 	 * Constructor
 	 *
@@ -17,10 +17,21 @@ class reports extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		
+		$this->CI = &get_instance();
 		$this->lang->load('dashboard');
 		Template::set_block('sub_nav', 'reports/_sub_nav');
 		Assets::add_module_js('dashboard', 'dashboard.js');
+		$this->load->model('pegawai/unitkerja_model');
+		$unit_id = $this->input->get("unit_id");
+		
+		if($unit_id){
+			$satker = $this->unitkerja_model->find_unit('',$unit_id);
+			$nama_unor = array();
+			$this->satker_id= $satker->ID;
+
+			Template::set('selectedSatker', $satker);
+			
+		}
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -33,7 +44,7 @@ class reports extends Admin_Controller
 		$this->auth->restrict('Dashboard.Reports.View');
 		$this->load->model('pegawai/pegawai_model', null, true);
 		$this->load->model('golongan/golongan_model', null, true);
-		$this->load->model('pegawai/unitkerja_model');
+		
 		$recsatker = $this->unitkerja_model->count_satker();
 		Template::set('jmlsatker', $recsatker[0]->jumlah ? $recsatker[0]->jumlah : 0);
 		// jml pegawai
@@ -74,17 +85,10 @@ class reports extends Admin_Controller
 		endif;
 		Template::set('jsonpendidikan', json_encode($jsonpendidikan));
 		
-		$recordumur = $this->db->query('select sum(CASE  WHEN age < 25 THEN 1 END) "<25"
-											,sum(CASE  WHEN age >= 25  AND age <= 30 THEN 1 END) "25-30"
-											,sum(CASE  WHEN age >= 31  AND age <= 35 THEN 1 END) "31-35"
-											,sum(CASE  WHEN age >= 36  AND age <= 40 THEN 1 END) "36-40"
-											,sum(CASE  WHEN age >= 41  AND age <= 45 THEN 1 END) "41-45"
-											,sum(CASE  WHEN age >= 46  AND age <= 50 THEN 1 END) "46-50"
-											,sum(CASE WHEN age > 50 THEN 1 END) ">50"
-										FROM (
-											SELECT EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) age
-											FROM hris.pegawai
-											) t',array($parent))->result('array');
+		if($this->CI->auth->role_id() =="5"){
+			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		}
+		$recordumur = $this->pegawai_model->group_by_range_umur();
 		
 		$colors=    array('#FCD202', '#B0DE09','#FF6600', '#0D8ECF', '#2A0CD0', '#CD0D74', '#CC0000', '#00CC00', '#0000CC', '#DDDDDD', '#999999', '#333333', '#990000');
 		$ajsonumur = array();

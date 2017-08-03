@@ -9,16 +9,18 @@
 	$menu = $this->uri->segment(3);
 	$submenu = $this->uri->segment(4);
 ?>
-<div class="row margin">
-	<div class="col-md-12">
-		<table class="filter_pegawai" sborder=0 width='100%' cellpadding="10">
+<div class="row " style="margin:10px 0px;">
+	<div class="col-md-12x">
+		<table class="filter_unit_kerja" sborder=0 width='100%' cellpadding="10">
 				<tr>
-					<td width="200px"><label for="example-text-input" class="col-form-label">Satuan Kerja</label></td>
+					<td><label for="example-text-input" class="col-form-label">Unit Kerja</label></td>
+				</tr>	
+				<tr>
 					<td colspan=2>
 						<select id="unit_id_key" name="unit_id_key" width="100%" class=" col-md-10 format-control">
 							<?php 
 								if($selectedSatker){
-									echo "<option value='$selectedSatker->ID' SELECTED>$selectedSatker->NAMA_UNOR</option>";
+									echo "<option value='$selectedSatker->ID' SELECTED>$selectedSatker->NAMA_UNOR_FULL</option>";
 								}
 							?>
 						</select>
@@ -35,7 +37,7 @@
 		minimumInputLength: 0,
 		allowClear: true,
 		ajax: {
-			url: '<?php echo site_url("pegawai/kepegawaian/ajax_satker_list");?>',
+			url: '<?php echo site_url("pegawai/kepegawaian/ajax_unit_list");?>',
 			dataType: 'json',
 			data: function(params) {
 				return {

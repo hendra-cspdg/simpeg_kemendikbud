@@ -837,23 +837,25 @@ class Kepegawaian extends Admin_Controller
 		$term = $this->input->get('term');
 		$page = $this->input->get('page');
 		$this->db->flush_cache();
-		$this->db->like("lower(\"NAMA_UNOR\")",strtolower($term),"BOTH");
-		$this->db->order_by("NAMA_UNOR","ASC");
-		$data = $this->unitkerja_model->find_satker();
+		$data = $this->unitkerja_model->find_unit($term);
 		
 		$output = array();
 		$output['results'] = array();
 		foreach($data as $row){
 			$nama_unor = array();
-			if($row->grand_name){
-				$nama_unor[] = $row->grand_name;
+			if($row->NAMA_UNOR_ESELON_1){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_1;
 			}
-			if($row->parent_name){
-				$nama_unor[] = $row->parent_name;
+			if($row->NAMA_UNOR_ESELON_2){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_2;
 			}
-			if($row->NAMA_UNOR){
-				$nama_unor[] = $row->NAMA_UNOR;
+			if($row->NAMA_UNOR_ESELON_3){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_3;
 			}
+			if($row->NAMA_UNOR_ESELON_4){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_4;
+			}
+			
 			$output['results'] [] = array(
 				'id'=>$row->ID,
 				'text'=>implode(" - ",$nama_unor)

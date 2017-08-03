@@ -295,6 +295,37 @@ class Unitkerja_model extends BF_Model
 		$this->unitkerja_model->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja)');
 		return parent::find_all();
 	}
+	public function find_unit($key='',$id='')
+	{
+		$this->db->from('vw_unit_list vw');
+		$this->db->like('lower(vw."NAMA_UNOR")',strtolower($key),"BOTH");
+		if($id!=''){
+			$this->db->where('vw."ID"',$id);
+		}
+		$this->db->order_by('vw."NAMA_UNOR_ESELON_1"',"ASC");
+		$this->db->order_by('vw."NAMA_UNOR_ESELON_2"',"ASC");
+		$this->db->order_by('vw."NAMA_UNOR_ESELON_3"',"ASC");
+		$this->db->order_by('vw."NAMA_UNOR_ESELON_4"',"ASC");
+		if($id!=''){ 
+			$row=  $this->db->get()->first_row();
+			$nama_unor = array();
+			if($row->NAMA_UNOR_ESELON_1){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_1;
+			}
+			if($row->NAMA_UNOR_ESELON_2){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_2;
+			}
+			if($row->NAMA_UNOR_ESELON_3){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_3;
+			}
+			if($row->NAMA_UNOR_ESELON_4){
+				$nama_unor[] = $row->NAMA_UNOR_ESELON_4;
+			}
+			$row->NAMA_UNOR_FULL = implode(" - ",$nama_unor);
+			return $row;
+		}
+		return $this->db->get()->result();
+	}
 	public function count_satker()
 	{
 		if($this->CI->auth->role_id() =="5"){
