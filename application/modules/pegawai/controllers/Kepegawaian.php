@@ -11,7 +11,7 @@ class Kepegawaian extends Admin_Controller
     protected $permissionView   = 'Pegawai.Kepegawaian.View';
     protected $permissionAddpendidikan   = 'Pegawai.Kepegawaian.Addpendidikan';
     protected $permissionUbahfoto   = 'Pegawai.Kepegawaian.Ubahfoto';
-
+	public $UNOR_ID = null;
     /**
      * Constructor
      *
@@ -20,7 +20,11 @@ class Kepegawaian extends Admin_Controller
     public function __construct()
     {
         parent::__construct();
-        
+        $CI = &get_instance();
+		
+		if($CI->auth->role_id() =="5"){
+			$this->UNOR_ID = $this->getunor_id($this->CI->auth->username());
+		}
         
         $this->load->model('pegawai/pegawai_model');
         $this->load->model('pegawai/riwayat_pendidikan_model');
@@ -479,6 +483,8 @@ class Kepegawaian extends Admin_Controller
      * updates, else false.
      */
     public function getdata(){
+		
+
 		$draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -547,16 +553,28 @@ class Kepegawaian extends Admin_Controller
 				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
 			}
 		}
+		
 		$this->db->stop_cache();
 		$output=array();
 		$output['draw']=$draw;
 		$total= $this->pegawai_model->count_all();
+		$orders = $this->input->post('order');
+		foreach($orders as $order){
+			if($order['column']==1){
+				$this->pegawai_model->order_by("NIP_BARU",$order['dir']);
+			}
+			if($order['column']==2){
+				$this->pegawai_model->order_by("NAMA",$order['dir']);
+			}
+			if($order['column']==3){
+				$this->pegawai_model->order_by("NAMA_UNOR",$order['dir']);
+			}
+		}
 		$output['recordsTotal']= $output['recordsFiltered']=$total;
 		$output['data']=array();
 		
-		//die($start."masuk".$start);
 		$this->pegawai_model->limit($length,$start);
-		$records=$this->pegawai_model->find_all_by_satker_id();
+		$records=$this->pegawai_model->find_all($this->UNOR_ID);
 
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
@@ -565,7 +583,7 @@ class Kepegawaian extends Admin_Controller
                 $row []  = $nomor_urut.".";
                 $row []  = $record->NIP_BARU;
                 $row []  = $record->NAMA;
-                $row []  = $record->NAMA_UNOR."<br>".$record->NAMA_SATKER;
+                $row []  = $record->NAMA_UNOR_FULL;
                 
                 $btn_actions = array();
                 $btn_actions  [] = "

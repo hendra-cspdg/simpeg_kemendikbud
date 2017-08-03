@@ -150,7 +150,7 @@ $("#unit_id_key").select2({
 	}
 });
 $table = $(".table-data").DataTable({
-	ordering: false,
+	
 	dom : "<'row'<'col-sm-6'><'col-sm-6'>>" +
 	"<'row'<'col-sm-12'tr>>" +
 	"<'row'<'col-sm-2'l><'col-sm-3'i><'col-sm-7'p>>",

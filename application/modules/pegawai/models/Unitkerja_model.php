@@ -308,20 +308,7 @@ class Unitkerja_model extends BF_Model
 		$this->db->order_by('vw."NAMA_UNOR_ESELON_4"',"ASC");
 		if($id!=''){ 
 			$row=  $this->db->get()->first_row();
-			$nama_unor = array();
-			if($row->NAMA_UNOR_ESELON_1){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_1;
-			}
-			if($row->NAMA_UNOR_ESELON_2){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_2;
-			}
-			if($row->NAMA_UNOR_ESELON_3){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_3;
-			}
-			if($row->NAMA_UNOR_ESELON_4){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_4;
-			}
-			$row->NAMA_UNOR_FULL = implode(" - ",$nama_unor);
+			
 			return $row;
 		}
 		return $this->db->get()->result();

@@ -289,40 +289,31 @@ class Pegawai_model extends BF_Model
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
-	public function count_all() {
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
-		}		
-		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
-		$this->db->join("hris.unitkerja as satker",'unit.UNOR_INDUK=satker.ID', 'left');
+	public function count_all($satker_id){
+		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
+		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
+		$this->db->where('vw."ID" is not null');
 		
 		return parent::count_all();
 	}
-	public function find_all(){
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')"); 
+	public function find_all($satker_id){
+		
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
 		}
-		$this->db->select('pegawai.*',false);
-		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
-		$this->db->join("hris.unitkerja as satker",'unit.UNOR_INDUK=satker.ID', 'left');
+		$this->db->select('pegawai.*,vw."NAMA_UNOR_FULL"',false);
+		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
+		$this->db->where('vw."ID" is not null');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
 	
-	public function find_all_by_satker_id($id=null){
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
-		}
-		$this->db->select('pegawai.*,satker."NAMA_UNOR" AS "NAMA_SATKER", unit."NAMA_UNOR",unit."ID" as "UNIT_ID" ',false);
-		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
-		$this->db->join("hris.unitkerja as satker",'unit.UNOR_INDUK=satker.ID', 'left');
-		if($id){
-			$this->db->where('unit."DIATASAN_ID"',$id);
-		}
-		$this->db->order_by("NAMA","ASC");
-		return parent::find_all();
-
-	}
+	
 	public function find_kelompokjabatan(){
 		$this->db->select('pegawai."ID",pegawai."NAMA","NIP_BARU",golongan."NAMA"  as "NAMA_GOLONGAN"',false);
 		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
