@@ -78,10 +78,12 @@ class Diklatfungsional extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
+                $row []  = $record->JENIS_DIKLAT;
                 $row []  = $record->NAMA_KURSUS;
                 $row []  = $record->TANGGAL_KURSUS;
                 $row []  = $record->TAHUN;
-                
+                $row []  = $record->INSTITUSI_PENYELENGGARA;
+                $row []  = $record->NOMOR_SERTIPIKAT;
                 $btn_actions = array();
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."pegawai/diklatfungsional/edit/".$PNS_ID."/".$record->DIKLAT_FUNGSIONAL_ID."'  data-toggle='modal' title='Ubah Data'><span class='fa-stack'>
