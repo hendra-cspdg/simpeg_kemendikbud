@@ -54,16 +54,7 @@ class Unitkerja_model extends BF_Model
      *
      * @return void
      */
-    protected $CI;
-   	protected $UNOR_ID;
-	function __construct()
-    {
-		$this->CI = &get_instance();
-		if($this->CI->auth->role_id() =="5"){
-			$this->load->model('pegawai/pegawai_model');
-			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
-		}
-    }//end __construct
+    
     public function find_all($satker = "")
 	{
 		
@@ -313,12 +304,11 @@ class Unitkerja_model extends BF_Model
 		}
 		return $this->db->get()->result();
 	}
-	public function count_satker()
+	public function count_satker($unor_id='')
 	{
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(ID = '".$this->UNOR_ID."' or ESELON_1 = '".$this->UNOR_ID."' or ESELON_2 = '".$this->UNOR_ID."' or ESELON_3 = '".$this->UNOR_ID."' or ESELON_4 = '".$this->UNOR_ID."')");
+		if($unor_id !=''){
+			$this->db->where("(ID = '".$unor_id."' or ESELON_1 = '".$unor_id."' or ESELON_2 = '".$unor_id."' or ESELON_3 = '".$unor_id."' or ESELON_4 = '".$unor_id."')");
 		}
-		
 		if(empty($this->selects))
 		{
 			$this->select('count(distinct "UNOR_INDUK") AS jumlah');

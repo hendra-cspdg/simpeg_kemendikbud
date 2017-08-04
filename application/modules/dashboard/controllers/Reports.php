@@ -7,7 +7,7 @@ class reports extends Admin_Controller
 {
 
 	//--------------------------------------------------------------------
-	public $satker_id = null;
+	public $UNOR_ID = null;
 	protected $CI;
 	/**
 	 * Constructor
@@ -22,16 +22,23 @@ class reports extends Admin_Controller
 		Template::set_block('sub_nav', 'reports/_sub_nav');
 		Assets::add_module_js('dashboard', 'dashboard.js');
 		$this->load->model('pegawai/unitkerja_model');
+		$this->load->model('pegawai/pegawai_model', null, true);
+
+		//CEK DARI INPUTAN FILTER UNOR
 		$unit_id = $this->input->get("unit_id");
-		
 		if($unit_id){
 			$satker = $this->unitkerja_model->find_unit('',$unit_id);
 			
 			$nama_unor = array();
-			$this->satker_id= $satker->ID;
+			$this->UNOR_ID= $satker->ID;
 			
 			Template::set('selectedSatker', $satker);
 			
+		}
+		//Jika ada role executive ?
+		if($this->CI->auth->role_id() =="5"){
+			//???
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
 		}
 	}
 	//--------------------------------------------------------------------
@@ -43,21 +50,19 @@ class reports extends Admin_Controller
 	public function index()
 	{
 		$this->auth->restrict('Dashboard.Reports.View');
-		$this->load->model('pegawai/pegawai_model', null, true);
-		$this->load->model('golongan/golongan_model', null, true);
 		
-		$recsatker = $this->unitkerja_model->count_satker();
+		$recsatker = $this->unitkerja_model->count_satker($this->UNOR_ID);
 		Template::set('jmlsatker', $recsatker[0]->jumlah ? $recsatker[0]->jumlah : 0);
 		// jml pegawai
 		$total= $this->pegawai_model->count_all();
 		Template::set('totalpegawai', $total);
-		$jmlpensiun = $this->pegawai_model->count_pensiun($this->satker_id); 
+		$jmlpensiun = $this->pegawai_model->count_pensiun($this->UNOR_ID); 
 		Template::set('jmlpensiun', $jmlpensiun);
 
 		
 		
 		$jsonpendidikan = array();
-		$recordpendidikan = $this->pegawai_model->grupbypendidikan($this->satker_id); 
+		$recordpendidikan = $this->pegawai_model->grupbypendidikan($this->UNOR_ID); 
 		$dataprov = array();
 		if (isset($recordpendidikan) && is_array($recordpendidikan) && count($recordpendidikan)) :
 			foreach ($recordpendidikan as $record) :
@@ -71,10 +76,7 @@ class reports extends Admin_Controller
 		endif;
 		Template::set('jsonpendidikan', json_encode($jsonpendidikan));
 		
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
-		}
-		$recordumur = $this->pegawai_model->group_by_range_umur($this->satker_id);
+		$recordumur = $this->pegawai_model->group_by_range_umur($this->UNOR_ID);
 		
 		$colors=    array('#FCD202', '#B0DE09','#FF6600', '#0D8ECF', '#2A0CD0', '#CD0D74', '#CC0000', '#00CC00', '#0000CC', '#DDDDDD', '#999999', '#333333', '#990000');
 		$ajsonumur = array();
@@ -88,11 +90,11 @@ class reports extends Admin_Controller
 		Template::set('jsonumur', json_encode($ajsonumur));
 		
 		// agama
-		$agamas = $this->pegawai_model->find_grupagama($this->satker_id);
+		$agamas = $this->pegawai_model->find_grupagama($this->UNOR_ID);
 		Template::set('agamas', $agamas);
 		
 		// jenis kelamin
-		$jks = $this->pegawai_model->grupbyjk($this->satker_id);
+		$jks = $this->pegawai_model->grupbyjk($this->UNOR_ID);
 		$jsonjk = array();
 		$datajk = array();
 		if (isset($jks) && is_array($jks) && count($jks)) :
@@ -108,7 +110,7 @@ class reports extends Admin_Controller
 		Template::set('jsonjk', json_encode($jsonjk));
 		// pensiun pertahun
 		// belum di kasih filter buat role executive
-		$pensiuntahun = $this->pegawai_model->stats_pensiun_pertahun($this->satker_id);
+		$pensiuntahun = $this->pegawai_model->stats_pensiun_pertahun($this->UNOR_ID);
 		
 		$index = 0;
 		foreach($pensiuntahun as &$row){
@@ -118,7 +120,7 @@ class reports extends Admin_Controller
 		Template::set('jsonpensiuntahun', json_encode($pensiuntahun));
 		
 		// rekap_pangkat_golongan
-		$data_jumlah_pegawai_per_golongan = $this->pegawai_model->get_jumlah_pegawai_per_golongan($this->satker_id);
+		$data_jumlah_pegawai_per_golongan = $this->pegawai_model->get_jumlah_pegawai_per_golongan($this->UNOR_ID);
 		
 		$index = 0;
 		foreach($data_jumlah_pegawai_per_golongan as &$row){

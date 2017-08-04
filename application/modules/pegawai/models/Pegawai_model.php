@@ -268,24 +268,7 @@ class Pegawai_model extends BF_Model
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
 
-    /**
-     * Constructor
-     *
-     * @return void
-     */
-   	protected $CI;
-   	protected $UNOR_ID;
-	function __construct()
-    {
-		$this->CI = &get_instance();
-		if($this->CI->auth->role_id() =="5"){
-			$this->UNOR_ID = $this->getunor_id($this->CI->auth->username());
-		}
-		$selected_unit = $this->CI->input->get('unit_id');
-		if($selected_unit){
-			$this->UNOR_ID = $selected_unit;
-		}
-    }//end __construct
+    
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
@@ -371,10 +354,10 @@ class Pegawai_model extends BF_Model
 		$this->db->join('agama', 'pegawai.AGAMA_ID = agama.ID', 'left');
 		return parent::find_all();
 	}
-	public function group_by_range_umur($satker_id){		
+	public function group_by_range_umur($unor_id=''){		
 		$where_clause = '';
-		if($satker_id){
-			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		if($unor_id!=''){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$unor_id.'\' OR vw."ESELON_2" = \''.$unor_id.'\' OR vw."ESELON_3" = \''.$unor_id.'\' OR vw."ESELON_4" = \''.$unor_id.'\')' ;
 		}
 		$this->db->select('	 sum(CASE WHEN vw."ID" is not null AND  "AGE" < 25 THEN 1 else 0 END) "<25"
 							,sum(CASE WHEN vw."ID" is not null AND  "AGE" >= 25  AND "AGE" <= 30 THEN 1 else 0 END) "25-30"
@@ -388,34 +371,12 @@ class Pegawai_model extends BF_Model
 		$this->db->join("vw_unit_list as vw","daftar_pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		return $this->db->get()->result('array');								
 	}
-	public function grupbygolongan()
-	{
-		 
-		if(empty($this->selects))
-		{
-			$this->select('golongan.NAMA,count(pegawai."GOL_ID") as jumlah');
-		}
-		 
-		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
-		$this->db->group_by('pegawai.GOL_ID');
-		$this->db->group_by('golongan.NAMA');
-		return parent::find_all();
-	}
-	public function grupbypangkat()
-	{
-		 
-		if(empty($this->selects))
-		{
-			$this->select('count(pegawai."JABATAN_ID") as jumlah');
-		}
-		//$this->db->join('ref_jabatan', 'pegawai.JABATAN_ID = ref_jabatan.ID_JABATAN', 'left');
-		$this->db->group_by('JABATAN_ID');
-		return parent::find_all();
-	}
-	public function grupbypendidikan($satker_id){		
+
+	
+	public function grupbypendidikan($unor_id=''){		
 		$where_clause = '';
-		if($satker_id){
-			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		if($unor_id!=''){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$unor_id.'\' OR vw."ESELON_2" = \''.$unor_id.'\' OR vw."ESELON_3" = \''.$unor_id.'\' OR vw."ESELON_4" = \''.$unor_id.'\')' ;
 		}
 
 		if(empty($this->selects))
@@ -430,13 +391,10 @@ class Pegawai_model extends BF_Model
 		$this->db->order_by('tkpendidikan.ID',"ASC");
 		return parent::find_all();
 	}
-	public function grupbyjk($satker_id){		
+	public function grupbyjk($unor_id=''){		
 		$where_clause = '';
-		if($satker_id){
-			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
-		}
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+		if($unor_id!=''){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$unor_id.'\' OR vw."ESELON_2" = \''.$unor_id.'\' OR vw."ESELON_3" = \''.$unor_id.'\' OR vw."ESELON_4" = \''.$unor_id.'\')' ;
 		}
 		if(empty($this->selects))
 		{
@@ -446,32 +404,22 @@ class Pegawai_model extends BF_Model
 		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
 		return parent::find_all();
 	}
-	public function count_pensiun(){
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
-		}		
+	public function count_pensiun($unor_id=''){
+		if($unor_id!=''){
+			$this->db->where("(unitkerja.ID = '".$unor_id."' or unitkerja.ESELON_1 = '".$unor_id."' or unitkerja.ESELON_2 = '".$unor_id."' or unitkerja.ESELON_3 = '".$unor_id."' or unitkerja.ESELON_4 = '".$unor_id."')");
+		}
 		$this->db->select('pegawai.*');
 		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
-		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
+		$this->db->join("hris.unitkerja ","pegawai.UNOR_ID=unitkerja.ID", 'left');
 		return parent::count_all();
 	}
-	public function find_all_pensiun(){
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unitkerja.ID = '".$this->UNOR_ID."' or unitkerja.ESELON_1 = '".$this->UNOR_ID."' or unitkerja.ESELON_2 = '".$this->UNOR_ID."' or unitkerja.ESELON_3 = '".$this->UNOR_ID."' or unitkerja.ESELON_4 = '".$this->UNOR_ID."')");
+	public function find_all_pensiun($unor_id=''){
+		if($unor_id!=''){
+			$this->db->where("(unitkerja.ID = '".$unor_id."' or unitkerja.ESELON_1 = '".$unor_id."' or unitkerja.ESELON_2 = '".$unor_id."' or unitkerja.ESELON_3 = '".$unor_id."' or unitkerja.ESELON_4 = '".$unor_id."')");
 		}
 		$this->db->select('pegawai.*,unitkerja."NAMA_UNOR",EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) as umur');
 		$this->db->where('EXTRACT(YEAR FROM age(cast("TGL_LAHIR" as date))) > 58');
 		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
-		return parent::find_all();
-	}
-	public function find_pentiunpertahun(){
-		if($this->CI->auth->role_id() =="5"){
-			$this->db->where("(unit.ID = '".$this->UNOR_ID."' or unit.ESELON_1 = '".$this->UNOR_ID."' or unit.ESELON_2 = '".$this->UNOR_ID."' or unit.ESELON_3 = '".$this->UNOR_ID."' or unit.ESELON_4 = '".$this->UNOR_ID."')");
-		}
-		$this->db->select('EXTRACT(YEAR FROM "TMT_PENSIUN") TAHUN,count("ID") as jumlah');
-		$this->db->where('TMT_PENSIUN IS NOT NULL');
-		$this->db->group_by('EXTRACT(YEAR FROM "TMT_PENSIUN")');
-		$this->db->join("hris.unitkerja as unit","pegawai.UNOR_ID=unit.ID", 'left');
 		return parent::find_all();
 	}
 	public function stats_pensiun_pertahun($satker_id,$tahun_kedepan=5){		

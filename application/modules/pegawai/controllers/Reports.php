@@ -11,7 +11,7 @@ class Reports extends Admin_Controller
     protected $permissionView   = 'Pegawai.Kepegawaian.View';
     protected $permissionAddpendidikan   = 'Pegawai.Kepegawaian.Addpendidikan';
     protected $permissionUbahfoto   = 'Pegawai.Kepegawaian.Ubahfoto';
-
+	public $UNOR_ID = null;
     /**
      * Constructor
      *
@@ -35,6 +35,12 @@ class Reports extends Admin_Controller
         
         //load referensi
         $this->load->model('pegawai/jenis_jabatan_model');
+
+		//Jika ada role executive ?
+		if($this->CI->auth->role_id() =="5"){
+			//???
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
+		}
     }
 
     /**
@@ -189,7 +195,7 @@ class Reports extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->pegawai_model->order_by($iSortCol,$sSortCol);
-		$records=$this->pegawai_model->find_all_pensiun();
+		$records=$this->pegawai_model->find_all_pensiun($this->UNOR_ID);
 
 		/*Ketika dalam mode pencarian, berarti kita harus
 		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
@@ -200,10 +206,10 @@ class Reports extends Admin_Controller
 			$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($search).'%\'');
 			$this->pegawai_model->or_where('upper("NIP_BARU") LIKE \''.strtoupper($search).'%\'');
 			//$this->pegawai_model->or_where('NIP_BARU',$search);
-			$jum	= $this->pegawai_model->count_pensiun();
+			$jum	= $this->pegawai_model->count_pensiun($this->UNOR_ID);
 			$output['recordsTotal']=$output['recordsFiltered']=$jum;
 		}else{
-			$total= $this->pegawai_model->count_pensiun();
+			$total= $this->pegawai_model->count_pensiun($this->UNOR_ID);
 			$output['draw']=$draw;
 			$output['recordsTotal']= $output['recordsFiltered']=$total;
 			$output['data']=array();
@@ -259,7 +265,7 @@ class Reports extends Admin_Controller
     public function listpensiun()
     {	
     	$this->auth->restrict($this->permissionView);
-        $records = $this->pegawai_model->find_all_pensiun();
+        $records = $this->pegawai_model->find_all_pensiun($this->UNOR_ID);
         Template::set('records', $records);
     	Template::set('toolbar_title', "Estimasi Pegawai Pensiun");
 		
