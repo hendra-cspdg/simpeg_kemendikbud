@@ -507,43 +507,25 @@ class Pegawai_model extends BF_Model
 		return $tahuns;
 	}
 	public function get_duk_list($unit_id=null,$start,$length){
+		$output = new stdClass;
+		$this->db->start_cache();
 		if($unit_id){
-			$this->load->model("pegawai/unitkerja_model");
-			$this->unitkerja_model->where("ID",$unit_id);
-			$unor_data = $this->unitkerja_model->find_first_row();
-			
-			$ids  = array();
-			if($unor_data){
-				$this->unitkerja_model->getChildren($unor_data->ID ,$ids,$onlyID = true,$include_sub=TRUE,$includeMe=true,$first=true);
-			}
-			
-			$total = $this->db->from("hris.pegawai peg")->join("hris.unitkerja uk","peg.UNOR_ID=uk.ID","LEFT")->where_in("uk.\"ID\"",$ids)->get()->num_rows();
-			$data = $this->db->query('
-				SELECT
-					* FROM duk_list 
-					
-					where "UNITKERJA_ID" in ?					
-					LIMIT ? OFFSET ?
-			',array($ids,$length,$start))->result();
-			
-			$output = new stdClass;
-			$output->total = $total;
-			$output->data = $data;
+			$this->db->group_start();
+			$this->db->or_where("ESELON_1",$unit_id);
+			$this->db->or_where("ESELON_2",$unit_id);
+			$this->db->or_where("ESELON_3",$unit_id);
+			$this->db->or_where("ESELON_4",$unit_id);
+			$this->db->group_end();
 		}
-		else {
-			$total = $this->db->from("hris.pegawai")->get()->num_rows();
-			$data = $this->db->query('
-				SELECT
-					* FROM duk_list 				
-					LIMIT ? OFFSET ?
-			',array($length,$start))->result();
-			
-			$output = new stdClass;
-			$output->total = $total;
-			$output->data = $data;
-		}
-		
-		return  $output;
+		$this->db->from('vw_duk_list');
+		$this->db->stop_cache();
+		$total = $this->db->get()->num_rows();
+		$this->db->limit($length,$start);
+		$data = $this->db->get()->result();
+		$output->total = $total;
+		$output->data = $data;
+		$this->db->flush_cache();
+		return $output;
 	}	
 
 	public function get_jumlah_pegawai_per_golongan($satker_id){
