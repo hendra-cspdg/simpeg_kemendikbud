@@ -61,8 +61,7 @@ class Manage_application_model extends BF_Model
     public function __construct()
     {
         parent::__construct();
-		$this->old_schema = $this->db->schema;
-		$this->db->schema =  "webservice";
+		
     }
 
 	public function find_all(){
@@ -94,5 +93,20 @@ class Manage_application_model extends BF_Model
 		$this->db->schema = $this->old_schema;
 		return true;
 	}
-	
+	public function count_all(){
+		$this->db->schema = 'webservice';
+		return parent::count_all();
+	}
+	public function find($id){
+		$this->db->schema = 'webservice';
+		return parent::find($id);
+	}
+	public function update($id,$data){
+		$this->db->schema = 'webservice';
+		return parent::update($id,$data);
+	}
+	public function insert($data){
+		$this->db->schema = 'webservice';
+		return parent::insert($data);
+	}
 }

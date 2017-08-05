@@ -287,7 +287,14 @@ class Pegawai_model extends BF_Model
 		
 		$where_clause = '';
 		if($satker_id){
-			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+			if(is_array($satker_id) && sizeof($satker_id)>0){
+				$where_clause = 'AND ( 1=2 ';
+				foreach($satker_id as $u_id){
+					$where_clause .= ' OR vw."ESELON_1" = \''.$u_id.'\' OR vw."ESELON_2" = \''.$u_id.'\' OR vw."ESELON_3" = \''.$u_id.'\' OR vw."ESELON_4" = \''.$u_id.'\' ' ;
+				}
+				$where_clause .= ')';
+			}
+			else $where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
 		}
 		$this->db->select('pegawai.*,vw."NAMA_UNOR_FULL"',false);
 		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);

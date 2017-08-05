@@ -38,14 +38,6 @@ class Manage_application extends Admin_Controller
 		$output['recordsTotal']= $output['recordsFiltered']=$total;
 		$output['data']=array();
 
-
-		/*Jika $search mengandung nilai, berarti user sedang telah 
-		memasukan keyword didalam filed pencarian*/
-		if($search!=""){
-			$this->Manage_application_model->where('upper("name") LIKE \''.strtoupper($search).'%\'');
-            $this->Manage_application_model->or_where('upper("url") LIKE \''.strtoupper($search).'%\'');
-            $this->Manage_application_model->or_where('upper("description") LIKE \''.strtoupper($search).'%\'');
-		}
 		$this->Manage_application_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
@@ -53,17 +45,6 @@ class Manage_application extends Admin_Controller
 		$this->Manage_application_model->order_by($iSortCol,$sSortCol);
 		$records=$this->Manage_application_model->find_all();
 
-		/*Ketika dalam mode pencarian, berarti kita harus
-		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
-		yang mengandung keyword tertentu
-		*/
-		if($search != "")
-		{
-			$this->Manage_application_model->where('upper("NAMA_DIKLAT") LIKE \''.strtoupper($search).'%\'');
-			$jum	= $this->Manage_application_model->count_all();
-			$output['recordsTotal']=$output['recordsFiltered']=$jum;
-		}
-		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {
@@ -137,47 +118,20 @@ class Manage_application extends Admin_Controller
         $q= $this->input->get('term');
         $start = ($page-1)*$limit;
 		
-		if(!empty($q)){
-            $length = 10;
-            $term = $this->input->get('term');
-            $page = $this->input->get('page');
-            $this->db->flush_cache();
-            $data = $this->db->query("
-                select 
-                uk.\"ID\" ,
-                uk.\"NAMA_UNOR\" ,
-                parent.\"NAMA_UNOR\" as parent_name,
-                grand.\"NAMA_UNOR\" as grand_name
-                from 
-                hris.unitkerja uk
-                left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
-                left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
-                where lower(uk.\"NAMA_UNOR\") like ?
-                ",array("%".strtolower($term)."%"))->result();
-            
-            $output = array();
-            $output['results'] = array();
-           
-            foreach($data as $row){
-                $nama_unor = array();
-                if($row->grand_name){
-                    $nama_unor[] = $row->grand_name;
-                }
-                if($row->parent_name){
-                    $nama_unor[] = $row->parent_name;
-                }
-                if($row->NAMA_UNOR){
-                    $nama_unor[] = $row->NAMA_UNOR;
-                }
-                $output['results'] [] = array(
-                    'id'=>$row->ID,
-                    'text'=>implode(" - ",$nama_unor)
-                );
-            }
-            $output['pagination'] = array("more"=>false);
-            
-            echo json_encode($output);
-		}
+        $this->load->model('pegawai/unitkerja_model');
+        $this->db->like('lower("NAMA_UNOR")',strtolower($q),'BOTH');
+        $this->db->order_by('"NAMA_UNOR"','asc');
+        $satkers = $this->unitkerja_model->find_satker();
+        $output = array();
+        $output['results'] = array();
+        foreach($satkers as $satker){
+            $output['results'] [] = array(
+                'id'=>$satker->ID,
+                'text'=>$satker->NAMA_UNOR
+            );
+        }
+        $output['pagination'] = array("more"=>false);
+        echo json_encode($output); 
     }
     
     public function crud($record_id=''){
@@ -252,20 +206,20 @@ class Manage_application extends Admin_Controller
 
             $this->db->insert_batch('webservice.api_access',$data);
             
-            $Satker_Auth = $this->input->post("Satker_Auth");
-            $uks = $this->db->from("hris.unitkerja")->where_in("ID",$Satker_Auth)->get()->result();
-            $ids = array();
-            foreach($uks as $uk){
-                $ids [] = $uk->ID;
-            }
-            if(sizeof($ids)>0){
-                $this->db->set("satker_auth",implode(",",$ids));
-            }
-            else {
-                $this->db->set("satker_auth",null);
-            }
-            $this->db->where("id",$id);
-            $this->db->update("webservice.api_keys");
+           $Satker_Auth = $this->input->post("Satker_Auth");
+           if(sizeof($Satker_Auth)>0){
+               $satkers = implode(',',$Satker_Auth);
+               $data = array(
+                    'satker_auth'=>$satkers
+               );
+               $this->Manage_application_model->update($id,$data);
+           }
+           else {
+               $data = array(
+                    'satker_auth'=>null
+               );
+               $this->Manage_application_model->update($id,$data);
+           }
             
         }
         $response ['success']= true;

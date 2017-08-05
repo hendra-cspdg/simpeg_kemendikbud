@@ -38,14 +38,6 @@ class Manage_api extends Admin_Controller
 		$output['recordsTotal']= $output['recordsFiltered']=$total;
 		$output['data']=array();
 
-
-		/*Jika $search mengandung nilai, berarti user sedang telah 
-		memasukan keyword didalam filed pencarian*/
-		if($search!=""){
-			$this->manage_api_model->where('upper("name") LIKE \''.strtoupper($search).'%\'');
-            $this->manage_api_model->or_where('upper("url") LIKE \''.strtoupper($search).'%\'');
-            $this->manage_api_model->or_where('upper("description") LIKE \''.strtoupper($search).'%\'');
-		}
 		$this->manage_api_model->limit($length,$start);
 		/*Urutkan dari alphabet paling terkahir*/
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
@@ -53,16 +45,6 @@ class Manage_api extends Admin_Controller
 		$this->manage_api_model->order_by($iSortCol,$sSortCol);
 		$records=$this->manage_api_model->find_all();
 
-		/*Ketika dalam mode pencarian, berarti kita harus
-		'recordsTotal' dan 'recordsFiltered' sesuai dengan jumlah baris
-		yang mengandung keyword tertentu
-		*/
-		if($search != "")
-		{
-			$this->manage_api_model->where('upper("NAMA_DIKLAT") LIKE \''.strtoupper($search).'%\'');
-			$jum	= $this->manage_api_model->count_all();
-			$output['recordsTotal']=$output['recordsFiltered']=$jum;
-		}
 		
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):

@@ -86,7 +86,7 @@
      $("#Satker_Auth").select2({
         placeholder: 'Cari Hak Akses Unor...',
         width: '100%',
-        minimumInputLength: 3,
+        minimumInputLength: 0,
         multiple:true,
         allowClear: true,
         ajax: {
