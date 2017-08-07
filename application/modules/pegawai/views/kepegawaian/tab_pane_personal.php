@@ -291,7 +291,7 @@
         </div>
          <div class="form-group col-sm-6">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     TMT
                 </div>
                 <div class="col-sm-6">
