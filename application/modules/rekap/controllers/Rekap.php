@@ -49,42 +49,193 @@ class rekap extends Admin_Controller
 	}
 	public function bup_usia(){
 		$data_bup_per_range_umur = $this->pegawai_model->get_bup_per_range_umur($this->satker_id); 
-		$index = 0;
-		foreach($data_bup_per_range_umur as &$row){
-			$row->color = $colors[$index];
-			$index++;
-		}
 		Template::set('data_bup_per_range_umur', $data_bup_per_range_umur);
-		Template::set_view('rekap/bup_usia');
-		Template::render();
+
+		Template::set('download_url',base_url('rekap/bup_usia?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_bup_usia.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			$start_row = 5;
+			foreach($data_bup_per_range_umur as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['range']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['bup_58']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['bup_60']);
+				$start_row++;			
+			}
+			$filename = 'REKAP_BUP_USIA';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/bup_usia');
+			Template::render();
+		}
 	}
 	public function golongan_usia(){
 		$data_rekap_golongan_per_usia = $this->pegawai_model->get_rekap_golongan_per_usia($this->satker_id);
 		Template::set('data_rekap_golongan_per_usia', $data_rekap_golongan_per_usia);		
-		Template::set_view('rekap/golongan_usia');
-		Template::render();
+		
+		Template::set('download_url',base_url('rekap/golongan_usia?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_golongan_usia.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			
+			$data = Template::get('data_rekap_golongan_per_usia');
+			
+			$start_row = 5;
+			foreach($data as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['Golongan']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['<25']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['25-30']);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$start_row, $row['31-35']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$start_row, $row['36-40']);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$start_row, $row['41-45']);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$start_row, $row['46-50']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$start_row, $row['>50']);
+				$start_row++;			
+			}
+			$filename = 'REKAP_GOLONGAN_USIA';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/golongan_usia');
+			Template::render();
+		}
+		
 	} 
 	public function gender_usia(){
 		$data_rekap_jenis_kelamin_per_usia = $this->pegawai_model->get_rekap_jenis_kelamin_per_usia($this->satker_id);
-		
 		Template::set('data_rekap_jenis_kelamin_per_usia', $data_rekap_jenis_kelamin_per_usia);
 		
-		Template::set_view('rekap/gender_usia');
-		Template::render();
+		Template::set('download_url',base_url('rekap/gender_usia?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_gender_usia.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			$start_row = 5;
+			foreach($data_rekap_jenis_kelamin_per_usia as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['JENIS KELAMIN']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['<25']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['25-30']);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$start_row, $row['31-35']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$start_row, $row['36-40']);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$start_row, $row['41-45']);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$start_row, $row['46-50']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$start_row, $row['>50']);
+				$start_row++;			
+			}
+			$filename = 'REKAP_JENISKELAMIN_USIA';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/gender_usia');
+			Template::render();
+		}
 	} 
 	public function pendidikan_usia(){
 		$data_rekap_pendidikan_per_usia = $this->pegawai_model->get_rekap_pendidikan_per_usia($this->satker_id);
 		Template::set('data_rekap_pendidikan_per_usia', $data_rekap_pendidikan_per_usia);
-	
-		Template::set_view('rekap/pendidikan_usia');
-		Template::render();
+		Template::set('download_url',base_url('rekap/pendidikan_usia?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_pendidikan_usia.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			$start_row = 5;
+			foreach($data_rekap_pendidikan_per_usia as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['TK PENDIDIKAN']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['<25']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['25-30']);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$start_row, $row['31-35']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$start_row, $row['36-40']);
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$start_row, $row['41-45']);
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$start_row, $row['46-50']);
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$start_row, $row['>50']);
+				$start_row++;			
+			}
+			$filename = 'REKAP_PENDIDIKAN_USIA';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/pendidikan_usia');
+			Template::render();
+		}
+		
 	} 
 	public function golongan_gender(){
 		$data_rekap_golongan_per_jenis_kelamin = $this->pegawai_model->get_rekap_golongan_per_jenis_kelamin($this->satker_id);
 		Template::set('data_rekap_golongan_per_jenis_kelamin', $data_rekap_golongan_per_jenis_kelamin);
-	
-		Template::set_view('rekap/golongan_gender');
-		Template::render();
+		Template::set('download_url',base_url('rekap/golongan_gender?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_golongan_jenis_kelamin.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			$start_row = 5;
+			foreach($data_rekap_golongan_per_jenis_kelamin as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['nama']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['M']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['F']);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$start_row, $row['-']);
+				$start_row++;			
+			}
+			$filename = 'REKAP_GOLONGAN_JENIS_KELAMIN';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/golongan_gender');
+			Template::render();
+		}
+		
 	} 
 	public function golongan_pendidikan(){
 		$data_rekap_golongan_per_pendidikan = $this->pegawai_model->get_rekap_golongan_per_pendidikan($this->satker_id);

@@ -60,6 +60,16 @@
 				<h3 class="box-title">Matriks Jenis Kelamin dan Usia</h3>
 
 				<div class="box-tools pull-right">
+					<div class="btn-group ">
+						<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?php echo $download_url; ?>" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+						</ul>
+					</div>	
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 					</button>
 					<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
