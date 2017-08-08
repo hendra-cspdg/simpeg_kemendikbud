@@ -196,6 +196,7 @@ class Settings extends Admin_Controller
 		Template::set('toolbar_title', lang('us_user_management'));
 		Template::set('nip', $nip);
 		Template::set('nama', $nama);
+		Template::set('total', $total_users);
 		Template::render();
 
 	}//end index()

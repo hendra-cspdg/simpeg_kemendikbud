@@ -94,7 +94,7 @@ echo form_open();
 		<thead>
 			<tr>
 				<th class="column-check"><input class="check-all" type="checkbox" /></th>
-				<th class='id'><?php echo lang('bf_id'); ?></th>
+				<th class='id'><?php echo lang('bf_id'); ?> User</th>
 				<th><?php echo lang('bf_username'); ?></th>
 				<th><?php echo lang('bf_display_name'); ?></th>
 				<th><?php echo lang('bf_email'); ?></th>
