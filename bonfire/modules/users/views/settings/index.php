@@ -58,10 +58,10 @@ th.status { width: 10em; }
 	 <table>
         	<tr> 
             	<td>
-                	<b>Username</b>
+                	<b>NIP/Nama</b>
                 </td>
 				<td>
-                	<b>Pegawai</b>
+
                 </td>
                 <td>
                 	 

@@ -86,7 +86,7 @@
 				"bLengthChange": false,
 				serverSide: true,
 				"columnDefs": [
-					{"className": "dt-center", "targets": [0,1,4,5]},
+					{"className": "dt-center", "targets": [0,4,5]},
 					{"className": "dt-left", "targets": [2,3]},
 				],
 				ajax: {
