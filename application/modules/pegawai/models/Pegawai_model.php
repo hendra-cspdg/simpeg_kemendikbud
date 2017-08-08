@@ -342,6 +342,23 @@ class Pegawai_model extends BF_Model
 		$this->db->group_by("UNOR_ID");
 		return parent::find_all();
 	}
+	public function find_grupjabataninstansi($eselon2 ="")
+	{
+		
+		if(empty($this->selects))
+		{
+			$this->select($this->table_name .'.JABATAN_INSTANSI_ID,KODE_INTERNAL,count(pegawai."JABATAN_INSTANSI_ID") as jumlah');
+		}
+		if($eselon2 != ""){
+			$this->db->where('"KODE_INTERNAL" LIKE \''.strtoupper($eselon2).'%\'');
+		}
+		//$this->db->join('ref_jabatan', 'ref_jabatan.ID_Jabatan = JABATAN_ID', 'left');
+		$this->db->join("unitkerja","pegawai.UNOR_ID=unitkerja.ID", 'left');
+		$this->db->group_by("JABATAN_INSTANSI_ID");
+		//$this->db->group_by("UNOR_ID");
+		$this->db->group_by("KODE_INTERNAL");
+		return parent::find_all();
+	}
 	// update yanarazor
 	public function find_grupagama($satker_id){		
 		$where_clause = '';

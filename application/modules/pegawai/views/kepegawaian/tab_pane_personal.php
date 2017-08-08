@@ -285,7 +285,7 @@
                      
                 </div>
                 <div class="col-sm-9">
-                    <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } ?></b>
+                    <b><?php if($pegawai->JENIS_JABATAN_ID == "4") { echo isset($NAMA_JABATAN) ? $NAMA_JABATAN  : ""; } echo $pegawai->JABATAN_INSTANSI_ID;?></b>
                 </div>
             </div>
         </div>

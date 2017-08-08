@@ -60,7 +60,6 @@ class Reports extends Admin_Controller
     	
     	if (isset($satker) && is_array($satker) && count($satker)):
 			foreach($satker as $record):
-				//if(substr($datadetil->KODE_INTERNAL,6,2) == "00"){}
 				if($record->DIATASAN_ID == $idsatker){
 					$eselon3["ID"][] = $record->ID;
 					$eselon3["NAMA_UNOR"][] 	= $record->NAMA_UNOR;
@@ -70,7 +69,7 @@ class Reports extends Admin_Controller
 				}
 			endforeach;
 		endif;
-		//print_r($eselon3);
+		//echo count($eselon3);
 		//die();
     	/*
     	$eselon4 = $this->unitkerja_model->find_eselon4($ideselon2);
@@ -90,16 +89,17 @@ class Reports extends Admin_Controller
 		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
 			foreach($kuotajabatan as $record):
 				//echo $record->ID_JABATAN;
-				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->ID_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->KODE_JABATAN);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] 	= trim($record->NAMA_JABATAN);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;
-		$pegawaijabatan = $this->pegawai_model->find_grupjabatan($ideselon2);
+		$pegawaijabatan = $this->pegawai_model->find_grupjabataninstansi($ideselon2);
 		$apegawai = array(); 
 		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
 			foreach($pegawaijabatan as $record):
-				$apegawai[trim($record->UNOR_ID)."-jml-".trim($record->JABATAN_ID)] = trim($record->jumlah);
+				//echo trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)." = ".$record->jumlah."<br>";
+				$apegawai[trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)] = trim($record->jumlah);
 			endforeach;
 		endif;
 		//print_r($apegawai);
