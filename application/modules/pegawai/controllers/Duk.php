@@ -44,7 +44,7 @@ class Duk extends Admin_Controller
 			$row[]  = $nomor_urut;			
 			$row[] = $temp;
 			$row[] = $record->golongan_text;
-			$row[] = $record->JABATAN_NAMA;
+			$row[] = $record->JABATAN_INSTANSI_NAMA;
 			$row[] = $record->MK_TAHUN." Thn ".$record->MK_BLN." Bln";
 			$row[] = $record->TMT_CPNS;
 			$row[] = $record->TMT_GOLONGAN;

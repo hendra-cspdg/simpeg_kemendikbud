@@ -168,15 +168,16 @@ class Settings extends Admin_Controller
 		$nip 	= $this->input->get('nip');
 		$nama		= $this->input->get('nama');
 		// Fetch the users to display
-		$this->user_model->where("username like '%".$nip."%'");
-		//$this->user_model->where("display_name like '%".$nama."%'");
+		$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
+		$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
 		$this->user_model->limit($this->limit, $offset)->where($where);
 		$this->user_model->select('users.id, users.role_id, username, display_name, email, last_login, banned, active, users.deleted, role_name');
 		Template::set('users', $this->user_model->find_all());
 
 		// Pagination
 		$this->load->library('pagination');
-		$this->user_model->where("username like '%".$nip."%'");
+		$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
+		$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
 		//$this->user_model->where("display_name like '%".$nama."%'");
 		$this->user_model->where($where);
 		$total_users = $this->user_model->count_all();
@@ -195,6 +196,7 @@ class Settings extends Admin_Controller
 		Template::set('toolbar_title', lang('us_user_management'));
 		Template::set('nip', $nip);
 		Template::set('nama', $nama);
+		Template::set('total', $total_users);
 		Template::render();
 
 	}//end index()

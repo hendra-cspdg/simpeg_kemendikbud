@@ -19,12 +19,12 @@ Dropzone.autoDiscover = true;
     var foto_upload= new Dropzone(".dropzone",{
     	 autoProcessQueue: true,
 		 url: "<?php echo base_url() ?>admin/kepegawaian/pegawai/savefoto",
-		 maxFilesize: 20,
+		 maxFilesize: 1,
 		 parallelUploads : 10,
 		 method:"post",
 		 acceptedFiles:"image/*",
 		 paramName:"userfile",
-		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto disini",
+		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto disini, <br> Ketentuan : Ukuran Max 1MB, Tipe pas foto, file yang di perkenankan .png|jpg|jpeg)",
 		 dictInvalidFileType:"Type file ini tidak dizinkan",
 		 addRemoveLinks:true,
 		 init: function () {
