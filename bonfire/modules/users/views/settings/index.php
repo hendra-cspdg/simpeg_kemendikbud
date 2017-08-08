@@ -3,7 +3,7 @@ $areaUrl = SITE_AREA . '/settings/users';
 ?>
 
 <div class='box box-primary'>
-    <div class="box-body">
+    <div class="box-body">x
 <style>
 th.id { width: 3em; }
 th.last-login { width: 11em; }
@@ -72,11 +72,6 @@ th.status { width: 10em; }
             	<td>
                 	 <input id='nip' type='text' class="form-control" style="width:150px" name='nip' maxlength="20" value="<?php echo set_value('nip', isset($nip) ? $nip : ''); ?>" />
                 </td>
-                <td>
-					<input id='nama' type='text' class="form-control" name='nama' maxlength="100" value="<?php echo set_value('nama', isset($nama) ? $nama : ''); ?>" />
-					 
-                </td>
-                  
                 <td valign="top">
                 	 <input type="submit" name="Act" class="btn btn-primary" value="Cari "  />
                	</td> 
