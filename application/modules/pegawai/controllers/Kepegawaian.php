@@ -19,13 +19,7 @@ class Kepegawaian extends Admin_Controller
      */
     public function __construct()
     {
-        parent::__construct();
-        $CI = &get_instance();
-		
-		if($CI->auth->role_id() =="5"){
-			$this->UNOR_ID = $this->getunor_id($this->CI->auth->username());
-		}
-        
+        parent::__construct(); 
         $this->load->model('pegawai/pegawai_model');
         $this->load->model('pegawai/riwayat_pendidikan_model');
         $this->lang->load('pegawai');
@@ -519,7 +513,13 @@ class Kepegawaian extends Admin_Controller
 				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
 			}
 			if($filters['unit_id_cb']){
-				$this->pegawai_model->where_in('satker."ID"',$filters['unit_id_key']);	
+				$this->db->group_start();
+				$this->db->where('vw."ID"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_1"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_2"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_3"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_4"',$filters['unit_id_key']);	
+				$this->db->group_end();
 			}
 
 
@@ -855,28 +855,21 @@ class Kepegawaian extends Admin_Controller
 		$term = $this->input->get('term');
 		$page = $this->input->get('page');
 		$this->db->flush_cache();
-		$data = $this->unitkerja_model->find_unit($term);
+		//Jika ada role executive ?
+		$UNOR_ID = '';
+		$CI = &get_instance();
 		
+		if($CI->auth->role_id() =="5"){
+			$UNOR_ID = $this->pegawai_model->getunor_id($CI->auth->username());
+		}
+		$data = $this->unitkerja_model->find_unit($term,$UNOR_ID);
+
 		$output = array();
 		$output['results'] = array();
 		foreach($data as $row){
-			$nama_unor = array();
-			if($row->NAMA_UNOR_ESELON_1){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_1;
-			}
-			if($row->NAMA_UNOR_ESELON_2){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_2;
-			}
-			if($row->NAMA_UNOR_ESELON_3){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_3;
-			}
-			if($row->NAMA_UNOR_ESELON_4){
-				$nama_unor[] = $row->NAMA_UNOR_ESELON_4;
-			}
-			
 			$output['results'] [] = array(
 				'id'=>$row->ID,
-				'text'=>implode(" - ",$nama_unor)
+				'text'=>$row->NAMA_UNOR_FULL
 			);
 		}
 		$output['pagination'] = array("more"=>false);

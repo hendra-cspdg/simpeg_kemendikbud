@@ -286,12 +286,14 @@ class Unitkerja_model extends BF_Model
 		$this->unitkerja_model->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja)');
 		return parent::find_all();
 	}
-	public function find_unit($key='',$id='')
+	public function find_by_id($id='')
 	{
 		$this->db->from('vw_unit_list vw');
 		$this->db->like('lower(vw."NAMA_UNOR")',strtolower($key),"BOTH");
 		if($id!=''){
+			$this->db->group_start();
 			$this->db->where('vw."ID"',$id);
+			$this->db->group_end();
 		}
 		$this->db->order_by('vw."NAMA_UNOR_ESELON_1"',"ASC");
 		$this->db->order_by('vw."NAMA_UNOR_ESELON_2"',"ASC");
@@ -302,6 +304,22 @@ class Unitkerja_model extends BF_Model
 			
 			return $row;
 		}
+		return $this->db->get()->result();
+	}
+	public function find_unit($key='',$id='')
+	{
+		$this->db->from('vw_unit_list vw');
+		$this->db->like('lower(vw."NAMA_UNOR")',strtolower($key),"BOTH");
+		if($id!=''){
+			$this->db->group_start();
+			$this->db->where('vw."ID"',$id);
+			$this->db->or_where('vw."ESELON_1"',$id);
+			$this->db->or_where('vw."ESELON_2"',$id);
+			$this->db->or_where('vw."ESELON_3"',$id);
+			$this->db->or_where('vw."ESELON_4"',$id);
+			$this->db->group_end();
+		}
+		$this->db->order_by('vw."NAMA_UNOR_FULL"',"ASC");
 		return $this->db->get()->result();
 	}
 	public function count_satker($unor_id='')

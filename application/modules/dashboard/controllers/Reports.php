@@ -27,7 +27,7 @@ class reports extends Admin_Controller
 		//CEK DARI INPUTAN FILTER UNOR
 		$unit_id = $this->input->get("unit_id");
 		if($unit_id){
-			$satker = $this->unitkerja_model->find_unit('',$unit_id);
+			$satker = $this->unitkerja_model->find_by_id($unit_id);
 			
 			$nama_unor = array();
 			$this->UNOR_ID= $satker->ID;
