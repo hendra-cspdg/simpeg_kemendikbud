@@ -112,8 +112,8 @@ class Reports extends Admin_Controller
     {
     	$this->auth->restrict($this->permissionCreate);
         $kode_satker = $this->uri->segment(5);
-        $this->load->model('ref_jabatan/ref_jabatan_model');
-        $jabatans = $this->ref_jabatan_model->find_all();
+        $this->load->model('ref_jabatan/jabatan_model');
+        $jabatans = $this->jabatan_model->find_all();
 		Template::set('kode_satker', $kode_satker);
 		Template::set('jabatans', $jabatans);
         Template::set('toolbar_title', "Tambah Kuota Jabatan");
