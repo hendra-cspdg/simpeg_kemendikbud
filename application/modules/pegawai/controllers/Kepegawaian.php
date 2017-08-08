@@ -477,8 +477,7 @@ class Kepegawaian extends Admin_Controller
      * updates, else false.
      */
     public function getdata(){
-		
-
+	
 		$draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');

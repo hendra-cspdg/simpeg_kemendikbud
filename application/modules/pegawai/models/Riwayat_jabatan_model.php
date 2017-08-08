@@ -59,6 +59,11 @@ class Riwayat_jabatan_model extends BF_Model
 			'label' => 'TMT JABATAN',
 			'rules' => 'required',
 		),
+		array(
+			'field' => 'ID_JENIS_JABATAN',
+			'label' => 'JENIS JABATAN',
+			'rules' => 'required',
+		),
 	);
 	protected $insert_validation_rules  = array();
 	protected $skip_validation 			= true;
@@ -85,5 +90,69 @@ class Riwayat_jabatan_model extends BF_Model
 		$this->db->join("hris.unitkerja as unit","rwt_jabatan.ID_UNOR=unit.KODE_INTERNAL", 'left');
 		$this->db->join("hris.unitkerja as satker",'unit.UNOR_INDUK=satker.ID', 'left');
 		return parent::find_all();
+	}
+	public function update($id,$data,$posts){
+		if($posts['IS_ACTIVE'] == "1"){
+			// update semua jadi inactive
+			$dataupdate = array();
+        	$dataupdate["IS_ACTIVE"] = '';
+			$this->riwayat_jabatan_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
+			// update jadi active yang terpilih
+			$dataupdate = array();
+			$rec_jenis = $this->jenis_jabatan_model->find($posts["ID_JENIS_JABATAN"]);
+        	$dataupdate["JENIS_JABATAN_ID"] = $posts["ID_JENIS_JABATAN"];
+			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
+			$dataupdate['JABATAN_INSTANSI_ID']	= $posts['ID_JABATAN'];
+			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$posts["ID_JABATAN"]);
+        	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
+			$this->pegawai_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
+			
+			// update tabel unirkerja jika pilihan adalah pejabat struktural
+			if($posts["ID_JENIS_JABATAN"] == "1"){
+			 
+			   $adata = array();
+			   $this->pegawai_model->where("PNS_ID",$posts["PNS_ID"]);
+			   $pegawai_data = $this->pegawai_model->find_first_row();  
+			   $adata["NAMA_PEJABAT"] = $pegawai_data->NAMA;
+			   $adata["PEMIMPIN_PNS_ID"] = trim($posts["PNS_ID"]);
+			   $this->unitkerja_model->update_where("ID",TRIM($posts["ID_UNOR"]), $adata);
+			   //die($posts["ID_UNOR").$pegawai_data->NAMA."masuk");
+			}
+			// end
+			
+		}
+		return parent::update($id,$data);
+	}
+	public function insert($data,$posts){
+		if($posts['IS_ACTIVE'] == "1"){
+			// update semua jadi inactive
+			$dataupdate = array();
+        	$dataupdate["IS_ACTIVE"] = '';
+			$this->riwayat_jabatan_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
+			// update jadi active yang terpilih
+			$dataupdate = array();
+			$rec_jenis = $this->jenis_jabatan_model->find($posts["ID_JENIS_JABATAN"]);
+        	$dataupdate["JENIS_JABATAN_ID"] = $posts["ID_JENIS_JABATAN"];
+			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
+			$dataupdate['JABATAN_INSTANSI_ID']	= $posts['ID_JABATAN'];
+			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$posts["ID_JABATAN"]);
+        	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
+			$this->pegawai_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
+			
+			// update tabel unirkerja jika pilihan adalah pejabat struktural
+			if($posts["ID_JENIS_JABATAN"] == "1"){
+			 
+			   $adata = array();
+			   $this->pegawai_model->where("PNS_ID",$posts["PNS_ID"]);
+			   $pegawai_data = $this->pegawai_model->find_first_row();  
+			   $adata["NAMA_PEJABAT"] = $pegawai_data->NAMA;
+			   $adata["PEMIMPIN_PNS_ID"] = trim($posts["PNS_ID"]);
+			   $this->unitkerja_model->update_where("ID",TRIM($posts["ID_UNOR"]), $adata);
+			   //die($posts["ID_UNOR").$pegawai_data->NAMA."masuk");
+			}
+			// end
+			
+		}
+		return parent::insert($id,$data);
 	}
 }
