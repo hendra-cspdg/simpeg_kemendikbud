@@ -104,7 +104,7 @@ $lang['bf_no'] = 'No';
 $lang['bf_none'] = 'None';
 $lang['bf_id'] = 'ID';
 
-$lang['bf_or'] = 'or';
+$lang['bf_or'] = 'atau';
 $lang['bf_size'] = 'Size';
 $lang['bf_files'] = 'Files';
 $lang['bf_file'] = 'File';

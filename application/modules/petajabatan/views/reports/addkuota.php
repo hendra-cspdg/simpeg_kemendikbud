@@ -35,7 +35,6 @@ $id = isset($kuota_jabatan->ID) ? $kuota_jabatan->ID : '';
         </div>
         <div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan" />
-            <?php echo lang('bf_or'); ?>
         </div>
     <?php echo form_close(); ?>
 </div>
