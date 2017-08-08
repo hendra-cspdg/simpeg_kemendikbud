@@ -14,11 +14,11 @@ $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 	</div>
 		<?php 
 		$width = 3;
-		//echo count($eselon3);
-		if((count($eselon3)+1) < 4){
+		$jmleselon3 = count($eselon3["ID"]);
+		if($jmleselon3 < 4){
 			$width = 4;
 		} ?>
-		<?php for($s=0;$s < (count($eselon3)+1);$s++){ ?>
+		<?php for($s=0;$s < $jmleselon3;$s++){ ?>
 			<div class="box-small  col-sm-<?php echo $width; ?>">
 			   <div class="box-small  col-sm-12" style="border: 1px solid black;background:green;min-height:50px;color:white;padding-top:10px;">
 				  <b> <?php echo $eselon3['NAMA_UNOR'][$s]; ?></b>
@@ -89,7 +89,7 @@ $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 										<?php endif; ?>
 									  </td>
 									  <td>
-										  -
+										  <?php echo $akuota[$ideselon4."-KELAS"][$a]; ?>
 									  </td>
 									  <td>
 									  <?php 

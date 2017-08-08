@@ -69,7 +69,7 @@ class Reports extends Admin_Controller
 				}
 			endforeach;
 		endif;
-		//echo count($eselon3);
+		//echo count($eselon3["ID"]);
 		//die();
     	/*
     	$eselon4 = $this->unitkerja_model->find_eselon4($ideselon2);
@@ -91,6 +91,7 @@ class Reports extends Admin_Controller
 				//echo $record->ID_JABATAN;
 				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->KODE_JABATAN);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] 	= trim($record->NAMA_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-KELAS"][] 	= trim($record->KELAS);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;

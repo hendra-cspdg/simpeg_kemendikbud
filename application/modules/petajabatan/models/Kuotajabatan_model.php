@@ -73,7 +73,7 @@ class Kuotajabatan_model extends BF_Model
 		
 		if(empty($this->selects))
 		{
-			$this->select($this->table_name .'.KODE_UNIT_KERJA,jabatan.KODE_JABATAN,JUMLAH_PEMANGKU_JABATAN,NAMA_JABATAN');
+			$this->select($this->table_name .'.KODE_UNIT_KERJA,jabatan.KODE_JABATAN,JUMLAH_PEMANGKU_JABATAN,NAMA_JABATAN,KELAS');
 		}
 		if($unitkerja != ""){
 			$this->unitkerja_model->where('"KODE_UNIT_KERJA" LIKE \''.strtoupper($unitkerja).'%\'');
