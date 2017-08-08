@@ -168,16 +168,21 @@ class Settings extends Admin_Controller
 		$nip 	= $this->input->get('nip');
 		$nama		= $this->input->get('nama');
 		// Fetch the users to display
-		$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
-		$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
-		$this->user_model->limit($this->limit, $offset)->where($where);
+		if($nip != ""){
+			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
+			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
+		//$this->user_model->limit($this->limit, $offset)->where($where);
+		}
 		$this->user_model->select('users.id, users.role_id, username, display_name, email, last_login, banned, active, users.deleted, role_name');
+		$this->user_model->where($where);
 		Template::set('users', $this->user_model->find_all());
 
 		// Pagination
 		$this->load->library('pagination');
-		$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
-		$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
+		if($nip != ""){
+			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
+			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
+		}
 		//$this->user_model->where("display_name like '%".$nama."%'");
 		$this->user_model->where($where);
 		$total_users = $this->user_model->count_all();
@@ -400,7 +405,7 @@ class Settings extends Admin_Controller
 	{
 		$user = $this->user_model->find($id);
 
-		if (isset($user) && has_permission('Permissions.'.$user->role_name.'.Manage') && $user->id != $this->current_user->id)
+		if (isset($user) && has_permission('Permissions.'.trim($user->role_name).'.Manage') && $user->id != $this->current_user->id)
 		{
 			if ($this->user_model->delete($id))
 			{
@@ -544,7 +549,7 @@ class Settings extends Admin_Controller
         $this->form_validation->set_rules('email', 'lang:bf_email', 'required|trim|valid_email|max_length[120]|unique[users.email' . $extra_unique_rule . ']');
 
 		if (has_permission('Bonfire.Roles.Manage')
-            && has_permission('Permissions.' . $cur_role_name . '.Manage')
+            && has_permission('Permissions.' . trim($cur_role_name) . '.Manage')
            ) {
 			$this->form_validation->set_rules('role_id', 'lang:us_role', 'required|trim|max_length[2]|is_numeric');
 		}
