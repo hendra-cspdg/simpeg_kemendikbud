@@ -126,14 +126,14 @@ class Reports extends Admin_Controller
         $kode_satker = $this->uri->segment(5);
         $kode_jabatan = $this->uri->segment(6);
         $this->kuotajabatan_model->where("kuota_jabatan.KODE_UNIT_KERJA",$kode_satker);
-        $this->kuotajabatan_model->where("kuota_jabatan.ID_JABATAN",(int)$kode_jabatan);
+        $this->kuotajabatan_model->where("kuota_jabatan.ID_JABATAN",$kode_jabatan);
         $kuota_jabatan = $this->kuotajabatan_model->find_det();
         //print_r($kuota_jabatan);
         //die($kuota_jabatan[0]->ID);
         Template::set('kuota_jabatan', $kuota_jabatan);
         
-        $this->load->model('ref_jabatan/ref_jabatan_model');
-        $jabatans = $this->ref_jabatan_model->find_all();
+        $this->load->model('ref_jabatan/jabatan_model');
+        $jabatans = $this->jabatan_model->find_all();
 		Template::set('kode_satker', $kode_satker);
 		Template::set('jabatans', $jabatans);
         Template::set('toolbar_title', "Tambah Kuota Jabatan");
