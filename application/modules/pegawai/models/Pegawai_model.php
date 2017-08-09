@@ -272,7 +272,7 @@ class Pegawai_model extends BF_Model
 	public function find_first_row(){
 		return $this->db->get($this->db->schema.".".$this->table_name)->first_row();
 	}
-	public function count_all($satker_id){
+	public function count_all($satker_id = ""){
 		
 		$where_clause = '';
 		if($satker_id){
