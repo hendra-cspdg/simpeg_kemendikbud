@@ -20,6 +20,7 @@ class Kepegawaian extends Admin_Controller
     public function __construct()
     {
         parent::__construct(); 
+        
         $this->load->model('pegawai/pegawai_model');
         $this->load->model('pegawai/riwayat_pendidikan_model');
         $this->lang->load('pegawai');

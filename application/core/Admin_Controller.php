@@ -70,8 +70,8 @@ class Admin_Controller extends Authenticated_Controller
                 $this->showProfiler(false);
             }
         }
-		 
-		
+		 // hidden log di bawah
+		$this->output->enable_profiler(FALSE);
         // Basic setup
         Template::set_theme($this->config->item('template.admin_theme'), $this->config->item('template.default_theme'));
     }
