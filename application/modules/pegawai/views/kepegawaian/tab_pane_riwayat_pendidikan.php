@@ -17,7 +17,7 @@
             <table class="table table-datatable">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th width="15px">No</th>
                     <th>Jenjang Pendidikan</th>
                     <th width='50%'>NAMA Sekolah</th>
                     <th width='40%'>Jurusan</th>

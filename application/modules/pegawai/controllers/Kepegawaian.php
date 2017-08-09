@@ -434,7 +434,20 @@ class Kepegawaian extends Admin_Controller
         Template::set('pegawai', $pegawai);
         Template::set('PNS_ID', $pegawai->PNS_ID);
 		// lokasi kerja
-		$gol_id = $pegawai->GOL_ID;
+		// cek dari riwayat golongan terakhir
+		// jika golongan riwayat lebih tinggi dengan golongan yang di pegawai maka pakai golongan yang di riwayat
+		$this->load->model('pegawai/riwayat_kepangkatan_model');
+		$this->riwayat_kepangkatan_model->order_by("TMT_GOLONGAN","desc");
+        $this->riwayat_kepangkatan_model->where("PNS_ID",$pegawai->PNS_ID);  
+        $recordrwtpangakats = $this->riwayat_kepangkatan_model->limit(1)->find_all();
+        $golonganriwayat = isset($recordrwtpangakats[0]->ID_GOLONGAN) ? trim($recordrwtpangakats[0]->ID_GOLONGAN) : "";
+        $gol_id = $pegawai->GOL_ID;
+        if((int)$golonganriwayat > (int)$pegawai->GOL_ID){
+        	$gol_id = $golonganriwayat;
+        }
+        // end riwayat golongan terakhir
+        
+		
 		$recgolongan = $this->golongan_model->find(trim($gol_id));
 		Template::set('GOLONGAN_AKHIR', $recgolongan->NAMA);
 		

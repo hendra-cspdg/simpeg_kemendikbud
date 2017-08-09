@@ -23,7 +23,8 @@ class Diklatfungsional extends Admin_Controller
         $this->load->model('pegawai/pegawai_model');
     }
     public function ajax_list(){
-        
+         $this->load->library('convert');
+ 		$convert = new convert();
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -80,7 +81,7 @@ class Diklatfungsional extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->JENIS_DIKLAT;
                 $row []  = $record->NAMA_KURSUS;
-                $row []  = $record->TANGGAL_KURSUS;
+                $row []  = $convert->fmtDate($record->TANGGAL_KURSUS,"dd-mm-yyyy");
                 $row []  = $record->TAHUN;
                 $row []  = $record->INSTITUSI_PENYELENGGARA;
                 $row []  = $record->NOMOR_SERTIPIKAT;

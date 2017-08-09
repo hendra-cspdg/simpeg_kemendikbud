@@ -23,6 +23,8 @@ class Diklatstruktural extends Admin_Controller
         $this->load->model('pegawai/pegawai_model');
     }
     public function ajax_list(){
+    	$this->load->library('convert');
+ 		$convert = new convert();
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -79,7 +81,7 @@ class Diklatstruktural extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->NAMA_DIKLAT;
                 $row []  = $record->NOMOR;
-                $row []  = $record->TANGGAL;
+                $row []  = $convert->fmtDate($record->TANGGAL,"dd-mm-yyyy");
                 $row []  = $record->TAHUN;
                 
                 $btn_actions = array();

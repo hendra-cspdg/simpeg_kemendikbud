@@ -17,7 +17,7 @@
             <table class="table table-datatable">
             <thead>
                 <tr>
-                    <th width='100px' >No</th>
+                    <th width='15px' >No</th>
                     <th>Jabatan</th>
                     <th>Unit Kerja</th>
                     <th width='100px' >TMT</th>
