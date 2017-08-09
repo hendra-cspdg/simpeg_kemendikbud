@@ -574,7 +574,7 @@ class Kepegawaian extends Admin_Controller
 		
 		$this->pegawai_model->limit($length,$start);
 		$records=$this->pegawai_model->find_all($this->UNOR_ID);
-
+		$this->db->flush_cache();
 		$nomor_urut=$start+1;
 		if(isset($records) && is_array($records) && count($records)):
 			foreach ($records as $record) {
@@ -619,7 +619,7 @@ class Kepegawaian extends Admin_Controller
 			}
 		endif;
 		echo json_encode($output);
-		$this->db->flush_cache();
+		
 	}
 	public function download()
 	{
