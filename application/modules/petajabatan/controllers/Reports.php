@@ -60,7 +60,6 @@ class Reports extends Admin_Controller
     	
     	if (isset($satker) && is_array($satker) && count($satker)):
 			foreach($satker as $record):
-				//if(substr($datadetil->KODE_INTERNAL,6,2) == "00"){}
 				if($record->DIATASAN_ID == $idsatker){
 					$eselon3["ID"][] = $record->ID;
 					$eselon3["NAMA_UNOR"][] 	= $record->NAMA_UNOR;
@@ -70,7 +69,7 @@ class Reports extends Admin_Controller
 				}
 			endforeach;
 		endif;
-		//print_r($eselon3);
+		//echo count($eselon3["ID"]);
 		//die();
     	/*
     	$eselon4 = $this->unitkerja_model->find_eselon4($ideselon2);
@@ -90,16 +89,18 @@ class Reports extends Admin_Controller
 		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
 			foreach($kuotajabatan as $record):
 				//echo $record->ID_JABATAN;
-				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->ID_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->KODE_JABATAN);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] 	= trim($record->NAMA_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-KELAS"][] 	= trim($record->KELAS);
 				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
 			endforeach;
 		endif;
-		$pegawaijabatan = $this->pegawai_model->find_grupjabatan($ideselon2);
+		$pegawaijabatan = $this->pegawai_model->find_grupjabataninstansi($ideselon2);
 		$apegawai = array(); 
 		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
 			foreach($pegawaijabatan as $record):
-				$apegawai[trim($record->UNOR_ID)."-jml-".trim($record->JABATAN_ID)] = trim($record->jumlah);
+				//echo trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)." = ".$record->jumlah."<br>";
+				$apegawai[trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)] = trim($record->jumlah);
 			endforeach;
 		endif;
 		//print_r($apegawai);
@@ -112,8 +113,8 @@ class Reports extends Admin_Controller
     {
     	$this->auth->restrict($this->permissionCreate);
         $kode_satker = $this->uri->segment(5);
-        $this->load->model('ref_jabatan/ref_jabatan_model');
-        $jabatans = $this->ref_jabatan_model->find_all();
+        $this->load->model('ref_jabatan/jabatan_model');
+        $jabatans = $this->jabatan_model->find_all();
 		Template::set('kode_satker', $kode_satker);
 		Template::set('jabatans', $jabatans);
         Template::set('toolbar_title', "Tambah Kuota Jabatan");
@@ -126,14 +127,14 @@ class Reports extends Admin_Controller
         $kode_satker = $this->uri->segment(5);
         $kode_jabatan = $this->uri->segment(6);
         $this->kuotajabatan_model->where("kuota_jabatan.KODE_UNIT_KERJA",$kode_satker);
-        $this->kuotajabatan_model->where("kuota_jabatan.ID_JABATAN",(int)$kode_jabatan);
+        $this->kuotajabatan_model->where("kuota_jabatan.ID_JABATAN",$kode_jabatan);
         $kuota_jabatan = $this->kuotajabatan_model->find_det();
         //print_r($kuota_jabatan);
         //die($kuota_jabatan[0]->ID);
         Template::set('kuota_jabatan', $kuota_jabatan);
         
-        $this->load->model('ref_jabatan/ref_jabatan_model');
-        $jabatans = $this->ref_jabatan_model->find_all();
+        $this->load->model('ref_jabatan/jabatan_model');
+        $jabatans = $this->jabatan_model->find_all();
 		Template::set('kode_satker', $kode_satker);
 		Template::set('jabatans', $jabatans);
         Template::set('toolbar_title', "Tambah Kuota Jabatan");

@@ -24,7 +24,8 @@ class Riwayatkepangkatan extends Admin_Controller
         $this->load->model('pegawai/golongan_model');
     }
     public function ajax_list(){
-        
+        $this->load->library('convert');
+ 		$convert = new convert();
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -62,7 +63,7 @@ class Riwayatkepangkatan extends Admin_Controller
 		$kolom = $iSortCol != "" ? $iSortCol : "NAMA";
 		$sSortCol == "asc" ? "asc" : "desc";
 		$this->riwayat_kepangkatan_model->order_by($iSortCol,$sSortCol);
-         $this->riwayat_kepangkatan_model->order_by("TMT_GOLONGAN","asc");
+        $this->riwayat_kepangkatan_model->order_by("TMT_GOLONGAN","asc");
         $this->riwayat_kepangkatan_model->where("PNS_ID",$pegawai_data->PNS_ID);  
 		
         $records=$this->riwayat_kepangkatan_model->find_all();
@@ -85,7 +86,7 @@ class Riwayatkepangkatan extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->PANGKAT;
                 $row []  = $record->GOLONGAN;
-                $row []  = $record->TMT_GOLONGAN;
+                $row []  = $convert->fmtDate($record->TMT_GOLONGAN,"dd-mm-yyyy")."";
                 $row []  = $record->MK_GOLONGAN_TAHUN." tahun/".$record->MK_GOLONGAN_BULAN." bulan";
                 
                 $btn_actions = array();

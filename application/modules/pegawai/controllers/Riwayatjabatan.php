@@ -29,7 +29,8 @@ class Riwayatjabatan extends Admin_Controller
 		
     }
     public function ajax_list(){
-        
+        $this->load->library('convert');
+ 		$convert = new convert();
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -92,7 +93,7 @@ class Riwayatjabatan extends Admin_Controller
                 $row []  = $nomor_urut;
                 $row []  = $record->NAMA_JABATAN;
                 $row []  = $record->UNOR."<br>".$record->NAMA_SATKER;
-                $row []  = $record->TMT_JABATAN;
+                $row []  = $convert->fmtDate($record->TMT_JABATAN,"dd-mm-yyyy");
                 $btn_actions = array();
                 
                 $btn_actions  [] = "

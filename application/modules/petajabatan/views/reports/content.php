@@ -4,6 +4,7 @@ $can_edit		= $this->auth->has_permission('Petajabatan.Reports.Edit');
 $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 ?>
 <center>
+
 	<div class="col-sm-12">
 		<div class="box-small col-sm-12"  style="border: 1px solid black;min-height:50px; padding:10px;margin-bottom:20px;background:#3c8dbc;color:white;">
 			<b>
@@ -13,10 +14,11 @@ $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 	</div>
 		<?php 
 		$width = 3;
-		if(count($eselon3) < 4){
+		$jmleselon3 = count($eselon3["ID"]);
+		if($jmleselon3 < 4){
 			$width = 4;
 		} ?>
-		<?php for($s=0;$s < count($eselon3);$s++){ ?>
+		<?php for($s=0;$s < $jmleselon3;$s++){ ?>
 			<div class="box-small  col-sm-<?php echo $width; ?>">
 			   <div class="box-small  col-sm-12" style="border: 1px solid black;background:green;min-height:50px;color:white;padding-top:10px;">
 				  <b> <?php echo $eselon3['NAMA_UNOR'][$s]; ?></b>
@@ -87,24 +89,26 @@ $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 										<?php endif; ?>
 									  </td>
 									  <td>
-										  -
+										  <?php echo $akuota[$ideselon4."-KELAS"][$a]; ?>
 									  </td>
 									  <td>
 									  <?php 
-									  	$jmlada = isset($apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]]) ? $apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]] : "";
+									  	$jmlada = isset($apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]]) ? $apegawai[$ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]] : "0";
 									  	//echo $ideselon4."-jml-".$akuota[$ideselon4."-ID_JABATAN"][$a]; ?>
 									  	<?php echo $jmlada; ?>
 										  
 									  </td>
 									  <td>
 										  <?php 
+										  // kuota
 										  $quota = $akuota[$ideselon4."-JML"][$a];
 										  echo $quota; 
+										  $sisa = (int)$jmlada - (int)$quota;
 										  ?>
 									  </td>
-									  <td>
+									  <td <?php echo $sisa < 0 ? "style=background:red" : "";  ?> <?php echo $sisa > 0 ? "style=background:yellow" : "";  ?>>
 										  <?php
-										  $sisa = (int)$jmlada - (int)$quota;
+										  
 										  echo $sisa;
 										  ?>
 									  </td>
@@ -122,4 +126,15 @@ $can_add		= $this->auth->has_permission('Petajabatan.Reports.Create');
 			</div>
 			
 		<?php }?>
+
 </center>
+<div class="box-small  col-sm-12">
+<table>
+	<tr>
+		<td style="background:red;width:40px;"><td><td> &nbsp; Kurang</td>
+	</tr>
+	<tr>
+		<td style="background:yellow;width:40px;"> <td><td> &nbsp; Melebihi</td>
+	</tr>
+</table>
+</div>

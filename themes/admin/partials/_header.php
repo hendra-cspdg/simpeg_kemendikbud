@@ -106,10 +106,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="<?php echo site_url(SITE_AREA .'/settings/users/edit') ?>" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?php echo site_url(SITE_AREA .'/settings/users/edit') ?>" class="btn btn-warning btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo site_url('logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?php echo site_url('logout'); ?>" class="btn btn-warning btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

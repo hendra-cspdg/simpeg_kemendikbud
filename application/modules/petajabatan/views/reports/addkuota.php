@@ -17,7 +17,7 @@ $id = isset($kuota_jabatan->ID) ? $kuota_jabatan->ID : '';
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($jabatans) && is_array($jabatans) && count($jabatans)):?>
 						<?php foreach($jabatans as $record):?>
-							<option value="<?php echo $record->ID_JABATAN?>" <?php if(isset($kuota_jabatan->ID_JABATAN))  echo  ($kuota_jabatan->ID_JABATAN==$record->ID_JABATAN) ? "selected" : ""; ?>><?php echo $record->NAMA_JABATAN; ?></option>
+							<option value="<?php echo $record->KODE_JABATAN?>" <?php if(isset($kuota_jabatan->ID_JABATAN))  echo  ($kuota_jabatan->ID_JABATAN==$record->KODE_JABATAN) ? "selected" : ""; ?>><?php echo $record->NAMA_JABATAN; ?></option>
 							<?php endforeach;?>
 						<?php endif;?>
 					</select>
@@ -35,7 +35,6 @@ $id = isset($kuota_jabatan->ID) ? $kuota_jabatan->ID : '';
         </div>
         <div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan" />
-            <?php echo lang('bf_or'); ?>
         </div>
     <?php echo form_close(); ?>
 </div>

@@ -297,7 +297,8 @@ class Manage_unitkerja extends Admin_Controller {
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
             $this->db->select('ID as id,NAMA_UNOR as text');
-
+            $this->db->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja)');
+				
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
