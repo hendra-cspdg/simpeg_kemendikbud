@@ -5,11 +5,19 @@ class Manage_unitkerja extends Admin_Controller {
     protected $permissionDelete = 'ManageUnitKerja.Kepegawaian.Delete';
     protected $permissionEdit   = 'ManageUnitKerja.Kepegawaian.Edit';
     protected $permissionView   = 'ManageUnitKerja.Kepegawaian.View';
-    
+    public $UNOR_ID = null;
     public function __construct()
     {
         parent::__construct();
         $this->load->model("pegawai/unitkerja_model");
+        $this->load->model('pegawai/pegawai_model');
+        // filter untuk role executive
+		if($this->auth->role_id() =="5"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->auth->username());
+		}
+		if($this->auth->role_id() =="6"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_induk($this->auth->username());
+		}
     }
     public function index(){
         Template::set('toolbar_title', "Manage Unit Kerja");
@@ -291,13 +299,17 @@ class Manage_unitkerja extends Admin_Controller {
     }
     private function data_modelinternal($key,$start,$limit){
           // update
+          $where_clause = "";
+          	if($this->UNOR_ID){
+				$where_clause = 'AND ("ESELON_1" = \''.$this->UNOR_ID.'\' OR "ESELON_2" = \''.$this->UNOR_ID.'\' OR "ESELON_3" = \''.$this->UNOR_ID.'\' OR "ESELON_4" = \''.$this->UNOR_ID.'\')' ;
+			}
             $this->db->start_cache();
             $this->db->like('lower("NAMA_UNOR")', strtolower($key));
             $this->db->from("hris.unitkerja");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
             $this->db->select('ID as id,NAMA_UNOR as text');
-            $this->db->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja)');
+            $this->db->where('"ID" in (select "UNOR_INDUK" from hris.unitkerja) '.$where_clause);
 				
             $this->db->limit($limit,$start);
 

@@ -9,7 +9,7 @@ class Duk extends Admin_Controller
     protected $permissionDelete = 'DiklatFungsional.Kepegawaian.Delete';
     protected $permissionEdit   = 'DiklatFungsional.Kepegawaian.Edit';
     protected $permissionView   = 'DiklatFungsional.Kepegawaian.View';
-
+	public $UNOR_ID = null;
     /**
      * Constructor
      *
@@ -19,12 +19,19 @@ class Duk extends Admin_Controller
     {
         parent::__construct();
         $this->load->model('pegawai/pegawai_model');
+        // filter untuk role executive
+		if($this->auth->role_id() =="5"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->auth->username());
+		}
+		if($this->auth->role_id() =="6"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_induk($this->auth->username());
+		}
     }
     public function ajax_list(){
         $draw= $this->input->post('draw');
 		$length= $this->input->post('length');
 		$start= $this->input->post('start');
-		$unit_id = $this->input->post('unit_id');
+		$unit_id = $this->input->post('unit_id') != "" ? $this->input->post('unit_id') : $this->UNOR_ID;
 		$o = $this->pegawai_model->get_duk_list($unit_id,$start,$length);
 		
 		$nomor_urut=$start+1;
@@ -70,11 +77,12 @@ class Duk extends Admin_Controller
         Template::render();
     }
 	public function cetak($unit_id=null){
-		
+		 
 		$this->load->model("pegawai/unitkerja_model");
 		if($unit_id == null || $unit_id == 'null'){
-			$unor = $this->unitkerja_model->where("ID",2)->find_first_row();
-			$unit_id = $unor->ID;
+			$unit_id = $this->UNOR_ID;
+			$unor = $this->unitkerja_model->where("ID",$unit_id)->find_first_row();
+			$unit_id = $unor->ID ?  $unor->ID : $this->UNOR_ID;
 		}
 		else {
 			$unor = $this->unitkerja_model->where("ID",$unit_id)->find_first_row();
@@ -168,6 +176,10 @@ EOD;
 		$pdf->Output('daftar_duk.pdf', 'I');
 	}
 	public function ajax_unit_list(){
+		$where_clause = "";
+		if($this->UNOR_ID){
+			$where_clause = 'AND (uk."ESELON_1" = \''.$this->UNOR_ID.'\' OR uk."ESELON_2" = \''.$this->UNOR_ID.'\' OR uk."ESELON_3" = \''.$this->UNOR_ID.'\' OR uk."ESELON_4" = \''.$this->UNOR_ID.'\')' ;
+		}
 		$length = 10;
 		$term = $this->input->get('term');
 		$page = $this->input->get('page');
@@ -181,7 +193,7 @@ EOD;
 			hris.unitkerja uk
 			left join hris.unitkerja parent on parent.\"ID\" = uk.\"DIATASAN_ID\"
 			left join hris.unitkerja grand on grand.\"ID\" = parent.\"DIATASAN_ID\"
-			where lower(uk.\"NAMA_UNOR\") like ?
+			where 1=1 ".$where_clause." and lower(uk.\"NAMA_UNOR\") like ?
 			",array("%".strtolower($term)."%"))->result();
 		
 		$output = array();
