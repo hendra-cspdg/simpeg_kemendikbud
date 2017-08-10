@@ -793,4 +793,22 @@ class Pegawai_model extends BF_Model
 		}
 		return $unor_id;
 	}
+	public function getunor_induk($nip = ""){
+		$where_clause = 'AND pegawai."NIP_BARU" = \''.trim($nip).'\'' ;
+		$unor_id = "";
+		$data = $this->db->query('
+				SELECT
+					"UNOR_INDUK" 
+				FROM
+					hris.pegawai
+					left join unitkerja vw on pegawai."UNOR_ID"= vw."ID"
+					where 1=1 '.$where_clause.';
+			')->result('array');
+		foreach($data as $row){
+			//echo "masuk bro";
+			$unor_id = $row['UNOR_INDUK'];
+		}
+		return $unor_id;
+	}
+	
 }

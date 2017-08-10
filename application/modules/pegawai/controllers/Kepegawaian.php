@@ -78,6 +78,14 @@ class Kepegawaian extends Admin_Controller
 		
 		$this->load->model('pegawai/lokasi_model');
 		$this->load->model('pegawai/unitkerja_model');
+		
+		// filter untuk role executive
+		if($this->auth->role_id() =="5"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->auth->username());
+		}
+		if($this->auth->role_id() =="6"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_induk($this->auth->username());
+		}
     }
 
     /**
@@ -491,7 +499,7 @@ class Kepegawaian extends Admin_Controller
      * updates, else false.
      */
     public function getdata(){
-	
+    	
 		$draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
@@ -570,7 +578,7 @@ class Kepegawaian extends Admin_Controller
 		$this->db->stop_cache();
 		$output=array();
 		$output['draw']=$draw;
-		$total= $this->pegawai_model->count_all();
+		$total= $this->pegawai_model->count_all($this->UNOR_ID);
 		$orders = $this->input->post('order');
 		foreach($orders as $order){
 			if($order['column']==1){

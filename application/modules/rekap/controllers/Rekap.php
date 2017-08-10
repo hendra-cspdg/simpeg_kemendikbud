@@ -33,6 +33,13 @@ class rekap extends Admin_Controller
 			Template::set('selectedSatker', $satker);
 			
 		}
+		// filter untuk role executive
+		if($this->auth->role_id() =="5"){
+			$this->satker_id = $this->pegawai_model->getunor_id($this->auth->username());
+		}
+		if($this->auth->role_id() =="6"){
+			$this->satker_id = $this->pegawai_model->getunor_induk($this->auth->username());
+		}
 	}
 	//--------------------------------------------------------------------
 	/**

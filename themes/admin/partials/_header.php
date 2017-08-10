@@ -7,6 +7,7 @@
 	if (isset($shortcut_data) && is_array($shortcut_data['shortcut_keys'])) {
 	//	Assets::add_js($this->load->view('ui/shortcut_keys', $shortcut_data, true), 'inline');
 	}
+	$module = $this->uri->segment(1);
 	$mainmenu = $this->uri->segment(2);
 	$menu = $this->uri->segment(3);
 	$submenu = $this->uri->segment(4);
@@ -165,7 +166,7 @@
           </li>
         <?php endif; ?>
          <?php if ($this->auth->has_permission('Rekap.Reports.View')) : ?>
-        	<li class="treeview ">
+        	<li class="treeview <?php echo $module == 'rekap' ? 'active' : '' ?>">
         		<a href="#">
 	            	<i class="fa fa-folder"></i>
     	        	<span>Rekap </span>    

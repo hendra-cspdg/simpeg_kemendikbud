@@ -40,6 +40,9 @@ class reports extends Admin_Controller
 			//???
 			$this->UNOR_ID = $this->pegawai_model->getunor_id($this->CI->auth->username());
 		}
+		if($this->auth->role_id() =="6"){
+			$this->UNOR_ID = $this->pegawai_model->getunor_induk($this->auth->username());
+		}
 	}
 	//--------------------------------------------------------------------
 	/**
@@ -54,7 +57,7 @@ class reports extends Admin_Controller
 		$recsatker = $this->unitkerja_model->count_satker($this->UNOR_ID);
 		Template::set('jmlsatker', $recsatker[0]->jumlah ? $recsatker[0]->jumlah : 0);
 		// jml pegawai
-		$total= $this->pegawai_model->count_all();
+		$total= $this->pegawai_model->count_all($this->UNOR_ID);
 		Template::set('totalpegawai', $total);
 		$jmlpensiun = $this->pegawai_model->count_pensiun($this->UNOR_ID); 
 		Template::set('jmlpensiun', $jmlpensiun);
