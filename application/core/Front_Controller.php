@@ -31,7 +31,8 @@ class Front_Controller extends Base_Controller
         $this->load->library('assets');
 
         $this->set_current_user();
-
+		// hidden log di bawah
+		$this->output->enable_profiler(FALSE);
         Events::trigger('after_front_controller');
     }//end __construct()
 
