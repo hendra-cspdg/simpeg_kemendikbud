@@ -70,141 +70,137 @@ class Settings extends Admin_Controller
 	 *
 	 * @return  void
 	 */
-	public function index($filter='all', $offset=0)
-	{
-		$this->auth->restrict('Bonfire.Users.Manage');
+	 public function index($filter = 'all', $offset = 0)
+    {
+        $this->auth->restrict($this->permissionManage);
 
-		// Fetch roles we might want to filter on
-		$roles = $this->role_model->select('role_id, role_name')->where('deleted', 0)->find_all();
-		$ordered_roles = array();
-		foreach ($roles as $role)
-		{
-			$ordered_roles[$role->role_id] = $role;
-		}
-		Template::set('roles', $ordered_roles);
+        // Fetch roles for the filter and the list.
+        $roles = $this->role_model->select('role_id, role_name')
+                                  ->where('deleted', 0)
+                                  ->order_by('role_name', 'asc')
+                                  ->find_all();
+        $orderedRoles = array();
+        foreach ($roles as $role) {
+            $orderedRoles[$role->role_id] = $role;
+        }
+        Template::set('roles', $orderedRoles);
 
-		// Do we have any actions?
-		if (isset($_POST['activate']))    $action = '_activate';
-		if (isset($_POST['deactivate']))  $action = '_deactivate';
-		if (isset($_POST['ban']))         $action = '_ban';
-		if (isset($_POST['delete']))      $action = '_delete';
-		if (isset($_POST['purge']))       $action = '_purge';
-		if (isset($_POST['restore']))     $action = '_restore';
+        // Perform any actions?
+        foreach (array('restore', 'purge', 'delete', 'ban', 'deactivate', 'activate') as $act) {
+            if (isset($_POST[$act])) {
+                $action = "_{$act}";
+                break;
+            }
+        }
 
-		if (isset($action))
-		{
-			$checked = $this->input->post('checked');
+        // If an action was found, get the checked users and perform the action.
+        if (isset($action)) {
+            $checked = $this->input->post('checked');
+            if (empty($checked)) {
+                // No users checked.
+                Template::set_message(lang('us_empty_id'), 'error');
+            } else {
+                foreach ($checked as $userId) {
+                    $this->$action($userId);
+                }
+            }
+        }
 
-			if (!empty($checked))
-			{
-				foreach($checked as $user_id)
-				{
-					$this->$action($user_id);
-				}
-			}
-			else
-			{
-				Template::set_message(lang('us_empty_id'), 'error');
-			}
-		}
+        // Actions done, now display the view.
+        $where = array('users.deleted' => 0);
 
-		// Actions done, now display the view
-		$where = array('users.deleted' => 0);
+        // Filters
+        if (preg_match('{first_letter-([A-Z])}', $filter, $matches)) {
+            $filterType = 'first_letter';
+            $firstLetter = $matches[1];
+            Template::set('first_letter', $firstLetter);
+        } elseif (preg_match('{role_id-([0-9]*)}', $filter, $matches)) {
+            $filterType = 'role_id';
+            $roleId = (int) $matches[1];
+        } else {
+            $filterType = $filter;
+        }
 
-		// Filters
-		if (preg_match('{first_letter-([A-Z])}', $filter, $matches))
-		{
-			$filter_type = 'first_letter';
-			$first_letter = $matches[1];
-		}
-		elseif (preg_match('{role_id-([0-9]*)}', $filter, $matches))
-		{
-			$filter_type = 'role_id';
-			$role_id = (int) $matches[1];
-		}
-		else
-		{
-			$filter_type = $filter;
-		}
-
-		switch($filter_type)
-		{
-			case 'inactive':
-				$where['users.active'] = 0;
-				break;
-
-			case 'banned':
-				$where['users.banned'] = 1;
-				break;
-
-			case 'deleted':
-				$where['users.deleted'] = 1;
-				break;
-
-			case 'role_id':
-				$where['users.role_id'] = $role_id;
-
-				foreach ($roles as $role)
-				{
-					if ($role->role_id == $role_id)
-					{
-						Template::set('filter_role', $role->role_name);
-						break;
-					}
-				}
-				break;
-
-			case 'first_letter':
-				$where['SUBSTRING( LOWER(username), 1, 1)='] = $first_letter;
-				break;
-
-			case 'all':
-				// Nothing to do
-				break;
-
-			default:
-				show_404("users/index/$filter/");
-		}
-		$nip 	= $this->input->get('nip');
-		$nama		= $this->input->get('nama');
-		// Fetch the users to display
-		if($nip != ""){
-			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
-			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
-		//$this->user_model->limit($this->limit, $offset)->where($where);
-		}
-		$this->user_model->select('users.id, users.role_id, username, display_name, email, last_login, banned, active, users.deleted, role_name');
-		$this->user_model->where($where);
-		Template::set('users', $this->user_model->find_all());
-
-		// Pagination
-		$this->load->library('pagination');
-		if($nip != ""){
+        switch ($filterType) {
+            case 'inactive':
+                $where['users.active'] = 0;
+                break;
+            case 'banned':
+                $where['users.banned'] = 1;
+                break;
+            case 'deleted':
+                $where['users.deleted'] = 1;
+                break;
+            case 'role_id':
+                $where['users.role_id'] = $roleId;
+                foreach ($roles as $role) {
+                    if ($role->role_id == $roleId) {
+                        Template::set('filter_role', $role->role_name);
+                        break;
+                    }
+                }
+                break;
+            case 'first_letter':
+                // @todo Determine whether this needs to be changed to become
+                // usable with databases other than MySQL
+                $where['SUBSTRING( LOWER(username), 1, 1)='] = $firstLetter;
+                break;
+            case 'all':
+                // Nothing to do
+                break;
+            default:
+                // Unknown/bad $filterType
+                show_404("users/index/$filter/");
+        }
+        // Fetch the users to display
+        $this->user_model->limit($this->limit, $offset)
+                         ->where($where)
+                         ->select(
+                             array(
+                                'users.id',
+                                'users.role_id',
+                                'username',
+                                'display_name',
+                                'email',
+                                'last_login',
+                                'banned',
+                                'active',
+                                'users.deleted',
+                                'role_name',
+                             )
+                         );
+        
+        $nip = $this->input->get('nip');
+		if($nip!=""){
 			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
 			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
 		}
-		//$this->user_model->where("display_name like '%".$nama."%'");
-		$this->user_model->where($where);
-		$total_users = $this->user_model->count_all();
+        Template::set('users', $this->user_model->find_all());
 
-		$this->pager['base_url'] = site_url(SITE_AREA ."/settings/users/index/$filter/");
-		$this->pager['total_rows'] = $total_users;
-		$this->pager['per_page'] = $this->limit;
-		$this->pager['uri_segment']	= 6;
+        // Used as the view's index_url and the base for the pager's base_url.
+        $indexUrl = site_url(SITE_AREA . '/settings/users/index') . '/';
+        Template::set('index_url', $indexUrl);
 
-		$this->pagination->initialize($this->pager);
+        // Pagination
+        $this->load->library('pagination');
+		
+		if($nip!=""){
+			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
+			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
+		}
+        $this->pager['base_url']    = "{$indexUrl}{$filter}/";
+        $this->pager['per_page'] = $this->limit;
+        $this->pager['total_rows']  = $this->user_model->where($where)->count_all();
+        $this->pager['uri_segment'] = 6;
 
-		Template::set('index_url', site_url(SITE_AREA .'/settings/users/index/') .'/');
-		Template::set('filter_type', $filter_type);
+        $this->pagination->initialize($this->pager);
 
-		Template::set('toolbar_title', lang('us_user_management'));
-		Template::set('toolbar_title', lang('us_user_management'));
-		Template::set('nip', $nip);
-		Template::set('nama', $nama);
-		Template::set('total', $total_users);
-		Template::render();
+        Template::set('nip', $nip);
+        Template::set('filter_type', $filterType);
+        Template::set('toolbar_title', lang('us_user_management'));
 
-	}//end index()
+        Template::render();
+    }
 
 	//--------------------------------------------------------------------
 
