@@ -188,13 +188,15 @@ class Settings extends Admin_Controller
 			$this->user_model->where("lower(username) like '%".strtolower($nip)."%'");
 			$this->user_model->or_where("lower(display_name) like '%".strtolower($nip)."%'");
 		}
+		$total = $this->user_model->where($where)->count_all();
         $this->pager['base_url']    = "{$indexUrl}{$filter}/";
         $this->pager['per_page'] = $this->limit;
-        $this->pager['total_rows']  = $this->user_model->where($where)->count_all();
+        $this->pager['total_rows']  = $total;
         $this->pager['uri_segment'] = 6;
 
         $this->pagination->initialize($this->pager);
-
+		
+		Template::set('total', $total);
         Template::set('nip', $nip);
         Template::set('filter_type', $filterType);
         Template::set('toolbar_title', lang('us_user_management'));
