@@ -24,7 +24,7 @@ Dropzone.autoDiscover = true;
 		 method:"post",
 		 acceptedFiles:"image/*",
 		 paramName:"userfile",
-		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto disini, <br> Ketentuan : Ukuran Max 1MB, Tipe pas foto, file yang di perkenankan .png|jpg|jpeg)",
+		 dictDefaultMessage:"<img src='<?php echo base_url(); ?>assets/images/dropico.png' width='50px'/><br>drop foto disini, <br> Ketentuan : Ukuran file Max 1MB,Max dimensi 800x1200px, Tipe pas foto, file yang di perkenankan .png|jpg|jpeg)",
 		 dictInvalidFileType:"Type file ini tidak dizinkan",
 		 addRemoveLinks:true,
 		 init: function () {
