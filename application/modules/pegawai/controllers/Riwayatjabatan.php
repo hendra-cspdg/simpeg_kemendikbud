@@ -173,6 +173,7 @@ class Riwayatjabatan extends Admin_Controller
         $this->show($PNS_ID,$record_id);
     }
     public function detil($PNS_ID,$record_id=''){
+    	Template::set('recsatker', $this->unitkerja_model->find_satker());
         $datadetil = $this->riwayat_jabatan_model->find($record_id); 
 		$recordunors = $this->unitkerja_model->find_all($datadetil->ID_SATUAN_KERJA);
 		$jenis_jabatan = $datadetil->ID_JENIS_JABATAN;
@@ -252,6 +253,8 @@ class Riwayatjabatan extends Admin_Controller
         if(empty($data["TMT_PELANTIKAN"])){
             unset($data["TMT_PELANTIKAN"]);
         }
+        
+        $data["LAST_UPDATED"] 	= date("Y-m-d");
         $id_data = $this->input->post("ID");
         if(isset($id_data) && !empty($id_data)){
             $this->riwayat_jabatan_model->update($id_data,$data,$this->input->post());

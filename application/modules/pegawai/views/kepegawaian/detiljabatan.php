@@ -13,7 +13,7 @@
            <div class="control-group<?php echo form_error('ID_SATUAN_KERJA') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('SATUAN KERJA', 'ID_SATUAN_KERJA', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" disabled disabled class="form-control" select2  col-sm-12" width="100%">
+                	<select name="ID_SATUAN_KERJA" id="ID_SATUAN_KERJA" disabled class="form-control" select2  col-sm-12" width="100%">
 						<option value="">-- Silahkan Pilih --</option>
 						<?php if (isset($recsatker) && is_array($recsatker) && count($recsatker)):?>
 						<?php foreach($recsatker as $record):?>

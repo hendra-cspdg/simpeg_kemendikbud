@@ -92,7 +92,7 @@ class Riwayat_jabatan_model extends BF_Model
 		return parent::find_all();
 	}
 	public function update($id,$data,$posts){
-		if($posts['IS_ACTIVE'] == "1"){
+		if(isset($posts['IS_ACTIVE']) and $posts['IS_ACTIVE'] == "1"){
 			// update semua jadi inactive
 			$dataupdate = array();
         	$dataupdate["IS_ACTIVE"] = '';
@@ -124,7 +124,7 @@ class Riwayat_jabatan_model extends BF_Model
 		return parent::update($id,$data);
 	}
 	public function insert($data,$posts){
-		if($posts['IS_ACTIVE'] == "1"){
+		if(isset($posts['IS_ACTIVE']) and $posts['IS_ACTIVE'] == "1"){
 			// update semua jadi inactive
 			$dataupdate = array();
         	$dataupdate["IS_ACTIVE"] = '';
@@ -153,6 +153,6 @@ class Riwayat_jabatan_model extends BF_Model
 			// end
 			
 		}
-		return parent::insert($id,$data);
+		return parent::insert($data);
 	}
 }
