@@ -68,7 +68,7 @@
 						<?php endif;?>
 					</select>
 					</div>
-					<span class='divjabatan'></span>
+					<span class='divjabatan'><?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?></span>
                     <span class='help-inline'><?php echo form_error('ID_JABATAN'); ?></span>
                 </div>
             </div>   
@@ -175,6 +175,13 @@
 	 $(".select2").select2({width: '100%'});
 </script>
 <script>
+<?php if(isset($detail_riwayat->ID_JENIS_JABATAN) and $detail_riwayat->ID_JENIS_JABATAN == "1"){
+?>
+	 $('.slcjabatan').hide();
+	 
+<?php
+}
+?>
 	$('#ID_SATUAN_KERJA').change(function() {
 		var valuesatker = $('#ID_SATUAN_KERJA').val();
 			$("#ID_UNOR").empty().append("<option>loading...</option>"); //show loading...
