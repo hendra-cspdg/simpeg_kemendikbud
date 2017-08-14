@@ -350,6 +350,6 @@ class Unitkerja_model extends BF_Model
 		{
 			$this->select($this->table_name .'.*');
 		}
-		return parent::find_by('ID',$UNOR);
+		return parent::find_by('KODE_INTERNAL',$UNOR);
 	}
 }
