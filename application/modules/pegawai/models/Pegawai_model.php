@@ -776,6 +776,30 @@ class Pegawai_model extends BF_Model
 		
 		return array_values($output);
 	}
+	public function get_jumlah_pegawai_per_jabatan($satker_id){
+		$where_clause = '';
+		if($satker_id){
+			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
+		}
+		$data = $this->db->query('
+			SELECT
+				jenis_jabatan."ID"	,
+				jenis_jabatan."NAMA",	
+				SUM(CASE WHEN vw."ID" is not null and pegawai."JENIS_JABATAN_ID" is not null then 1 else 0 end) as "JUMLAH"
+			FROM
+				hris.jenis_jabatan
+				LEFT JOIN hris.pegawai on jenis_jabatan."ID" = pegawai."JENIS_JABATAN_ID"
+				left join vw_unit_list vw on pegawai."UNOR_ID"= vw."ID"   '.$where_clause.'
+				where 1=1
+			GROUP BY
+			jenis_jabatan."ID"	
+			ORDER BY
+				jenis_jabatan."NAMA"
+		')->result();
+	
+		
+		return $data;
+	}
 	public function getunor_id($nip = ""){
 		$where_clause = 'AND pegawai."NIP_BARU" = \''.trim($nip).'\'' ;
 		$unor_id = "";

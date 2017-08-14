@@ -73,6 +73,7 @@ Route::any('rekap/golongan-gender','rekap/golongan_gender');
 Route::any('rekap/golongan-pendidikan','rekap/golongan_pendidikan');
 Route::any('rekap/pendidikan-gender','rekap/pendidikan_gender');
 Route::any('rekap/agama-gender','rekap/agama_gender');
+Route::any('rekap/stats-pegawai-jabatan','rekap/stats_jabatan');
 
 
 

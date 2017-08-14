@@ -370,4 +370,41 @@ class rekap extends Admin_Controller
 			Template::render();
 		}
 	} 	
+	public function stats_jabatan(){
+		$data_jumlah_pegawai_per_jabatan = $this->pegawai_model->get_jumlah_pegawai_per_jabatan($this->satker_id);
+		Template::set('data_jumlah_pegawai_per_jabatan', $data_jumlah_pegawai_per_jabatan);
+
+		Template::set('download_url',base_url('rekap/stats_jabatan?unit_id='.$this->satker_id.'&action=download'));
+		$action = $this->input->get('action');
+		if($action=='download'){
+			$this->load->library('Excel');
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_rekap_jumlah_pegawai_per_jabatan.xlsx');
+
+			$objPHPExcel->setActiveSheetIndex(0);
+			
+			$data = Template::get('data_jumlah_pegawai_per_jabatan');
+			
+			$start_row = 5;
+			foreach($data as $row){
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->NAMA)
+                            ->setCellValue('C'.$start_row, $row->JUMLAH)
+							;
+				$start_row++;			
+			}
+			$filename = 'REKAP_Stats_Jabatan';
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'"');
+			header('Cache-Control: max-age=0');
+
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+			//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+			$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+			exit; //done.. exiting!
+		}
+		else {
+			Template::set_view('rekap/jumlah_pegawai_per_jabatan');
+			Template::render();
+		}
+	} 	
 }

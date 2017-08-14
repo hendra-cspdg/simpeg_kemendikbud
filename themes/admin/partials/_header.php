@@ -224,6 +224,12 @@
                       <span>Agama dan Gender </span>    
                   </a>
                 </li>
+                <li>
+                  <a href="<?php echo base_url();?>rekap/stats-pegawai-jabatan">
+                      <i class="fa fa-circle-o"></i>
+                      <span>Jumlah Pegawai per Jabatan </span>    
+                  </a>
+                </li>
               </ul>
           </li>
         <?php endif; ?>
