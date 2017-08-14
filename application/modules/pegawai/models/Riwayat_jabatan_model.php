@@ -108,7 +108,7 @@ class Riwayat_jabatan_model extends BF_Model
 			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
 			$dataupdate['JABATAN_INSTANSI_ID']	= $posts['ID_JABATAN'];
 			
-        	$dataupdate["JABATAN_INSTANSI_NAMA1"] = $rec_jabatan->NAMA_JABATAN;
+        	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
 			$this->pegawai_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
 			
 			// update tabel unirkerja jika pilihan adalah pejabat struktural
