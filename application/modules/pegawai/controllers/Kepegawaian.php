@@ -127,7 +127,7 @@ class Kepegawaian extends Admin_Controller
 			 	$tipefile=$_FILES['userfile']['type'];
 			 	//$tipefile = $_FILES['userfile']['name'];
 				 $upload = false;
-			$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.urlphoto')));
+				//$uploadData = handle_upload('userfile',trim($this->settings_lib->item('site.urlphoto')));
 				 log_activity($this->auth->user_id(), 'Gagal : '.$uploadData['error'].trim($this->settings_lib->item('site.pathphoto')).$tipefile.$this->input->ip_address(), 'pegawai');
 			 }else{
 			 	$namafile = $uploadData['data']['file_name'];

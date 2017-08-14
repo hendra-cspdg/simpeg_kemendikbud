@@ -314,6 +314,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>admin/developer/sysinfo"><i class="fa fa-circle-o"></i> Informasi Sistem</a></li>
+            <li><a href="<?php echo base_url();?>admin/reports/activities"><i class="fa fa-circle-o"></i> Log sistem</a></li>
             <!--
             <li><a href="<?php echo base_url();?>admin/developer/builder"><i class="fa fa-circle-o"></i> Module Builder</a></li>
              <li>

@@ -406,13 +406,14 @@ class Reports extends Admin_Controller
 
         // Apply the filter, if there is one
         if (empty($filterValue) || $filterValue == 'all') {
-            $total = $this->activity_model->count_by("{$activityTable}.{$activityDeletedField}", 0);
+           // $total = $this->activity_model->count_by("{$activityTable}.{$activityDeletedField}", 0);
         } else {
             $where = $where == 'activity_id' ? 'activity_id <' : $where;
+            /*
             $total = $this->activity_model->where($where, $filterValue)
                                           ->where("{$activityTable}.{$activityDeletedField}", 0)
                                           ->count_by($where, $filterValue);
-
+*/
             // Set this again for use in the main query
             $this->activity_model->where($where, $filterValue);
         }
