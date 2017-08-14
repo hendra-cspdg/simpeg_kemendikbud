@@ -94,8 +94,12 @@ class Riwayat_jabatan_model extends BF_Model
 	public function update($id,$data,$posts){
 		if(isset($posts['IS_ACTIVE']) and $posts['IS_ACTIVE'] == "1"){
 			// update semua jadi inactive
+			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$posts["ID_JABATAN"]);
+			//die($rec_jabatan->NAMA_JABATAN." kode");
+			
 			$dataupdate = array();
         	$dataupdate["IS_ACTIVE"] = '';
+        	 
 			$this->riwayat_jabatan_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
 			// update jadi active yang terpilih
 			$dataupdate = array();
@@ -103,7 +107,7 @@ class Riwayat_jabatan_model extends BF_Model
         	$dataupdate["JENIS_JABATAN_ID"] = $posts["ID_JENIS_JABATAN"];
 			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
 			$dataupdate['JABATAN_INSTANSI_ID']	= $posts['ID_JABATAN'];
-			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$posts["ID_JABATAN"]);
+			
         	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
 			$this->pegawai_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
 			
@@ -135,7 +139,7 @@ class Riwayat_jabatan_model extends BF_Model
         	$dataupdate["JENIS_JABATAN_ID"] = $posts["ID_JENIS_JABATAN"];
 			$dataupdate["JENIS_JABATAN_NAMA"] = $rec_jenis->NAMA;
 			$dataupdate['JABATAN_INSTANSI_ID']	= $posts['ID_JABATAN'];
-			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",$posts["ID_JABATAN"]);
+			$rec_jabatan = $this->jabatan_model->find_by("KODE_JABATAN",trim($posts["ID_JABATAN"]));
         	$dataupdate["JABATAN_INSTANSI_NAMA"] = $rec_jabatan->NAMA_JABATAN;
 			$this->pegawai_model->update_where("PNS_ID",$posts["PNS_ID"], $dataupdate);
 			

@@ -234,8 +234,9 @@ class Riwayatjabatan extends Admin_Controller
         // jika jabatannya struktural
         if($this->input->post("ID_JENIS_JABATAN") == "1"){
         	if($this->input->post("ID_UNOR") != ""){
-        	$rec_jabatan = $this->unitkerja_model->find_by("ID",$this->input->post("ID_UNOR"));
+        	$rec_jabatan = $this->unitkerja_model->find_by("KODE_INTERNAL",$this->input->post("ID_UNOR"));
         	$data["NAMA_JABATAN"] = $rec_jabatan->NAMA_JABATAN;
+        	$data["UNOR"] = $rec_jabatan->NAMA_UNOR;
         	}
         }else{
         	if($this->input->post("ID_JABATAN") != ""){

@@ -21,56 +21,76 @@ td.button-column button {
     width: 20em;
 }
 </style>
+<div class="row">
+<div class="box-body">
 <div class="row icons">
     <?php if ($hasPermissionViewOwn) : ?>
-	<div class="column size1of4 media-box">
-        <a href='<?php echo "{$activitiesReportsUrl}/{$pages['own']}"; ?>'>
-			<img src="<?php echo Template::theme_url('images/activity-user.png'); ?>" alt='user icon' />
-		</a>
-        <p><strong><?php echo lang(str_replace('activity_', 'activities_', $pages['own'])); ?></strong><br />
-            <span><?php echo lang(str_replace('activity_', 'activities_', "{$pages['own']}_description")); ?></span>
-		</p>
-	</div>
+     <div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+		  <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+
+		  <div class="info-box-content">
+			<span class="info-box-text"><a href='<?php echo "{$activitiesReportsUrl}/{$pages['own']}"; ?>'>Aktifitas Anda</a></span>
+			<span class="info-box-number"></span>
+		  </div>
+		  <!-- /.info-box-content -->
+		</div>
+		<!-- /.info-box -->
+	  </div>
+	 
 	<?php
     endif;
     if ($hasPermissionViewUser) :
     ?>
-	<div class="column size1of4 media-box">
-        <a href='<?php echo "{$activitiesReportsUrl}/{$pages['user']}"; ?>'>
-			<img src="<?php echo Template::theme_url('images/customers.png'); ?>" alt='users icon' />
-		</a>
-        <p><strong><?php echo lang(str_replace('activity_', 'activities_', "{$pages['user']}s")); ?></strong><br />
-            <span><?php echo lang(str_replace('activity_', 'activities_', "{$pages['user']}s_description")); ?></span>
-		</p>
-	</div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+		  <span class="info-box-icon bg-aqua"><i class="fa fa-users"></i></span>
+
+		  <div class="info-box-content">
+			<span class="info-box-text"><a href='<?php echo "{$activitiesReportsUrl}/{$pages['user']}"; ?>'>Aktifitas User</a></span>
+			<span class="info-box-number"></span>
+		  </div>
+		  <!-- /.info-box-content -->
+		</div>
+		<!-- /.info-box -->
+	  </div>
 	<?php
     endif;
     if ($hasPermissionViewModule) :
     ?>
-	<div class="column size1of4 media-box">
-        <a href='<?php echo "{$activitiesReportsUrl}/{$pages['module']}"; ?>'>
-			<img src="<?php echo Template::theme_url('images/product.png'); ?>" alt='modules icon' />
-		</a>
-        <p><strong><?php echo lang(str_replace('activity_', 'activities_', "{$pages['module']}s")); ?></strong><br />
-            <span><?php echo lang(str_replace('activity_', 'activities_', "{$pages['module']}_description")); ?></span>
-		</p>
-	</div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+		  <span class="info-box-icon bg-aqua"><i class="fa fa-docs"></i></span>
+
+		  <div class="info-box-content">
+			<span class="info-box-text"><a href='<?php echo "{$activitiesReportsUrl}/{$pages['module']}"; ?>'>Aktifitas By Module</a></span>
+			<span class="info-box-number"></span>
+		  </div>
+		  <!-- /.info-box-content -->
+		</div>
+		<!-- /.info-box -->
+	  </div>
 	<?php
     endif;
     if ($hasPermissionViewDate) :
     ?>
-	<div class="column size1of4 media-box">
-        <a href='<?php echo "{$activitiesReportsUrl}/{$pages['date']}"; ?>'>
-			<img src="<?php echo Template::theme_url('images/calendar.png'); ?>" alt='calendar icon' />
-		</a>
-        <p><strong><?php echo lang(str_replace('activity_', 'activities_', $pages['date'])); ?></strong><br />
-            <span><?php echo lang(str_replace('activity_', 'activities_', "{$pages['date']}_description")); ?></span>
-		</p>
-	</div>
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<div class="info-box">
+		  <span class="info-box-icon bg-aqua"><i class="fa fa-calender"></i></span>
+
+		  <div class="info-box-content">
+			<span class="info-box-text"><a href='<?php echo "{$activitiesReportsUrl}/{$pages['date']}"; ?>'>Aktifitas By Tanggal</a></span>
+			<span class="info-box-number"></span>
+		  </div>
+		  <!-- /.info-box-content -->
+		</div>
+		<!-- /.info-box -->
+	  </div>
+	 
 	<?php endif; ?>
 </div>
 <div class="row">
-	<div class="column size1of2">
+	<div class="column size1of2 col-md-12">
 		<!-- Active Modules -->
 		<div class="admin-box">
 			<h3><?php echo lang('activities_top_modules'); ?></h3>
@@ -96,7 +116,7 @@ td.button-column button {
             <?php endif; ?>
 		</div>
 	</div>
-	<div class="column size1of2 last-column">
+	<div class="column size1of2 last-column col-md-12">
 		<div class="admin-box">
 			<!-- Active Users -->
 			<h3><?php echo lang('activities_top_users'); ?></h3>
@@ -123,6 +143,7 @@ td.button-column button {
 		</div>
 	</div>
 </div>
+</row>
 <?php
 if ($hasPermissionDeleteOwn
     || $hasPermissionDeleteUser
@@ -130,7 +151,8 @@ if ($hasPermissionDeleteOwn
     || $hasPermissionDeleteDate
 ) :
 ?>
-<div class="admin-box">
+<div class="row">
+<div class="box-body">
 	<h3><?php echo lang('activities_cleanup'); ?></h3>
 	<table class="table table-striped">
 		<tbody>
@@ -219,5 +241,9 @@ if ($hasPermissionDeleteOwn
 		</tbody>
 	</table>
 </div>
+
 <?php
 endif;
+?>
+</div>
+</div>

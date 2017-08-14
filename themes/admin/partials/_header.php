@@ -262,6 +262,9 @@
             <?php if ($this->auth->has_permission('MasterPendidikan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>pegawai/masterpendidikan"><i class="fa fa-circle-o"></i>Pendidikan</a></li>
             <?php endif; ?>
+             <?php if ($this->auth->has_permission('Tkpendidikan.Masters.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/masters/tkpendidikan"><i class="fa fa-circle-o"></i>Tk Pendidikan</a></li>
+            <?php endif; ?>
             <?php if ($this->auth->has_permission('Golongan.Masters.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/masters/golongan"><i class="fa fa-circle-o"></i>Golongan</a></li>
             <?php endif; ?>
@@ -317,6 +320,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="<?php echo base_url();?>admin/developer/sysinfo"><i class="fa fa-circle-o"></i> Informasi Sistem</a></li>
+            <li><a href="<?php echo base_url();?>admin/reports/activities"><i class="fa fa-circle-o"></i> Log sistem</a></li>
             <!--
             <li><a href="<?php echo base_url();?>admin/developer/builder"><i class="fa fa-circle-o"></i> Module Builder</a></li>
              <li>

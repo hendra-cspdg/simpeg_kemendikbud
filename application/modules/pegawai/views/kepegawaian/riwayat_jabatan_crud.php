@@ -68,7 +68,7 @@
 						<?php endif;?>
 					</select>
 					</div>
-					<span class='divjabatan'></span>
+					<span class='divjabatan'><?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?></span>
                     <span class='help-inline'><?php echo form_error('ID_JABATAN'); ?></span>
                 </div>
             </div>   
@@ -159,7 +159,7 @@
             <div class="control-group<?php echo form_error('NAMA_JABATAN') ? ' error' : ''; ?> col-sm-12">
                 <?php echo form_label('NAMA JABATAN', 'NAMA_JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<input type='text' class="form-control" name='NAMA_JABATAN'  value="<?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?>" />
+                	<input type='text' class="form-control" id='NAMA_JABATAN' name='NAMA_JABATAN'  value="<?php echo set_value('NAMA_JABATAN', isset($detail_riwayat->NAMA_JABATAN) ? $detail_riwayat->NAMA_JABATAN : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ESELON4'); ?></span>
                 </div>
             </div>
@@ -175,11 +175,18 @@
 	 $(".select2").select2({width: '100%'});
 </script>
 <script>
+<?php if(isset($detail_riwayat->ID_JENIS_JABATAN) and $detail_riwayat->ID_JENIS_JABATAN == "1"){
+?>
+	 $('.slcjabatan').hide();
+	 
+<?php
+}
+?>
 	$('#ID_SATUAN_KERJA').change(function() {
 		var valuesatker = $('#ID_SATUAN_KERJA').val();
 			$("#ID_UNOR").empty().append("<option>loading...</option>"); //show loading...
 			 
-			var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getbysatker?satker=" + encodeURIComponent(valuesatker);
+			var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getbysatkerID?satker=" + encodeURIComponent(valuesatker);
 			$.getJSON(json_url,function(data){
 				$("#ID_UNOR").empty(); 
 				if(data==""){
@@ -198,6 +205,7 @@
 	});
 	$('#ID_UNOR').change(function() {
 		var val = $('#ID_UNOR').val();
+		
 		var json_url = "<?php echo base_url(); ?>pegawai/manage_unitkerja/getnamajabatan?unor=" + encodeURIComponent(val);
 		$.ajax({    
 		   type: "POST",
@@ -205,11 +213,12 @@
 		   data: "",
 		   dataType: "html",
 		   success: function(data){ 
-				
+				//alert(data);
 				var valuejenisjabatan = $('#ID_JENIS_JABATAN').val();
 				if(valuejenisjabatan == "1"){
 					$('.slcjabatan').hide();
 					$('.divjabatan').html(data);
+					$('#NAMA_JABATAN').val(data) ;
 				}else{
 					$('.slcjabatan').show();
 					$('.divjabatan').html("");
