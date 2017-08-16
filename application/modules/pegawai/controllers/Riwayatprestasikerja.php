@@ -62,7 +62,7 @@ class Riwayatprestasikerja extends Admin_Controller
         $draw = $this->input->post('draw');
 		$iSortCol = $this->input->post('iSortCol_1');
 		$sSortCol = $this->input->post('sSortDir_1');
-        $PNS_ID = "1552260645";//$this->input->post('PNS_ID');
+        $PNS_ID = $this->input->post('PNS_ID');
         if(empty($PNS_ID)){
             ECHO "die";
             die();
