@@ -103,16 +103,27 @@
 	});
 </script>	
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Berdasarkan Golongan</h3>
 
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=golongan" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">	
@@ -124,11 +135,23 @@
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Pendidikan</h3>
 
+              
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=pendidikan" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">	
@@ -140,11 +163,23 @@
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Umur</h3>
 
+             
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=umur" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -165,16 +200,28 @@
           </div>
         
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-5">
 					<div class="box box-success">
             <div class="box-header with-border">
               <h3 class="box-title">Proyeksi Pensiun Pertahun</h3>
 
+              
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=proyeksi_pensiun" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding">	
@@ -186,11 +233,23 @@
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Agama</h3>
 
+              
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=agama" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -234,11 +293,23 @@
             <div class="box-header with-border">
               <h3 class="box-title">Grafik Jenis Kelamin</h3>
 
+              
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
+								<div class="btn-group ">
+									<button type="button" class="btn btn-warning">Silahkan Pilih</button>
+									<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="?unit_id=<?php echo $this->input->get('unit_id');?>&action=download&data=jenis_kelamin" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+									</ul>
+								</div>	
+								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+								</button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								
+							</div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

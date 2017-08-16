@@ -133,6 +133,152 @@ class reports extends Admin_Controller
 		Template::set('data_jumlah_pegawai_per_golongan', json_encode($data_jumlah_pegawai_per_golongan));
 		
 		
+
+		$action = $this->input->get("action");
+		if($action=="download"){
+			$data = $this->input->get("data");
+			if($data =='golongan'){
+				$o = json_decode(Template::get('data_jumlah_pegawai_per_golongan'));
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_golongan.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->nama);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->total);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_GOLONGAN';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+
+			}
+			else if($data =='proyeksi_pensiun'){
+				$o = json_decode(Template::get('jsonpensiuntahun'));
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_proyeksi_pensiun.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->tahun);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->jumlah);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_PROYEKSI_PENSIUN';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+			}
+			else if($data =='pendidikan'){				
+				$o = json_decode(Template::get('jsonpendidikan'));
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_pendidikan.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->NAMA);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->jumlah);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_PENDIDIKAN';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+			}
+			else if($data =='agama'){
+				$o = Template::get('agamas');
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_agama.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->label);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->value);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_AGAMA';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+			}
+			else if($data =='umur'){
+				
+				$o = json_decode(Template::get('jsonumur'));
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_umur.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->label);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->jumlah);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_UMUR';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+			}
+			else if($data =='jenis_kelamin'){
+				$o = json_decode(Template::get('jsonjk'));
+				$this->load->library('Excel');
+				$objPHPExcel = new PHPExcel();
+				$objPHPExcel = PHPExcel_IOFactory::load(FCPATH.DIRECTORY_SEPARATOR.'/templates/template_data_dashboard_jenis_kelamin.xlsx');
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				$start_row = 5;
+				foreach($o as $row){
+					$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row->Jenis_Kelamin);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row->jumlah);
+					$start_row++;			
+				}
+				$filename = 'DASHBOARD_JENISKELAMIN';
+				header('Content-Type: application/vnd.ms-excel');
+				header('Content-Disposition: attachment;filename="'.$filename.'"');
+				header('Cache-Control: max-age=0');
+
+				$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');  //downloadable file is in Excel 2003 format (.xls)
+				//$objWriter = PHPExcel_IOFactory::createWriter($objTpl, 'Excel2007'); 
+				$objWriter->save('php://output');  //send it to user, of course you can save it to disk also!
+				exit; //done.. exiting!
+			}
+			return;
+		}
 		Template::render();
 	}
 	 
