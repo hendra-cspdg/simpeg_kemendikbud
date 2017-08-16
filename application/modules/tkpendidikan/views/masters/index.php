@@ -12,7 +12,7 @@ if ($can_delete) {
 <div class="admin-box box box-primary">
 	<div class="box-header">
 		<h3>
-			Jabatan
+			Tingkt Pendidikan
 			
 			 <?php if ($this->auth->has_permission('Tkpendidikan.Masters.Create')) : ?>
               <a href="<?php echo site_url($areaUrl . '/create'); ?>">

@@ -126,31 +126,19 @@
                 </div>
             </div>	
             <div class="control-group<?php echo form_error('ATASAN_LANGSUNG_PNS_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label('ATASAN LANGSUNG PNS ID', 'ATASAN LANGSUNG PNS ID', array('class' => 'control-label')); ?>
+                <?php echo form_label("ATASAN LANGSUNG PNS ID", 'NILAI ATASAN_LANGSUNG_PNS_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ATASAN_LANGSUNG_PNS_ID" id="ATASAN_LANGSUNG_PNS_ID" class="form-control">
-						<?php 
-                            if($selectedAtasanLangsung){
-                                echo "<option selected value='".$selectedAtasanLangsung->PNS_ID."'>".$selectedAtasanLangsung->NAMA."</option>";
-                            }
-                        ?>
-					</select>
+                    <input id='ATASAN_LANGSUNG_PNS_ID' type='text' class="form-control" name='ATASAN_LANGSUNG_PNS_ID' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_ID', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_ID) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_ID : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_ID'); ?></span>
                 </div>
-            </div>
-           <div class="control-group<?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label('ATASAN ATASAN LANGSUNG PNS ID', 'ATASAN ATASANLANGSUNG PNS ID', array('class' => 'control-label')); ?>
+            </div>	
+            <div class="control-group<?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("ATASAN ATASAB LANGSUNG PNS ID", 'NILAI ATASAN_ATASAN_LANGSUNG_PNS_ID', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                	<select name="ATASAN_ATASAN_LANGSUNG_PNS_ID" id="ATASAN_ATASAN_LANGSUNG_PNS_ID" class="form-control">
-						<?php 
-                            if($selectedAtasanAtasanLangsung){
-                                echo "<option selected value='".$selectedAtasanAtasanLangsung->PNS_ID."'>".$selectedAtasanAtasanLangsung->NAMA."</option>";
-                            }
-                        ?>
-					</select>
+                    <input id='ATASAN_ATASAN_LANGSUNG_PNS_ID' type='text' class="form-control" name='ATASAN_ATASAN_LANGSUNG_PNS_ID' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_ID', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_ID) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_ID : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID'); ?></span>
                 </div>
-            </div>		
+            </div>	
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
@@ -169,26 +157,36 @@
     });
 </script>
 <script>
+	var pembagi = 5;
     $("#JABATAN_TIPE").change(function(){
         if($(this).val()==1){
+        	pembagi = 6;
             $("#PERILAKU_KEPEMIMPINAN").val(0);
             $("#PERILAKU_KEPEMIMPINAN").attr("READONLY",false);
         }
         else {
+        	pembagi = 5;
             $("#PERILAKU_KEPEMIMPINAN").val(0);
             $("#PERILAKU_KEPEMIMPINAN").attr("READONLY",true);
         }
         calcPerilaku();
     });
+    
     function calcPerilaku(){
+    	var nilaiskp = Number($("#NILAI_SKP_AKHIR").val());
          var total = Number($("#PERILAKU_KOMITMEN").val())+
          Number($("#PERILAKU_INTEGRITAS").val())+
          Number($("#PERILAKU_DISIPLIN").val())+
          Number($("#PERILAKU_KERJASAMA").val())+
          Number($("#PERILAKU_ORIENTASI_PELAYANAN").val())+
          Number($("#PERILAKU_KEPEMIMPINAN").val());
-         Number($("#NILAI_PERILAKU").val(total));
-         $("#NILAI_PERILAKU_AKHIR").val($("#NILAI_PERILAKU").val()*40/100);
+         var totalperilaku = (total/pembagi);
+         $("#NILAI_PERILAKU").val(totalperilaku);
+         var NILAI_PERILAKU_AKHIR = totalperilaku*40/100;
+         $("#NILAI_PERILAKU_AKHIR").val(NILAI_PERILAKU_AKHIR);
+         var totalall = NILAI_PERILAKU_AKHIR + nilaiskp;
+         $("#NILAI_PPK").val(totalall);
+         
     }
      $("#PERILAKU_KOMITMEN").keyup(function(){
          calcPerilaku();
@@ -211,6 +209,7 @@
     $("#NILAI_SKP").keyup(function(){
         $("#NILAI_SKP_AKHIR").val($("#NILAI_SKP").val()*60/100);
     });
+    /*
     $("#ATASAN_LANGSUNG_PNS_ID").select2({
         placeholder: 'Cari Atasan Langsung...',
         width: '100%',
@@ -245,6 +244,7 @@
             cache: true
         }
     });
+    */
     $("#ID_INSTANSI").select2({
         placeholder: 'Cari Data Instansi..',
         width: '100%',
