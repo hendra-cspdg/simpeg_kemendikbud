@@ -257,7 +257,7 @@ class Manage_application extends Admin_Controller
 		exit();
     }
     public function index($PNS_ID=8){
-       // Template::set_view("kepegawaian/tab_pane_riwayat_diklat_struktural");
+        Template::set_view("Manage_application/index");
         Template::set('PNS_ID', $PNS_ID);
         Template::set('TAB_ID', uniqid("TAB_CONTOH"));
         Template::render();
