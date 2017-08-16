@@ -106,7 +106,7 @@
 	<div class="col-md-8">
 		<div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Berdasarkan Golongan</h3>
+              <h3 class="box-title">Grafik Berdasarkan Golongan</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -122,7 +122,7 @@
           </div>
         <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Pendidikan</h3>
+              <h3 class="box-title">Grafik Pendidikan</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -138,7 +138,7 @@
           </div> 
 		  <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Umur</h3>
+              <h3 class="box-title">Grafik Umur</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -168,7 +168,7 @@
 	<div class="col-md-4">
 					<div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Pensiun Pertahun</h3>
+              <h3 class="box-title">Proyeksi Pensiun Pertahun</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -184,7 +184,7 @@
           </div>
           <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Agama</h3>
+              <h3 class="box-title">Grafik Agama</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -232,7 +232,7 @@
 						
            <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">Chart Jenis Kelamin</h3>
+              <h3 class="box-title">Grafik Jenis Kelamin</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

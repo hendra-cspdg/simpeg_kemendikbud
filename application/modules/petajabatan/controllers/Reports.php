@@ -42,6 +42,12 @@ class Reports extends Admin_Controller
 		Template::set("collapse",true);
         Template::render();
     }
+    public function kosong()
+    {
+    	Template::set('toolbar_title', "Peta Jabatan Kosong");
+		Template::set("collapse",true);
+        Template::render();
+    }
     public function viewdata()
     {
     	$unitkerja = $this->input->get('unitkerja');
@@ -105,6 +111,73 @@ class Reports extends Admin_Controller
 		endif;
 		//print_r($apegawai);
     	$output = $this->load->view('reports/content',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota,"apegawai"=>$apegawai),true);	
+		 
+		echo $output;
+        die();
+    }
+    public function viewdatakosong()
+    {
+    	$unitkerja = $this->input->get('unitkerja');
+    	$this->load->model('pegawai/pegawai_model');
+    	$this->load->model('pegawai/unitkerja_model');
+    	$datadetil = $this->unitkerja_model->find_by("ID",$unitkerja);
+    	//print_r($datadetil);
+    	//die("unit ".$unitkerja);
+    	$ideselon2 = isset($datadetil->KODE_INTERNAL) ? substr($datadetil->KODE_INTERNAL,0,5) : "";
+    	$idsatker = isset($datadetil->ID) ? $datadetil->ID : "";
+    	// eselon III
+    	//$eselon3 = $this->unitkerja_model->find_by("DIATASAN_ID",$idsatker);
+    	$eselon3[] = array(); 
+    	$aeselon4[] = array(); 
+    	$satker = $this->unitkerja_model->find_eselon3($ideselon2);
+    	
+    	if (isset($satker) && is_array($satker) && count($satker)):
+			foreach($satker as $record):
+				if($record->DIATASAN_ID == $idsatker){
+					$eselon3["ID"][] = $record->ID;
+					$eselon3["NAMA_UNOR"][] 	= $record->NAMA_UNOR;
+				}else{
+					$aeselon4[$record->DIATASAN_ID][] = $record->NAMA_UNOR;
+					$aeselon4[$record->DIATASAN_ID."-ID"][] = $record->KODE_INTERNAL;
+				}
+			endforeach;
+		endif;
+		//echo count($eselon3["ID"]);
+		//die();
+    	/*
+    	$eselon4 = $this->unitkerja_model->find_eselon4($ideselon2);
+    	//print_r($eselon3);
+    	if (isset($eselon4) && is_array($eselon4) && count($eselon4)):
+			foreach($eselon4 as $record):
+				$ideselon3 = isset($record->KODE_UNIT_KERJA) ? substr($record->KODE_UNIT_KERJA,0,8) : "";
+				$aeselon4[$ideselon3][] = $record->NAMA_ESELON_IV;
+				$aeselon4[$ideselon3."-ID"][] = $record->KODE_UNIT_KERJA;
+				//echo $record->NAMA_ESELON_IV;
+			endforeach;
+		endif;
+		*/
+		// Mulai kuota jabatan 
+		$kuotajabatan = $this->kuotajabatan_model->find_all($ideselon2);
+		$akuota[] = array(); 
+		if (isset($kuotajabatan) && is_array($kuotajabatan) && count($kuotajabatan)):
+			foreach($kuotajabatan as $record):
+				//echo $record->ID_JABATAN;
+				$akuota[trim($record->KODE_UNIT_KERJA)."-ID_JABATAN"][] 	= trim($record->KODE_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-NAMA_Jabatan"][] 	= trim($record->NAMA_JABATAN);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-KELAS"][] 	= trim($record->KELAS);
+				$akuota[trim($record->KODE_UNIT_KERJA)."-JML"][] = trim($record->JUMLAH_PEMANGKU_JABATAN);
+			endforeach;
+		endif;
+		$pegawaijabatan = $this->pegawai_model->find_grupjabataninstansi($ideselon2);
+		$apegawai = array(); 
+		if (isset($pegawaijabatan) && is_array($pegawaijabatan) && count($pegawaijabatan)):
+			foreach($pegawaijabatan as $record):
+				//echo trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)." = ".$record->jumlah."<br>";
+				$apegawai[trim($record->KODE_INTERNAL)."-jml-".trim($record->JABATAN_INSTANSI_ID)] = trim($record->jumlah);
+			endforeach;
+		endif;
+		//print_r($apegawai);
+    	$output = $this->load->view('reports/contentkosong',array('datadetil'=>$datadetil,"eselon3"=>$eselon3,"aeselon4"=>$aeselon4,"akuota"=>$akuota,"apegawai"=>$apegawai),true);	
 		 
 		echo $output;
         die();

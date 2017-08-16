@@ -105,7 +105,7 @@ class rekap extends Admin_Controller
 			
 			$start_row = 5;
 			foreach($data as $row){
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['Golongan']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$start_row, $row['nama']);
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$start_row, $row['<25']);
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$start_row, $row['25-30']);
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$start_row, $row['31-35']);
@@ -115,7 +115,7 @@ class rekap extends Admin_Controller
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$start_row, $row['>50']);
 				$start_row++;			
 			}
-			$filename = 'REKAP_GOLONGAN_USIA';
+			$filename = 'REKAP_GOLONGAN_USIA.xlsx';
 			header('Content-Type: application/vnd.ms-excel');
 			header('Content-Disposition: attachment;filename="'.$filename.'"');
 			header('Cache-Control: max-age=0');

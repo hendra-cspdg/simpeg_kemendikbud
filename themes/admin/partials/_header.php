@@ -306,6 +306,9 @@
             <?php if ($this->auth->has_permission('Petajabatan.Reports.View')) : ?>
             <li><a href="<?php echo base_url();?>admin/reports/petajabatan"><i class="fa fa-table"></i>Daftar kuota jabatan</a></li>
             <?php endif; ?>
+            <?php if ($this->auth->has_permission('Petajabatan.Reports.View')) : ?>
+            <li><a href="<?php echo base_url();?>admin/reports/petajabatan/kosong"><i class="fa fa-table"></i>kuota jabatan kosong</a></li>
+            <?php endif; ?>
             <li><a href="<?php echo base_url();?>petajabatan/struktur"><i class="fa fa-circle-o"></i>Struktur Organisasi</a></li>
           </ul>
         </li>

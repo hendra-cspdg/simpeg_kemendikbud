@@ -145,7 +145,6 @@ class Riwayat_jabatan_model extends BF_Model
 			
 			// update tabel unirkerja jika pilihan adalah pejabat struktural
 			if($posts["ID_JENIS_JABATAN"] == "1"){
-			 
 			   $adata = array();
 			   $this->pegawai_model->where("PNS_ID",$posts["PNS_ID"]);
 			   $pegawai_data = $this->pegawai_model->find_first_row();  

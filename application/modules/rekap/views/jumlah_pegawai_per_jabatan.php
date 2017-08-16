@@ -85,7 +85,7 @@
 							<?php 
 								echo "<table class='table table-list table-bordered'><thead><tr><th>JENIS JABATAN</th><th>JUMLAH</th></tr></thead><tbody>";
 									foreach($data_jumlah_pegawai_per_jabatan as $row){
-										echo "<tr><td>$row->NAMA</td><td>$row->JUMLAH</td></tr>";
+										echo "<tr><td>$row->NAMA</td><td align='right'>".number_format($row->JUMLAH)."</td></tr>";
 									}
 									echo "</tbody></table>";
 							?>

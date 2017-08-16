@@ -74,7 +74,7 @@
 			var kode =$(this).attr("kode");
 				swal({
 					title: "Anda Yakin?",
-					text: "Hapus data Riwayat jabatan!",
+					text: "Hapus data Riwayat Pekerjaan!",
 					type: "warning",
 					showCancelButton: true,
 					confirmButtonClass: 'btn-danger',
