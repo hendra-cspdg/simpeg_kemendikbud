@@ -227,6 +227,7 @@
     });
 </script>
 <script>
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 	var pembagi = 6;
     $("#JABATAN_TIPE").change(function(){
         if($(this).val()==1){
