@@ -9,7 +9,13 @@
         <fieldset>
             <input id='ID' type='hidden' class="form-control" name='ID' maxlength='32' value="<?php echo set_value('ID', isset($detail_riwayat->ID) ? trim($detail_riwayat->ID) : ''); ?>" />
             <input id='PNS_ID' type='hidden' class="form-control" name='PNS_ID' maxlength='32' value="<?php echo set_value('PNS_ID', isset($PNS_ID) ? trim($PNS_ID) : ''); ?>" />
-          
+          <div class="control-group<?php echo form_error('TAHUN') ? ' error' : ''; ?> col-sm-12">
+                <?php echo form_label("TAHUN SKP", 'TAHUN SKP', array('class' => 'control-label')); ?>
+                <div class='controls'>
+                    <input id='TAHUN' type='text' class="form-control" name='TAHUN' maxlength='32' value="<?php echo set_value('TAHUN', isset($detail_riwayat->TAHUN) ? $detail_riwayat->TAHUN : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('TAHUN'); ?></span>
+                </div>
+            </div>
           <div class="control-group<?php echo form_error('JABATAN_TIPE') ? ' error' : ''; ?> col-sm-6">
                 <?php echo form_label('JENIS JABATAN', 'JENIS JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
@@ -25,11 +31,11 @@
                     <span class='help-inline'><?php echo form_error('JABATAN_TIPE'); ?></span>
                 </div>
             </div>
-             <div class="control-group<?php echo form_error('TAHUN') ? ' error' : ''; ?> col-sm-6">
-                <?php echo form_label("TAHUN SKP", 'TAHUN SKP', array('class' => 'control-label')); ?>
+            <div class="control-group<?php echo form_error('JABATAN_NAMA') ? ' error' : ''; ?> col-sm-6">
+                <?php echo form_label("NAMA JABATAN", 'NAMA JABATAN', array('class' => 'control-label')); ?>
                 <div class='controls'>
-                    <input id='TAHUN' type='text' class="form-control" name='TAHUN' maxlength='32' value="<?php echo set_value('TAHUN', isset($detail_riwayat->TAHUN) ? $detail_riwayat->TAHUN : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('TAHUN'); ?></span>
+                    <input id='JABATAN_NAMA' type='text' class="form-control" name='JABATAN_NAMA' maxlength='32' value="<?php echo set_value('JABATAN_NAMA', isset($detail_riwayat->JABATAN_NAMA) ? $detail_riwayat->JABATAN_NAMA : ''); ?>" />
+                    <span class='help-inline'><?php echo form_error('JABATAN_NAMA'); ?></span>
                 </div>
             </div>
            
@@ -98,7 +104,7 @@
             </div>
             <div class="row"></div>
              <div class="control-group<?php echo form_error('NILAI_PERILAKU') ? ' error' : ''; ?> col-sm-4">
-                <?php echo form_label("NILAI PERILAKU AKHIR", 'NILAI_PERILAKU', array('class' => 'control-label')); ?>
+                <?php echo form_label("NILAI_PERILAKU", 'NILAI_PERILAKU', array('class' => 'control-label')); ?>
                 <div class='controls'>
                     <input id='NILAI_PERILAKU' type='text' class="form-control" name='NILAI_PERILAKU' maxlength='32' value="<?php echo set_value('NILAI_PERILAKU', isset($detail_riwayat->NILAI_PERILAKU) ? $detail_riwayat->NILAI_PERILAKU : ''); ?>" />
                     <span class='help-inline'><?php echo form_error('NILAI_PERILAKU'); ?></span>
@@ -125,20 +131,84 @@
                     <span class='help-inline'><?php echo form_error('NILAI_PPK'); ?></span>
                 </div>
             </div>	
-            <div class="control-group<?php echo form_error('ATASAN_LANGSUNG_PNS_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("ATASAN LANGSUNG PNS ID", 'NILAI ATASAN_LANGSUNG_PNS_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='ATASAN_LANGSUNG_PNS_ID' type='text' class="form-control" name='ATASAN_LANGSUNG_PNS_ID' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_ID', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_ID) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_ID'); ?></span>
-                </div>
-            </div>	
-            <div class="control-group<?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID') ? ' error' : ''; ?> col-sm-12">
-                <?php echo form_label("ATASAN ATASAB LANGSUNG PNS ID", 'NILAI ATASAN_ATASAN_LANGSUNG_PNS_ID', array('class' => 'control-label')); ?>
-                <div class='controls'>
-                    <input id='ATASAN_ATASAN_LANGSUNG_PNS_ID' type='text' class="form-control" name='ATASAN_ATASAN_LANGSUNG_PNS_ID' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_ID', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_ID) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_ID : ''); ?>" />
-                    <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID'); ?></span>
-                </div>
-            </div>	
+            <div class="nav-tabs-custom control-group col-sm-12" style="margin-top:5px">
+                <ul id="tab-insides-here" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#atasan-langsung" data-toggle="tab" aria-expanded="true"> Atasan Langsung </a>
+                    </li>
+                    <li class="">
+                        <a href="#atasan-atasan-langsung" data-toggle="tab" aria-expanded="false"> Atasan Atasan Langsung </a>
+                    </li>
+                </ul>    
+                <style>
+                    .tab-content > .active {
+                        display: table;                       
+                    }    
+                </style>    
+                <div class="tab-content">
+                    <div class="tab-pane active" id="atasan-langsung">
+                    
+                        <div class="control-group col-sm-12">
+                            <label for="ATASAN_LANGSUNG_PNS_ID" class="control-label">CARI DARI DAFTAR PEGAWAI</label>
+                            <div class='controls'>
+                                <select id="ATASAN_LANGSUNG_PNS_ID" name="ATASAN_LANGSUNG_PNS_ID" width="100%" class=" col-md-10 format-control"></select>
+                                <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_ID'); ?></span>
+                            </div>
+                        </div>
+                        <div class="control-group col-sm-12">
+                            <label for="ATASAN_LANGSUNG_PNS_NIP" class="control-label">NIP ATASAN LANGSUNG</label>
+                            <div class='controls'>
+                                <input id='ATASAN_LANGSUNG_PNS_NIP' type='text' class="form-control" name='ATASAN_LANGSUNG_PNS_NIP' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_NIP', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_NIP) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_NIP : ''); ?>" />
+                                <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_NIP'); ?></span>
+                            </div>
+                        </div>
+                        <div class="control-group col-sm-12">
+                            <label for="ATASAN_LANGSUNG_PNS_NAMA" class="control-label">NAMA ATASAN LANGSUNG</label>
+                            <div class='controls'>
+                                <input id='ATASAN_LANGSUNG_PNS_NAMA' type='text' class="form-control" name='ATASAN_LANGSUNG_PNS_NAMA' maxlength='32' value="<?php echo set_value('ATASAN_LANGSUNG_PNS_NAMA', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_NAMA) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_NAMA : ''); ?>" />
+                                <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_NAMA'); ?></span>
+                            </div>
+                        </div>
+                        <div class="control-group col-sm-12">
+                            <label for="ATASAN_LANGSUNG_PNS_JABATAN" class="control-label">JABATAN ATASAN LANGSUNG</label>
+                            <div class='controls'>
+                                <input id='ATASAN_LANGSUNG_PNS_JABATAN' type='text' class="form-control" name='ATASAN_LANGSUNG_PNS_JABATAN' maxlength='32' value="<?php echo set_value('NILAI_PERILAKU_AKHIR', isset($detail_riwayat->ATASAN_LANGSUNG_PNS_JABATAN) ? $detail_riwayat->ATASAN_LANGSUNG_PNS_JABATAN : ''); ?>" />
+                                <span class='help-inline'><?php echo form_error('ATASAN_LANGSUNG_PNS_JABATAN'); ?></span>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="tab-pane " id="atasan-atasan-langsung">
+                        <div class="control-group col-sm-12">
+                            <label for="ATASAN_ATASAN_LANGSUNG_PNS_ID" class="control-label">CARI DARI DAFTAR PEGAWAI</label>
+                            <div class='controls'>
+                                <select id="ATASAN_ATASAN_LANGSUNG_PNS_ID" name="ATASAN_ATASAN_LANGSUNG_PNS_ID" width="100%" class=" col-md-10 format-control"></select>
+                                <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_ID'); ?></span>
+                            </div>
+                        </div>
+                         <div class="control-group col-sm-12">
+                                <label for="ATASAN_ATASAN_LANGSUNG_PNS_NIP" class="control-label">NIP ATASAN ATASAN LANGSUNG</label>
+                                <div class='controls'>
+                                    <input id='ATASAN_ATASAN_LANGSUNG_PNS_NIP' type='text' class="form-control" name='ATASAN_ATASAN_LANGSUNG_PNS_NIP' maxlength='32' value="<?php echo set_value('ATASAN_ATASAN_LANGSUNG_PNS_NIP', isset($detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_NIP) ? $detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_NIP : ''); ?>" />
+                                    <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_NIP'); ?></span>
+                                </div>
+                            </div>
+                            <div class="control-group col-sm-12">
+                                <label for="ATASAN_ATASAN_LANGSUNG_PNS_NAMA" class="control-label">NAMA ATASAN ATASAN LANGSUNG</label>
+                                <div class='controls'>
+                                    <input id='ATASAN_ATASAN_LANGSUNG_PNS_NAMA' type='text' class="form-control" name='ATASAN_ATASAN_LANGSUNG_PNS_NAMA' maxlength='32' value="<?php echo set_value('ATASAN_ATASAN_LANGSUNG_PNS_NAMA', isset($detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_NAMA) ? $detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_NAMA : ''); ?>" />
+                                    <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_NAMA'); ?></span>
+                                </div>
+                            </div>
+                            <div class="control-group col-sm-12">
+                                <label for="ATASAN_ATASAN_LANGSUNG_PNS_JABATAN" class="control-label">JABATAN ATASAN ATASAN LANGSUNG</label>
+                                <div class='controls'>
+                                    <input id='ATASAN_ATASAN_LANGSUNG_PNS_JABATAN' type='text' class="form-control" name='ATASAN_ATASAN_LANGSUNG_PNS_JABATAN' maxlength='32' value="<?php echo set_value('ATASAN_ATASAN_LANGSUNG_PNS_JABATAN', isset($detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_JABATAN) ? $detail_riwayat->ATASAN_ATASAN_LANGSUNG_PNS_JABATAN : ''); ?>" />
+                                    <span class='help-inline'><?php echo form_error('ATASAN_ATASAN_LANGSUNG_PNS_JABATAN'); ?></span>
+                                </div>
+                            </div>
+                    </div>  
+                </div>      
+            </div>    	
         </div>
   		<div class="box-footer">
             <input type='submit' name='save' id="btnsave" class='btn btn-primary' value="Simpan Data" /> 
@@ -157,7 +227,7 @@
     });
 </script>
 <script>
-	var pembagi = 5;
+	var pembagi = 6;
     $("#JABATAN_TIPE").change(function(){
         if($(this).val()==1){
         	pembagi = 6;
@@ -184,7 +254,7 @@
          $("#NILAI_PERILAKU").val(totalperilaku);
          var NILAI_PERILAKU_AKHIR = totalperilaku*40/100;
          $("#NILAI_PERILAKU_AKHIR").val(NILAI_PERILAKU_AKHIR);
-         var totalall = NILAI_PERILAKU_AKHIR + nilaiskp;
+         var totalall = Number(NILAI_PERILAKU_AKHIR) + Number(nilaiskp);
          $("#NILAI_PPK").val(totalall);
          
     }
@@ -209,7 +279,7 @@
     $("#NILAI_SKP").keyup(function(){
         $("#NILAI_SKP_AKHIR").val($("#NILAI_SKP").val()*60/100);
     });
-    /*
+    
     $("#ATASAN_LANGSUNG_PNS_ID").select2({
         placeholder: 'Cari Atasan Langsung...',
         width: '100%',
@@ -226,6 +296,18 @@
             },
             cache: true
         }
+    }).change(function(){
+        if($(this).select2('data').length==1){
+            $("#ATASAN_LANGSUNG_PNS_NIP").val($(this).select2('data')[0]['NIP_BARU']);
+            $("#ATASAN_LANGSUNG_PNS_JABATAN").val($(this).select2('data')[0]['JABATAN_NAMA']);
+            $("#ATASAN_LANGSUNG_PNS_NAMA").val($(this).select2('data')[0]['NAMA']);
+        }
+        else {
+            $("#ATASAN_LANGSUNG_PNS_NIP").val('');
+            $("#ATASAN_LANGSUNG_PNS_JABATAN").val('');
+            $("#ATASAN_LANGSUNG_PNS_NAMA").val('');
+        }
+       
     });
     $("#ATASAN_ATASAN_LANGSUNG_PNS_ID").select2({
         placeholder: 'Cari Atasan Atasan Langsung...',
@@ -243,8 +325,20 @@
             },
             cache: true
         }
+    }).change(function(){
+       if($(this).select2('data').length==1){
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_NIP").val($(this).select2('data')[0]['NIP_BARU']);
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_JABATAN").val($(this).select2('data')[0]['JABATAN_NAMA']);
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_NAMA").val($(this).select2('data')[0]['NAMA']);
+        }
+        else {
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_NIP").val('');
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_JABATAN").val('');
+            $("#ATASAN_ATASAN_LANGSUNG_PNS_NAMA").val('');
+        }
+       
     });
-    */
+    
     $("#ID_INSTANSI").select2({
         placeholder: 'Cari Data Instansi..',
         width: '100%',

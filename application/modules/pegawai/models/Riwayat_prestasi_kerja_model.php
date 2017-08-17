@@ -50,6 +50,41 @@ class Riwayat_prestasi_kerja_model extends BF_Model
 			'rules' => 'numeric|required',
 		),
 		array(
+			'field' => 'JABATAN_NAMA',
+			'label' => 'NAMA JABATAN',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_LANGSUNG_PNS_NIP',
+			'label' => 'NIP ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_LANGSUNG_PNS_NAMA',
+			'label' => 'NAMA ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_LANGSUNG_PNS_JABATAN',
+			'label' => 'JABATAN ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_ATASAN_LANGSUNG_PNS_NIP',
+			'label' => 'NIP ATASAN ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_ATASAN_LANGSUNG_PNS_NAMA',
+			'label' => 'NAMA ATASAN ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
+			'field' => 'ATASAN_ATASAN_LANGSUNG_PNS_JABATAN',
+			'label' => 'JABATAN ATASAN ATASAN LANGSUNG',
+			'rules' => 'required',
+		),
+		array(
 			'field' => 'NILAI_SKP',
 			'label' => 'NILAI SKP',
 			'rules' => 'numeric|required|greater_than_equal_to[0]|less_than_equal_to[100]',

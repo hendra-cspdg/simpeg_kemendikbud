@@ -31,11 +31,11 @@ class Riwayatprestasikerja extends Admin_Controller
         
         if(!empty($q)){
             $this->db->start_cache();
-            $this->db->like('lower("NAMA")', strtolower($key));
+            $this->db->like('lower("NAMA")', strtolower($q));
             $this->db->from("hris.pegawai");
             $this->db->stop_cache();
             $total = $this->db->get()->num_rows();
-            $this->db->select('PNS_ID as id,NAMA as text');
+            $this->db->select('PNS_ID as id,NAMA as text,NAMA,NIP_BARU,JABATAN_NAMA');
             $this->db->limit($limit,$start);
 
             $data = $this->db->get()->result();
@@ -116,11 +116,11 @@ class Riwayatprestasikerja extends Admin_Controller
 			foreach ($records as $record) {
                 $row = array();
                 $row []  = $nomor_urut;
+                $row []  = $record->TAHUN;
                 $row []  = $record->NILAI_PPK;
-                $row []  = $record->NILAI_PPK;
-                $row []  = $record->NILAI_PPK;
-                $row []  = $record->NILAI_PPK;
-                $row []  = $record->NILAI_PPK;
+                $row []  = $record->NILAI_SKP;
+                $row []  = $record->NILAI_PERILAKU;
+                $row []  = $record->JABATAN_NAMA;
 
                 $btn_actions = array();
                 $btn_actions  [] = "
@@ -235,23 +235,10 @@ class Riwayatprestasikerja extends Admin_Controller
         $data["PNS_ID"] = $pegawai_data->PNS_ID;
         $data["PNS_NAMA"] = $pegawai_data->NAMA;
         $data["PNS_NIP"] = $pegawai_data->NIP_BARU;
-       
-        //data atasan langsung
         
-        $this->pegawai_model->where("PNS_ID",$this->input->post("ATASAN_LANGSUNG_PNS_ID"));
-        $atasan_pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["ATASAN_LANGSUNG_PNS_ID"] = $atasan_pegawai_data->PNS_ID;
-        $data["ATASAN_LANGSUNG_PNS_NAMA"] = $atasan_pegawai_data->NAMA;
-        $data["ATASAN_LANGSUNG_PNS_NIP"] = $atasan_pegawai_data->NIP_BARU;
-
-        $this->pegawai_model->where("PNS_ID",$this->input->post("ATASAN_ATASAN_LANGSUNG_PNS_ID"));
-        $atasan_atasan_pegawai_data = $this->pegawai_model->find_first_row();  
-        $data["ATASAN_ATASAN_LANGSUNG_PNS_ID"] = $atasan_atasan_pegawai_data->PNS_ID;
-        $data["ATASAN_ATASAN_LANGSUNG_PNS_NAMA"] = $atasan_atasan_pegawai_data->NAMA;
-        $data["ATASAN_ATASAN_LANGSUNG_PNS_NIP"] = $atasan_atasan_pegawai_data->NIP_BARU;
-
+        
         $jenis_jabatan_data = $this->jenis_jabatan_model->find($this->input->post("JABATAN_TIPE"));
-        $data["JABATAN_TEXT"] = $jenis_jabatan_data->NAMA;
+        $data["JABATAN_TIPE_TEXT"] = $jenis_jabatan_data->NAMA;
 
        
         if(empty($data["SK_TANGGAL"])){
