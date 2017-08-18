@@ -279,7 +279,7 @@ class Pegawai_model extends BF_Model
 			$where_clause = 'AND (vw."ESELON_1" = \''.$satker_id.'\' OR vw."ESELON_2" = \''.$satker_id.'\' OR vw."ESELON_3" = \''.$satker_id.'\' OR vw."ESELON_4" = \''.$satker_id.'\')' ;
 		}
 		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
-		$this->db->where('vw."ID" is not null');
+		//$this->db->where('vw."ID" is not null');
 		
 		return parent::count_all();
 	}
@@ -298,7 +298,7 @@ class Pegawai_model extends BF_Model
 		}
 		$this->db->select('pegawai.*,vw."NAMA_UNOR_FULL"',false);
 		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
-		$this->db->where('vw."ID" is not null');
+		//$this->db->where('vw."ID" is not null');
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
