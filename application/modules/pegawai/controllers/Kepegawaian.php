@@ -614,6 +614,13 @@ class Kepegawaian extends Admin_Controller
 					   	</span>
 					   	</a>
                 ";
+				$btn_actions  [] = "
+                    <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/cetak_drh/".$record->PNS_ID."'  data-toggle='tooltip' title='Cetak DRH'><span class='fa-stack'>
+					   <i class='fa fa-square fa-stack-2x'></i>
+					   	<i class='fa fa-download fa-stack-1x fa-inverse'></i>
+					   	</span>
+					   	</a>
+                ";
                 if($this->auth->has_permission("Pegawai.Kepegawaian.Edit")){
                 $btn_actions  [] = "
                     <a class='show-modal-custom' href='".base_url()."admin/kepegawaian/pegawai/edit/".$record->ID."' data-toggle='tooltip' title='Ubah data'><span class='fa-stack'>
@@ -642,6 +649,30 @@ class Kepegawaian extends Admin_Controller
 		endif;
 		echo json_encode($output);
 		
+	}
+	public function cetak_drh($pns_id){
+		$pegawai = $this->pegawai_model->get_drh($pns_id);
+		$this->load->library('LibOpenTbs');
+		$template_name = APPPATH."..".DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'template_drh.docx';
+		$TBS = $this->libopentbs->TBS;
+		
+		$TBS->LoadTemplate($template_name, OPENTBS_ALREADY_UTF8); // Also merge some [onload] automatic fields (depends of the type of document).
+		
+		$TBS->MergeField('a', array(
+			'fullname'=>$pegawai->NAMA,
+			'nip'=>$pegawai->NIP_BARU,
+			'alamat'=>$pegawai->ALAMAT,
+			'tempat_lahir'=>$pegawai->TEMPAT_LAHIR,
+			'tanggal_lahir'=>$pegawai->TGL_LAHIR,
+			'pangkat'=>$pegawai->PANGKAT_TEXT,
+			'gol_ruang'=>$pegawai->GOL_TEXT,
+			'sex'=>$pegawai->JENIS_KELAMIN=='M'?"Pria":"Wanita",
+			'agama'=>$pegawai->AGAMA_TEXT,
+			'status_kawin'=>$pegawai->KAWIN_TEXT,
+		));
+		$output_file_name = 'DRH.xlsx';
+		$output_file_name = str_replace('.', '_'.date('Y-m-d').'.', $output_file_name);
+		$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
 	}
 	public function download()
 	{

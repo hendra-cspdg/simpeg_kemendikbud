@@ -315,6 +315,9 @@ class Pegawai_model extends BF_Model
 		$this->db->join('golongan', 'pegawai.GOL_ID = golongan.ID', 'left');
 		return parent::count_all();
 	}
+	public function get_drh($id){
+		return $this->db->from('vw_drh')->where('PNS_ID',$id)->get()->first_row();
+	}
     public function find_detil($ID ="")
 	{
 		

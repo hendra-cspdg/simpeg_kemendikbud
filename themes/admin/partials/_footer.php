@@ -1,7 +1,7 @@
 <div id="loading-all" class="modal fade bs-modal-lg">Loadin...</div>
  
 <!-- Modal -->
-    <div data-backdrop="static" data-keyboard="false" class="modal fade bs-modal-lg" id="modal-global" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div data-backdrop="static" data-keyboard="false" class="modal fade bs-modal-lg" id="modal-global"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
