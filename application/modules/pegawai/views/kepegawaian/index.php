@@ -112,7 +112,7 @@ if ($can_delete) {
 				<?php if ($this->auth->has_permission('Pegawai.Kepegawaian.Create')) : ?>
 				<li><a href="<?php echo site_url($areaUrl . '/create'); ?>"><i class="fa fa-plus"></i>Tambah Pegawai</a></li>
 				<?php endif; ?>
-				 <li><a href="<?php echo site_url($areaUrl . '/download'); ?>" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
+				 <li><a class="download_xls" target="_blank"><i class="fa fa-download" aria-hidden="true"></i> Download .xls</a></li>
 				 <li><a href="<?php echo site_url($areaUrl . '/importdatapegawai'); ?>" target="_blank" tooltip="Import data pegawai" class="show-modal" ><i class="fa fa-upload" aria-hidden="true"></i>Upload data</a></li>
 			   </ul>
 			 </div>
@@ -132,6 +132,11 @@ if ($can_delete) {
 </div>
 
 <script type="text/javascript">
+
+$(".download_xls").click(function(){
+	var xyz = $("#form_search_pegawai").serialize();
+	window.open("<?php echo base_url('admin/kepegawaian/pegawai/download');?>?"+xyz);
+});
 $("#unit_id_key").select2({
 	placeholder: 'Cari Unit Kerja...',
 	width: '100%',

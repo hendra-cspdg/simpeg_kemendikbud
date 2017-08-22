@@ -676,11 +676,59 @@ class Kepegawaian extends Admin_Controller
 	}
 	public function download()
 	{
-		$satker 		= $this->input->get('satker');
-		$nama 			= $this->input->get('nama');
 	  
-		//$datapegwai = $this->pegawai_model->limit(100)->find_all(); 
-		$datapegwai = $this->pegawai_model->find_all(); 
+		$advanced_search_filters  = $_GET;
+		
+		if($advanced_search_filters){
+			$filters = $advanced_search_filters;
+			
+			if($filters['nama_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
+			}
+			if($filters['unit_id_cb']){
+				$this->db->group_start();
+				$this->db->where('vw."ID"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_1"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_2"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_3"',$filters['unit_id_key']);	
+				$this->db->or_where('vw."ESELON_4"',$filters['unit_id_key']);	
+				$this->db->group_end();
+			}
+
+
+			if($filters['nip_cb']){
+				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+			}
+			if($filters['umur_cb']){
+				if($filters['umur_operator']=="="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']==">"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") >',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") <=',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="<"){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR")<',$filters['umur_key']*12);	
+				}
+				if($filters['umur_operator']=="!="){
+					$this->pegawai_model->where('calc_age("TGL_LAHIR") !=',$filters['umur_key']*12);	
+				}
+			}
+			if($filters['eselon_cb']){
+				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+			}
+			if($filters['golongan_cb']){
+				$this->pegawai_model->where('"GOL_ID"',strtoupper($filters['golongan_key']));	
+			}
+		}
+		
+		$datapegwai=$this->pegawai_model->find_all($this->UNOR_ID);
+		
 		$this->load->library('Excel');
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel = PHPExcel_IOFactory::load(trim($this->settings_lib->item('site.pathuploaded')).'template.xls');
