@@ -670,8 +670,8 @@ class Kepegawaian extends Admin_Controller
 			'agama'=>$pegawai->AGAMA_TEXT,
 			'status_kawin'=>$pegawai->KAWIN_TEXT,
 		));
-		$output_file_name = 'DRH.xlsx';
-		$output_file_name = str_replace('.', '_'.date('Y-m-d').'.', $output_file_name);
+		$output_file_name = 'DRH.docx';
+		$output_file_name = str_replace('.', '_'.date('Y-m-d').$pegawai->NIP_BARU.'.', $output_file_name);
 		$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
 	}
 	public function download()
