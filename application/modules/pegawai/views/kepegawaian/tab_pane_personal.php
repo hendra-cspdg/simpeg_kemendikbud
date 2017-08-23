@@ -495,13 +495,14 @@
 					   <span class='help-inline'><?php echo form_error('TGL_CATATAN_POLISI'); ?></span>
 				   </div>
 			   </div> 
-			   <div class="control-group<?php echo form_error('AKTE_KELAHIRAN') ? ' error' : ''; ?> col-sm-6">
+			   <div class="control-group<?php echo form_error('AKTE_KELAHIRAN') ? ' error' : ''; ?> col-sm-12">
 				   <?php echo form_label("AKTE KELAHIRAN", 'AKTE_KELAHIRAN', array('class' => 'control-label')); ?>
 				   <div class='controls'>
 					   <input id='AKTE_KELAHIRAN' type='text' class="form-control" name='AKTE_KELAHIRAN' maxlength='25' value="<?php echo set_value('AKTE_KELAHIRAN', isset($pegawai->AKTE_KELAHIRAN) ? $pegawai->AKTE_KELAHIRAN : ''); ?>" />
 					   <span class='help-inline'><?php echo form_error('AKTE_KELAHIRAN'); ?></span>
 				   </div>
 			   </div>
+			   <!--
 			   <div class="control-group<?php echo form_error('STATUS_HIDUP') ? ' error' : ''; ?> col-sm-6">
 				   <?php echo form_label("STATUS HIDUP", 'STATUS_HIDUP', array('class' => 'control-label')); ?>
 				   <div class='controls'>
@@ -519,6 +520,7 @@
 					   <span class='help-inline'><?php echo form_error('AKTE_MENINGGAL'); ?></span>
 				   </div>
 			   </div>
+			   
 			   <div class="control-group col-sm-6">
 				   <label for="inputNAMA" class="control-label">TANGGAL</label>
 				   <div class="input-group date">
@@ -529,6 +531,7 @@
 					   <span class='help-inline'><?php echo form_error('TGL_MENINGGAL'); ?></span>
 				   </div>
 			   </div> 
+			   -->
 				<div class="control-group<?php echo form_error('BPJS') ? ' error' : ''; ?> col-sm-6">
 				   <?php echo form_label(lang('pegawai_field_BPJS'), 'BPJS', array('class' => 'control-label')); ?>
 				   <div class='controls'>
