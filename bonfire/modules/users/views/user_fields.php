@@ -18,14 +18,14 @@ $defaultTimezone = isset($current_user) ? $current_user->timezone : strtoupper(s
 <div class="control-group<?php echo iif(form_error('email'), $errorClass); ?> col-sm-12">
     <label class="control-label required" for="email"><?php echo lang('bf_email'); ?></label>
     <div class="controls">
-        <input class="<?php echo $controlClass; ?> form-control" type="text" id="email" name="email" value="<?php echo set_value('email', isset($user) ? $user->email : ''); ?>" />
+        <input class="<?php echo $controlClass; ?> form-control" type="text" id="email" name="email" value="<?php echo set_value('email', isset($user) ? trim($user->email) : ''); ?>" />
         <span class="help-inline"><?php echo form_error('email'); ?></span>
     </div>
 </div>
 <div class="control-group<?php echo iif(form_error('display_name'), $errorClass); ?> col-sm-12">
     <label class="control-label" for="display_name"><?php echo lang('bf_display_name'); ?></label>
     <div class="controls">
-        <input class="<?php echo $controlClass; ?> form-control" type="text" id="display_name" name="display_name" value="<?php echo set_value('display_name', isset($user) ? $user->display_name : ''); ?>" />
+        <input class="<?php echo $controlClass; ?> form-control" type="text" id="display_name" name="display_name" value="<?php echo set_value('display_name', isset($user) ? trim($user->display_name) : ''); ?>" />
         <span class="help-inline"><?php echo form_error('display_name'); ?></span>
     </div>
 </div>
@@ -33,7 +33,7 @@ $defaultTimezone = isset($current_user) ? $current_user->timezone : strtoupper(s
 <div class="control-group<?php echo iif(form_error('username'), $errorClass); ?> col-sm-12">
     <label class="control-label required" for="username"><?php echo lang('bf_username'); ?></label>
     <div class="controls">
-        <input class="<?php echo $controlClass; ?> form-control" type="text" id="username" name="username" value="<?php echo set_value('username', isset($user) ? $user->username : ''); ?>" />
+        <input class="<?php echo $controlClass; ?> form-control" <?php echo set_value('username', isset($user) ? "readonly" : ''); ?> type="text" id="username" name="username" value="<?php echo set_value('username', isset($user) ? trim($user->username) : ''); ?>" />
         <span class="help-inline"><?php echo form_error('username'); ?></span>
     </div>
 </div>
