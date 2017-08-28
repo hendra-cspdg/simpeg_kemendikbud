@@ -184,9 +184,9 @@ class Pegawai extends  LIPIAPI_REST_Controller {
         }
         $this->load->model('pegawai/pegawai_model');
         //$this->db->where("x",1);
-        $pegawais = $this->pegawai_model->find_all($satkers);
+        $pegawais = $this->pegawai_model->find_all($satkers,true);
         $total = sizeof($pegawais);
-        $pegawais = $this->pegawai_model->find_all($satkers);
+        $pegawais = $this->pegawai_model->find_all($satkers,true);
 
          $output = array(
             'success' => true,

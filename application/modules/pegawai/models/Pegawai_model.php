@@ -283,7 +283,7 @@ class Pegawai_model extends BF_Model
 		
 		return parent::count_all();
 	}
-	public function find_all($satker_id){
+	public function find_all($satker_id,$strict_in_satker = false){
 		
 		$where_clause = '';
 		if($satker_id){
@@ -298,7 +298,9 @@ class Pegawai_model extends BF_Model
 		}
 		$this->db->select('pegawai.*,vw."NAMA_UNOR_FULL"',false);
 		$this->db->join("vw_unit_list as vw","pegawai.\"UNOR_ID\"=vw.\"ID\" $where_clause ", 'left',false);
-		//$this->db->where('vw."ID" is not null');
+		if($strict_in_satker){
+			$this->db->where('vw."ID" is not null');
+		}
 		$this->db->order_by("NAMA","ASC");
 		return parent::find_all();
 	}
