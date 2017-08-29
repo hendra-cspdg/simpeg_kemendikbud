@@ -531,7 +531,7 @@ class Kepegawaian extends Admin_Controller
 				$filters[$filter['name']] = $filter["value"];
 			}
 			if($filters['nama_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
+				$this->pegawai_model->like('upper("NAMA")',strtoupper($filters['nama_key']),"BOTH");	
 			}
 			if($filters['unit_id_cb']){
 				$this->db->group_start();
@@ -545,7 +545,7 @@ class Kepegawaian extends Admin_Controller
 
 
 			if($filters['nip_cb']){
-				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+				$this->pegawai_model->like('upper("NIP_BARU")',strtoupper($filters['nip_key']),"BOTH");	
 			}
 			if($filters['umur_cb']){
 				if($filters['umur_operator']=="="){
@@ -683,7 +683,8 @@ class Kepegawaian extends Admin_Controller
 			$filters = $advanced_search_filters;
 			
 			if($filters['nama_cb']){
-				$this->pegawai_model->where('upper("NAMA") LIKE \''.strtoupper($filters['nama_key']).'%\'');	
+				$this->pegawai_model->like('upper("NAMA")',strtoupper($filters['nama_key']),"BOTH");	
+				
 			}
 			if($filters['unit_id_cb']){
 				$this->db->group_start();
@@ -697,7 +698,7 @@ class Kepegawaian extends Admin_Controller
 
 
 			if($filters['nip_cb']){
-				$this->pegawai_model->where('upper("NIP_BARU") LIKE \''.strtoupper($filters['nip_key']).'%\'');	
+				$this->pegawai_model->like('upper("NIP_BARU")',strtoupper($filters['nip_key']),"BOTH");	
 			}
 			if($filters['umur_cb']){
 				if($filters['umur_operator']=="="){
