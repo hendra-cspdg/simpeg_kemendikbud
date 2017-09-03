@@ -22,7 +22,8 @@ class Kepegawaian extends Admin_Controller
         parent::__construct(); 
         
         $this->load->model('pegawai/pegawai_model');
-        $this->load->model('pegawai/riwayat_pendidikan_model');
+		$this->load->model('pegawai/riwayat_pendidikan_model');
+		$this->load->model('pegawai/riwayat_kepangkatan_model');
         $this->lang->load('pegawai');
         
             Assets::add_css('flick/jquery-ui-1.8.13.custom.css');
@@ -99,7 +100,7 @@ class Kepegawaian extends Admin_Controller
     	$this->auth->restrict($this->permissionView);
          
         
-    Template::set('toolbar_title', lang('pegawai_manage'));
+        Template::set('toolbar_title', lang('pegawai_manage'));
 		
         Template::render();
     }
@@ -658,10 +659,15 @@ class Kepegawaian extends Admin_Controller
 		
 		$TBS->LoadTemplate($template_name, OPENTBS_ALREADY_UTF8); // Also merge some [onload] automatic fields (depends of the type of document).
 		
+		$foto_pegawai = trim($this->settings_lib->item('site.urlphoto'))."noimage.jpg";
+		if(file_exists(trim($this->settings_lib->item('site.urlphoto')).$pegawai->PHOTO)){
+			$foto_pegawai =  trim($this->settings_lib->item('site.urlphoto')).$pegawai->PHOTO;
+		}
 		$TBS->MergeField('a', array(
 			'fullname'=>$pegawai->NAMA,
 			'nip'=>$pegawai->NIP_BARU,
 			'alamat'=>$pegawai->ALAMAT,
+			'foto'=>$foto_pegawai,
 			'tempat_lahir'=>$pegawai->TEMPAT_LAHIR,
 			'tanggal_lahir'=>$pegawai->TGL_LAHIR,
 			'pangkat'=>$pegawai->PANGKAT_TEXT,
@@ -670,6 +676,16 @@ class Kepegawaian extends Admin_Controller
 			'agama'=>$pegawai->AGAMA_TEXT,
 			'status_kawin'=>$pegawai->KAWIN_TEXT,
 		));
+		$this->riwayat_pendidikan_model->order_by("TAHUN_LULUS","asc");
+        $this->riwayat_pendidikan_model->where("PNS_ID",$pns_id);    
+		$records=$this->riwayat_pendidikan_model->find_all();
+		$TBS->MergeBlock('pend',$records);
+
+        $this->riwayat_kepangkatan_model->where("PNS_ID",$pns_id);  
+        $records = $this->riwayat_kepangkatan_model->find_all();
+		$TBS->MergeBlock('pk',$records);
+		
+
 		$output_file_name = 'DRH.docx';
 		$output_file_name = str_replace('.', '_'.date('Y-m-d').$pegawai->NIP_BARU.'.', $output_file_name);
 		$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name); // Also merges all [onshow] automatic fields.
