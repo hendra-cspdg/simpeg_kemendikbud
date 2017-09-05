@@ -177,23 +177,59 @@ class Pegawai extends  LIPIAPI_REST_Controller {
             'msg'=>'Unknown error'
         );
         $unor_id = $this->get('unor_id');
+        $start = (int)$this->get('start');
+        $limit = $this->get('limit');
         if ($unor_id === NULL)
         {
             $output['msg'] = 'Parameter unor_id di butuhkan';
             $this->response($output, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code
         }
-        $this->load->model('pegawai/pegawai_model');
-        //$this->db->where("x",1);
-        $pegawais = $this->pegawai_model->find_all($satkers,true);
-        $total = sizeof($pegawais);
-        $pegawais = $this->pegawai_model->find_all($satkers,true);
+        if ($start === NULL)
+        {
+           $start = 0;
+        }
+        else {
+            if($start<0){
+                $output['msg'] = 'Parameter start harus >=0 ';
+                $this->response($output, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code 
+            }
+        }
 
+        if ($limit === NULL)
+        {
+           $limit = 10;
+        }
+        else {
+            if($limit==-1){
+                // no problem
+            }
+            else if($limit>1000){
+                $output['msg'] = 'Parameter limit maksimal 1000 ';
+                $this->response($output, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code 
+            }
+            else if($limit<0){
+                $output['msg'] = 'Parameter limit harus >=0 ';
+                $this->response($output, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code 
+            }
+
+        }
+        
+        $this->load->model('pegawai/pegawai_model');
+        if($limit==-1){
+
+        }
+        else {
+            $this->db->limit($limit,$start);
+        }
+        $total= $this->pegawai_model->count_list($satkers,true);
+        
+        $pegawais = $this->pegawai_model->find_all($satkers,true);
+        $this->db->flush_cache();
          $output = array(
             'success' => true,
             'total'=>$total,
             'data'=>$pegawais
         );
-        $this->db->flush_cache();
         $this->response($output, REST_Controller::HTTP_OK); // OK (200) being the HTTP response code
     }
     public function detail_get(){
