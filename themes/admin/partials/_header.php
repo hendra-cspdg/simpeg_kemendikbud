@@ -130,7 +130,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="<?php echo base_url();?>assets/images/<?php echo (isset($pegawai->PHOTO) && $pegawai->PHOTO != "") ? $pegawai->PHOTO : 'noimage.jpg'; ?>" class="img-circle" alt="Profile Photo">
+          <img src="<?php echo base_url();?>assets/images/<?php echo (isset($current_user->PHOTO) && $current_user->PHOTO != "") ? $current_user->PHOTO : 'noimage.jpg'; ?>" class="img-circle" alt="Profile Photo">
         </div>
         <div class="pull-left info">
           <p><?php echo (isset($current_user->display_name) && !empty($current_user->display_name)) ? $current_user->display_name : ($this->settings_lib->item('auth.use_usernames') ? $current_user->username : $current_user->email); ?></p>
