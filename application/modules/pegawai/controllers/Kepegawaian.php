@@ -769,7 +769,9 @@ class Kepegawaian extends Admin_Controller
 					if($col == 3)
 						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field." ",PHPExcel_Cell_DataType::TYPE_STRING);
 					else
-						$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field,PHPExcel_Cell_DataType::TYPE_STRING);
+						//$objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow($col,$row,$record->$field,PHPExcel_Cell_DataType::TYPE_STRING);
+						$type = PHPExcel_Cell_DataType::TYPE_STRING;
+						$objPHPExcel->getActiveSheet()->getCellByColumnAndRow($col, $row)->setValueExplicit($record->$field, $type);
 					$col++;
 				}
 			   
