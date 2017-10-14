@@ -172,7 +172,8 @@ class Pegawai extends  LIPIAPI_REST_Controller {
         if($appKeyData->satker_auth){
             $satkers = explode(',',$appKeyData->satker_auth);
         }
-        $output = array(
+		
+		$output = array(
             'success'=>false,
             'msg'=>'Unknown error'
         );
@@ -221,9 +222,30 @@ class Pegawai extends  LIPIAPI_REST_Controller {
         else {
             $this->db->limit($limit,$start);
         }
-        $total= $this->pegawai_model->count_list($satkers,true);
+		
+		$filter_satkers = array();
+		if(sizeof($satkers)==0){ // has ALL PRIV
+			$filter_satkers[] = $unor_id;
+		}
+		else {
+			$found_priv = false;
+			foreach($satkers as $satker){
+				if($satker == $unor_id){
+					$found_priv = true;
+				}
+			}
+			if(!$found_priv){
+				$output['msg'] = 'Parameter limit harus >=0 ';
+                $this->response($output, REST_Controller::HTTP_BAD_REQUEST); // BAD_REQUEST (400) being the HTTP response code 
+				return;
+			}	
+			else {
+				$filter_satkers[] = $unor_id;
+			}
+		}
+        $total= $this->pegawai_model->count_list($filter_satkers,true);
         
-        $pegawais = $this->pegawai_model->find_all($satkers,true);
+        $pegawais = $this->pegawai_model->find_all($filter_satkers,true);
         $this->db->flush_cache();
          $output = array(
             'success' => true,
